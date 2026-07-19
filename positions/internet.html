@@ -125,9 +125,13 @@ nav a.active{color:#fff;background:#06b6d4}
 /* ── Smooth Section Reveal ── */
 .section{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
 .section.visible{opacity:1;transform:translateY(0)}
+.hub-back{position:fixed;top:10px;left:10px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(8,8,14,.82);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;text-decoration:none;font:600 12px/1 monospace;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s}
+.hub-back:hover{border-color:#0ff;color:#0ff;box-shadow:0 0 14px rgba(0,255,255,.35)}
+@media(max-width:768px){.hub-back{top:8px;left:8px;padding:5px 10px;font-size:11px}}
 </style>
 </head>
 <body>
+<a class="hub-back" href="index.html">← 返回全部作品集</a>
 
 <canvas id="dot-canvas"></canvas>
 
