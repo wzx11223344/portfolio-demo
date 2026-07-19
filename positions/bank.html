@@ -1,144 +1,266 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>期权定价引擎 · 蒙特卡洛与BSM</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>金融量化引擎 · 期权定价与风控系统</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e0e0e8;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
-canvas{display:block;width:100%;height:auto;background:#050508}
-#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 30% 50%,#0a1628 0%,#0a0a0f 70%)}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;padding:12px}
-nav a{color:#888;text-decoration:none;padding:6px 14px;font-size:12px;font-family:monospace;border:1px solid #222;border-radius:6px;transition:.3s}
-nav a:hover{color:#3b82f6;border-color:#3b82f6;box-shadow:0 0 12px rgba(59,130,246,.15)}
-.hero{text-align:center;padding:40px 0}
-h1{font-size:clamp(32px,5vw,52px);font-weight:700;background:linear-gradient(135deg,#3b82f6,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.sub{color:#666;font-size:13px;font-family:monospace}
-.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:24px 0}
-.stat{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:14px 20px;text-align:center;min-width:90px}
-.stat-num{font-size:26px;font-weight:700;font-family:monospace;color:#3b82f6}.stat-lbl{font-size:10px;color:#555;margin-top:2px}
-.card{background:#0d0d18;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:20px}
-.card-title{font-family:monospace;font-size:14px;color:#3b82f6;margin-bottom:16px}.card-title span{color:#00ff88}
+body{background:#0a1628;color:#c8d0dc;font-family:'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif;overflow-x:hidden}
+::selection{background:#f59e0b;color:#0a1628}
+
+/* ── 浮动K线背景 ── */
+#kline-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.35}
+
+/* ── 固定导航 ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:4px;padding:10px 16px;background:rgba(10,22,40,0.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,0.15);flex-wrap:wrap}
+nav a{color:#8899aa;text-decoration:none;padding:6px 16px;font-size:13px;font-weight:500;letter-spacing:0.5px;border-radius:6px;transition:.3s;position:relative;cursor:pointer}
+nav a:hover,nav a.active{color:#f59e0b;background:rgba(245,158,11,0.08)}
+nav a.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#f59e0b,transparent);border-radius:2px}
+
+/* ── 容器 ── */
+.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:70px 20px 30px}
+
+/* ── 英雄区 ── */
+.hero{text-align:center;padding:40px 0 30px}
+h1{font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:2px;line-height:1.2}
+h1 .gold{background:linear-gradient(180deg,#fbbf24 0%,#f59e0b 25%,#d97706 50%,#fbbf24 70%,#b45309 100%);background-size:100% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:metalShine 3s ease-in-out infinite alternate}
+h1 .ice{background:linear-gradient(135deg,#60a5fa,#3b82f6,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+@keyframes metalShine{0%{background-position-y:0%}100%{background-position-y:100%}}
+.sub{color:#5a6a7a;font-size:13px;font-family:monospace;letter-spacing:2px;margin-top:6px}
+.sub span{color:#f59e0b}
+
+/* ── KPI统计 ── */
+.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:24px 0 32px}
+.stat{background:linear-gradient(145deg,rgba(20,40,70,0.6),rgba(10,22,40,0.8));border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:16px 22px;text-align:center;min-width:100px;box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(245,158,11,0.1);transition:.3s}
+.stat:hover{border-color:rgba(245,158,11,0.5);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,0.1)}
+.stat-num{font-size:28px;font-weight:700;font-family:monospace;background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:10px;color:#6a7a8a;margin-top:3px;text-transform:uppercase;letter-spacing:1px}
+
+/* ── 卡片 ── */
+.card{background:linear-gradient(160deg,rgba(15,30,55,0.85),rgba(10,22,40,0.95));border:1px solid rgba(59,130,246,0.12);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 2px 0 rgba(245,158,11,0.08),0 8px 32px rgba(0,0,0,0.25),inset 0 1px 0 rgba(245,158,11,0.06);position:relative;overflow:hidden;transition:.3s}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.4),rgba(59,130,246,0.4),transparent)}
+.card:hover{border-color:rgba(245,158,11,0.2);box-shadow:0 2px 0 rgba(245,158,11,0.12),0 12px 40px rgba(0,0,0,0.35)}
+.card-title{font-size:14px;font-weight:600;color:#f59e0b;margin-bottom:16px;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.card-title .badge{display:inline-block;background:rgba(245,158,11,0.15);color:#f59e0b;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:400}
+
+/* ── 滑块 ── */
+.slider-group{margin-bottom:10px}
+.slider-group .lbl{display:flex;justify-content:space-between;font-size:11px;color:#6a7a8a;font-family:monospace;margin-bottom:2px}
+.slider-group .lbl .val{color:#f59e0b;font-weight:600}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:linear-gradient(90deg,#1a2744,#3b82f6);border-radius:3px;outline:none;border:none;margin:2px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);border:2px solid rgba(255,255,255,0.15);box-shadow:0 0 12px rgba(245,158,11,0.35);cursor:pointer;transition:.2s}
+input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(245,158,11,0.5);transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);border:2px solid rgba(255,255,255,0.15);cursor:pointer}
+
+/* ── 按钮 ── */
+.btn{padding:7px 16px;border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08);color:#8899aa;border-radius:8px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s;letter-spacing:0.5px}
+.btn:hover{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,0.08)}
+.btn-gold{border-color:rgba(245,158,11,0.4);color:#f59e0b;background:rgba(245,158,11,0.1)}
+.btn-gold:hover{background:rgba(245,158,11,0.18);box-shadow:0 0 16px rgba(245,158,11,0.15)}
 .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
-.btn{padding:6px 14px;border:1px solid #222;background:#111;color:#888;border-radius:6px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s}
-.btn:hover{border-color:#3b82f6;color:#3b82f6}.btn-primary{border-color:#3b82f6;color:#3b82f6}
+
+/* ── 布局 ── */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:768px){.grid-2{grid-template-columns:1fr}}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
-.stat-line{display:flex;justify-content:space-between;padding:3px 0;font-family:monospace;font-size:11px;color:#888;border-bottom:1px solid #111}
-.stat-line span{color:#e0e0e8}.greeks-table{width:100%;border-collapse:collapse;font-size:11px;font-family:monospace}
-.greeks-table td{padding:5px 8px;border-bottom:1px solid #1a1a2e}
-.greeks-table .val{color:#00ff88;text-align:right}
-.footer{text-align:center;padding:40px;font-size:11px;color:#444;font-family:monospace}
-input[type=range]{width:100%;-webkit-appearance:none;height:4px;background:#222;border-radius:2px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#3b82f6;cursor:pointer}
+
+/* ── Greeks表格 ── */
+.greeks-wrap{overflow-x:auto}
+.greeks-table{width:100%;border-collapse:collapse;font-size:12px;font-family:monospace}
+.greeks-table tr{border-bottom:1px solid rgba(59,130,246,0.06)}
+.greeks-table tr:nth-child(even){background:rgba(59,130,246,0.04)}
+.greeks-table td{padding:7px 10px}
+.greeks-table td:first-child{color:#6a7a8a;letter-spacing:0.3px}
+.greeks-table .val{color:#f59e0b;text-align:right;font-weight:600}
+
+/* ── 状态行 ── */
+.stat-line{display:flex;justify-content:space-between;padding:5px 0;font-family:monospace;font-size:11px;color:#6a7a8a;border-bottom:1px solid rgba(59,130,246,0.06)}
+.stat-line span{color:#c8d0dc}
+
+/* ── 技能区 ── */
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+@media(max-width:600px){.skills{grid-template-columns:repeat(2,1fr)}}
+.skill-card{background:rgba(15,30,55,0.6);border:1px solid rgba(245,158,11,0.1);border-radius:10px;padding:16px;text-align:center;transition:.3s}
+.skill-card:hover{border-color:rgba(245,158,11,0.3);transform:translateY(-2px)}
+.skill-name{font-size:12px;color:#8899aa;margin-bottom:8px}
+.skill-bar{height:6px;background:rgba(59,130,246,0.1);border-radius:3px;overflow:hidden;position:relative}
+.skill-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#f59e0b);border-radius:3px;transition:width 1s ease;width:0}
+.skill-pct{font-size:13px;font-weight:700;color:#f59e0b;font-family:monospace;margin-top:5px}
+
+/* ── Footer ── */
+.footer{text-align:center;padding:40px 0 20px;font-size:12px;color:#4a5a6a;font-family:monospace;border-top:1px solid rgba(245,158,11,0.06);margin-top:20px}
+.footer a{color:#f59e0b;text-decoration:none;transition:.3s}
+.footer a:hover{text-shadow:0 0 12px rgba(245,158,11,0.3)}
+.footer .badge{display:inline-block;background:rgba(245,158,11,0.08);color:#f59e0b;font-size:10px;padding:2px 10px;border-radius:4px;margin:0 4px}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a1628}
+::-webkit-scrollbar-thumb{background:rgba(245,158,11,0.2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(245,158,11,0.4)}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero,.card,.skills,.footer{animation:fadeUp .6s ease both}
+.card:nth-child(2){animation-delay:.1s}
+.skills{animation-delay:.2s}
 </style>
 </head>
 <body>
-<div id="bg"></div>
+
+<canvas id="kline-bg"></canvas>
+
+<nav>
+<a class="active" data-target="pricing">定价模型</a>
+<a data-target="greeks">Greeks</a>
+<a data-target="mc">蒙特卡洛</a>
+<a data-target="smile">波动率</a>
+<a data-target="skills">技能</a>
+</nav>
+
 <div class="container">
-<nav><a>期权定价</a><a>Greeks</a><a>蒙特卡洛</a><a>风控</a></nav>
+
 <div class="hero">
-<h1>量化定价引擎</h1>
-<div class="sub">// Black-Scholes-Merton · 蒙特卡洛模拟 · Greeks风控</div>
+<h1><span class="gold">量化定价</span> <span class="ice">引擎</span></h1>
+<div class="sub">// Black-Scholes-Merton · <span>Monte Carlo</span> · Greeks 风控矩阵</div>
 <div class="stats">
-<div class="stat"><div class="stat-num" id="bs-call">0.00</div><div class="stat-lbl">看涨期权</div></div>
-<div class="stat"><div class="stat-num" id="bs-put">0.00</div><div class="stat-lbl">看跌期权</div></div>
-<div class="stat"><div class="stat-num" id="mc-bs-ref">0.00</div><div class="stat-lbl">BS解析解</div></div>
-<div class="stat"><div class="stat-num" id="ntime">0ms</div><div class="stat-lbl">计算耗时</div></div>
+<div class="stat"><div class="stat-num" id="bs-call">0.00</div><div class="stat-lbl">看涨期权 Call</div></div>
+<div class="stat"><div class="stat-num" id="bs-put">0.00</div><div class="stat-lbl">看跌期权 Put</div></div>
+<div class="stat"><div class="stat-num" id="mc-bs-ref">0.00</div><div class="stat-lbl">BS 解析解</div></div>
+<div class="stat"><div class="stat-num" id="ntime">0 ms</div><div class="stat-lbl">计算耗时</div></div>
 </div>
 </div>
 
 <div class="grid-2">
-<div class="card">
-<div class="card-title"><span>#</span> BSM解析定价 · 参数</div>
-<div style="margin:4px 0 2px;font-size:10px;color:#666;font-family:monospace">标的价格: <span id="bs-s-val">100</span></div>
-<input type="range" id="bs-s" min="50" max="150" value="100">
-<div style="margin:4px 0 2px;font-size:10px;color:#666;font-family:monospace">行权价: <span id="bs-k-val">100</span></div>
-<input type="range" id="bs-k" min="50" max="150" value="100">
-<div style="margin:4px 0 2px;font-size:10px;color:#666;font-family:monospace">到期时间(年): <span id="bs-t-val">1.0</span></div>
-<input type="range" id="bs-t" min="1" max="36" value="12">
-<div style="margin:4px 0 2px;font-size:10px;color:#666;font-family:monospace">波动率: <span id="bs-sigma-val">25%</span></div>
-<input type="range" id="bs-sigma" min="10" max="80" value="25">
-<div style="margin:4px 0 2px;font-size:10px;color:#666;font-family:monospace">无风险利率: <span id="bs-r-val">3%</span></div>
-<input type="range" id="bs-r" min="0" max="10" value="3">
-<button class="btn btn-primary" id="bs-calc-btn" style="margin-top:12px">▶ 重新定价</button>
+<div class="card" id="pricing">
+<div class="card-title">BSM 解析定价 <span class="badge">5 参数</span></div>
+<div class="slider-group"><div class="lbl"><span>标的价格 S</span><span class="val" id="bs-s-val">100</span></div><input type="range" id="bs-s" min="50" max="150" value="100"></div>
+<div class="slider-group"><div class="lbl"><span>行权价 K</span><span class="val" id="bs-k-val">100</span></div><input type="range" id="bs-k" min="50" max="150" value="100"></div>
+<div class="slider-group"><div class="lbl"><span>到期时间 T</span><span class="val" id="bs-t-val">1.0 年</span></div><input type="range" id="bs-t" min="1" max="36" value="12"></div>
+<div class="slider-group"><div class="lbl"><span>波动率 σ</span><span class="val" id="bs-sigma-val">25%</span></div><input type="range" id="bs-sigma" min="10" max="80" value="25"></div>
+<div class="slider-group"><div class="lbl"><span>无风险利率 r</span><span class="val" id="bs-r-val">3%</span></div><input type="range" id="bs-r" min="0" max="10" value="3"></div>
+<button class="btn btn-gold" id="bs-calc-btn">▶ 重新定价</button>
 </div>
 
-<div class="card">
-<div class="card-title"><span>#</span> Greeks 风险指标</div>
+<div class="card" id="greeks">
+<div class="card-title">Greeks 风险敞口 <span class="badge">7 项</span></div>
+<div class="greeks-wrap">
 <table class="greeks-table">
-<tr><td>Delta (看涨)</td><td class="val" id="g-delta-c">0.0000</td><td>Delta (看跌)</td><td class="val" id="g-delta-p">0.0000</td></tr>
+<tr><td>Delta (Call)</td><td class="val" id="g-delta-c">0.0000</td><td>Delta (Put)</td><td class="val" id="g-delta-p">0.0000</td></tr>
 <tr><td>Gamma</td><td class="val" id="g-gamma">0.0000</td><td colspan="2"></td></tr>
-<tr><td>Theta (看涨)</td><td class="val" id="g-theta-c">0.0000</td><td>Theta (看跌)</td><td class="val" id="g-theta-p">0.0000</td></tr>
-<tr><td>Vega</td><td class="val" id="g-vega">0.0000</td><td>Rho (看涨)</td><td class="val" id="g-rho-c">0.0000</td></tr>
+<tr><td>Theta (Call)</td><td class="val" id="g-theta-c">0.0000</td><td>Theta (Put)</td><td class="val" id="g-theta-p">0.0000</td></tr>
+<tr><td>Vega</td><td class="val" id="g-vega">0.0000</td><td>Rho (Call)</td><td class="val" id="g-rho-c">0.0000</td></tr>
 </table>
 </div>
 </div>
+</div>
 
 <div class="grid-2">
-<div class="card">
-<div class="card-title"><span>#</span> 蒙特卡洛路径模拟 · 几何布朗运动</div>
+<div class="card" id="mc">
+<div class="card-title">蒙特卡洛路径模拟 <span class="badge">几何布朗运动</span></div>
 <div class="controls">
-<button class="btn" id="mc-n1k">1K路径</button>
-<button class="btn btn-primary" id="mc-n10k">10K路径</button>
-<button class="btn" id="mc-n100k">100K路径</button>
+<button class="btn" id="mc-n1k">1K 路径</button>
+<button class="btn btn-gold" id="mc-n10k">10K 路径</button>
+<button class="btn" id="mc-n100k">100K 路径</button>
 </div>
 <canvas id="mc-canvas" width="500" height="300"></canvas>
-<div class="stat-line">MC估计<span id="mc-est">0.0000</span><span>BS参考<span id="mc-ref">0.0000</span></span><span>误差<span id="mc-err">0.00%</span></span></div>
+<div class="stat-line"><span>MC 估计 <b id="mc-est">0.0000</b></span><span>BS 参考 <b id="mc-ref">0.0000</b></span><span>误差 <b id="mc-err">0.00%</b></span></div>
 </div>
 
-<div class="card">
-<div class="card-title"><span>#</span> 波动率曲面 · 微笑效应</div>
-<canvas id="smile-canvas" width="340" height="300"></canvas>
+<div class="card" id="smile">
+<div class="card-title">波动率微笑曲线 <span class="badge">偏度效应</span></div>
+<canvas id="smile-canvas" width="500" height="300"></canvas>
 </div>
 </div>
 
-<div class="footer"><a href="https://github.com/wzx11223344" style="color:#3b82f6;text-decoration:none">github.com/wzx11223344</a> · 万值翔 · 基金从业+银行从业双证</div>
+<div class="card" id="skills">
+<div class="card-title">核心技能矩阵 <span class="badge">专业能力</span></div>
+<div class="skills">
+<div class="skill-card"><div class="skill-name">量化分析</div><div class="skill-bar"><div class="skill-fill" data-pct="95"></div></div><div class="skill-pct">95%</div></div>
+<div class="skill-card"><div class="skill-name">风险管理</div><div class="skill-bar"><div class="skill-fill" data-pct="88"></div></div><div class="skill-pct">88%</div></div>
+<div class="skill-card"><div class="skill-name">计量经济建模</div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div><div class="skill-pct">90%</div></div>
+<div class="skill-card"><div class="skill-name">金融数据分析</div><div class="skill-bar"><div class="skill-fill" data-pct="92"></div></div><div class="skill-pct">92%</div></div>
+</div>
+</div>
+
+<div class="footer">
+<a href="https://github.com/wzx11223344">github.com/wzx11223344</a>
+<span class="badge">基金从业资格</span>
+<span class="badge">银行从业资格</span>
+</div>
 </div>
 
 <script>
+// ═══ K线浮动背景 ═══
+(function(){
+  const c=document.getElementById('kline-bg'),ctx=c.getContext('2d');
+  let w,h;const bars=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<35;i++)bars.push({
+    x:Math.random()*w,y:Math.random()*h,
+    w:6+Math.random()*12,h:20+Math.random()*50,
+    dx:-0.15-Math.random()*0.2,green:Math.random()>0.5,
+    alpha:0.08+Math.random()*0.15
+  });
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(const b of bars){
+      const x=b.x-b.w/2,m=b.h/2;
+      ctx.fillStyle=b.green?`rgba(245,158,11,${b.alpha})`:`rgba(59,130,246,${b.alpha})`;
+      ctx.fillRect(x,b.y-m,b.w,b.h);
+      ctx.fillRect(x,b.y-2,3,4);ctx.fillRect(x+b.w-3,b.y-2,3,4);
+      b.x+=b.dx;if(b.x+b.w<0){b.x=w+20;b.y=60+Math.random()*(h-120);b.green=Math.random()>0.5}
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
 // ═══ BSM Engine ═══
-function normCDF(x){const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;const s=Math.sign(x);x=Math.abs(x);const t=1/(1+p*x);const y=1-((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x/2);return s>0?y:1-y;}
+function normCDF(x){const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;const s=Math.sign(x);x=Math.abs(x);const t=1/(1+p*x);return s>0?1-((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x/2):((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x/2);}
 function normPDF(x){return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI);}
 function bsPrice(S,K,T,sigma,r,q=0){
-  if(T<=0||sigma<=0||K<=0||S<=0)return {call:0,put:0};
+  if(T<=0||sigma<=0||K<=0||S<=0)return{call:0,put:0};
   const d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
   const d2=d1-sigma*Math.sqrt(T);
   const call=S*Math.exp(-q*T)*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);
   const put=K*Math.exp(-r*T)*normCDF(-d2)-S*Math.exp(-q*T)*normCDF(-d1);
-  return {call,put,d1,d2};
+  return{call,put,d1,d2};
 }
 function greeks(S,K,T,sigma,r,q=0){
   const p=bsPrice(S,K,T,sigma,r,q);if(!p.call)return{};
-  const d1=p.d1,d2=p.d2;
-  const nd1=normPDF(d1);
-  const deltaC=Math.exp(-q*T)*normCDF(d1);
-  const deltaP=Math.exp(-q*T)*(normCDF(d1)-1);
-  const gamma=Math.exp(-q*T)*nd1/(S*sigma*Math.sqrt(T));
-  const thetaC=-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*normCDF(d2)+q*S*Math.exp(-q*T)*normCDF(d1);
-  const thetaP=-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*normCDF(-d2)-q*S*Math.exp(-q*T)*normCDF(-d1);
-  const vega=S*Math.exp(-q*T)*nd1*Math.sqrt(T)/100;
-  const rhoC=K*T*Math.exp(-r*T)*normCDF(d2)/100;
-  const rhoP=-K*T*Math.exp(-r*T)*normCDF(-d2)/100;
-  return{deltaC,deltaP,gamma,thetaC,thetaP,vega,rhoC,rhoP};
+  const d1=p.d1,d2=p.d2,nd1=normPDF(d1);
+  return{
+    deltaC:Math.exp(-q*T)*normCDF(d1),
+    deltaP:Math.exp(-q*T)*(normCDF(d1)-1),
+    gamma:Math.exp(-q*T)*nd1/(S*sigma*Math.sqrt(T)),
+    thetaC:-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*normCDF(d2)+q*S*Math.exp(-q*T)*normCDF(d1),
+    thetaP:-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*normCDF(-d2)-q*S*Math.exp(-q*T)*normCDF(-d1),
+    vega:S*Math.exp(-q*T)*nd1*Math.sqrt(T)/100,
+    rhoC:K*T*Math.exp(-r*T)*normCDF(d2)/100,
+    rhoP:-K*T*Math.exp(-r*T)*normCDF(-d2)/100
+  };
+}
+
+// ═══ 数字滚动动画 ═══
+function animateValue(el,target,duration=600){
+  const start=parseFloat(el.textContent)||0,steps=30,step=(target-start)/steps;
+  let i=0;const id=setInterval(()=>{i++;const v=start+step*i;el.textContent=i<steps?v.toFixed(2):target.toFixed(2);if(i>=steps)clearInterval(id)},duration/steps);
 }
 
 function updateBS(){
-  const S=parseFloat(document.getElementById('bs-s').value);
-  const K=parseFloat(document.getElementById('bs-k').value);
-  const T=parseFloat(document.getElementById('bs-t').value)/12;
-  const sigma=parseFloat(document.getElementById('bs-sigma').value)/100;
-  const r=parseFloat(document.getElementById('bs-r').value)/100;
-  document.getElementById('bs-s-val').textContent=S;
-  document.getElementById('bs-k-val').textContent=K;
-  document.getElementById('bs-t-val').textContent=T.toFixed(1);
+  const t0=performance.now();
+  const S=+document.getElementById('bs-s').value,K=+document.getElementById('bs-k').value;
+  const T=+document.getElementById('bs-t').value/12,sigma=+document.getElementById('bs-sigma').value/100,r=+document.getElementById('bs-r').value/100;
+  document.getElementById('bs-s-val').textContent=S;document.getElementById('bs-k-val').textContent=K;
+  document.getElementById('bs-t-val').textContent=T.toFixed(1)+' 年';
   document.getElementById('bs-sigma-val').textContent=sigma*100+'%';
   document.getElementById('bs-r-val').textContent=r*100+'%';
-  const p=bsPrice(S,K,T,sigma,r);
-  const g=greeks(S,K,T,sigma,r);
-  document.getElementById('bs-call').textContent=p.call.toFixed(2);
-  document.getElementById('bs-put').textContent=p.put.toFixed(2);
+  const p=bsPrice(S,K,T,sigma,r),g=greeks(S,K,T,sigma,r);
+  animateValue(document.getElementById('bs-call'),p.call);
+  animateValue(document.getElementById('bs-put'),p.put);
+  document.getElementById('mc-bs-ref').textContent=p.call.toFixed(2);
   document.getElementById('g-delta-c').textContent=g.deltaC?.toFixed(4)||'-';
   document.getElementById('g-delta-p').textContent=g.deltaP?.toFixed(4)||'-';
   document.getElementById('g-gamma').textContent=g.gamma?.toFixed(6)||'-';
@@ -146,65 +268,103 @@ function updateBS(){
   document.getElementById('g-theta-p').textContent=g.thetaP?.toFixed(4)||'-';
   document.getElementById('g-vega').textContent=g.vega?.toFixed(4)||'-';
   document.getElementById('g-rho-c').textContent=g.rhoC?.toFixed(4)||'-';
-  return {S,K,T,sigma,r,p};
+  document.getElementById('ntime').textContent=Math.round(performance.now()-t0)+' ms';
+  return{S,K,T,sigma,r,p};
 }
 
-// ═══ MC Simulation ═══
+// ═══ MC 模拟 ═══
 const mcCanvas=document.getElementById('mc-canvas'),mcCtx=mcCanvas.getContext('2d');
-let mcRunning=false;
+mcCanvas.width=mcCanvas.clientWidth*2;mcCanvas.height=mcCanvas.clientHeight*2;mcCtx.scale(2,2);
 function mcSimulate(N){
-  const {S,K,T,sigma,r,p}=updateBS();
+  const{S,K,T,sigma,r,p}=updateBS();
   document.getElementById('mc-ref').textContent=p.call.toFixed(4);
   const dt=T/252;let sum=0,sum2=0;
-  mcCtx.fillStyle='#050508';mcCtx.fillRect(0,0,500,300);
-  
+  const cw=mcCanvas.clientWidth||500,ch=mcCanvas.clientHeight||300;
+  mcCtx.fillStyle='#0a1628';mcCtx.fillRect(0,0,cw,ch);
   for(let i=0;i<N;i++){
-    let price=S;mcCtx.beginPath();mcCtx.moveTo(0,280);
+    let price=S;mcCtx.beginPath();
     for(let d=0;d<252;d++){
       const z=Math.sqrt(-2*Math.log(Math.random()))*Math.cos(2*Math.PI*Math.random());
       price*=Math.exp((r-0.5*sigma*sigma)*dt+sigma*Math.sqrt(dt)*z);
-      const x=d/252*480+10,y=280-price*2.5;
+      const x=d/252*(cw-20)+10,y=(ch-20)-(price/(S*2))*(ch-40);
       if(d===0)mcCtx.moveTo(x,y);else mcCtx.lineTo(x,y);
     }
-    const payoff=Math.max(0,price-K);
-    sum+=payoff;sum2+=payoff*payoff;
-    mcCtx.strokeStyle=`rgba(59,130,246,${Math.min(0.6,100/N+0.01)})`;
-    mcCtx.lineWidth=0.5;mcCtx.stroke();
-    if(i%1000===0){mcCtx.stroke();}
+    const payoff=Math.max(0,price-K);sum+=payoff;sum2+=payoff*payoff;
+    mcCtx.strokeStyle=`rgba(59,130,246,${Math.min(0.5,80/N+0.01)})`;
+    mcCtx.lineWidth=0.6;mcCtx.stroke();
   }
-  const est=Math.exp(-r*T)*sum/N;
-  const err=Math.abs(est-p.call)/p.call*100;
+  // BS基准线
+  mcCtx.strokeStyle='rgba(245,158,11,0.7)';mcCtx.lineWidth=2;mcCtx.setLineDash([5,4]);
+  mcCtx.beginPath();mcCtx.moveTo(10,(ch-20)-(K/(S*2))*(ch-40));
+  mcCtx.lineTo(cw-10,(ch-20)-(K/(S*2))*(ch-40));mcCtx.stroke();mcCtx.setLineDash([]);
+  // 标签
+  mcCtx.fillStyle='rgba(245,158,11,0.5)';mcCtx.font='9px monospace';
+  mcCtx.fillText('K='+K,12,(ch-20)-(K/(S*2))*(ch-40)-6);
+  // 标注
+  mcCtx.fillStyle='rgba(59,130,246,0.3)';mcCtx.font='9px monospace';
+  mcCtx.fillText(N+' 条模拟路径',cw-110,18);
+  const est=Math.exp(-r*T)*sum/N,err=Math.abs(est-p.call)/p.call*100;
   document.getElementById('mc-est').textContent=est.toFixed(4);
   document.getElementById('mc-err').textContent=err.toFixed(2)+'%';
-  document.getElementById('mc-bs-ref').textContent=p.call.toFixed(2);
-  // Draw BS reference line
-  mcCtx.strokeStyle='#00ff88';mcCtx.lineWidth=2;
-  mcCtx.beginPath();mcCtx.moveTo(0,280-K*2.5);mcCtx.lineTo(500,280-K*2.5);mcCtx.stroke();
 }
-document.querySelectorAll('[id^=mc-n]').forEach(b=>b.onclick=()=>{mcSimulate(parseInt(b.textContent.replace(/[^0-9]/g,'')));});
+document.querySelectorAll('[id^=mc-n]').forEach(b=>b.onclick=function(){
+  document.querySelectorAll('[id^=mc-n]').forEach(x=>x.classList.remove('btn-gold'));
+  this.classList.add('btn-gold');
+  mcSimulate(parseInt(this.textContent.replace(/[^0-9]/g,'')));
+});
 mcSimulate(10000);
 
-// ═══ Volatility Smile ═══
+// ═══ 波动率微笑 ═══
 const smileCanvas=document.getElementById('smile-canvas'),smileCtx=smileCanvas.getContext('2d');
+smileCanvas.width=smileCanvas.clientWidth*2;smileCanvas.height=smileCanvas.clientHeight*2;smileCtx.scale(2,2);
 function drawSmile(){
-  smileCtx.fillStyle='#050508';smileCtx.fillRect(0,0,340,300);
-  const S=100;const T=1;const r=0.03;
-  for(let strike=60;strike<=140;strike+=5){
+  const cw=smileCanvas.clientWidth||500,ch=smileCanvas.clientHeight||300,S=100,T=1,r=0.03;
+  smileCtx.fillStyle='#0a1628';smileCtx.fillRect(0,0,cw,ch);
+  // 网格
+  smileCtx.strokeStyle='rgba(59,130,246,0.06)';smileCtx.lineWidth=0.5;
+  for(let i=0;i<=10;i++){const y=i/10*ch;smileCtx.beginPath();smileCtx.moveTo(0,y);smileCtx.lineTo(cw,y);smileCtx.stroke()}
+  // 散点 + 曲线
+  const pts=[];let prevX,prevY;
+  for(let strike=60;strike<=140;strike+=2){
     const vol=0.2+0.003*Math.abs(strike-100)+0.0001*(strike-100)*(strike-100);
-    const p=bsPrice(S,strike,T,vol,r);
-    const x=(strike-60)/80*300+20;
-    const y=280-p.call*3;
-    smileCtx.fillStyle='#3b82f6';smileCtx.beginPath();smileCtx.arc(x,y,3,0,Math.PI*2);smileCtx.fill();
+    const x=(strike-60)/80*(cw-40)+20,y=ch-20-(vol-0.2)*1500;
+    pts.push({x,y,vol,strike});
+    // 连接线
+    if(prevX!==undefined){smileCtx.strokeStyle='rgba(245,158,11,0.3)';smileCtx.lineWidth=1.5;smileCtx.beginPath();smileCtx.moveTo(prevX,prevY);smileCtx.lineTo(x,y);smileCtx.stroke()}
+    prevX=x;prevY=y;
   }
-  smileCtx.fillStyle='#888';smileCtx.font='9px monospace';
-  smileCtx.fillText('波动率微笑曲线',120,30);
-  smileCtx.fillStyle='#555';smileCtx.font='7px monospace';
-  smileCtx.fillText('行权价 →',140,290);
+  // 散点
+  for(const p of pts){if(p.strike%5===0){smileCtx.fillStyle='rgba(245,158,11,0.6)';smileCtx.beginPath();smileCtx.arc(p.x,p.y,3.5,0,Math.PI*2);smileCtx.fill()}}
+  // 标签
+  smileCtx.fillStyle='rgba(245,158,11,0.4)';smileCtx.font='10px monospace';smileCtx.fillText('隐含波动率',cw/2-40,18);
+  smileCtx.fillStyle='rgba(59,130,246,0.3)';smileCtx.font='8px monospace';smileCtx.fillText('行权价 →',cw/2-22,ch-4);
+  // Y轴参考
+  smileCtx.fillStyle='rgba(255,255,255,0.15)';smileCtx.font='7px monospace';smileCtx.fillText('σ=0.20',6,ch-24);
+  smileCtx.fillText('σ=0.28',6,18);
 }
 drawSmile();
 
-document.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{const t0=performance.now();updateBS();document.getElementById('ntime').textContent=Math.round(performance.now()-t0)+'ms';}));
+// ═══ 事件绑定 ═══
+document.querySelectorAll('input[type=range]').forEach(inp=>inp.addEventListener('input',()=>updateBS()));
+document.getElementById('bs-calc-btn').addEventListener('click',()=>updateBS());
 updateBS();
+
+// ═══ 技能动画 ═══
+setTimeout(()=>{document.querySelectorAll('.skill-fill').forEach(el=>{const p=el.dataset.pct;setTimeout(()=>{el.style.width=p+'%'},200)})},500);
+
+// ═══ 导航滚动 ═══
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',function(){
+  document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active');
+  const t=this.dataset.target;
+  if(t){const el=document.getElementById(t);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}
+}));
+// 滚动高亮
+window.addEventListener('scroll',()=>{
+  const sections=['pricing','greeks','mc','smile','skills'];
+  let cur='';sections.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<300)cur=id});
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.dataset.target===cur));
+});
 </script>
 </body>
 </html>
