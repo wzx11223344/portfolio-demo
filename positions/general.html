@@ -265,7 +265,15 @@ document.querySelectorAll('a,button,.btn').forEach(el=>{
 });
 
 // ═══ Scroll Reveal ═══
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');const fills=e.target.querySelectorAll('.skill-fill');fills.forEach(f=>{f.style.width=f.dataset.w})}}},{threshold:.1});
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e)=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+      const fills=e.target.querySelectorAll('.skill-fill');
+      fills.forEach((f)=>{ f.style.width=f.dataset.w; });
+    }
+  });
+},{threshold:.1});
 document.querySelectorAll('.card,.footer').forEach(el=>obs.observe(el));
 
 // ═══ Neural Network ═══
