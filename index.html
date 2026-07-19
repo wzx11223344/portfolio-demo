@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>万值翔 · 实战作品集</title>
+<style>
+/* ═══════════════════════════════════════ */
+/* CSS Variables & Reset                     */
+/* ═══════════════════════════════════════ */
+:root {
+  --bg-deep: #060609;
+  --bg-card: #0c0c14;
+  --bg-elevated: #111122;
+  --text-primary: #e8e8f0;
+  --text-secondary: #8890a4;
+  --text-muted: #555a6e;
+  --accent-neon: #00f0a8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --border-subtle: #1a1a2e;
+  --border-glow: rgba(0,240,168,0.3);
+  --glow-neon: 0 0 20px rgba(0,240,168,0.25);
+  --glow-blue: 0 0 20px rgba(59,130,246,0.25);
+  --font-display: 'Georgia', 'Noto Serif SC', serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════ */
+/* Canvas Background                        */
+/* ═══════════════════════════════════════ */
+#bg-canvas {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  z-index: 0; pointer-events:none; opacity:0.4;
+}
+
+/* ═══════════════════════════════════════ */
+/* Navigation                               */
+/* ═══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; width:100%; z-index:100;
+  background: rgba(6,6,9,0.85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 0;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: var(--font-mono); font-size: 14px;
+  color: var(--accent-neon); letter-spacing: 2px;
+}
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 13px; transition: color 0.2s; letter-spacing: 0.5px;
+}
+.nav-links a:hover { color: var(--accent-neon); }
+
+/* ═══════════════════════════════════════ */
+/* Section Containers                       */
+/* ═══════════════════════════════════════ */
+section { position:relative; z-index:1; padding: 80px 24px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════ */
+/* Hero Section                             */
+/* ═══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; position:relative; z-index:1;
+}
+.hero-content { max-width: 800px; }
+.hero-glitch {
+  font-family: var(--font-mono); font-size: 14px;
+  color: var(--accent-neon); letter-spacing: 4px;
+  margin-bottom: 16px; text-transform: uppercase;
+  animation: glitch-text 8000ms infinite;
+}
+@keyframes glitch-text {
+  0%,90%,100% { text-shadow: 0 0 0 transparent; }
+  92% { text-shadow: 2px 0 var(--accent-pink); }
+  94% { text-shadow: -2px 0 var(--accent-blue); }
+}
+.hero-name {
+  font-family: var(--font-display); font-size: clamp(48px, 8vw, 88px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.1;
+  background: linear-gradient(135deg, #fff 0%, var(--accent-neon) 50%, #fff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+.hero-subtitle {
+  font-size: 18px; color: var(--text-secondary);
+  margin-bottom: 8px; font-weight: 300;
+}
+.hero-stats {
+  display: flex; gap: 32px; justify-content: center;
+  margin-top: 40px; flex-wrap: wrap;
+}
+.stat-card {
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 20px 28px; min-width: 120px;
+  transition: all 0.3s;
+}
+.stat-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-neon);
+  transform: translateY(-2px);
+}
+.stat-value {
+  font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+  color: var(--accent-neon);
+}
+.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 1px; }
+
+/* ═══════════════════════════════════════ */
+/* Section Headers                          */
+/* ═══════════════════════════════════════ */
+.section-header { margin-bottom: 48px; }
+.section-tag {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--accent-neon); letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700; letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.section-desc { font-size: 15px; color: var(--text-secondary); max-width: 600px; }
+
+/* ═══════════════════════════════════════ */
+/* MCP Server Grid                          */
+/* ═══════════════════════════════════════ */
+.mcp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.mcp-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 24px; transition: all 0.3s;
+  cursor: default; position: relative; overflow: hidden;
+}
+.mcp-card::before {
+  content: ''; position: absolute; top:0; left:0; width:100%; height:2px;
+  background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.mcp-card:hover::before { opacity: 1; }
+.mcp-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-neon);
+  transform: translateY(-4px);
+}
+.mcp-icon {
+  font-family: var(--font-mono); font-size: 24px;
+  color: var(--accent-neon); margin-bottom: 12px;
+}
+.mcp-name {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--accent-neon); margin-bottom: 6px;
+}
+.mcp-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.mcp-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.mcp-tags { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
+.mcp-tag {
+  font-family: var(--font-mono); font-size: 10px;
+  padding: 3px 8px; border-radius: 4px;
+  background: rgba(0,240,168,0.1); color: var(--accent-neon);
+  border: 1px solid rgba(0,240,168,0.2);
+}
+
+/* ═══════════════════════════════════════ */
+/* Algorithm Visualizer                     */
+/* ═══════════════════════════════════════ */
+.algo-section { background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-subtle); padding: 32px; margin-bottom: 24px; }
+.algo-header { display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:12px; }
+.algo-title { font-family: var(--font-mono); font-size: 15px; color: var(--accent-neon); }
+.algo-controls { display:flex; gap:8px; flex-wrap:wrap; }
+.algo-btn {
+  font-family: var(--font-mono); font-size: 11px;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  background: var(--bg-elevated); color: var(--text-secondary);
+  border: 1px solid var(--border-subtle); transition: all 0.2s;
+}
+.algo-btn:hover, .algo-btn.active {
+  border-color: var(--accent-neon); color: var(--accent-neon);
+  box-shadow: 0 0 8px rgba(0,240,168,0.15);
+}
+.algo-canvas-wrap {
+  border: 1px solid var(--border-subtle); border-radius: 8px;
+  overflow: hidden; background: var(--bg-deep);
+  position:relative;
+}
+.algo-canvas-wrap canvas { display:block; width:100%; height:auto; }
+.algo-stats {
+  display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 12px;
+}
+.algo-stat { color: var(--text-secondary); }
+.algo-stat span { color: var(--accent-neon); }
+
+/* ═══════════════════════════════════════ */
+/* Skills Ecosystem                         */
+/* ═══════════════════════════════════════ */
+.skills-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+.skill-category {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 24px;
+}
+.skill-cat-name { font-family: var(--font-mono); font-size: 14px; color: var(--accent-blue); margin-bottom: 16px; }
+.skill-meter-bg { height:4px; background: var(--bg-elevated); border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
+.skill-meter-fill { height:100%; border-radius:2px; transition: width 1.5s ease-out; }
+.skill-items { font-size:13px; color: var(--text-secondary); line-height: 2; }
+.skill-items strong { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════ */
+/* Timeline                                 */
+/* ═══════════════════════════════════════ */
+.timeline { position:relative; padding-left: 32px; }
+.timeline::before {
+  content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
+  width: 2px; background: var(--border-subtle);
+}
+.tl-item { position:relative; margin-bottom: 32px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -29px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg-elevated); border: 2px solid var(--accent-neon);
+}
+.tl-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.tl-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
+.tl-desc { font-size: 13px; color: var(--text-secondary); }
+
+/* ═══════════════════════════════════════ */
+/* Live Activity Feed                      */
+/* ═══════════════════════════════════════ */
+.activity-feed {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 24px; max-height: 360px; overflow-y: auto;
+}
+.activity-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
+}
+.activity-dot {
+  width:8px; height:8px; border-radius:50%; margin-top: 5px; flex-shrink:0;
+}
+.activity-dot.push { background: var(--accent-neon); }
+.activity-dot.publish { background: var(--accent-purple); }
+.activity-dot.create { background: var(--accent-blue); }
+.activity-time { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); min-width: 140px; }
+.activity-text { color: var(--text-secondary); }
+.activity-text strong { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════ */
+/* Footer                                   */
+/* ═══════════════════════════════════════ */
+.footer {
+  text-align: center; padding: 48px 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+.footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+.footer-link {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--text-secondary); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--accent-neon); }
+.footer-copy { font-size: 12px; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════ */
+/* Scroll Reveal Animations                 */
+/* ═══════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════ */
+/* Responsive                               */
+/* ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-stats { gap: 12px; }
+  .stat-card { min-width: 90px; padding: 14px 18px; }
+  .stat-value { font-size: 24px; }
+  .nav-links { display: none; }
+  .mcp-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Navigation                                -->
+<!-- ═══════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">WZX.PORTFOLIO</span>
+    <ul class="nav-links">
+      <li><a href="#about">关于</a></li>
+      <li><a href="#mcp">MCP</a></li>
+      <li><a href="#demo">算法Demo</a></li>
+      <li><a href="#skills">技能</a></li>
+      <li><a href="#timeline">时间线</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Hero                                     -->
+<!-- ═══════════════════════════════════════ -->
+<section class="hero" id="about">
+  <div class="hero-content">
+    <div class="hero-glitch">[ FULL-STACK · AI ENGINEER ]</div>
+    <h1 class="hero-name">万值翔</h1>
+    <p class="hero-subtitle">不套壳 · 不调API凑数 · 每个算法从零实现</p>
+    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">华东师范大学 · 经济学本科 · AI & 量化计算</p>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-value" id="count-repos">101</div><div class="stat-label">开源仓库</div></div>
+      <div class="stat-card"><div class="stat-value">15</div><div class="stat-label">MCP 服务器</div></div>
+      <div class="stat-card"><div class="stat-value">~370</div><div class="stat-label">AI 工具接口</div></div>
+      <div class="stat-card"><div class="stat-value">115K+</div><div class="stat-label">行代码</div></div>
+      <div class="stat-card"><div class="stat-value">58</div><div class="stat-label">SkillHub 发布</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- MCP Servers                              -->
+<!-- ═══════════════════════════════════════ -->
+<section id="mcp"><div class="section-inner">
+  <div class="section-header reveal">
+    <div class="section-tag">01 · INFRASTRUCTURE</div>
+    <h2 class="section-title">MCP 服务器矩阵</h2>
+    <p class="section-desc">15台MCP服务器，~370个工具接口，纯Python标准库实现，覆盖金融、NLP、数学、数据处理等10+领域</p>
+  </div>
+  <div class="mcp-grid" id="mcp-container"></div>
+</div></section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Algorithm Demo                           -->
+<!-- ═══════════════════════════════════════ -->
+<section id="demo" style="background: var(--bg-card);"><div class="section-inner">
+  <div class="section-header reveal">
+    <div class="section-tag">02 · LIVE DEMO</div>
+    <h2 class="section-title">算法可视化演示</h2>
+    <p class="section-desc">从零实现的经典算法，在浏览器中实时运行。点击按钮切换不同算法</p>
+  </div>
+
+  <!-- Demo 1: 排序算法对比 -->
+  <div class="algo-section reveal">
+    <div class="algo-header">
+      <div class="algo-title">▸ 排序算法实时对比</div>
+      <div class="algo-controls">
+        <button class="algo-btn active" data-algo="bubble">冒泡排序 O(n²)</button>
+        <button class="algo-btn" data-algo="quick">快速排序 O(n log n)</button>
+        <button class="algo-btn" data-algo="merge">归并排序 O(n log n)</button>
+        <button class="algo-btn" data-algo="heap">堆排序 O(n log n)</button>
+        <button class="algo-btn" id="btn-sort-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 运行</button>
+      </div>
+    </div>
+    <div class="algo-canvas-wrap"><canvas id="sort-canvas" height="260"></canvas></div>
+    <div class="algo-stats">
+      <div class="algo-stat">比较次数: <span id="sort-comparisons">0</span></div>
+      <div class="algo-stat">交换次数: <span id="sort-swaps">0</span></div>
+      <div class="algo-stat">耗时: <span id="sort-time">0 ms</span></div>
+    </div>
+  </div>
+
+  <!-- Demo 2: 路径规划 -->
+  <div class="algo-section reveal">
+    <div class="algo-header">
+      <div class="algo-title">▸ 路径规划算法</div>
+      <div class="algo-controls">
+        <button class="algo-btn active" data-path="bfs">广度优先 BFS</button>
+        <button class="algo-btn" data-path="dfs">深度优先 DFS</button>
+        <button class="algo-btn" data-path="astar">A* 启发式</button>
+        <button class="algo-btn" id="btn-path-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 运行</button>
+        <button class="algo-btn" id="btn-path-reset">↻ 随机障碍</button>
+      </div>
+    </div>
+    <div class="algo-canvas-wrap"><canvas id="path-canvas" height="340"></canvas></div>
+    <div class="algo-stats">
+      <div class="algo-stat">探索节点: <span id="path-explored">0</span></div>
+      <div class="algo-stat">路径长度: <span id="path-length">0</span></div>
+      <div class="algo-stat">耗时: <span id="path-time">0 ms</span></div>
+    </div>
+  </div>
+
+  <!-- Demo 3: 分形树 -->
+  <div class="algo-section reveal">
+    <div class="algo-header">
+      <div class="algo-title">▸ 递归分形树 (L-System)</div>
+      <div class="algo-controls">
+        <button class="algo-btn active" data-tree="pythagoras">毕达哥拉斯树</button>
+        <button class="algo-btn" data-tree="koch">Koch雪花</button>
+        <button class="algo-btn" data-tree="sierpinski">谢尔宾斯基三角</button>
+        <button class="algo-btn" data-tree="dragon">龙曲线</button>
+        <button class="algo-btn" id="btn-tree-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 生成</button>
+      </div>
+    </div>
+    <div class="algo-canvas-wrap"><canvas id="tree-canvas" height="360"></canvas></div>
+    <div class="algo-stats">
+      <div class="algo-stat">递归深度: <span id="tree-depth">8</span></div>
+      <div class="algo-stat">绘制线段: <span id="tree-segments">0</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Skills Ecosystem                         -->
+<!-- ═══════════════════════════════════════ -->
+<section id="skills"><div class="section-inner">
+  <div class="section-header reveal">
+    <div class="section-tag">03 · ECOSYSTEM</div>
+    <h2 class="section-title">技能版图</h2>
+    <p class="section-desc">12大场景 · 24+核心算法 · 17,138行效率技能代码 · 零外部依赖</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">办公效率 · office-helper</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:89%;background:var(--accent-neon);"></div></div>
+      <div class="skill-items">TF-IDF文件分类 · PDF解析 · <strong>Myers差异</strong> · TextRank摘要 · <strong>AVL区间树</strong> · XLSX合并JOIN · 1,609行</div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">数据分析 · data-cleaner</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:93%;background:var(--accent-blue);"></div></div>
+      <div class="skill-items"><strong>Isolation Forest</strong> · KNN填充 · 数据画像(偏度/峰度) · Pearson/Spearman/Kendall · 5维质量评分 · 1,848行</div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">设计多媒体 · media-processor</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:85%;background:var(--accent-purple);"></div></div>
+      <div class="skill-items"><strong>Canny边缘检测</strong> · K-Means++色彩量化 · <strong>DCT感知哈希</strong> · 块DCT水印 · 卷积引擎 · 901行</div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">AI Agent · agent-framework</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:87%;background:var(--accent-pink);"></div></div>
+      <div class="skill-items"><strong>ReAct推理</strong> · DAG工作流(Kahn拓扑) · LRU记忆 · Few-shot模板 · 多Agent协作 · 1,123行</div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">商业运营 · business-analytics</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:90%;background:var(--accent-amber);"></div></div>
+      <div class="skill-items"><strong>RFM+K-Means</strong> · <strong>BG/NBD</strong>客户LTV · <strong>Apriori</strong>购物篮 · 逻辑回归流失预测 · <strong>ARIMA</strong> · 1,346行</div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-name">教育学习 · study-companion</div>
+      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:86%;background:var(--accent-red);"></div></div>
+      <div class="skill-items"><strong>SM-2间隔重复</strong> · <strong>BKT贝叶斯知识追踪</strong> · <strong>IRT自适应难度</strong> · Leitner闪卡 · 0-1背包计划 · 1,254行</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Timeline                                 -->
+<!-- ═══════════════════════════════════════ -->
+<section id="timeline" style="background: var(--bg-card);"><div class="section-inner">
+  <div class="section-header reveal">
+    <div class="section-tag">04 · MILESTONES</div>
+    <h2 class="section-title">项目演进</h2>
+    <p class="section-desc">从第一个仓库到101个开源项目的完整轨迹</p>
+  </div>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-date">2024 Q1-Q2</div>
+      <div class="tl-title">计量经济学库 (14个项目)</div>
+      <div class="tl-desc">bayesmetrics、causalinference、dsgepy、laborecon、networkecon、pyconometrics、spatialecon、textecon — 覆盖贝叶斯统计、因果推断、DSGE、劳动经济学、网络经济学、空间计量</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024 Q3</div>
+      <div class="tl-title">量化金融与智能体 (17个项目)</div>
+      <div class="tl-desc">投资组合优化、回测引擎、因子挖掘、ML选股、衍生品定价、信用风险 + 多智能体交易模拟、RL交易、审计Agent、辩论评审</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025</div>
+      <div class="tl-title">MCP基础设施 (8台服务器)</div>
+      <div class="tl-desc">金融数据、量化引擎、文档分析、数据库助手、数据可视化、机器学习、统计引擎、网页抓取 — 208个工具接口</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026 Q2</div>
+      <div class="tl-title">效率技能 v2.0.0 (12项目 · 17,138行)</div>
+      <div class="tl-desc">24+核心算法从零实现 — Isolation Forest、TextRank、PageRank、K-Means++、Apriori、ARIMA、Canny、DCT、Myers、SM-2、BKT、IRT、BG/NBD、CVSS…</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026 Q3 · 现在</div>
+      <div class="tl-title">MCP扩展至15台 (~370工具) + SkillHub 58技能</div>
+      <div class="tl-desc">NLP服务(分词语义/朴素贝叶斯/K-Means++)、文本处理(Myers差异/霍夫曼)、数据管道(PCA/SMOTE/K-Fold)、数学引擎(FFT/单纯形/SVD)</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Live Activity                            -->
+<!-- ═══════════════════════════════════════ -->
+<section><div class="section-inner">
+  <div class="section-header reveal">
+    <div class="section-tag">05 · ACTIVITY</div>
+    <h2 class="section-title">实时活动</h2>
+    <p class="section-desc">GitHub 最新仓库动态</p>
+  </div>
+  <div class="activity-feed reveal" id="activity-feed">
+    <div class="activity-item"><div class="activity-dot create"></div><div class="activity-time">加载中...</div><div class="activity-text">正在从 GitHub API 获取数据</div></div>
+  </div>
+</div></section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Footer                                   -->
+<!-- ═══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-links">
+    <a class="footer-link" href="https://github.com/wzx11223344" target="_blank">GitHub</a>
+    <a class="footer-link" href="https://skillhub.cn" target="_blank">SkillHub</a>
+    <span class="footer-link">d:\D盘TRAE办公\GitHub作品集.pdf</span>
+    <span class="footer-link">wzx11223344@gmail.com</span>
+  </div>
+  <p class="footer-copy">© 2024-2026 万值翔 · 不套壳不调API凑数 · 每个算法从零实现</p>
+</footer>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SCRIPTS                                  -->
+<!-- ═══════════════════════════════════════ -->
+<script>
+// ═══ Particle Background ═══
+(function bgParticles() {
+  const c = document.getElementById('bg-canvas');
+  const ctx = c.getContext('2d');
+  let w, h, particles = [];
+  function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: Math.random()*w, y: Math.random()*h,
+      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
+      r: Math.random()*1.5+0.5, alpha: Math.random()*0.4+0.1
+    });
+  }
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x<0||p.x>w) p.vx*=-1;
+      if (p.y<0||p.y>h) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(0,240,168,${p.alpha})`; ctx.fill();
+    }
+    for (let i=0;i<particles.length;i++) {
+      for (let j=i+1;j<particles.length;j++) {
+        let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+        if (dist<120) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,240,168,${0.06*(1-dist/120)})`; ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ═══ Scroll Reveal ═══
+(function scrollReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+
+// ═══ MCP Servers Data ═══
+const mcpData = [
+  {id:'financial', icon:'▹', name:'mcp-financial-data', title:'金融数据', desc:'A股行情 · 基金数据 · 宏观经济 · 市场宽度', tags:['金融','行情','19工具']},
+  {id:'quant', icon:'▹', name:'mcp-quant-engine', title:'量化引擎', desc:'BS期权定价 · MC模拟 · Greeks · Markowitz · VaR', tags:['量化','衍生品','24工具']},
+  {id:'doc', icon:'▹', name:'mcp-doc-analyzer', title:'文档分析', desc:'文件读取 · 词频统计 · TF-IDF · TextRank · 情感分析', tags:['NLP','文档','21工具']},
+  {id:'db', icon:'▹', name:'mcp-db-assistant', title:'数据库助手', desc:'SQLite执行 · Schema分析 · 数据质量 · SQL构建器', tags:['数据库','SQL','26工具']},
+  {id:'viz', icon:'▹', name:'mcp-data-viz', title:'数据可视化', desc:'柱状图·折线·散点·热力图·雷达图·仪表盘', tags:['可视化','图表','32工具']},
+  {id:'ml', icon:'▹', name:'mcp-ml-toolkit', title:'机器学习', desc:'分类 · 回归 · 聚类 · 交叉验证 · 网格搜索', tags:['ML','scikit-learn','30工具']},
+  {id:'stats', icon:'▹', name:'mcp-stats-engine', title:'统计分析', desc:'描述性统计 · 假设检验 · OLS回归 · ARIMA · ADF', tags:['统计','时间序列','30工具']},
+  {id:'scraper', icon:'▹', name:'mcp-web-scraper', title:'网页抓取', desc:'网页获取 · HTML解析 · CSS选择器 · 内容提取', tags:['抓取','HTML','26工具']},
+  {id:'nlp', icon:'⬡', name:'mcp-nlp-service', title:'NLP服务', desc:'分词 · TextRank · 朴素贝叶斯 · K-Means++ · 马尔可夫生成', tags:['NLP','AI','23工具']},
+  {id:'text', icon:'⬡', name:'mcp-text-processor', title:'文本处理', desc:'Markdown↔HTML · Myers差异 · 霍夫曼压缩 · Base64', tags:['文本','编码','22工具']},
+  {id:'pipe', icon:'⬡', name:'mcp-data-pipeline', title:'数据管道', desc:'数据画像 · PCA降维 · SMOTE过采样 · K-Fold交叉验证', tags:['ETL','特征','22工具']},
+  {id:'math', icon:'⬡', name:'mcp-math-engine', title:'数学引擎', desc:'FFT · SVD分解 · 单纯形法 · RK4 ODE · 假设检验', tags:['数学','数值','22工具']},
+];
+(function renderMCP() {
+  let html = '';
+  mcpData.forEach(m => {
+    html += `<div class="mcp-card reveal">
+      <div class="mcp-icon">${m.icon}</div>
+      <div class="mcp-name">${m.name}</div>
+      <div class="mcp-title">${m.title}</div>
+      <div class="mcp-desc">${m.desc}</div>
+      <div class="mcp-tags">${m.tags.map(t=>`<span class="mcp-tag">${t}</span>`).join('')}</div>
+    </div>`;
+  });
+  document.getElementById('mcp-container').innerHTML = html;
+  // Re-observe
+  setTimeout(() => {
+    document.querySelectorAll('#mcp-container .reveal').forEach(el => {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.15 }).observe(el);
+    });
+  }, 100);
+})();
+
+// ═══ Sort Algorithm Demo ═══
+let sortRunning = false, currentAlgo = 'bubble';
+const sortCanvas = document.getElementById('sort-canvas'), sortCtx = sortCanvas.getContext('2d');
+let sortArray = [], n = 60;
+function resetSortArray() {
+  sortArray = [];
+  for (let i=0;i<n;i++) sortArray.push(Math.random()*230+20);
+}
+function drawSortArray(highlight=[], highlight2=[]) {
+  const w = sortCanvas.parentElement.offsetWidth - 2;
+  sortCanvas.width = w;
+  sortCtx.clearRect(0,0,w,260);
+  const bw = (w-20)/n, bh = 260;
+  sortArray.forEach((v,i) => {
+    if (highlight.includes(i)) sortCtx.fillStyle = '#ef4444';
+    else if (highlight2.includes(i)) sortCtx.fillStyle = '#3b82f6';
+    else sortCtx.fillStyle = `rgba(0,240,168,${0.3+v/600})`;
+    sortCtx.fillRect(10+i*bw, bh-v, bw-1, v);
+  });
+}
+async function bubbleSort() {
+  let comp=0, swap=0, t0=performance.now();
+  for (let i=0;i<n;i++) {
+    for (let j=0;j<n-i-1;j++) {
+      comp++; document.getElementById('sort-comparisons').textContent=comp;
+      drawSortArray([j,j+1]);
+      await new Promise(r=>setTimeout(r,5));
+      if (sortArray[j]>sortArray[j+1]) {
+        [sortArray[j],sortArray[j+1]]=[sortArray[j+1],sortArray[j]]; swap++;
+        document.getElementById('sort-swaps').textContent=swap;
+        drawSortArray([], [j+1]);
+        await new Promise(r=>setTimeout(r,5));
+      }
+    }
+  }
+  document.getElementById('sort-time').textContent=Math.round(performance.now()-t0);
+}
+async function quickSort(lo=0, hi=n-1) {
+  if (!window._qsc) { window._qsc={comp:0,swap:0,t0:performance.now()}; }
+  if (lo>=hi) { if(lo===0&&hi===n-1||lo>=n-1) document.getElementById('sort-time').textContent=Math.round(performance.now()-window._qsc.t0); return; }
+  let pivot=sortArray[hi], i=lo-1;
+  for (let j=lo;j<hi;j++) {
+    window._qsc.comp++; document.getElementById('sort-comparisons').textContent=window._qsc.comp;
+    drawSortArray([j,hi]);
+    await new Promise(r=>setTimeout(r,8));
+    if (sortArray[j]<pivot) {
+      i++; [sortArray[i],sortArray[j]]=[sortArray[j],sortArray[i]]; window._qsc.swap++;
+      document.getElementById('sort-swaps').textContent=window._qsc.swap;
+      drawSortArray([],[i,j]);
+      await new Promise(r=>setTimeout(r,8));
+    }
+  }
+  [sortArray[i+1],sortArray[hi]]=[sortArray[hi],sortArray[i+1]]; window._qsc.swap++;
+  drawSortArray([],[i+1]); await new Promise(r=>setTimeout(r,8));
+  await quickSort(lo,i);
+  await quickSort(i+2,hi);
+}
+async function mergeSort(lo=0, hi=n-1) {
+  if (!window._msc) { window._msc={comp:0,swap:0,t0:performance.now()}; }
+  if (lo>=hi) return;
+  let mid=Math.floor((lo+hi)/2);
+  await mergeSort(lo,mid); await mergeSort(mid+1,hi);
+  let tmp=[], i=lo, j=mid+1;
+  while(i<=mid&&j<=hi) {
+    window._msc.comp++; document.getElementById('sort-comparisons').textContent=window._msc.comp;
+    drawSortArray([i,j]);
+    await new Promise(r=>setTimeout(r,6));
+    if(sortArray[i]<=sortArray[j]) tmp.push(sortArray[i++]);
+    else tmp.push(sortArray[j++]);
+  }
+  while(i<=mid) tmp.push(sortArray[i++]);
+  while(j<=hi) tmp.push(sortArray[j++]);
+  for(let k=0;k<tmp.length;k++) {
+    sortArray[lo+k]=tmp[k]; window._msc.swap++;
+    document.getElementById('sort-swaps').textContent=window._msc.swap;
+    drawSortArray([],[lo+k]);
+    await new Promise(r=>setTimeout(r,4));
+  }
+  if(lo===0&&hi>=n-1) document.getElementById('sort-time').textContent=Math.round(performance.now()-window._msc.t0);
+}
+async function heapSort() {
+  let comp=0, swap=0, t0=performance.now();
+  function heapify(i, sz) {
+    let max=i, l=2*i+1, r=2*i+2;
+    if(l<sz&&sortArray[l]>sortArray[max]) max=l;
+    if(r<sz&&sortArray[r]>sortArray[max]) max=r;
+    if(max!==i) { comp++; [sortArray[i],sortArray[max]]=[sortArray[max],sortArray[i]]; swap++; heapify(max,sz); }
+  }
+  for(let i=Math.floor(n/2)-1;i>=0;i--) heapify(i,n);
+  for(let i=n-1;i>0;i--) {
+    comp++; [sortArray[0],sortArray[i]]=[sortArray[i],sortArray[0]]; swap++;
+    document.getElementById('sort-comparisons').textContent=comp;
+    document.getElementById('sort-swaps').textContent=swap;
+    drawSortArray([0,i]); await new Promise(r=>setTimeout(r,12));
+    heapify(0,i);
+  }
+  document.getElementById('sort-time').textContent=Math.round(performance.now()-t0);
+}
+resetSortArray(); drawSortArray();
+
+document.querySelectorAll('[data-algo]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-algo]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); currentAlgo = btn.dataset.algo;
+    resetSortArray(); drawSortArray();
+    document.getElementById('sort-comparisons').textContent='0';
+    document.getElementById('sort-swaps').textContent='0';
+    document.getElementById('sort-time').textContent='0 ms';
+  });
+});
+document.getElementById('btn-sort-run').addEventListener('click', async () => {
+  if (sortRunning) return; sortRunning = true;
+  document.getElementById('sort-comparisons').textContent='0';
+  document.getElementById('sort-swaps').textContent='0';
+  document.getElementById('sort-time').textContent='...';
+  window._qsc = null; window._msc = null;
+  if (currentAlgo === 'bubble') await bubbleSort();
+  else if (currentAlgo === 'quick') await quickSort();
+  else if (currentAlgo === 'merge') await mergeSort();
+  else if (currentAlgo === 'heap') await heapSort();
+  drawSortArray(); sortRunning = false;
+});
+
+// ═══ Pathfinding Demo ═══
+const pathCanvas = document.getElementById('path-canvas'), pathCtx = pathCanvas.getContext('2d');
+const ROWS=22, COLS=40; let grid=[], pathAlgo='bfs';
+function resetGrid() {
+  grid = [];
+  for (let r=0;r<ROWS;r++) {
+    grid[r]=[];
+    for (let c=0;c<COLS;c++) grid[r][c]=(r===0||r===ROWS-1||c===0||c===COLS-1||Math.random()<0.28)?1:0;
+  }
+  grid[1][1]=0; grid[ROWS-2][COLS-2]=0;
+}
+resetGrid();
+function drawGrid(visited=[], path=[]) {
+  const w = pathCanvas.parentElement.offsetWidth - 2;
+  pathCanvas.width = w;
+  const cs = Math.min(w/COLS, 16);
+  const h = cs*ROWS;
+  pathCanvas.height = h;
+  for (let r=0;r<ROWS;r++) {
+    for (let c=0;c<COLS;c++) {
+      if (r===1&&c===1) pathCtx.fillStyle = '#3b82f6';
+      else if (r===ROWS-2&&c===COLS-2) pathCtx.fillStyle = '#ef4444';
+      else if (path.some(p=>p.r===r&&p.c===c)) pathCtx.fillStyle = '#00f0a8';
+      else if (visited.some(p=>p.r===r&&p.c===c)) pathCtx.fillStyle = 'rgba(139,92,246,0.4)';
+      else if (grid[r][c]===1) pathCtx.fillStyle = '#1a1a2e';
+      else pathCtx.fillStyle = '#0c0c14';
+      pathCtx.fillRect(c*cs, r*cs, cs-0.5, cs-0.5);
+    }
+  }
+}
+async function bfsPath() {
+  let t0=performance.now(), q=[{r:1,c:1,path:[]}], visited=[], explored=0;
+  visited.push({r:1,c:1});
+  while(q.length) {
+    let {r,c,path:p}=q.shift(); explored++;
+    document.getElementById('path-explored').textContent=explored;
+    if (r===ROWS-2&&c===COLS-2) {
+      document.getElementById('path-length').textContent=p.length;
+      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
+      drawGrid(visited,p); return;
+    }
+    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
+      let nr=r+dr, nc=c+dc;
+      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0&&!visited.some(v=>v.r===nr&&v.c===nc)) {
+        visited.push({r:nr,c:nc}); q.push({r:nr,c:nc,path:[...p,{r:nr,c:nc}]});
+      }
+    }
+    if (explored%15===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,15)); }
+  }
+  drawGrid(visited);
+}
+async function dfsPath() {
+  let t0=performance.now(), stack=[{r:1,c:1,path:[]}], visited=[], explored=0;
+  while(stack.length) {
+    let {r,c,path:p}=stack.pop(); explored++;
+    document.getElementById('path-explored').textContent=explored;
+    if (visited.some(v=>v.r===r&&v.c===c)) continue;
+    visited.push({r,c});
+    if (r===ROWS-2&&c===COLS-2) {
+      document.getElementById('path-length').textContent=p.length;
+      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
+      drawGrid(visited,p); return;
+    }
+    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
+      let nr=r+dr, nc=c+dc;
+      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0) {
+        stack.push({r:nr,c:nc,path:[...p,{r:nr,c:nc}]});
+      }
+    }
+    if (explored%10===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,20)); }
+  }
+  drawGrid(visited);
+}
+async function astarPath() {
+  let t0=performance.now(), open=[{r:1,c:1,g:0,h:Math.abs(ROWS-2-1)+Math.abs(COLS-2-1),path:[]}], closed=[], visited=[], explored=0;
+  while(open.length) {
+    open.sort((a,b)=>(a.g+a.h)-(b.g+b.h));
+    let {r,c,g,path:p}=open.shift(); explored++;
+    document.getElementById('path-explored').textContent=explored;
+    visited.push({r,c});
+    if (r===ROWS-2&&c===COLS-2) {
+      document.getElementById('path-length').textContent=p.length;
+      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
+      drawGrid(visited,p); return;
+    }
+    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
+      let nr=r+dr, nc=c+dc;
+      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0&&!closed.some(v=>v.r===nr&&v.c===nc)) {
+        let ng=g+1, nh=Math.abs(ROWS-2-nr)+Math.abs(COLS-2-nc);
+        let existing=open.find(o=>o.r===nr&&o.c===nc);
+        if (existing&&existing.g<=ng) continue;
+        else if(existing) open=open.filter(o=>!(o.r===nr&&o.c===nc));
+        open.push({r:nr,c:nc,g:ng,h:nh,path:[...p,{r:nr,c:nc}]});
+      }
+    }
+    closed.push({r,c});
+    if (explored%20===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,10)); }
+  }
+  drawGrid(visited);
+}
+drawGrid();
+
+document.querySelectorAll('[data-path]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-path]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); pathAlgo = btn.dataset.path;
+    document.getElementById('path-explored').textContent='0';
+    document.getElementById('path-length').textContent='0';
+    document.getElementById('path-time').textContent='0 ms';
+    drawGrid();
+  });
+});
+document.getElementById('btn-path-run').addEventListener('click', async () => {
+  resetGrid(); drawGrid();
+  await new Promise(r=>setTimeout(r,100));
+  if (pathAlgo==='bfs') await bfsPath();
+  else if (pathAlgo==='dfs') await dfsPath();
+  else if (pathAlgo==='astar') await astarPath();
+});
+document.getElementById('btn-path-reset').addEventListener('click', () => {
+  resetGrid(); drawGrid();
+  document.getElementById('path-explored').textContent='0';
+  document.getElementById('path-length').textContent='0';
+  document.getElementById('path-time').textContent='0 ms';
+});
+
+// ═══ Fractal Tree Demo ═══
+const treeCanvas = document.getElementById('tree-canvas'), treeCtx = treeCanvas.getContext('2d');
+let treeType='pythagoras', treeDepth=8;
+function drawFractal() {
+  const w = treeCanvas.parentElement.offsetWidth - 2;
+  treeCanvas.width = w;
+  const h = 360;
+  treeCanvas.height = h;
+  treeCtx.clearRect(0,0,w,h);
+  treeCtx.strokeStyle = '#00f0a8';
+  treeCtx.lineWidth = 1;
+  let segments = 0;
+
+  function pythagoras(x,y,len,angle,depth) {
+    if (depth===0||len<3) return;
+    let x2=x+len*Math.cos(angle), y2=y-len*Math.sin(angle);
+    treeCtx.strokeStyle = `rgba(${0},${240},${168},${0.3+depth/treeDepth*0.7})`;
+    treeCtx.beginPath(); treeCtx.moveTo(x,y); treeCtx.lineTo(x2,y2); treeCtx.stroke();
+    segments++;
+    let a1=angle-Math.PI/4, a2=angle+Math.PI/4, nl=len*0.67;
+    pythagoras(x2,y2,nl,a1,depth-1);
+    pythagoras(x2,y2,nl,a2,depth-1);
+  }
+  function koch(x1,y1,x2,y2,depth) {
+    if (depth===0) {
+      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.stroke();
+      segments++; return;
+    }
+    let dx=x2-x1, dy=y2-y1;
+    let xa=x1+dx/3, ya=y1+dy/3;
+    let xb=x1+2*dx/3, yb=y1+2*dy/3;
+    let mx=x1+dx/2, my=y1+dy/2;
+    let hh=Math.sqrt(dx*dx+dy*dy)/3*Math.sqrt(3)/2;
+    let px=mx-dy/Math.sqrt(dx*dx+dy*dy)*hh, py=my+dx/Math.sqrt(dx*dx+dy*dy)*hh;
+    koch(x1,y1,xa,ya,depth-1);
+    koch(xa,ya,px,py,depth-1);
+    koch(px,py,xb,yb,depth-1);
+    koch(xb,yb,x2,y2,depth-1);
+  }
+  function sierpinski(x1,y1,x2,y2,x3,y3,depth) {
+    if (depth===0) {
+      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.lineTo(x3,y3); treeCtx.closePath();
+      treeCtx.stroke(); segments++; return;
+    }
+    let mx12=(x1+x2)/2, my12=(y1+y2)/2;
+    let mx23=(x2+x3)/2, my23=(y2+y3)/2;
+    let mx31=(x3+x1)/2, my31=(y3+y1)/2;
+    sierpinski(x1,y1,mx12,my12,mx31,my31,depth-1);
+    sierpinski(mx12,my12,x2,y2,mx23,my23,depth-1);
+    sierpinski(mx31,my31,mx23,my23,x3,y3,depth-1);
+  }
+  function dragon(x1,y1,x2,y2,depth,flip=1) {
+    if (depth===0) {
+      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.stroke();
+      segments++; return;
+    }
+    let mx=(x1+x2)/2, my=(y1+y2)/2;
+    let dx=x2-x1, dy=y2-y1;
+    let px=mx-flip*dy/2, py=my+flip*dx/2;
+    dragon(x1,y1,px,py,depth-1,1);
+    dragon(px,py,x2,y2,depth-1,-1);
+  }
+
+  treeCtx.strokeStyle = '#00f0a8';
+  if (treeType==='pythagoras') pythagoras(w/2, h-30, h*0.25, Math.PI/2, treeDepth);
+  else if (treeType==='koch') {
+    let s=Math.min(w,h)*0.4;
+    koch(w/2-s/2, h/2+20, w/2+s/2, h/2+20, treeDepth);
+  }
+  else if (treeType==='sierpinski') sierpinski(w/2,40, 40,h-20, w-20,h-20, treeDepth);
+  else if (treeType==='dragon') dragon(w/2-80, h/2, w/2+80, h/2, treeDepth);
+  document.getElementById('tree-segments').textContent = segments;
+}
+document.querySelectorAll('[data-tree]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-tree]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); treeType = btn.dataset.tree;
+    document.getElementById('tree-depth').textContent = treeDepth;
+    drawFractal();
+  });
+});
+document.getElementById('btn-tree-run').addEventListener('click', () => {
+  drawFractal();
+});
+// Init
+setTimeout(drawFractal, 400);
+
+// ═══ GitHub Activity Feed ═══
+(async function loadActivity() {
+  try {
+    const r = await fetch('https://api.github.com/users/wzx11223344/repos?per_page=20&sort=created&direction=desc');
+    const repos = await r.json();
+    const types = {
+      'mcp-': { cls: 'publish', label: 'MCP 服务器' },
+      'skill-': { cls: 'create', label: '技能' },
+      'default': { cls: 'push', label: '仓库' }
+    };
+    let html = '';
+    repos.slice(0,15).forEach(repo => {
+      let t = types['default'];
+      for (let k in types) { if (repo.name.startsWith(k)) { t = types[k]; break; } }
+      html += `<div class="activity-item">
+        <div class="activity-dot ${t.cls}"></div>
+        <div class="activity-time">${repo.created_at?.slice(0,10)||'?'}</div>
+        <div class="activity-text"><strong>${repo.name}</strong> · ${t.label} · ${repo.language||'?'} · ${(repo.size||0)}KB</div>
+      </div>`;
+    });
+    document.getElementById('activity-feed').innerHTML = html;
+  } catch(e) {
+    document.getElementById('activity-feed').innerHTML = '<div class="activity-item"><div class="activity-dot push"></div><div class="activity-time">--</div><div class="activity-text">离线模式：使用本地数据</div></div>';
+  }
+})();
+
+// Resize handler for canvases
+window.addEventListener('resize', () => {
+  drawSortArray();
+  drawGrid();
+  drawFractal();
+});
+</script>
+
+</body>
+</html>
