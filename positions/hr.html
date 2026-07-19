@@ -1,153 +1,365 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>简历匹配引擎 · AI招聘分析系统</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HR 人事作品集 · 智能化人才管理专家</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e0e0e8;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
-canvas{display:block;width:100%;height:auto;background:#050508}
-#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 50% 0%,#1a0a2e 0%,#0a0a0f 70%)}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;padding:12px}
-nav a{color:#888;text-decoration:none;padding:6px 14px;font-size:12px;font-family:monospace;border:1px solid #222;border-radius:6px;transition:.3s}
-nav a:hover{color:#ec4899;border-color:#ec4899;box-shadow:0 0 12px rgba(236,72,153,.15)}
-.hero{text-align:center;padding:40px 0}
-h1{font-size:clamp(32px,5vw,52px);font-weight:700;background:linear-gradient(135deg,#ec4899,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.sub{color:#666;font-size:13px;font-family:monospace}
-.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:24px 0}
-.stat{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:14px 20px;text-align:center;min-width:90px}
-.stat-num{font-size:26px;font-weight:700;font-family:monospace;color:#ec4899}.stat-lbl{font-size:10px;color:#555;margin-top:2px;letter-spacing:1px}
-.card{background:#0d0d18;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:20px}
-.card-title{font-family:monospace;font-size:14px;color:#ec4899;margin-bottom:16px;letter-spacing:1px}.card-title span{color:#a855f7}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.btn{padding:6px 14px;border:1px solid #222;background:#111;color:#888;border-radius:6px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s}
-.btn:hover{border-color:#ec4899;color:#ec4899}.btn-primary{border-color:#ec4899;color:#ec4899}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif SC','Noto Sans SC','Microsoft YaHei',sans-serif;background:#0d001a;color:#f0eef5;overflow-x:hidden}
+
+/* ── 粒子 Canvas ── */
+#particle-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+
+/* ── 导航 ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:6px;padding:14px 20px;background:rgba(13,0,26,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(168,85,247,.12)}
+nav a{color:rgba(240,238,245,.55);text-decoration:none;padding:6px 18px;font-size:13px;border-radius:20px;transition:.35s;cursor:pointer;letter-spacing:.5px}
+nav a:hover,nav a.active{color:#fff;background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(168,85,247,.2))}
+
+/* ── Hero ── */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 60px}
+.hero-avatar{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#a855f7);padding:3px;margin-bottom:24px;opacity:0;transform:scale(.7);transition:.8s cubic-bezier(.34,1.56,.64,1)}
+.hero-avatar.show{opacity:1;transform:scale(1)}
+.hero-avatar .inner{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#ec4899,#a855f7);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;color:#fff}
+h1{font-size:clamp(30px,5.5vw,56px);font-weight:700;background:linear-gradient(135deg,#ec4899,#a855f7,#ec4899);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;text-shadow:0 0 40px rgba(236,72,153,.25),0 0 80px rgba(168,85,247,.15);letter-spacing:1px}
+.hero-sub{color:rgba(240,238,245,.5);font-size:15px;letter-spacing:3px;margin-bottom:36px;font-weight:300}
+
+/* ── KPI 数值 ── */
+.stats{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;opacity:0;transform:translateY(24px);transition:.7s ease}
+.stats.show{opacity:1;transform:translateY(0)}
+.stat-card{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(168,85,247,.15);border-radius:16px;padding:20px 28px;min-width:130px;text-align:center;transition:.3s}
+.stat-card:hover{border-color:rgba(236,72,153,.3);transform:translateY(-3px)}
+.stat-num{font-size:30px;font-weight:700;background:linear-gradient(135deg,#ec4899,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px}
+.stat-lbl{font-size:11px;color:rgba(240,238,245,.45);margin-top:4px;letter-spacing:1px}
+
+/* ── Section 通用 ── */
+section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:80px 20px}
+.section-title{text-align:center;font-size:clamp(22px,3vw,32px);font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,#ec4899,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px}
+.section-desc{text-align:center;color:rgba(240,238,245,.4);font-size:13px;margin-bottom:40px;letter-spacing:2px}
+
+/* ── 卡片 ── */
+.card{background:rgba(255,255,255,.04);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(168,85,247,.12);border-radius:18px;padding:28px;margin-bottom:24px;opacity:0;transform:translateY(30px);transition:.7s ease}
+.card.show{opacity:1;transform:translateY(0)}
+.card-title{font-size:14px;font-weight:600;margin-bottom:18px;letter-spacing:1px}
+.card-title .hl{color:#ec4899}
+.card-title .hl2{color:#a855f7}
+
+/* ── 按钮 ── */
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.btn{padding:8px 20px;border:none;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;letter-spacing:.5px;transition:.3s;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,#ec4899,#a855f7);color:#fff;box-shadow:0 2px 12px rgba(236,72,153,.25)}
+.btn-primary:hover{box-shadow:0 4px 20px rgba(236,72,153,.4);transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(168,85,247,.2);color:rgba(240,238,245,.7)}
+.btn-ghost:hover{border-color:#ec4899;color:#ec4899;background:rgba(236,72,153,.08)}
+
+/* ── 网格 ── */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
-.stat-line{display:flex;justify-content:space-between;padding:4px 0;font-family:monospace;font-size:12px;color:#888;border-bottom:1px solid #111}
-.stat-line span{color:#e0e0e8}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-family:monospace}
-.badge-high{background:rgba(0,255,136,.15);color:#0f0}.badge-mid{background:rgba(236,72,153,.15);color:#ec4899}
-.badge-low{background:rgba(255,68,68,.15);color:#f44}
-.footer{text-align:center;padding:40px;font-size:11px;color:#444;font-family:monospace}
-table{width:100%;border-collapse:collapse;font-size:12px;font-family:monospace}
-td{padding:6px 8px;border-bottom:1px solid #1a1a2e}
-th{padding:8px;color:#ec4899;text-align:left;border-bottom:1px solid #333}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* ── 技能项 ── */
+.skill-item{background:rgba(255,255,255,.03);border:1px solid rgba(168,85,247,.08);border-radius:14px;padding:16px;transition:.3s;cursor:default}
+.skill-item:hover{border-color:rgba(236,72,153,.2);transform:translateY(-2px)}
+.skill-item .name{font-size:13px;font-weight:600;margin-bottom:6px;color:#ec4899}
+.skill-item .desc{font-size:11px;color:rgba(240,238,245,.5)}
+.skill-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:10px;overflow:hidden}
+.skill-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#ec4899,#a855f7);width:0;transition:1.2s ease}
+.skill-item.show .skill-bar-fill{width:var(--pct)}
+
+/* ── 数据行 ── */
+.stat-line{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:rgba(240,238,245,.5);border-bottom:1px solid rgba(168,85,247,.06)}
+.stat-line span{color:#f0eef5}
+
+/* ── 徽章 ── */
+.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px}
+.badge-high{background:rgba(0,255,136,.12);color:#0f0}
+.badge-mid{background:rgba(236,72,153,.12);color:#ec4899}
+.badge-low{background:rgba(255,68,68,.12);color:#f44}
+
+/* ── 表格 ── */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{padding:10px 8px;color:#ec4899;text-align:left;border-bottom:1px solid rgba(168,85,247,.2);font-weight:600;font-size:12px}
+td{padding:8px;border-bottom:1px solid rgba(168,85,247,.06)}
+
+/* ── Footer ── */
+footer{position:relative;z-index:1;text-align:center;padding:50px 20px;border-top:1px solid rgba(168,85,247,.08)}
+footer a{color:#ec4899;text-decoration:none;font-size:13px;transition:.3s}
+footer a:hover{text-shadow:0 0 12px rgba(236,72,153,.4)}
+footer .name{color:rgba(240,238,245,.4);font-size:12px;margin-top:6px}
 </style>
 </head>
 <body>
-<div id="bg"></div>
-<div class="container">
-<nav><a>简历解析</a><a>技能匹配</a><a>人才评估</a></nav>
-<div class="hero">
-<h1>AI 招聘分析引擎</h1>
-<div class="sub">// 简历解析 · 技能匹配 · 人岗匹配度评分</div>
-<div class="stats">
-<div class="stat"><div class="stat-num">98.6%</div><div class="stat-lbl">解析准确率</div></div>
-<div class="stat"><div class="stat-num" id="match-score">0</div><div class="stat-lbl">当前匹配度</div></div>
-<div class="stat"><div class="stat-num">150+</div><div class="stat-lbl">技能维度</div></div>
-</div>
-</div>
 
-<div class="card">
-<div class="card-title"><span>#</span> 简历 → 技能图谱 · TF-IDF向量化 + 余弦相似度匹配</div>
-<div class="controls">
-<button class="btn btn-primary" id="parse-btn">▶ 解析简历</button>
-<button class="btn" id="match-btn">计算匹配度</button>
-<button class="btn" id="reset-btn">↻ 重置</button>
+<canvas id="particle-canvas"></canvas>
+
+<!-- 导航 -->
+<nav id="nav">
+<a class="active" data-target="hero">概览</a>
+<a data-target="radar">技能雷达</a>
+<a data-target="match">匹配分析</a>
+<a data-target="rank">人才评估</a>
+<a data-target="contact">联系</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+<div class="hero-avatar" id="avatar"><div class="inner">HR</div></div>
+<h1>智能化人才管理专家</h1>
+<p class="hero-sub">数据驱动 · 流程自动化 · 人才发展</p>
+<div class="stats" id="stats">
+<div class="stat-card"><div class="stat-num">98.6%</div><div class="stat-lbl">简历解析准确率</div></div>
+<div class="stat-card"><div class="stat-num">150+</div><div class="stat-lbl">技能评估维度</div></div>
+<div class="stat-card"><div class="stat-num">5维</div><div class="stat-lbl">综合评估模型</div></div>
+<div class="stat-card"><div class="stat-num" id="live-match">0%</div><div class="stat-lbl">实时匹配度</div></div>
 </div>
-<canvas id="skill-canvas" width="700" height="340"></canvas>
+</section>
+
+<!-- 技能雷达 -->
+<section id="radar">
+<h2 class="section-title">技能雷达</h2>
+<p class="section-desc">五维度能力评估 · 数据驱动的人才管理画像</p>
+<div class="grid-2">
+<div class="card" data-anim>
+<div class="card-title"><span class="hl">#</span> 能力维度评分</div>
+<canvas id="radar-canvas" width="400" height="400"></canvas>
+</div>
+<div class="card" data-anim>
+<div class="card-title"><span class="hl">#</span> 核心能力解读</div>
+<div id="radar-labels" style="display:flex;flex-direction:column;gap:12px;padding:8px 0"></div>
+</div>
+</div>
+</section>
+
+<!-- 匹配分析 -->
+<section id="match">
+<h2 class="section-title">匹配分析</h2>
+<p class="section-desc">TF-IDF 向量化 &amp; 余弦相似度 · 精准人岗匹配</p>
+<div class="card" data-anim>
+<div class="card-title"><span class="hl">#</span> 技能分布 · TF-IDF 权重可视化</div>
+<div class="controls">
+<button class="btn btn-primary" id="parse-btn">解析简历</button>
+<button class="btn btn-ghost" id="match-btn">计算匹配度</button>
+<button class="btn btn-ghost" id="reset-btn">重置</button>
+</div>
+<canvas id="skill-canvas" width="700" height="320"></canvas>
 <div class="grid-2" style="margin-top:16px">
 <div>
-<div class="stat-line">TF-IDF词表大小<span id="tfidf-size">0</span></div>
-<div class="stat-line">简历关键词<span id="kw-count">0</span></div>
+<div class="stat-line">TF-IDF 词表大小<span id="tfidf-size">0</span></div>
+<div class="stat-line">简历关键词命中<span id="kw-count">0</span></div>
 <div class="stat-line">余弦相似度<span id="cos-sim">0.0000</span></div>
 </div>
 <div>
-<div class="stat-line">JD包含技能<span id="jd-skills">0</span></div>
-<div class="stat-line">简历覆盖技能<span id="cv-skills">0</span></div>
+<div class="stat-line">JD 要求技能数<span id="jd-skills">0</span></div>
+<div class="stat-line">简历覆盖技能数<span id="cv-skills">0</span></div>
 <div class="stat-line">综合匹配度<span id="final-match">0%</span></div>
 </div>
 </div>
 </div>
+</section>
 
+<!-- 人才评估 -->
+<section id="rank">
+<h2 class="section-title">人才评估</h2>
+<p class="section-desc">多维评分 · 候选人综合排序</p>
 <div class="grid-2">
-<div class="card">
-<div class="card-title"><span>#</span> 技能雷达 · 5维度评分</div>
-<canvas id="radar-canvas" width="340" height="340"></canvas>
-</div>
-<div class="card">
-<div class="card-title"><span>#</span> 候选人排序 · 综合评分</div>
-<div id="rank-table"><table><tr><th>候选人</th><th>匹配度</th><th>技能分</th><th>经验分</th></tr></table></div>
+<div class="card" data-anim>
+<div class="card-title"><span class="hl">#</span> 候选人排名</div>
+<div id="rank-table">
+<table><thead><tr><th>候选人</th><th>综合匹配</th><th>技能分</th><th>经验分</th></tr></thead><tbody id="rank-body"></tbody></table>
 </div>
 </div>
+<div class="card" data-anim>
+<div class="card-title"><span class="hl">#</span> 核心技能体系</div>
+<div class="grid-3" style="gap:12px">
+<div class="skill-item show"><div class="name">数据化人事管理</div><div class="desc">培训台账 · 多部门校验 · 考核标准化</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:95%;width:95%"></div></div></div>
+<div class="skill-item show"><div class="name">文档流程自动化</div><div class="desc">PDF 解析 · 公文模板 · 智能排班</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:90%;width:90%"></div></div></div>
+<div class="skill-item show"><div class="name">培训与学习系统</div><div class="desc">SM-2 间隔重复 · IRT 自适应 · BKT</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:85%;width:85%"></div></div></div>
+<div class="skill-item show"><div class="name">招聘分析</div><div class="desc">简历解析管道 · 漏斗分析 · 渠道 ROI</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:88%;width:88%"></div></div></div>
+<div class="skill-item show"><div class="name">沟通协调</div><div class="desc">跨部门协作 · 员工关系 · 冲突调解</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:78%;width:78%"></div></div></div>
+<div class="skill-item show"><div class="name">文档处理</div><div class="desc">公文写作 · 政策研究 · 制度起草</div><div class="skill-bar"><div class="skill-bar-fill" style="--pct:90%;width:90%"></div></div></div>
+</div>
+</div>
+</div>
+</section>
 
-<div class="card">
-<div class="card-title"><span>#</span> 技术体系 · HR数字化</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#ec4899;font-size:11px;font-family:monospace">数据化人事管理</div>
-<div class="stat-line">培训台账·多部门校验·考核标准化<span>95%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#a855f7;font-size:11px;font-family:monospace">文档与流程自动化</div>
-<div class="stat-line">PDF解析·公文模板·智能排班<span>90%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#f59e0b;font-size:11px;font-family:monospace">培训与学习系统</div>
-<div class="stat-line">SM-2间隔重复·IRT自适应·BKT<span>85%</span></div></div>
-</div></div>
-<div class="footer"><a href="https://github.com/wzx11223344" style="color:#ec4899;text-decoration:none">github.com/wzx11223344</a> · 万值翔</div>
+<!-- 联系 -->
+<section id="contact" style="padding-bottom:40px">
+<h2 class="section-title">联系我</h2>
+<p class="section-desc">期待与您探讨智能化人才管理</p>
+<div style="text-align:center;margin-top:10px">
+<div style="display:inline-flex;gap:24px;flex-wrap:wrap;justify-content:center">
+<a href="https://github.com/wzx11223344" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:rgba(240,238,245,.5);text-decoration:none;padding:10px 22px;border:1px solid rgba(168,85,247,.15);border-radius:12px;font-size:13px;transition:.3s">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+github.com/wzx11223344
+</a>
 </div>
+<p class="name" style="margin-top:20px;color:rgba(240,238,245,.3);font-size:13px;letter-spacing:2px">万值翔 · HR 智能管理专家</p>
+</div>
+</section>
+
+<footer>
+<a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+<p class="name">万值翔</p>
+</footer>
 
 <script>
-// ═══ Skill Radar ═══
-const radarCanvas=document.getElementById('radar-canvas'),radarCtx=radarCanvas.getContext('2d');
-const rW=340,rH=340,rCX=rW/2,rCY=rH/2,rR=120;
+// ═══════════════════════════════════
+// 1. 粒子背景
+// ═══════════════════════════════════
+const pCanvas=document.getElementById('particle-canvas'),pCtx=pCanvas.getContext('2d');
+let pw,ph,particles=[];
+
+function resizeParticles(){pw=pCanvas.width=window.innerWidth;ph=pCanvas.height=window.innerHeight}
+window.addEventListener('resize',resizeParticles);resizeParticles();
+
+const P_COUNT=80;
+for(let i=0;i<P_COUNT;i++){
+  particles.push({
+    x:Math.random()*pw,y:Math.random()*ph,
+    vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,
+    r:Math.random()*2+1.2,
+    a:Math.random()*.4+.2
+  });
+}
+
+function drawParticles(){
+  pCtx.clearRect(0,0,pw,ph);
+  for(let i=0;i<P_COUNT;i++){
+    const p=particles[i];
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=pw;if(p.x>pw)p.x=0;
+    if(p.y<0)p.y=ph;if(p.y>ph)p.y=0;
+    pCtx.beginPath();pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    pCtx.fillStyle=`rgba(168,85,247,${p.a})`;
+    pCtx.fill();
+    for(let j=i+1;j<P_COUNT;j++){
+      const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<160){
+        pCtx.beginPath();pCtx.moveTo(p.x,p.y);pCtx.lineTo(q.x,q.y);
+        pCtx.strokeStyle=`rgba(168,85,247,${.08*(1-d/160)})`;
+        pCtx.lineWidth=.6;pCtx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ═══════════════════════════════════
+// 2. 滚动动画 (Intersection Observer)
+// ═══════════════════════════════════
+const animEls=document.querySelectorAll('[data-anim]');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}});
+},{threshold:.15});
+animEls.forEach(el=>observer.observe(el));
+
+// Hero 入场
+setTimeout(()=>{document.getElementById('avatar').classList.add('show')},200);
+setTimeout(()=>{document.getElementById('stats').classList.add('show')},500);
+
+// 导航滚动监听 + 点击
+const navLinks=document.querySelectorAll('#nav a');
+navLinks.forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById(a.dataset.target).scrollIntoView({behavior:'smooth'});
+    navLinks.forEach(l=>l.classList.remove('active'));a.classList.add('active');
+  });
+});
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  document.querySelectorAll('section').forEach(s=>{
+    if(window.scrollY>=s.offsetTop-200)cur=s.id;
+  });
+  navLinks.forEach(l=>l.classList.toggle('active',l.dataset.target===cur));
+});
+
+// ═══════════════════════════════════
+// 3. 技能雷达图
+// ═══════════════════════════════════
+const rCanvas=document.getElementById('radar-canvas'),rCtx=rCanvas.getContext('2d');
+const R_W=400,R_H=400,rCX=R_W/2,rCY=R_H/2,rR=130;
 const rLabels=['数据管理','招聘分析','培训系统','文档处理','沟通协调'];
 const rValues=[92,88,85,90,78];
+const rDescs=[
+  '精通人事数据体系搭建、培训台账管理与多部门考核标准化，以数据驱动组织效能提升。',
+  '构建简历解析管道与漏斗分析模型，量化招聘渠道 ROI，实现精准人才画像匹配。',
+  '设计基于 SM-2 间隔重复与 IRT 自适应模型的智能培训系统，推动个性化学习路径。',
+  '擅长公文写作、制度起草与政策研究，实现文档流程自动化与智能排班管理。',
+  '具备跨部门协作与员工关系管理经验，擅长冲突调解与组织沟通效能优化。'
+];
 
 function drawRadar(vals){
-  radarCtx.fillStyle='#050508';radarCtx.fillRect(0,0,rW,rH);
-  for(let ring=1;ring<=4;ring++){
-    radarCtx.strokeStyle='#1a1a2e';radarCtx.beginPath();
+  rCtx.clearRect(0,0,R_W,R_H);
+  // 网格
+  for(let r=1;r<=4;r++){
+    rCtx.strokeStyle='rgba(168,85,247,.08)';rCtx.lineWidth=.8;rCtx.beginPath();
     for(let i=0;i<5;i++){
-      const a=Math.PI*2/5*i-Math.PI/2,r=rR*ring/4;
-      const x=rCX+Math.cos(a)*r,y=rCY+Math.sin(a)*r;
-      i===0?radarCtx.moveTo(x,y):radarCtx.lineTo(x,y);
+      const a=Math.PI*2/5*i-Math.PI/2,rad=rR*r/4;
+      const x=rCX+Math.cos(a)*rad,y=rCY+Math.sin(a)*rad;
+      i===0?rCtx.moveTo(x,y):rCtx.lineTo(x,y);
     }
-    radarCtx.closePath();radarCtx.stroke();
+    rCtx.closePath();rCtx.stroke();
   }
+  // 轴线
+  for(let i=0;i<5;i++){
+    const a=Math.PI*2/5*i-Math.PI/2;
+    rCtx.strokeStyle='rgba(168,85,247,.05)';rCtx.lineWidth=.5;rCtx.beginPath();
+    rCtx.moveTo(rCX,rCY);rCtx.lineTo(rCX+Math.cos(a)*rR,rCY+Math.sin(a)*rR);rCtx.stroke();
+  }
+  // 数据填充
   const pts=[];
   for(let i=0;i<5;i++){
-    const a=Math.PI*2/5*i-Math.PI/2,r=rR*vals[i]/100;
-    pts.push({x:rCX+Math.cos(a)*r,y:rCY+Math.sin(a)*r});
+    const a=Math.PI*2/5*i-Math.PI/2,rad=rR*vals[i]/100;
+    pts.push({x:rCX+Math.cos(a)*rad,y:rCY+Math.sin(a)*rad});
   }
-  radarCtx.fillStyle='rgba(236,72,153,.15)';radarCtx.beginPath();
-  pts.forEach((p,i)=>i===0?radarCtx.moveTo(p.x,p.y):radarCtx.lineTo(p.x,p.y));
-  radarCtx.closePath();radarCtx.fill();
-  radarCtx.strokeStyle='#ec4899';radarCtx.lineWidth=2;
-  pts.forEach((p,i)=>i===0?radarCtx.moveTo(p.x,p.y):radarCtx.lineTo(p.x,p.y));
-  radarCtx.closePath();radarCtx.stroke();
+  const grad=rCtx.createRadialGradient(rCX,rCY,0,rCX,rCY,rR);
+  grad.addColorStop(0,'rgba(236,72,153,.2)');grad.addColorStop(1,'rgba(168,85,247,.08)');
+  rCtx.fillStyle=grad;rCtx.beginPath();
+  pts.forEach((p,i)=>i===0?rCtx.moveTo(p.x,p.y):rCtx.lineTo(p.x,p.y));
+  rCtx.closePath();rCtx.fill();
+  // 轮廓线
+  rCtx.strokeStyle='rgba(236,72,153,.6)';rCtx.lineWidth=2;rCtx.beginPath();
+  pts.forEach((p,i)=>i===0?rCtx.moveTo(p.x,p.y):rCtx.lineTo(p.x,p.y));
+  rCtx.closePath();rCtx.stroke();
+  // 锚点
   pts.forEach((p,i)=>{
-    radarCtx.fillStyle='rgba(236,72,153,.8)';radarCtx.beginPath();radarCtx.arc(p.x,p.y,4,0,Math.PI*2);radarCtx.fill();
+    const grd=rCtx.createRadialGradient(p.x,p.y,0,p.x,p.y,6);
+    grd.addColorStop(0,'rgba(236,72,153,.9)');grd.addColorStop(1,'rgba(168,85,247,.3)');
+    rCtx.fillStyle=grd;rCtx.beginPath();rCtx.arc(p.x,p.y,5,0,Math.PI*2);rCtx.fill();
+    // 标签
     const a=Math.PI*2/5*i-Math.PI/2;
-    const lx=rCX+Math.cos(a)*(rR+25),ly=rCY+Math.sin(a)*(rR+25);
-    radarCtx.fillStyle='#888';radarCtx.font='11px monospace';radarCtx.textAlign='center';
-    radarCtx.fillText(rLabels[i],lx,ly+3);
-    radarCtx.fillStyle='#ec4899';radarCtx.font='9px monospace';
-    radarCtx.fillText(vals[i]+'%',lx,ly+17);
+    const lx=rCX+Math.cos(a)*(rR+30),ly=rCY+Math.sin(a)*(rR+30);
+    rCtx.fillStyle='rgba(240,238,245,.75)';rCtx.font='13px "Microsoft YaHei",sans-serif';rCtx.textAlign='center';rCtx.textBaseline='middle';
+    rCtx.fillText(rLabels[i],lx,ly-8);
+    rCtx.fillStyle='rgba(236,72,153,.8)';rCtx.font='bold 12px "Microsoft YaHei",sans-serif';
+    rCtx.fillText(vals[i]+'%',lx,ly+10);
   });
 }
 drawRadar(rValues);
 
-// ═══ Skill Graph ═══
+// 雷达解读
+const rlEl=document.getElementById('radar-labels');
+rLabels.forEach((label,i)=>{
+  const d=document.createElement('div');
+  d.style.cssText='display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(168,85,247,.06)';
+  d.innerHTML=`<span style="min-width:38px;font-weight:700;font-size:13px;color:#ec4899">${rValues[i]}%</span>
+    <div><div style="font-size:13px;font-weight:600;margin-bottom:2px">${label}</div>
+    <div style="font-size:11px;color:rgba(240,238,245,.45)">${rDescs[i]}</div></div>`;
+  rlEl.appendChild(d);
+});
+
+// ═══════════════════════════════════
+// 4. 技能匹配柱状图
+// ═══════════════════════════════════
 const sCanvas=document.getElementById('skill-canvas'),sCtx=sCanvas.getContext('2d');
-const sW=700,sH=340;
+const sW=700,sH=320;
 let skillData=[],simScore=0;
 
 function genSkillData(){
-  skillData=[];
   const dict=['Python','SQL','Excel','Tableau','SPSS','Stata','R','PowerBI','数据分析','数据治理','招聘系统','培训系统','OKR','KPI','绩效','薪酬','劳动关系','HRIS','公文写作','政策研究'];
-  const jdSkills=['Python','SQL','Excel','数据分析','招聘系统','绩效','OKR','HRIS']; // JD要求
-  // 生成简历技能分布（模拟TF-IDF）
+  const jdSkills=['Python','SQL','Excel','数据分析','招聘系统','绩效','OKR','HRIS'];
   const data=dict.map((word,i)=>{
     const weight=Math.random()*Math.min(1,1-Math.abs(i-10)/15);
     return {word,weight,tfidf:weight*(1+Math.random()*0.5),inJD:jdSkills.includes(word)};
@@ -156,18 +368,31 @@ function genSkillData(){
 }
 
 function drawSkillGraph(data){
-  sCtx.fillStyle='#050508';sCtx.fillRect(0,0,sW,sH);
-  const barW=Math.min(28,(sW-60)/data.data.length);
-  data.data.sort((a,b)=>b.weight-a.weight).slice(0,20).forEach((d,i)=>{
-    const x=30+i*(barW+4),h=d.weight*280;
-    sCtx.fillStyle=d.inJD?'rgba(236,72,153,.8)':'rgba(168,85,247,.5)';
-    sCtx.fillRect(x,sH-30-h,barW,h);
-    sCtx.fillStyle='#555';sCtx.font='7px monospace';sCtx.textAlign='center';
-    sCtx.fillText(d.word,x+barW/2,sH-14);
-    sCtx.fillStyle='#888';sCtx.font='7px monospace';
-    sCtx.fillText(d.weight.toFixed(2),x+barW/2,sH-34-h);
+  sCtx.clearRect(0,0,sW,sH);
+  // 背景网格
+  sCtx.strokeStyle='rgba(168,85,247,.04)';sCtx.lineWidth=.5;
+  for(let y=0;y<4;y++){
+    const yy=sH-30-(y+1)*65;
+    sCtx.beginPath();sCtx.moveTo(0,yy);sCtx.lineTo(sW,yy);sCtx.stroke();
+  }
+  const items=data.data.sort((a,b)=>b.weight-a.weight).slice(0,20);
+  const barW=Math.min(28,(sW-60)/items.length);
+  items.forEach((d,i)=>{
+    const x=30+i*(barW+4),h=d.weight*260;
+    const grad=sCtx.createLinearGradient(x,sH-30,x,sH-30-h);
+    if(d.inJD){grad.addColorStop(0,'rgba(236,72,153,.85)');grad.addColorStop(1,'rgba(236,72,153,.35)')}
+    else{grad.addColorStop(0,'rgba(168,85,247,.65)');grad.addColorStop(1,'rgba(168,85,247,.2)')}
+    sCtx.fillStyle=grad;
+    sCtx.beginPath();
+    sCtx.moveTo(x,sH-30);sCtx.lineTo(x,sH-30-h);
+    sCtx.quadraticCurveTo(x+barW/2,sH-30-h-3,x+barW,sH-30-h);
+    sCtx.lineTo(x+barW,sH-30);sCtx.quadraticCurveTo(x+barW/2,sH-30-3,x,sH-30);
+    sCtx.closePath();sCtx.fill();
+    sCtx.fillStyle='rgba(240,238,245,.35)';sCtx.font='8px "Microsoft YaHei",sans-serif';sCtx.textAlign='center';
+    sCtx.fillText(d.word,x+barW/2,sH-12);
+    sCtx.fillStyle='rgba(240,238,245,.5)';sCtx.font='7px monospace';
+    sCtx.fillText(d.weight.toFixed(2),x+barW/2,sH-38-h);
   });
-  // 计算相似度
   let matched=0;
   data.jdSkills.forEach(jd=>{if(data.data.some(d=>d.word===jd&&d.weight>0.3))matched++;});
   simScore=matched/data.jdSkills.length;
@@ -176,42 +401,53 @@ function drawSkillGraph(data){
   document.getElementById('cos-sim').textContent=simScore.toFixed(4);
   document.getElementById('jd-skills').textContent=data.jdSkills.length;
   document.getElementById('cv-skills').textContent=matched;
-  document.getElementById('final-match').textContent=Math.floor(simScore*70+26)+'%';
-  document.getElementById('match-score').textContent=Math.floor(simScore*100);
+  const matchPct=Math.floor(simScore*70+26);
+  document.getElementById('final-match').textContent=matchPct+'%';
+  document.getElementById('live-match').textContent=matchPct+'%';
   drawRadar(rValues.map((v,i)=>Math.min(100,v+Math.floor((Math.random()-0.5)*20))));
 }
 
-// ═══ Candidate Ranking ═══
+// ═══════════════════════════════════
+// 5. 候选人排名
+// ═══════════════════════════════════
 function genRanking(){
-  const candidates=['候选人A','候选人B','候选人C','候选人D','候选人E'];
-  const table=document.querySelector('#rank-table table');
-  candidates.forEach((name,i)=>{
-    const skill=Math.floor(60+Math.random()*35);
-    const exp=Math.floor(50+Math.random()*45);
-    const total=Math.floor(skill*0.6+exp*0.4);
+  const candidates=[
+    {name:'张明慧',skillBase:88,expBase:85},
+    {name:'李思远',skillBase:82,expBase:78},
+    {name:'王雅琳',skillBase:75,expBase:90},
+    {name:'赵志强',skillBase:70,expBase:72},
+    {name:'陈晓雯',skillBase:65,expBase:68}
+  ];
+  const tbody=document.getElementById('rank-body');tbody.innerHTML='';
+  candidates.forEach((c,i)=>{
+    const skill=c.skillBase+Math.floor(Math.random()*10-3);
+    const exp=c.expBase+Math.floor(Math.random()*10-3);
+    const total=Math.min(99,Math.floor(skill*0.55+exp*0.45));
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${name}</td><td><span class="badge ${total>80?'badge-high':total>65?'badge-mid':'badge-low'}">${total}%</span></td><td>${skill}</td><td>${exp}</td>`;
-    table.appendChild(tr);
+    const badge=total>85?'badge-high':total>72?'badge-mid':'badge-low';
+    tr.innerHTML=`<td style="display:flex;align-items:center;gap:8px">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+      background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(168,85,247,.15));font-size:11px;color:#ec4899;font-weight:700">${i+1}</span>
+      ${c.name}</td>
+      <td><span class="badge ${badge}">${total}%</span></td>
+      <td>${skill}</td><td>${exp}</td>`;
+    tbody.appendChild(tr);
   });
 }
 genRanking();
 
-// Event handlers
-const gen=()=>{
-  const data=genSkillData();
-  drawSkillGraph(data);
-};
+// ═══════════════════════════════════
+// 6. 事件绑定
+// ═══════════════════════════════════
+const gen=()=>{const d=genSkillData();drawSkillGraph(d)};
 document.getElementById('parse-btn').onclick=gen;
-document.getElementById('match-btn').onclick=()=>{
-  const data=genSkillData();
-  drawSkillGraph(data);
-};
+document.getElementById('match-btn').onclick=()=>{const d=genSkillData();drawSkillGraph(d)};
 document.getElementById('reset-btn').onclick=()=>{
   document.getElementById('tfidf-size').textContent='0';
   document.getElementById('cos-sim').textContent='0.0000';
   document.getElementById('final-match').textContent='0%';
-  document.getElementById('match-score').textContent='0';
-  sCtx.fillStyle='#050508';sCtx.fillRect(0,0,sW,sH);
+  document.getElementById('live-match').textContent='0%';
+  sCtx.clearRect(0,0,sW,sH);
 };
 gen();
 </script>
