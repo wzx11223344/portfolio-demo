@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>万值翔 · SYSTEM ONLINE</title>
+<title>万值翔 · 系统在线</title>
 <style>
 /* ═══════════════════════════════════════════════════════════════════════ */
 /* CSS Variables & Reset                                                    */
@@ -490,13 +490,13 @@ body {
 
 <!-- Toggle Controls -->
 <div class="toggle-controls">
-  <button class="toggle-btn active" id="btn-matrix" title="Toggle Matrix Rain">[R]AIN</button>
-  <button class="toggle-btn active" id="btn-scanlines" title="Toggle Scanlines">[S]CAN</button>
+  <button class="toggle-btn active" id="btn-matrix" title="切换代码雨">[雨]</button>
+  <button class="toggle-btn active" id="btn-scanlines" title="切换扫描线">[线]</button>
 </div>
 
 <!-- Loading Screen -->
 <div id="loading-screen">
-  <div class="loading-text">SYSTEM BOOTING...</div>
+  <div class="loading-text">系统启动中...</div>
   <div class="loading-bar-outer"><div class="loading-bar-inner" id="loading-bar"></div></div>
   <div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>
 </div>
@@ -538,7 +538,7 @@ body {
     </div>
 
     <div class="hero-clock reveal">
-      BEIJING <span class="clock-time" id="beijing-time">--:--:--</span> CST
+      BEIJING <span class="clock-time" id="beijing-time">--:--:--</span> 北京时间
     </div>
   </section>
 
@@ -549,8 +549,8 @@ body {
     <div class="section-header">
       <div class="icon-box">&#9679;</div>
       <div>
-        <div class="section-title">SIGNAL MONITOR</div>
-        <div class="section-subtitle">TECH STACK RADAR SCAN</div>
+        <div class="section-title">信号雷达</div>
+        <div class="section-subtitle">技术栈能力扫描</div>
       </div>
     </div>
     <div class="radar-container">
@@ -565,8 +565,8 @@ body {
     <div class="section-header">
       <div class="icon-box">[&nbsp;]</div>
       <div>
-        <div class="section-title">TERMINAL</div>
-        <div class="section-subtitle">MCP SERVER MATRIX</div>
+        <div class="section-title">终端矩阵</div>
+        <div class="section-subtitle">MCP 服务器阵列</div>
       </div>
     </div>
     <div class="mcp-grid" id="mcp-grid"></div>
@@ -579,18 +579,18 @@ body {
     <div class="section-header">
       <div class="icon-box">&Sigma;</div>
       <div>
-        <div class="section-title">ALGORITHM LAB</div>
-        <div class="section-subtitle">REAL-TIME VISUALIZATION</div>
+        <div class="section-title">算法实验室</div>
+        <div class="section-subtitle">实时可视化演示</div>
       </div>
     </div>
 
     <div class="lab-container">
       <div class="lab-tabs" id="lab-tabs">
-        <button class="lab-tab active" data-tab="sort">SORT</button>
-        <button class="lab-tab" data-tab="path">PATH</button>
-        <button class="lab-tab" data-tab="life">LIFE</button>
-        <button class="lab-tab" data-tab="mandelbrot">MANDELBROT</button>
-        <button class="lab-tab" data-tab="pso">PSO</button>
+        <button class="lab-tab active" data-tab="sort">排序</button>
+        <button class="lab-tab" data-tab="path">寻路</button>
+        <button class="lab-tab" data-tab="life">生命</button>
+        <button class="lab-tab" data-tab="mandelbrot">分形</button>
+        <button class="lab-tab" data-tab="pso">粒子</button>
       </div>
 
       <!-- SORT -->
@@ -598,17 +598,17 @@ body {
         <div class="lab-canvas-wrap"><canvas id="sort-canvas" width="800" height="300"></canvas></div>
         <div class="lab-controls">
           <select class="lab-select" id="sort-algo">
-            <option value="bubble">Bubble Sort</option>
-            <option value="quick">Quick Sort</option>
-            <option value="merge">Merge Sort</option>
-            <option value="heap">Heap Sort</option>
+            <option value="bubble">冒泡排序 O(n²)</option>
+            <option value="quick">快速排序 O(n log n)</option>
+            <option value="merge">归并排序 O(n log n)</option>
+            <option value="heap">堆排序 O(n log n)</option>
           </select>
-          <button class="lab-btn" id="sort-start">&#9654; Run</button>
-          <button class="lab-btn" id="sort-reset">&#8635; Reset</button>
+          <button class="lab-btn" id="sort-start">&#9654; 运行</button>
+          <button class="lab-btn" id="sort-reset">&#8635; 重置</button>
           <div class="lab-stats">
-            <span>Comparisons: <span class="stat-val" id="sort-cmp">0</span></span>
-            <span>Swaps: <span class="stat-val" id="sort-swap">0</span></span>
-            <span>Time: <span class="stat-val" id="sort-time">0ms</span></span>
+            <span>比较次数: <span class="stat-val" id="sort-cmp">0</span></span>
+            <span>交换次数: <span class="stat-val" id="sort-swap">0</span></span>
+            <span>耗时: <span class="stat-val" id="sort-time">0ms</span></span>
           </div>
         </div>
       </div>
@@ -622,11 +622,11 @@ body {
             <option value="dfs">DFS</option>
             <option value="astar">A*</option>
           </select>
-          <button class="lab-btn" id="path-start">&#9654; Run</button>
-          <button class="lab-btn" id="path-reset">&#8635; Reset</button>
+          <button class="lab-btn" id="path-start">&#9654; 运行</button>
+          <button class="lab-btn" id="path-reset">&#8635; 重置</button>
           <div class="lab-stats">
-            <span>Explored: <span class="stat-val" id="path-explored">0</span></span>
-            <span>Path Length: <span class="stat-val" id="path-length">0</span></span>
+            <span>探索节点: <span class="stat-val" id="path-explored">0</span></span>
+            <span>路径长度: <span class="stat-val" id="path-length">0</span></span>
           </div>
         </div>
       </div>
@@ -635,16 +635,16 @@ body {
       <div class="lab-panel" id="panel-life">
         <div class="lab-canvas-wrap"><canvas id="life-canvas" width="800" height="500"></canvas></div>
         <div class="lab-controls">
-          <button class="lab-btn" id="life-start">&#9654; Start</button>
-          <button class="lab-btn" id="life-pause">&#9208; Pause</button>
-          <button class="lab-btn" id="life-reset">&#8635; Random</button>
+          <button class="lab-btn" id="life-start">&#9654; 开始</button>
+          <button class="lab-btn" id="life-pause">&#9208; 暂停</button>
+          <button class="lab-btn" id="life-reset">&#8635; 随机</button>
           <div class="lab-speed-control">
-            <label>Speed:</label>
+            <label>速度:</label>
             <input type="range" id="life-speed" min="1" max="20" value="5">
           </div>
           <div class="lab-stats">
-            <span>Generation: <span class="stat-val" id="life-gen">0</span></span>
-            <span>Alive: <span class="stat-val" id="life-alive">0</span></span>
+            <span>世代: <span class="stat-val" id="life-gen">0</span></span>
+            <span>存活: <span class="stat-val" id="life-alive">0</span></span>
           </div>
         </div>
       </div>
@@ -656,8 +656,8 @@ body {
           <div class="mandelbrot-info" id="mandelbrot-info">R: [-2.0, 1.0] I: [-1.2, 1.2] | Zoom: 1.0x</div>
         </div>
         <div class="lab-controls">
-          <button class="lab-btn" id="mandelbrot-reset">&#8635; Reset View</button>
-          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);">Drag to pan | Scroll to zoom</span>
+          <button class="lab-btn" id="mandelbrot-reset">&#8635; 重置视图</button>
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);">拖拽平移 | 滚轮缩放</span>
         </div>
       </div>
 
@@ -665,11 +665,11 @@ body {
       <div class="lab-panel" id="panel-pso">
         <div class="lab-canvas-wrap"><canvas id="pso-canvas" width="700" height="500"></canvas></div>
         <div class="lab-controls">
-          <button class="lab-btn" id="pso-start">&#9654; Run</button>
-          <button class="lab-btn" id="pso-reset">&#8635; Reset</button>
+          <button class="lab-btn" id="pso-start">&#9654; 运行</button>
+          <button class="lab-btn" id="pso-reset">&#8635; 重置</button>
           <div class="lab-stats">
-            <span>Iteration: <span class="stat-val" id="pso-iter">0</span></span>
-            <span>Best Fitness: <span class="stat-val" id="pso-best">--</span></span>
+            <span>迭代次数: <span class="stat-val" id="pso-iter">0</span></span>
+            <span>最佳适应度: <span class="stat-val" id="pso-best">--</span></span>
           </div>
         </div>
       </div>
@@ -684,8 +684,8 @@ body {
     <div class="section-header">
       <div class="icon-box">&#9830;</div>
       <div>
-        <div class="section-title">ASSETS</div>
-        <div class="section-subtitle">CORE CAPABILITIES</div>
+        <div class="section-title">能力资产</div>
+        <div class="section-subtitle">核心技术领域</div>
       </div>
     </div>
     <div class="skills-grid" id="skills-grid"></div>
@@ -698,8 +698,8 @@ body {
     <div class="section-header">
       <div class="icon-box">&gt;_</div>
       <div>
-        <div class="section-title">CHRONICLE</div>
-        <div class="section-subtitle">PROJECT TIMELINE</div>
+        <div class="section-title">演进史</div>
+        <div class="section-subtitle">项目里程碑</div>
       </div>
     </div>
     <div class="timeline" id="timeline"></div>
@@ -712,13 +712,13 @@ body {
     <div class="section-header">
       <div class="icon-box">&#9608;</div>
       <div>
-        <div class="section-title">LOG</div>
-        <div class="section-subtitle">REAL-TIME ACTIVITY STREAM</div>
+        <div class="section-title">日志</div>
+        <div class="section-subtitle">实时活动流</div>
       </div>
     </div>
     <div class="log-container">
       <div class="log-header">
-        <span class="dot green"></span> LIVE FEED
+        <span class="dot green"></span> 实时推流
         <span style="margin-left:auto;font-size:10px;" id="log-status">CONNECTED</span>
       </div>
       <div id="log-entries">
@@ -731,8 +731,8 @@ body {
   <!-- Footer                                                                 -->
   <!-- ═══════════════════════════════════════════════════════════════════ -->
   <section id="footer">
-    <div class="footer-text">SYS // NODE: ONLINE // UPTIME: <span id="uptime">00:00:00</span></div>
-    <div class="footer-status"><span class="blink">&#9608;</span> ALL SYSTEMS NOMINAL</div>
+    <div class="footer-text">系统 // 节点: 在线 // 运行时间: <span id="uptime">00:00:00</span></div>
+    <div class="footer-status"><span class="blink">&#9608;</span> 所有系统正常</div>
   </section>
 </div>
 
@@ -986,7 +986,7 @@ body {
   (function() {
     const canvas = document.getElementById('radar-canvas');
     const ctx = canvas.getContext('2d');
-    const labels = ['Python', 'C++', 'Quant', 'ML', 'NLP', 'Full-Stack'];
+    const labels = ['Python', 'C++', '量化', '机器学习', 'NLP', '全栈'];
     const targets = [95, 80, 90, 85, 75, 88];
     const count = labels.length;
     const cx = canvas.width / 2;
@@ -1116,18 +1116,18 @@ body {
   /* ====================================================================== */
   (function() {
     const mcps = [
-      { name:'filesystem', icon:'&#128451;', tools:8, algo:'Path traversal, recursive operations, glob matching, file I/O sandbox' },
-      { name:'github', icon:'&#9830;', tools:12, algo:'REST API v3, GraphQL v4, OAuth2 flow, webhook signature verification' },
-      { name:'postgres', icon:'&#9702;', tools:6, algo:'Connection pooling, prepared statements, query planner, indexing strategies' },
-      { name:'playwright', icon:'&#9881;', tools:15, algo:'Browser context isolation, selector engine, network interception, auto-waiting' },
-      { name:'sequential-thinking', icon:'&#9883;', tools:3, algo:'Chain-of-thought reasoning, hypothesis branching, confidence scoring' },
-      { name:'memory', icon:'&#9783;', tools:5, algo:'Vector embeddings, cosine similarity, episodic memory retrieval, context pruning' },
-      { name:'brave-search', icon:'&#8982;', tools:4, algo:'Web index ranking, semantic search, freshness scoring, result dedup' },
-      { name:'puppeteer', icon:'&#127760;', tools:10, algo:'Headless Chrome automation, DOM manipulation, PDF generation, performance tracing' },
-      { name:'sqlite', icon:'&#9776;', tools:7, algo:'B-tree indexing, WAL journaling, query optimization, FTS5 full-text search' },
-      { name:'docker', icon:'&#9638;', tools:6, algo:'Container isolation, layered filesystem, image caching, network namespace' },
-      { name:'fetch', icon:'&#8593;&#8595;', tools:5, algo:'HTTP/2 multiplexing, streaming responses, TLS handshake, redirect chains' },
-      { name:'slack', icon:'#', tools:9, algo:'Socket Mode, Events API, Block Kit UI, message threading, slash commands' }
+      { name:'金融数据', icon:'&#9679;', tools:19, algo:'A股行情 · 基金净值 · 宏观经济指标 · 市场宽度计算 · 行业分类' },
+      { name:'量化引擎', icon:'&#9830;', tools:24, algo:'BS期权定价 · Monte Carlo模拟 · Greeks计算 · Markowitz优化 · VaR风险值' },
+      { name:'文档分析', icon:'&#9702;', tools:21, algo:'文件读取 · 词频统计 · TF-IDF · TextRank摘要 · 情感分析' },
+      { name:'数据库助手', icon:'&#9776;', tools:26, algo:'SQLite执行 · Schema分析 · 数据质量诊断 · SQL语句生成' },
+      { name:'数据可视化', icon:'&#9640;', tools:32, algo:'柱状图 · 折线图 · 散点图 · 热力图 · 雷达图 · HTML报告' },
+      { name:'机器学习', icon:'&#9883;', tools:30, algo:'分类(KNN/SVM/随机森林) · 回归 · K-Means聚类 · 交叉验证 · 网格搜索' },
+      { name:'统计分析', icon:'&#9881;', tools:30, algo:'描述性统计 · 假设检验 · OLS回归 · ARIMA · ACF-PACF · Granger因果' },
+      { name:'网页抓取', icon:'&#127760;', tools:26, algo:'网页获取 · HTML解析 · 表格提取 · CSS选择器 · Markdown转换' },
+      { name:'NLP服务', icon:'&#9783;', tools:23, algo:'最大匹配分词 · TextRank关键词 · 朴素贝叶斯 · K-Means++ · 马尔可夫生成' },
+      { name:'文本处理', icon:'&#8982;', tools:22, algo:'Markdown↔HTML · Myers差异 · 霍夫曼压缩 · Base64 · 代码高亮' },
+      { name:'数据管道', icon:'&#9638;', tools:22, algo:'数据画像 · PCA降维 · SMOTE过采样 · K-Fold · 异常检测(IQR+Z-score)' },
+      { name:'数学引擎', icon:'&Sigma;', tools:22, algo:'矩阵运算 · FFT · SVD分解 · 单纯形 · RK4 · 假设检验 · 卷积' }
     ];
 
     const grid = document.getElementById('mcp-grid');
@@ -1154,12 +1154,12 @@ body {
   /* ====================================================================== */
   (function() {
     const skills = [
-      { icon:'&#9763;', name:'Quantitative Trading', desc:'Market microstructure, order book simulation, factor models, backtesting engine, risk management', pct:95 },
-      { icon:'&#9881;', name:'NLP & Text Analysis', desc:'Transformer architectures, sentiment analysis, entity extraction, RAG pipelines, semantic search', pct:82 },
-      { icon:'&#9681;', name:'Computer Vision', desc:'Object detection (YOLO), image segmentation, OCR pipelines, video analysis, feature extraction', pct:78 },
-      { icon:'&#9640;', name:'Full-Stack Development', desc:'React/Next.js, FastAPI/Django, PostgreSQL, Redis, Docker, CI/CD pipelines', pct:90 },
-      { icon:'&#9776;', name:'Data Pipeline Engineering', desc:'ETL orchestration, stream processing (Kafka), data lakes, Airflow DAGs, monitoring', pct:88 },
-      { icon:'&#9729;', name:'Cloud Architecture', desc:'AWS/GCP, Kubernetes, Terraform IaC, service mesh, zero-downtime deployment, observability', pct:85 }
+      { icon:'&#9763;', name:'量化交易系统', desc:'市场微观结构 · 订单簿模拟 · 因子模型 · 回测引擎 · VaR风险管理 · 衍生品定价', pct:95 },
+      { icon:'&#9881;', name:'NLP与文本分析', desc:'分词/最大匹配 · TextRank · 朴素贝叶斯 · 实体提取 · 语义搜索 · 情感分析', pct:82 },
+      { icon:'&#9681;', name:'算法与数学', desc:'FFT · SVD分解 · 单纯形法 · 假设检验 · 数值积分 · 曼德博集合 · 粒子群优化', pct:85 },
+      { icon:'&#9640;', name:'数据管道工程', desc:'数据画像 · PCA降维 · SMOTE过采样 · 异常检测 · 分层抽样 · K-Fold交叉验证', pct:88 },
+      { icon:'&#9776;', name:'MCP与AI基础设施', desc:'15台MCP服务器 · ~370工具接口 · ReAct推理 · 多Agent协作 · 知识图谱', pct:90 },
+      { icon:'&#9729;', name:'经济学与计量', desc:'因果推断 · DSGE建模 · 贝叶斯统计 · 博弈论 · 空间计量 · 网络经济学 · 14个库', pct:92 }
     ];
 
     const grid = document.getElementById('skills-grid');
@@ -1195,12 +1195,12 @@ body {
   /* ====================================================================== */
   (function() {
     const items = [
-      { date:'2026.07', title:'MCP Ecosystem Expansion', desc:'Built and deployed 15 MCP servers covering filesystem, database, browser automation, and AI tooling domains.' },
-      { date:'2026.03', title:'Quant Trading Platform v3', desc:'High-frequency backtesting engine with sub-microsecond latency. Real-time market data pipeline processing 10M+ events/day.' },
-      { date:'2025.11', title:'AI Agent Orchestration Framework', desc:'Multi-agent coordination system with 58 specialized skills. Automated workflow engine with DAG-based task decomposition.' },
-      { date:'2025.06', title:'Open-Source NLP Toolkit', desc:'Released modular NLP pipeline library. 500+ GitHub stars. Transformer-based text classification, NER, and summarization.' },
-      { date:'2025.01', title:'Cloud-Native Data Platform', desc:'Designed distributed data platform on Kubernetes. Real-time ETL with Apache Kafka + Flink. 99.99% uptime SLA.' },
-      { date:'2024.08', title:'Algorithm Visualization Suite', desc:'Interactive algorithm demos: sorting, pathfinding, cellular automata, fractal rendering, optimization heuristics.' }
+      { date:'2026.07', title:'MCP生态扩展至15台', desc:'上线NLP服务、文本处理、数据管道、数学引擎4台新MCP服务器，总工具量达~370个。全算法级实现，零外部依赖。' },
+      { date:'2026 Q2', title:'效率技能 v2.0.0', desc:'12个项目全面重写，17,138行纯算法代码：Isolation Forest、TextRank、Canny、DCT、Myers、SM-2、BKT、IRT等24+核心算法从零实现。' },
+      { date:'2025', title:'MCP基础设施搭建', desc:'首批8台MCP服务器上线(金融数据/量化引擎/文档分析/数据库/可视化/机器学习/统计/网页抓取)，共208个工具接口。' },
+      { date:'2024 Q3', title:'量化金融与智能体系统', desc:'17个项目：投资组合优化(Markowitz/HRP)、回测引擎、因子挖掘、衍生品定价 + 多Agent交易模拟、RL交易、审计Agent。' },
+      { date:'2024 Q1-Q2', title:'计量经济学矩阵', desc:'14个Python计量经济学库：bayesmetrics、causalinference、dsgepy、laborecon、networkecon、spatialecon等，覆盖贝叶斯到空间计量。' },
+      { date:'2024 起步', title:'101个项目起航', desc:'从零开始构建项目矩阵。核心理念：不套壳、不调API凑数、每个算法亲手从零实现。经济学背景，深耕计量与量化。' }
     ];
 
     const timeline = document.getElementById('timeline');
@@ -1255,10 +1255,10 @@ body {
           entry.innerHTML = '<span class="timestamp">' + ts + '</span> <span class="' + typeClass + '">[' + evt.type.replace('Event','') + ']</span> ' + desc;
           container.appendChild(entry);
         });
-        statusEl.textContent = 'LIVE';
+        statusEl.textContent = '在线';
         statusEl.style.color = '#00ff88';
       } catch (e) {
-        statusEl.textContent = 'FALLBACK';
+        statusEl.textContent = '离线';
         statusEl.style.color = '#f59e0b';
         loadFallback();
       }
@@ -1267,16 +1267,16 @@ body {
     function loadFallback() {
       container.innerHTML = '';
       const items = [
-        { ts:'14:32:07', type:'[PUSH]', cls:'type-commit', desc:'feat: add PSO visualization to algorithm lab' },
-        { ts:'13:18:45', type:'[PUSH]', cls:'type-commit', desc:'perf: optimize Mandelbrot render with Web Worker' },
-        { ts:'12:05:22', type:'[PR]', cls:'type-pr', desc:'merge: MCP server matrix 3D flip cards' },
-        { ts:'10:47:11', type:'[ISSUE]', cls:'type-issue', desc:'bug: fix radar chart animation on mobile' },
-        { ts:'09:33:58', type:'[PUSH]', cls:'type-commit', desc:'feat: Conway Game of Life with speed control' },
-        { ts:'08:15:30', type:'[PUSH]', cls:'type-commit', desc:'style: cyberpunk HUD theme implementation' },
-        { ts:'07:02:14', type:'[ISSUE]', cls:'type-issue', desc:'docs: add algorithm complexity analysis' },
-        { ts:'23:48:05', type:'[PUSH]', cls:'type-commit', desc:'feat: pathfinding A*/BFS/DFS visualization' },
-        { ts:'22:11:39', type:'[PR]', cls:'type-pr', desc:'merge: sorting algorithm real-time comparison' },
-        { ts:'20:54:22', type:'[PUSH]', cls:'type-commit', desc:'init: project scaffold with matrix rain background' }
+        { ts:'14:32:07', type:'[推送]', cls:'type-commit', desc:'新增粒子群优化(PSO)可视化到算法实验室' },
+        { ts:'13:18:45', type:'[推送]', cls:'type-commit', desc:'优化曼德博集合渲染性能' },
+        { ts:'12:05:22', type:'[合并]', cls:'type-pr', desc:'MCP服务器矩阵3D翻转卡片效果上线' },
+        { ts:'10:47:11', type:'[问题]', cls:'type-issue', desc:'修复移动端雷达图动画显示异常' },
+        { ts:'09:33:58', type:'[推送]', cls:'type-commit', desc:'新增康威生命游戏，支持速度控制和实时统计' },
+        { ts:'08:15:30', type:'[推送]', cls:'type-commit', desc:'赛博监控室HUD主题全面上线' },
+        { ts:'07:02:14', type:'[问题]', cls:'type-issue', desc:'补充算法复杂度分析文档' },
+        { ts:'23:48:05', type:'[推送]', cls:'type-commit', desc:'A*/BFS/DFS路径规划可视化完成' },
+        { ts:'22:11:39', type:'[合并]', cls:'type-pr', desc:'排序算法实时对比演示模块合并' },
+        { ts:'20:54:22', type:'[推送]', cls:'type-commit', desc:'项目初始化：代码雨背景+系统架构搭建' }
       ];
       items.forEach(function(item) {
         const entry = document.createElement('div');
