@@ -1,137 +1,682 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>政策数据分析 · 产业调研 · 合规审计</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>政策研究与产业分析 · 作品集</title>
 <style>
+/* ═══════════════════════════════════════════
+   国资 · 政务风作品集 — 深灰蓝 · 正红 · 藏金
+   纯 HTML/CSS/JS · 零外部依赖
+   ═══════════════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e0e0e8;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
-canvas{display:block;width:100%;height:auto;background:#050508}
-#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 30% 30%,#1a0a2e 0%,#0a0a0f 70%)}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;padding:12px}
-nav a{color:#888;text-decoration:none;padding:6px 14px;font-size:12px;font-family:monospace;border:1px solid #222;border-radius:6px;transition:.3s}
-nav a:hover{color:#a855f7;border-color:#a855f7;box-shadow:0 0 12px rgba(168,85,247,.15)}
-.hero{text-align:center;padding:40px 0}
-h1{font-size:clamp(32px,5vw,52px);font-weight:700;background:linear-gradient(135deg,#a855f7,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.sub{color:#666;font-size:13px;font-family:monospace}
-.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:24px 0}
-.stat{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:14px 20px;text-align:center;min-width:90px}
-.stat-num{font-size:26px;font-weight:700;font-family:monospace;color:#a855f7}.stat-lbl{font-size:10px;color:#555}
-.card{background:#0d0d18;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:20px}
-.card-title{font-family:monospace;font-size:14px;color:#a855f7;margin-bottom:16px;letter-spacing:1px}.card-title span{color:#3b82f6}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.btn{padding:6px 14px;border:1px solid #222;background:#111;color:#888;border-radius:6px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s}
-.btn:hover{border-color:#a855f7;color:#a855f7}.btn-primary{border-color:#a855f7;color:#a855f7}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
-.stat-line{display:flex;justify-content:space-between;padding:4px 0;font-family:monospace;font-size:11px;color:#888;border-bottom:1px solid #111}
-.stat-line span{color:#e0e0e8}
-.footer{text-align:center;padding:40px;font-size:11px;color:#444;font-family:monospace}
+html{scroll-behavior:smooth}
+
+/* 主色调变量 */
+:root{
+  --bg:#0f172a;
+  --bg-card:#131c31;
+  --bg-elevated:#18233d;
+  --red:#ef4444;
+  --red-dim:#a52a2a;
+  --gold:#b8860b;
+  --gold-light:#d4a843;
+  --text:#e2e8f0;
+  --text-dim:#8899bb;
+  --border:#1e2a4a;
+  --red-line:rgba(239,68,68,0.15);
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Serif SC','SimSun','STSong','Source Han Serif SC','Microsoft YaHei',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ═══ 全屏中国风网格背景 ═══ */
+#grid-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:-1;
+  background:
+    /* 暗红色竖线 */
+    repeating-linear-gradient(
+      90deg,
+      transparent,transparent 95px,
+      var(--red-line) 95px,var(--red-line) 96px
+    ),
+    /* 暗红色横线 */
+    repeating-linear-gradient(
+      0deg,
+      transparent,transparent 95px,
+      var(--red-line) 95px,var(--red-line) 96px
+    ),
+    /* 中心光晕 */
+    radial-gradient(ellipse at 50% 40%, rgba(184,134,11,0.06) 0%, transparent 70%),
+    var(--bg);
+}
+
+/* ═══ 入场动画 ═══ */
+@keyframes riseUp{
+  0%{opacity:0;transform:translateY(40px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  0%{opacity:0}
+  100%{opacity:1}
+}
+@keyframes sealSpin{
+  0%{opacity:0;transform:scale(0.3) rotate(-30deg)}
+  60%{transform:scale(1.1) rotate(3deg)}
+  100%{opacity:0.15;transform:scale(1) rotate(0deg)}
+}
+@keyframes pulseGold{
+  0%,100%{box-shadow:0 0 8px rgba(184,134,11,0.3)}
+  50%{box-shadow:0 0 20px rgba(184,134,11,0.6)}
+}
+@keyframes barGrow{
+  0%{transform:scaleY(0)}
+  100%{transform:scaleY(1)}
+}
+
+.rise{animation:riseUp 0.8s ease-out both}
+.rise-d1{animation-delay:0.1s}
+.rise-d2{animation-delay:0.25s}
+.rise-d3{animation-delay:0.4s}
+.rise-d4{animation-delay:0.55s}
+.rise-d5{animation-delay:0.7s}
+
+/* ═══ 固定顶部导航 ═══ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  background:rgba(15,23,42,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 20px;
+}
+nav ul{
+  max-width:1100px;margin:0 auto;
+  display:flex;gap:4px;list-style:none;
+  justify-content:center;align-items:center;
+  height:52px;
+}
+nav ul li a{
+  display:block;padding:6px 18px;
+  color:var(--text-dim);text-decoration:none;
+  font-size:13px;font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  letter-spacing:2px;
+  border:1px solid transparent;
+  transition:all 0.3s ease;
+  position:relative;
+}
+nav ul li a::after{
+  content:'';position:absolute;bottom:0;left:50%;
+  width:0;height:2px;background:var(--red);
+  transition:all 0.3s ease;transform:translateX(-50%);
+}
+nav ul li a:hover{color:var(--gold-light)}
+nav ul li a:hover::after{width:60%}
+nav .nav-sep{color:var(--border);font-size:10px;user-select:none}
+
+/* ═══ 主容器 ═══ */
+.container{max-width:1100px;margin:0 auto;padding:72px 20px 40px}
+
+/* ═══ 英雄区 ═══ */
+.hero{text-align:center;padding:48px 0 32px;position:relative}
+.hero::before{
+  content:'政';position:absolute;top:-20px;left:50%;
+  transform:translateX(-50%);
+  font-size:200px;font-weight:900;color:rgba(239,68,68,0.04);
+  font-family:'Noto Serif SC',serif;pointer-events:none;
+  animation:fadeIn 1.5s ease-out 0.2s both;
+}
+
+/* 官印风格装饰圆 */
+.seal-ring{
+  width:70px;height:70px;margin:0 auto 18px;
+  border:2.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  animation:sealSpin 1.2s ease-out 0.1s both;
+}
+.seal-ring::before{
+  content:'';position:absolute;
+  width:56px;height:56px;
+  border:1px solid rgba(184,134,11,0.35);
+  border-radius:50%;
+}
+.seal-ring::after{
+  content:'研';font-size:26px;font-weight:700;
+  color:var(--gold-light);font-family:'Noto Serif SC',serif;
+}
+.seal-ring .seal-dot{
+  position:absolute;width:4px;height:4px;
+  background:var(--gold);border-radius:50%;opacity:0.5;
+}
+.seal-ring .seal-dot:nth-child(1){top:6px;left:50%;transform:translateX(-50%)}
+.seal-ring .seal-dot:nth-child(2){bottom:6px;left:50%;transform:translateX(-50%)}
+.seal-ring .seal-dot:nth-child(3){left:6px;top:50%;transform:translateY(-50%)}
+.seal-ring .seal-dot:nth-child(4){right:6px;top:50%;transform:translateY(-50%)}
+
+h1{
+  font-size:clamp(28px,4.5vw,46px);
+  font-weight:900;font-family:'Noto Serif SC','SimSun','STSong',serif;
+  letter-spacing:6px;
+  color:var(--text);
+  text-shadow:0 0 30px rgba(184,134,11,0.15),0 2px 0 rgba(184,134,11,0.3);
+  margin-bottom:6px;
+}
+.hero-sub{
+  font-size:14px;color:var(--gold-light);
+  letter-spacing:4px;font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  opacity:0.8;margin-bottom:28px;
+}
+
+/* ═══ KPI统计条 ═══ */
+.stats{
+  display:flex;gap:2px;justify-content:center;flex-wrap:wrap;
+  margin:0 auto;max-width:600px;
+}
+.stat-card{
+  flex:1;min-width:120px;
+  background:linear-gradient(135deg,var(--bg-card),var(--bg-elevated));
+  border:1px solid var(--border);
+  padding:16px 10px;text-align:center;
+  position:relative;
+  transition:all 0.3s ease;
+}
+.stat-card:hover{
+  border-color:var(--gold);z-index:2;
+  animation:pulseGold 1.5s ease-in-out;
+}
+.stat-card+.stat-card{border-left:none}
+.stat-val{
+  font-size:30px;font-weight:700;
+  font-family:'Noto Serif SC',serif;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.stat-label{
+  font-size:11px;color:var(--text-dim);
+  letter-spacing:2px;margin-top:4px;
+  font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+}
+
+/* ═══ 二级标题 ═══ */
+.section-title{
+  font-size:18px;font-weight:700;font-family:'Noto Serif SC',serif;
+  letter-spacing:3px;color:var(--text);
+  padding:0 0 12px 14px;
+  margin-bottom:16px;
+  border-bottom:2px solid var(--border);
+  position:relative;
+  display:flex;align-items:center;gap:10px;
+}
+.section-title::before{
+  content:'';position:absolute;left:0;bottom:-2px;
+  width:50px;height:2px;background:var(--red);
+}
+.section-title .badge{
+  font-size:11px;background:var(--red);
+  color:#fff;padding:2px 10px;
+  font-family:'Microsoft YaHei',sans-serif;
+  letter-spacing:1px;
+}
+
+/* ═══ 卡片 ═══ */
+.card{
+  background:linear-gradient(160deg,var(--bg-card),rgba(24,35,61,0.6));
+  border:1px solid var(--border);
+  padding:24px;margin-bottom:20px;
+  position:relative;
+  transition:border-color 0.3s ease;
+}
+/* 左侧红色竖条装饰线 */
+.card::before{
+  content:'';position:absolute;top:12px;left:0;
+  width:3px;height:calc(100% - 24px);
+  background:linear-gradient(180deg,var(--red),rgba(239,68,68,0.2));
+}
+.card:hover{border-color:rgba(184,134,11,0.4)}
+.card .card-inner{margin-left:10px}
+
+/* ═══ 画布 + 控制区 ═══ */
+canvas{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--border);
+  background:#0a1120;
+}
+.controls{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;
+}
+.btn{
+  padding:8px 22px;
+  border:1.5px solid var(--gold);
+  background:transparent;
+  color:var(--gold-light);
+  cursor:pointer;
+  font-size:12px;font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  letter-spacing:2px;
+  transition:all 0.3s ease;
+  position:relative;overflow:hidden;
+}
+.btn::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(184,134,11,0.1),transparent);
+  transition:left 0.5s ease;
+}
+.btn:hover::before{left:100%}
+.btn-primary{
+  background:var(--red);border-color:var(--gold);
+  color:#fff;
+}
+.btn-primary:hover{
+  background:#dc2626;box-shadow:0 0 20px rgba(239,68,68,0.3);
+}
+.btn-outline:hover{
+  background:rgba(184,134,11,0.1);border-color:var(--gold-light);
+}
+.stat-row{
+  display:flex;justify-content:space-between;padding:6px 0;
+  font-size:12px;color:var(--text-dim);font-family:'Microsoft YaHei',sans-serif;
+  border-bottom:1px solid rgba(30,42,74,0.5);
+}
+.stat-row span{color:var(--text)}
+.stat-row .hl{color:var(--gold-light);font-weight:700}
+
+/* ═══ 合规列表 ═══ */
+.compliance-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0 8px 6px;
+  border-bottom:1px solid rgba(30,42,74,0.4);
+  font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  font-size:12px;
+  transition:background 0.2s;
+}
+.compliance-item:hover{background:rgba(239,68,68,0.04)}
+.compliance-item .name{display:flex;align-items:center;gap:8px}
+.compliance-item .icon-pass{color:#22c55e;font-size:14px}
+.compliance-item .icon-fail{color:var(--red);font-size:14px}
+.compliance-item .score{
+  font-size:12px;padding:2px 8px;border:1px solid;
+  border-radius:2px;min-width:44px;text-align:center;
+}
+.score-pass{border-color:#22c55e;color:#22c55e}
+.score-fail{border-color:var(--red);color:var(--red)}
+
+/* ═══ 技能网格 ═══ */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+}
+@media(max-width:860px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.skills-grid{grid-template-columns:1fr}}
+.skill-card{
+  background:linear-gradient(160deg,var(--bg-card),var(--bg-elevated));
+  border:1px solid var(--border);
+  padding:16px;text-align:center;
+  transition:all 0.3s ease;position:relative;
+}
+.skill-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.skill-card .bar-wrap{
+  height:5px;background:rgba(255,255,255,0.05);
+  border-radius:0;margin:10px 0 6px;overflow:hidden;
+}
+.skill-card .bar-fill{
+  height:100%;border-radius:0;
+  transition:width 1.2s ease-out;
+}
+.skill-card .s-label{
+  font-size:13px;font-weight:600;
+  font-family:'Noto Serif SC',serif;
+  letter-spacing:1px;
+}
+.skill-card .s-pct{
+  font-size:18px;font-weight:700;
+  font-family:'Noto Serif SC',serif;
+}
+.skill-card .s-sub{
+  font-size:10px;color:var(--text-dim);
+  font-family:'Microsoft YaHei',sans-serif;
+}
+
+/* ═══ 布局网格 ═══ */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
+
+/* ═══ 底部 ═══ */
+footer{
+  text-align:center;padding:36px 20px 24px;
+  border-top:1px solid var(--border);
+  margin-top:20px;
+  font-size:12px;color:var(--text-dim);
+  font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+  letter-spacing:1px;
+}
+footer a{
+  color:var(--gold-light);text-decoration:none;
+  transition:color 0.3s;
+}
+footer a:hover{color:var(--red)}
+footer .footer-line{margin:4px 0}
+footer .footer-sep{color:var(--border);margin:0 10px}
 </style>
 </head>
 <body>
-<div id="bg"></div>
+<div id="grid-bg"></div>
+
+<!-- ═══ 固定导航 ═══ -->
+<nav>
+<ul>
+<li><a href="#policy">政策分析</a></li>
+<li class="nav-sep">|</li>
+<li><a href="#research">产业调研</a></li>
+<li class="nav-sep">|</li>
+<li><a href="#compliance">合规审查</a></li>
+<li class="nav-sep">|</li>
+<li><a href="#data">数据治理</a></li>
+<li class="nav-sep">|</li>
+<li><a href="#skills">技能</a></li>
+</ul>
+</nav>
+
 <div class="container">
-<nav><a>政策分析</a><a>产业调研</a><a>合规审查</a><a>数据治理</a></nav>
-<div class="hero">
-<h1>政策分析与合规审计平台</h1>
-<div class="sub">// 产业政策研究 · 数据治理 · 规范建设 · 流程优化</div>
-<div class="stats">
-<div class="stat"><div class="stat-num">95%</div><div class="stat-lbl">审核通过率</div></div>
-<div class="stat"><div class="stat-num" id="compliance-score">0</div><div class="stat-lbl">合规得分</div></div>
-<div class="stat"><div class="stat-num">15+</div><div class="stat-lbl">实地调研企业</div></div>
-</div></div>
 
-<div class="grid-2">
-<div class="card">
-<div class="card-title"><span>#</span> 产业政策分析 · 主题建模 + 关键词提取</div>
-<canvas id="policy-canvas" width="500" height="340"></canvas>
-<div class="controls" style="margin-top:8px">
-<button class="btn btn-primary" id="analyze-btn">▶ 政策分析</button>
-<button class="btn" id="reset-policy">↻ 重置</button>
-</div>
-<div class="stat-line">政策主题<span id="topic-count">0</span><span>关键词<span id="kw-total">0</span></span><span>关联度<span id="rel-score">0%</span></span></div>
+<!-- ═══ 英雄区 ═══ -->
+<div class="hero rise rise-d1">
+  <div class="seal-ring">
+    <span class="seal-dot"></span><span class="seal-dot"></span>
+    <span class="seal-dot"></span><span class="seal-dot"></span>
+  </div>
+  <h1>政策研究与产业分析</h1>
+  <div class="hero-sub">— 产业政策 · 合规审计 · 数据治理 · 调研报告 —</div>
+  <div class="stats rise rise-d2">
+    <div class="stat-card"><div class="stat-val">95%</div><div class="stat-label">审核通过率</div></div>
+    <div class="stat-card"><div class="stat-val" id="kpi-score">0</div><div class="stat-label">合规审计得分</div></div>
+    <div class="stat-card"><div class="stat-val">15+</div><div class="stat-label">实地调研企业</div></div>
+  </div>
 </div>
 
-<div class="card">
-<div class="card-title"><span>#</span> 合规检查表 · 逐项评分</div>
-<div id="compliance-list" style="font-family:monospace;font-size:11px"></div>
-<button class="btn btn-primary" id="audit-btn" style="margin-top:12px">▶ 执行合规审计</button>
-</div></div>
+<!-- ═══ 第一行：政策气泡 + 合规检查 ═══ -->
+<div class="grid-2 rise rise-d3">
 
-<div class="card">
-<div class="card-title"><span>#</span> 技术体系 · 国企数字化</div>
-<div class="grid-3">
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#a855f7;font-size:11px;font-family:monospace">公文写作与管理</div>
-<div class="stat-line">收发登记·台账管理·会议纪要·归档<span>95%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#3b82f6;font-size:11px;font-family:monospace">政策调研与报告</div>
-<div class="stat-line">产业分析·走访调研·信息归纳·报告撰写<span>92%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#00ff88;font-size:11px;font-family:monospace">合规与安全</div>
-<div class="stat-line">法规检索·合同分析·数据脱敏·风险评估<span>85%</span></div></div></div></div>
+  <!-- 政策主题气泡图 -->
+  <div class="card" id="policy">
+    <div class="card-inner">
+      <div class="section-title">政策主题 · 关联分析 <span class="badge">实时模拟</span></div>
+      <canvas id="policy-canvas" width="520" height="360"></canvas>
+      <div class="controls">
+        <button class="btn btn-primary" id="analyze-btn">执行政策分析</button>
+        <button class="btn btn-outline" id="reset-policy">重置视图</button>
+      </div>
+      <div class="stat-row">
+        <span>政策主题</span><span id="topic-count" style="color:var(--gold-light)">0</span>
+        <span>关键词频</span><span id="kw-total" style="color:var(--gold-light)">0</span>
+        <span>关联度</span><span id="rel-score" style="color:var(--gold-light)">0%</span>
+      </div>
+    </div>
+  </div>
 
-<div class="footer"><a href="https://github.com/wzx11223344" style="color:#a855f7;text-decoration:none">github.com/wzx11223344</a> · 万值翔 · 经信委实习 · 产业调研</div>
+  <!-- 合规检查表 -->
+  <div class="card" id="compliance">
+    <div class="card-inner">
+      <div class="section-title">合规检查 · 逐项评分 <span class="badge">审计模拟</span></div>
+      <div id="compliance-list"></div>
+      <button class="btn btn-primary" id="audit-btn" style="margin-top:14px">执行全面审计</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 第二行：产业调研 + 数据治理（合并为一个宽卡片） ═══ -->
+<div class="card rise rise-d4" id="research">
+  <div class="card-inner">
+    <div class="section-title">产业调研 · 实地走访 <span class="badge">成果展示</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:13px;color:var(--text);font-family:'Microsoft YaHei',sans-serif;line-height:1.8">
+          <p style="margin-bottom:10px;color:var(--text-dim)">调研区域覆盖长三角、珠三角重点产业园区，深入走访<strong style="color:var(--gold-light)">15家</strong>制造企业与<strong style="color:var(--gold-light)">6个</strong>产业园区，形成调研报告<strong style="color:var(--gold-light)">12份</strong>，获采纳建议<strong style="color:var(--gold-light)">8项</strong>。</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+          <div style="background:var(--bg-elevated);padding:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:20px;font-weight:700;color:var(--gold-light)">8</div>
+            <div style="font-size:10px;color:var(--text-dim)">采纳建议</div>
+          </div>
+          <div style="background:var(--bg-elevated);padding:10px;border:1px solid var(--border);text-align:center">
+            <div style="font-size:20px;font-weight:700;color:var(--gold-light)">12</div>
+            <div style="font-size:10px;color:var(--text-dim)">调研报告</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--text-dim);font-family:'Microsoft YaHei',sans-serif;line-height:2">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span>智能制造转型调研</span><span style="color:var(--gold-light)">已完成</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span>新能源产业链评估</span><span style="color:var(--gold-light)">已完成</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span>数字经济政策落地</span><span style="color:var(--gold-light)">已完成</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:4px 0"><span>专精特新企业追踪</span><span style="color:var(--gold-light)">已完成</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span>双碳目标路径分析</span><span style="color:var(--gold-light)">已完成</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 第三行：技能 ═══ -->
+<div class="card rise rise-d5" id="skills">
+  <div class="card-inner">
+    <div class="section-title">专业能力 · 技术体系 <span class="badge">综合素质</span></div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="s-label" style="color:var(--red)">公文写作管理</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:95%;background:linear-gradient(90deg,var(--red),#f87171)"></div></div>
+        <div class="s-pct" style="color:var(--red)">95%</div>
+        <div class="s-sub">收发登记 · 台账管理 · 会议纪要 · 归档</div>
+      </div>
+      <div class="skill-card">
+        <div class="s-label" style="color:#60a5fa">政策调研报告</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:92%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
+        <div class="s-pct" style="color:#60a5fa">92%</div>
+        <div class="s-sub">产业分析 · 走访调研 · 信息归纳 · 撰写</div>
+      </div>
+      <div class="skill-card">
+        <div class="s-label" style="color:#34d399">合规与安全</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:85%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+        <div class="s-pct" style="color:#34d399">85%</div>
+        <div class="s-sub">法规检索 · 合同分析 · 数据脱敏 · 评估</div>
+      </div>
+      <div class="skill-card">
+        <div class="s-label" style="color:#c084fc">数据治理</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:90%;background:linear-gradient(90deg,#8b5cf6,#c084fc)"></div></div>
+        <div class="s-pct" style="color:#c084fc">90%</div>
+        <div class="s-sub">数据分析 · 可视化 · 数据库 · 报表</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 底部 ═══ -->
+<footer class="rise rise-d5">
+  <div class="footer-line"><a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a></div>
+  <div class="footer-line">万值翔 · 经信委实习 · 产业政策调研</div>
+</footer>
+
 </div>
 
 <script>
-// ═══ Policy Analysis ═══  
-const pc=document.getElementById('policy-canvas'),pctx=pc.getContext('2d');
-const pw=500,ph=340;
-const topics=['智能制造','新能源','高端装备','数字经济','双碳','人工智能','生物医药','集成电路'];
-const keywords=['数字化转型','绿色制造','产业升级','创新驱动','高质量发展','供给侧改革','新质生产力','链长制','专精特新'];
+// ═══════════════════════════════════════════
+// 政策主题气泡图 + 关键词柱状图
+// ═══════════════════════════════════════════
+
+const pc = document.getElementById('policy-canvas');
+const pctx = pc.getContext('2d');
+const PW = 520, PH = 360;
+
+const TOPICS = ['智能制造','新能源','高端装备','数字经济','双碳战略','人工智能','生物医药','集成电路'];
+const KEYWORDS = ['数字化转型','绿色制造','产业升级','创新驱动','高质量发展','供给侧改革','新质生产力','链长制','专精特新'];
+
+/* 绘制仪表盘底部网格 */
+function drawGrid(){
+  pctx.save();
+  pctx.strokeStyle = 'rgba(30,42,74,0.25)';
+  pctx.lineWidth = 0.5;
+  for(let y=0;y<PH;y+=30){
+    pctx.beginPath();pctx.moveTo(0,y);pctx.lineTo(PW,y);pctx.stroke();
+  }
+  for(let x=0;x<PW;x+=30){
+    pctx.beginPath();pctx.moveTo(x,0);pctx.lineTo(x,PH);pctx.stroke();
+  }
+  pctx.restore();
+}
 
 function drawPolicy(data){
-  pctx.fillStyle='#050508';pctx.fillRect(0,0,pw,ph);
-  if(!data)return;
+  pctx.fillStyle = '#0a1120';
+  pctx.fillRect(0,0,PW,PH);
+  drawGrid();
+
+  if(!data) return;
+
+  // ── 彩色主题气泡 ──
+  const bubbleColors = [
+    '#ef4444','#f59e0b','#10b981','#3b82f6',
+    '#8b5cf6','#ec4899','#14b8a6','#f97316'
+  ];
+
   data.topics.forEach((t,i)=>{
-    const x=20+(i%4)*120,y=40+Math.floor(i/4)*100;
-    const r=t.weight*30+15;
-    const hue=270+Math.floor(t.weight*60);
-    pctx.fillStyle=`hsl(${hue},80%,50%)`;
-    pctx.beginPath();pctx.arc(x+60,y,r,0,Math.PI*2);pctx.fill();
-    pctx.fillStyle='#fff';pctx.font='8px monospace';pctx.textAlign='center';
-    pctx.fillText(t.name,x+60,y+2);
-    pctx.fillStyle='#aaa';pctx.font='7px monospace';
-    pctx.fillText(Math.round(t.weight*100)+'%',x+60,y+r+12);
+    const col = i % 4;
+    const row = Math.floor(i / 4);
+    const cx = 65 + col * 115 + (row === 1 ? 58 : 0);
+    const cy = 55 + row * 105;
+    const r = Math.max(20, t.weight * 38);
+
+    // 发光圈
+    const grad = pctx.createRadialGradient(cx,cy,0,cx,cy,r*1.6);
+    grad.addColorStop(0,bubbleColors[i % bubbleColors.length].replace(')','0.3)').replace('rgb','rgba').replace('#ef4444','rgba(239,68,68,0.2)'));
+    grad.addColorStop(1,'transparent');
+    pctx.fillStyle = grad;
+    pctx.beginPath();pctx.arc(cx,cy,r*1.6,0,Math.PI*2);pctx.fill();
+
+    // 气泡
+    const bg = pctx.createRadialGradient(cx-5,cy-5,0,cx,cy,r);
+    bg.addColorStop(0,bubbleColors[i % bubbleColors.length].replace(')','0.8)').replace('rgb','rgba').replace('#ef4444','rgba(239,68,68,0.7)'));
+    bg.addColorStop(1,bubbleColors[i % bubbleColors.length]);
+    pctx.fillStyle = bg;
+    pctx.beginPath();pctx.arc(cx,cy,r,0,Math.PI*2);pctx.fill();
+
+    // 高光
+    pctx.fillStyle = 'rgba(255,255,255,0.15)';
+    pctx.beginPath();pctx.arc(cx-4,cy-5,r*0.3,0,Math.PI*2);pctx.fill();
+
+    // 主题名称
+    pctx.fillStyle = '#fff';
+    pctx.font = 'bold 10px "Noto Serif SC","Microsoft YaHei",sans-serif';
+    pctx.textAlign = 'center';pctx.textBaseline = 'middle';
+    pctx.fillText(t.name,cx,cy);
+
+    // 权重
+    pctx.fillStyle = 'rgba(255,255,255,0.7)';
+    pctx.font = '8px "Microsoft YaHei",sans-serif';
+    pctx.fillText(Math.round(t.weight*100)+'%',cx,cy + r + 14);
   });
-  // Keywords
-  pctx.fillStyle='#555';pctx.font='8px monospace';pctx.textAlign='center';
-  pctx.fillText('政策关键词频率',pw/2,ph-15);
-  data.keywords.slice(0,7).forEach((kw,i)=>{
-    const x=30+i*65,y=ph-60;
-    pctx.fillStyle='rgba(168,85,247,.5)';
-    pctx.fillRect(x,y-kw.weight*30,30,kw.weight*30);
-    pctx.fillStyle='#888';pctx.font='6px monospace';pctx.textAlign='center';
-    pctx.fillText(kw.word,x+15,ph-50);
+
+  // ── 底部：关键词柱状图 ──
+  const barY = PH - 75;
+  const barH = 55;
+
+  // 分区线
+  pctx.strokeStyle = 'rgba(184,134,11,0.2)';
+  pctx.lineWidth = 1;
+  pctx.beginPath();pctx.moveTo(10,barY-5);pctx.lineTo(PW-10,barY-5);pctx.stroke();
+
+  pctx.fillStyle = 'rgba(184,134,11,0.5)';
+  pctx.font = '8px "Microsoft YaHei",sans-serif';
+  pctx.textAlign = 'left';pctx.textBaseline = 'bottom';
+  pctx.fillText('— 政策关键词频率 —',15,barY-8);
+
+  const kwSlice = data.keywords.slice(0,7);
+  const kwW = (PW - 40) / kwSlice.length;
+
+  kwSlice.forEach((kw,i)=>{
+    const x = 20 + i * kwW;
+    const bw = Math.max(16, kwW - 8);
+    const bh = Math.max(4, kw.weight * barH);
+
+    // 柱体渐变
+    const g = pctx.createLinearGradient(x,barY,x,barY-bh);
+    g.addColorStop(0,'rgba(184,134,11,0.3)');
+    g.addColorStop(1,'rgba(239,68,68,0.7)');
+    pctx.fillStyle = g;
+    pctx.fillRect(x,barY-bh,bw,bh);
+
+    // 柱体顶端标注数值
+    pctx.fillStyle = 'rgba(184,134,11,0.7)';
+    pctx.font = '7px "Microsoft YaHei",sans-serif';
+    pctx.textAlign = 'center';pctx.textBaseline = 'bottom';
+    pctx.fillText(Math.round(kw.weight*100)+'%',x+bw/2,barY-bh-2);
+
+    // 底端关键词（取前4字）
+    pctx.fillStyle = 'rgba(226,232,240,0.7)';
+    pctx.font = '7px "Microsoft YaHei",sans-serif';
+    pctx.textAlign = 'center';pctx.textBaseline = 'top';
+    const label = kw.word.length > 4 ? kw.word.slice(0,4) : kw.word;
+    pctx.fillText(label,x+bw/2,barY+3);
   });
 }
 
+/* 随机生成分析数据 */
 function generateAnalysis(){
-  const tCount=3+Math.floor(Math.random()*3);
-  const myTopics=topics.sort(()=>Math.random()-0.5).slice(0,tCount).map(t=>({name:t,weight:0.5+Math.random()*0.5}));
-  const kw=keywords.sort(()=>Math.random()-0.5).slice(0,3+Math.floor(Math.random()*3)).map(w=>({word:w,weight:0.3+Math.random()*0.7}));
-  return {topics:myTopics,keywords:kw};
+  const tCount = 3 + Math.floor(Math.random() * 4);
+  const shuffled = TOPICS.sort(()=>Math.random()-0.5);
+  const sel = shuffled.slice(0, tCount).map(t=>({name:t,weight:0.4+Math.random()*0.55}));
+  const kw = KEYWORDS.sort(()=>Math.random()-0.5)
+    .slice(0, 4+Math.floor(Math.random()*4))
+    .map(w=>({word:w,weight:0.25+Math.random()*0.7}));
+  return {topics:sel,keywords:kw};
 }
-drawPolicy(generateAnalysis());
 
-document.getElementById('analyze-btn').onclick=()=>{
-  const data=generateAnalysis();
+/* 更新UI统计 */
+function updateStats(data){
+  document.getElementById('topic-count').textContent = data.topics.length;
+  const kwSum = data.keywords.reduce((s,k)=>s+k.weight*100,0);
+  document.getElementById('kw-total').textContent = Math.round(kwSum);
+  const rel = 72 + Math.random() * 23;
+  document.getElementById('rel-score').textContent = Math.round(rel) + '%';
+  const score = 72 + Math.floor(Math.random() * 23);
+  document.getElementById('kpi-score').textContent = score;
+  document.querySelector('#compliance .section-title .badge').textContent = '审计模拟';
+}
+
+// 初次渲染
+const initData = generateAnalysis();
+drawPolicy(initData);
+updateStats(initData);
+
+// ── 政策分析按钮 ──
+document.getElementById('analyze-btn').onclick = ()=>{
+  const data = generateAnalysis();
   drawPolicy(data);
-  document.getElementById('topic-count').textContent=data.topics.length;
-  document.getElementById('kw-total').textContent=data.keywords.reduce((s,k)=>s+k.weight*100,0).toFixed(0);
-  document.getElementById('rel-score').textContent=(70+Math.random()*25).toFixed(0)+'%';
-  document.getElementById('compliance-score').textContent=Math.floor(70+Math.random()*25);
-};
-document.getElementById('reset-policy').onclick=()=>{
-  pctx.fillStyle='#050508';pctx.fillRect(0,0,pw,ph);
-  document.getElementById('topic-count').textContent='0';
-  document.getElementById('rel-score').textContent='0%';
+  updateStats(data);
 };
 
-// ═══ Compliance Checklist ═══
-const items=[
+// ── 重置按钮 ──
+document.getElementById('reset-policy').onclick = ()=>{
+  pctx.fillStyle = '#0a1120';
+  pctx.fillRect(0,0,PW,PH);
+  drawGrid();
+  document.getElementById('topic-count').textContent = '0';
+  document.getElementById('kw-total').textContent = '0';
+  document.getElementById('rel-score').textContent = '0%';
+};
+
+// ═══════════════════════════════════════════
+// 合规检查表
+// ═══════════════════════════════════════════
+
+const COMPLIANCE_ITEMS = [
   {name:'数据安全管理规范',passed:true,weight:20},
   {name:'公文格式标准化',passed:true,weight:15},
   {name:'档案管理制度',passed:true,weight:15},
@@ -140,24 +685,50 @@ const items=[
   {name:'信息安全等级保护',passed:false,weight:10},
   {name:'合同审查合规',passed:true,weight:10}
 ];
+
 function renderCompliance(isAudit){
-  const el=document.getElementById('compliance-list');el.innerHTML='';
-  let score=0,total=0,tCount=0,rCount=0;
-  items.forEach(item=>{
-    if(isAudit){item.passed=Math.random()>0.25;}
-    const d=document.createElement('div');d.className='stat-line';
-    const icon=item.passed?'✓':'✗';
-    d.innerHTML=`<span style="color:${item.passed?'#0f0':'#f44'}">${icon} ${item.name}</span><span>${item.passed?'通过':'未通过'} | ${item.weight}分</span>`;
+  const el = document.getElementById('compliance-list');
+  el.innerHTML = '';
+  let score = 0, total = 0;
+
+  COMPLIANCE_ITEMS.forEach(item=>{
+    if(isAudit) item.passed = Math.random() > 0.22;
+
+    const d = document.createElement('div');
+    d.className = 'compliance-item';
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'name';
+    const icon = document.createElement('span');
+    icon.className = item.passed ? 'icon-pass' : 'icon-fail';
+    icon.textContent = item.passed ? '◆' : '◇';
+    nameDiv.appendChild(icon);
+    nameDiv.append(item.name);
+
+    const scoreSpan = document.createElement('span');
+    scoreSpan.className = 'score ' + (item.passed ? 'score-pass' : 'score-fail');
+    scoreSpan.textContent = (item.passed ? '通过' : '未通过') + ' ' + item.weight + '分';
+
+    d.appendChild(nameDiv);
+    d.appendChild(scoreSpan);
     el.appendChild(d);
-    if(item.passed)score+=item.weight;
-    total+=item.weight;tCount++;
-    if(item.passed)rCount++;
+
+    if(item.passed) score += item.weight;
+    total += item.weight;
   });
-  const pct=Math.round(score/total*100);
-  document.getElementById('compliance-score').textContent=pct;
+
+  const pct = Math.round(score / total * 100);
+  document.getElementById('kpi-score').textContent = pct;
 }
+
 renderCompliance(false);
-document.getElementById('audit-btn').onclick=()=>renderCompliance(true);
+
+document.getElementById('audit-btn').onclick = ()=>{
+  renderCompliance(true);
+  // 审计后更新统计
+  const s = parseInt(document.getElementById('kpi-score').textContent);
+  document.querySelector('#compliance .section-title .badge').textContent = '已审计 · ' + s + '分';
+};
 </script>
 </body>
 </html>
