@@ -235,7 +235,7 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 <!-- ==================== HERO ==================== -->
 <section id="hero">
 <h1 class="hero-name">万值翔</h1>
-<div class="hero-subtitle" id="typewriter"></div>
+<div class="hero-subtitle" id="typewriter">经济学本科(前30%) · 101个开源项目 · 15台MCP服务器 · 人工智能与量化计算</div>
 <div class="hero-tags">
 <span>TRAE PLUGIN ECOSYSTEM</span><span>MCP ARCHITECTURE</span><span>FULL-STACK ENGINEERING</span>
 <span>QUANTITATIVE FINANCE</span><span>COMPUTER GRAPHICS</span><span>HIGH-PERFORMANCE COMPUTING</span>
@@ -244,7 +244,7 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 <div class="kpi-card"><div class="kpi-num" data-target="101">0</div><div class="kpi-label">代码仓库</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="15">0</div><div class="kpi-label">MCP 服务</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="370">0</div><div class="kpi-label">工具集成</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="115">0</div><div class="kpi-unit">K+</div><div class="kpi-label">代码行数</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="115000">0</div><div class="kpi-label">代码行数</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="58">0</div><div class="kpi-label">技能模块</div></div>
 </div>
 </section>
@@ -514,12 +514,13 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Git/GitHub</span><span>96%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-orange)" data-width="96"></div></div></div>
 </div>
 <div class="skill-cat">
-<h4>SPECIALIZED</h4>
-<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Computer Graphics</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-cyan)" data-width="85"></div></div></div>
-<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Quant Finance</span><span>82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-pink)" data-width="82"></div></div></div>
-<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Algorithms</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-green)" data-width="88"></div></div></div>
-<div class="skill-bar-wrap"><div class="skill-bar-label"><span>System Design</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-yellow)" data-width="80"></div></div></div>
-<div class="skill-bar-wrap"><div class="skill-bar-label"><span>LLM/Agent</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-purple)" data-width="90"></div></div></div>
+<h4>专业领域</h4>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>量化金融系统</span><span>82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-cyan)" data-width="82"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>NLP与文本分析</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-pink)" data-width="85"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>计量经济学建模</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-green)" data-width="88"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>MCP与工具生态</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-yellow)" data-width="95"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>数据管道与清洗</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-purple)" data-width="80"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>算法与数学</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-orange)" data-width="88"></div></div></div>
 </div>
 </div>
 <div class="timeline" style="margin-top:40px">
@@ -547,10 +548,10 @@ BUILT FROM SCRATCH · ZERO DEPENDENCIES · PURE HTML/CSS/JS · ALL DEMOS COMPUTE
     chars=new Array(cols).fill(0);
   }
   resize();window.addEventListener('resize',resize);
-  const glyphs='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!';
+  const glyphs='アイウエオカキ0123456789算法量化金融机器学习深度网络经济计量'+'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!';
   function draw(){
     ctx.fillStyle='rgba(10,10,10,.06)';ctx.fillRect(0,0,w,h);
-    ctx.fillStyle='#0f0';ctx.font='13px monospace';
+    ctx.fillStyle=Math.random()>.5?'#0f0':'#0a0';ctx.font='13px monospace';
     for(let i=0;i<cols;i++){
       const t=glyphs[Math.floor(Math.random()*glyphs.length)];
       const x=i*14,y=chars[i]*14;
@@ -573,10 +574,10 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 // ===================================================================
 (function(){
   const el=$('#typewriter');
-  const texts=['Senior Software Engineer · Plugin Ecosystem Architect',
-    'MCP Protocol Designer · Full-Stack Developer',
-    'Quantitative Finance Enthusiast · Computer Graphics Hacker',
-    'Building the future, one plugin at a time.'];
+  const texts=['不套壳、不调API凑数、每个算法从零实现',
+    '101个开源项目 · 15台MCP服务器 · ~370个工具接口',
+    '计量经济学到量化金融 · 从NLP到光线追踪引擎',
+    '经济学本科(前30%) · 基金从业+银行从业双证持有'];
   let ti=0,ci=0,deleting=false,ch='_';
   function tick(){
     const txt=texts[ti];
@@ -601,10 +602,13 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
   function animateKPI(){
     if(animated)return;animated=true;
     nums.forEach(el=>{
-      const target=parseInt(el.dataset.target),unit=el.nextElementSibling;
+      const target=parseInt(el.dataset.target);
       let cur=0;const dur=1500,step=Math.max(1,Math.floor(target/(dur/16)));
       const timer=setInterval(()=>{
-        cur=Math.min(cur+step,target);el.textContent=cur;
+        cur=Math.min(cur+step,target);
+        if(target>=10000)el.textContent=(cur/10000).toFixed(1)+'万';
+        else if(target>=1000)el.textContent=cur.toLocaleString();
+        else el.textContent=cur;
         if(cur>=target)clearInterval(timer);
       },16);
     });
@@ -640,10 +644,10 @@ document.addEventListener('click',e=>{
   panelParent.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   const panel=panelParent.querySelector('#'+tabId);
   if(panel)panel.classList.add('active');
-  if(tabId==='algo-mandel')renderMandelbrot();
-  if(tabId==='algo-life')resizeLifeCanvas();
-  if(tabId==='algo-path')resizePathCanvas();
-  if(tabId==='algo-sort')resizeSortCanvas();
+  if(tabId==='algo-mandel'){renderMandelbrot();const mc=$('#algo-mandel-canvas');if(mc){mc.style.width='100%';mc.style.height='100%';}}
+  if(tabId==='algo-life'){resizeLifeCanvas();const lc=$('#algo-life-canvas');if(lc){lc.style.width='100%';lc.style.height='100%';}}
+  if(tabId==='algo-path'){resizePathCanvas();const pc=$('#algo-path-canvas');if(pc){pc.style.width='100%';pc.style.height='100%';}}
+  if(tabId==='algo-sort'){resizeSortCanvas();const sc=$('#algo-sort-canvas');if(sc){sc.style.width='100%';sc.style.height='100%';}}
 });
 
 // ===================================================================
@@ -654,7 +658,7 @@ document.addEventListener('click',e=>{
   const sections=[];
   navLinks.forEach(a=>{const id=a.getAttribute('href');if(id)sections.push(document.querySelector(id));});
   window.addEventListener('scroll',()=>{
-    let cur='';
+    let cur='hero';
     sections.forEach(s=>{if(s&&window.scrollY>=s.offsetTop-200)cur=s.id;});
     navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
   });
@@ -1373,9 +1377,10 @@ lifeCanvas.addEventListener('click',e=>{
 let mandelCenterR=-0.7,mandelCenterI=0,mandelRange=3.5,mandelMaxIter=256;
 const mandelCanvas=$('#algo-mandel-canvas'),mandelCtx=mandelCanvas.getContext('2d');
 const MANDEL_W=600,MANDEL_H=400;
-let mandelDragging=false,mandelDragStart=null,mandelRenderId=0;
+let mandelDragging=false,mandelDragStart=null,mandelRenderId=0,mandelRendered=false;
 
 function renderMandelbrot(){
+  if(mandelRendered)return;
   const cw=mandelCanvas.width=MANDEL_W,ch=mandelCanvas.height=MANDEL_H;
   const img=mandelCtx.createImageData(cw,ch);
   const aspect=cw/ch,hw=mandelRange*aspect/2,hh=mandelRange/2;
@@ -1403,11 +1408,12 @@ function renderMandelbrot(){
     else $('#algo-mandel-info').textContent='中心: '+mandelCenterR.toFixed(6)+'+'+mandelCenterI.toFixed(6)+'i | 范围: '+mandelRange.toFixed(2)+' | 最大迭代: '+mandelMaxIter;
   }
   renderRow(0);
+  mandelRendered=true;
 }
 
-function resetMandelbrot(){mandelCenterR=-0.7;mandelCenterI=0;mandelRange=3.5;renderMandelbrot();}
-function mandelZoomIn(){mandelRange*=0.5;renderMandelbrot();}
-function mandelZoomOut(){mandelRange*=2;renderMandelbrot();}
+function resetMandelbrot(){mandelCenterR=-0.7;mandelCenterI=0;mandelRange=3.5;mandelRendered=false;renderMandelbrot();}
+function mandelZoomIn(){mandelRange*=0.5;mandelRendered=false;renderMandelbrot();}
+function mandelZoomOut(){mandelRange*=2;mandelRendered=false;renderMandelbrot();}
 
 mandelCanvas.addEventListener('mousedown',e=>{
   mandelDragging=true;mandelDragStart={x:e.clientX,y:e.clientY,cr:mandelCenterR,ci:mandelCenterI};
@@ -1422,13 +1428,13 @@ mandelCanvas.addEventListener('mousemove',e=>{
 });
 mandelCanvas.addEventListener('mouseup',()=>{
   if(!mandelDragging)return;mandelDragging=false;mandelCanvas.style.cursor='grab';
-  renderMandelbrot();
+  mandelRendered=false;renderMandelbrot();
 });
 mandelCanvas.addEventListener('wheel',e=>{
   e.preventDefault();
   mandelRange*=e.deltaY>0?1.1:.9;
   mandelRange=Math.max(1e-6,Math.min(10,mandelRange));
-  renderMandelbrot();
+  mandelRendered=false;renderMandelbrot();
 });
 
 // ===================================================================
