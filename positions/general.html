@@ -81,6 +81,22 @@ canvas{display:block;width:100%;height:auto;background:#05050a;border-radius:8px
 .skill-fill{height:100%;border-radius:2px;transition:width 1.5s ease;width:0}
 .skill-fill.cy{background:linear-gradient(90deg,var(--cy),var(--pk))}
 
+/* ── Projects ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.proj-card{display:block;background:rgba(255,255,255,.02);border:1px solid rgba(0,240,255,.08);border-radius:10px;padding:16px;transition:.3s;text-decoration:none;cursor:none}
+.proj-card:hover{border-color:var(--cy);box-shadow:0 0 24px rgba(0,240,255,.08);transform:translateY(-3px)}
+.proj-name{font-family:monospace;font-size:13px;color:var(--cy);margin-bottom:6px;text-shadow:0 0 8px rgba(0,240,255,.3)}
+.proj-card:hover .proj-name{color:#fff}
+.proj-desc{font-size:11px;color:#888;line-height:1.5;margin-bottom:10px}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap}
+.proj-tags span{font-family:monospace;font-size:9px;color:var(--pk);border:1px solid rgba(255,0,255,.2);border-radius:4px;padding:1px 6px}
+
+/* ── Contact ── */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.contact-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.02);border:1px solid rgba(0,240,255,.1);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:12px;color:#c8c8e0;text-decoration:none;transition:.3s;cursor:none}
+.contact-item:hover{border-color:var(--cy);color:var(--cy);box-shadow:0 0 18px rgba(0,240,255,.08)}
+.contact-item b{color:var(--pk);font-weight:400}
+
 /* ── Footer ── */
 .footer{text-align:center;padding:30px;font-size:11px;color:#444;font-family:monospace;opacity:0;transition:1s}
 .footer.show{opacity:1}
@@ -95,7 +111,7 @@ canvas{display:block;width:100%;height:auto;background:#05050a;border-radius:8px
 <canvas id="bg-grid"></canvas>
 
 <nav>
-<a href="#hero">首页</a><a href="#nn">神经网络</a><a href="#conv">卷积演示</a><a href="#kmeans">聚类分析</a><a href="#skills">技能</a>
+<a href="#hero">首页</a><a href="#nn">神经网络</a><a href="#conv">卷积演示</a><a href="#kmeans">聚类分析</a><a href="#projects">项目</a><a href="#skills">技能</a><a href="#contact">联系</a>
 </nav>
 
 <div class="container">
@@ -164,6 +180,46 @@ canvas{display:block;width:100%;height:auto;background:#05050a;border-radius:8px
 <div class="skill-card"><div class="skill-name" style="color:var(--pk);text-shadow:0 0 6px rgba(255,0,255,.2)">NLP 文本分析</div><div class="stat-line">TextRank · 贝叶斯 · TF-IDF<span>85%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="85%"></div></div></div>
 <div class="skill-card"><div class="skill-name">计量经济学</div><div class="stat-line">因果推断 · ARIMA · DSGE<span>88%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="88%"></div></div></div>
 <div class="skill-card"><div class="skill-name" style="color:var(--pk);text-shadow:0 0 6px rgba(255,0,255,.2)">MCP 生态</div><div class="stat-line">15台 · ~370接口 · 58技能<span>92%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="92%"></div></div></div>
+</div>
+</div>
+
+<div id="projects" class="card">
+<div class="card-title"><span class="p">◆</span> 项目作品 · 开源实证</div>
+<div class="proj-grid">
+<a class="proj-card" href="https://github.com/wzx11223344/pyconometrics" target="_blank">
+<div class="proj-name">pyconometrics</div>
+<div class="proj-desc">计量经济工具库：面板固定效应、工具变量(IV)、稳健标准误与异方差修正，覆盖经典与双重机器学习估计。</div>
+<div class="proj-tags"><span>Python</span><span>Stata</span><span>面板</span></div></a>
+<a class="proj-card" href="https://github.com/wzx11223344/quantlab" target="_blank">
+<div class="proj-name">quantlab</div>
+<div class="proj-desc">量化金融回测框架：因子挖掘、信号合成、CVaR 风险度量与绩效归因，支持多资产组合优化。</div>
+<div class="proj-tags"><span>Python</span><span>回测</span><span>CVaR</span></div></a>
+<a class="proj-card" href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">
+<div class="proj-name">causal-inference-ml</div>
+<div class="proj-desc">因果推断 + 机器学习：双重差分(DID)、断点回归(RD)、匹配与 uplift 建模的可复现实验代码。</div>
+<div class="proj-tags"><span>DID</span><span>RD</span><span>ML</span></div></a>
+<a class="proj-card" href="https://github.com/wzx11223344/china-econ-pulse" target="_blank">
+<div class="proj-name">china-econ-pulse</div>
+<div class="proj-desc">中国经济数据可视化：城市/省份面板指标动态仪表盘，融合年鉴、IFR 机器人渗透率等权威数据源。</div>
+<div class="proj-tags"><span>可视化</span><span>面板</span><span>Web</span></div></a>
+<a class="proj-card" href="https://github.com/wzx11223344/policysim" target="_blank">
+<div class="proj-name">policysim</div>
+<div class="proj-desc">政策模拟仿真：基于 DSGE 与可计算一般均衡的可视化政策冲击推演，支持参数敏感度分析。</div>
+<div class="proj-tags"><span>DSGE</span><span>仿真</span><span>政策</span></div></a>
+<a class="proj-card" href="https://github.com/wzx11223344/express-consumption" target="_blank">
+<div class="proj-name">express-consumption</div>
+<div class="proj-desc">正大杯 1,352 份问卷计量建模可复现代码，体现规范的问卷清洗、信效度检验与实证分析全流程。</div>
+<div class="proj-tags"><span>问卷</span><span>计量</span><span>复现</span></div></a>
+</div>
+</div>
+
+<div id="contact" class="card">
+<div class="card-title"><span class="p">◆</span> 联系方式</div>
+<div class="contact-grid">
+<a class="contact-item" href="https://github.com/wzx11223344" target="_blank"><b>GitHub</b> · wzx11223344</a>
+<a class="contact-item" href="https://space.bilibili.com/502800415" target="_blank"><b>B站</b> · 黎明之剑11</a>
+<a class="contact-item" href="mailto:13388736755@163.com"><b>Email</b> · 13388736755@163.com</a>
+<a class="contact-item" href="tel:13388736755"><b>电话</b> · 13388736755</a>
 </div>
 </div>
 
