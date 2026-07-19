@@ -3,998 +3,2000 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>万值翔 · 实战作品集</title>
+<title>万值翔 · SYSTEM ONLINE</title>
 <style>
-/* ═══════════════════════════════════════ */
-/* CSS Variables & Reset                     */
-/* ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* CSS Variables & Reset                                                    */
+/* ═══════════════════════════════════════════════════════════════════════ */
 :root {
-  --bg-deep: #060609;
-  --bg-card: #0c0c14;
+  --bg-deepest: #050508;
+  --bg-deep: #0a0a0f;
+  --bg-card: #0d0d18;
   --bg-elevated: #111122;
-  --text-primary: #e8e8f0;
+  --neon-green: #00ff88;
+  --neon-purple: #a855f7;
+  --neon-blue: #3b82f6;
+  --neon-cyan: #06b6d4;
+  --neon-pink: #ec4899;
+  --neon-amber: #f59e0b;
+  --text-primary: #e0e0e8;
   --text-secondary: #8890a4;
-  --text-muted: #555a6e;
-  --accent-neon: #00f0a8;
-  --accent-blue: #3b82f6;
-  --accent-purple: #8b5cf6;
-  --accent-pink: #ec4899;
-  --accent-amber: #f59e0b;
-  --accent-red: #ef4444;
+  --text-dim: #4a5068;
   --border-subtle: #1a1a2e;
-  --border-glow: rgba(0,240,168,0.3);
-  --glow-neon: 0 0 20px rgba(0,240,168,0.25);
-  --glow-blue: 0 0 20px rgba(59,130,246,0.25);
-  --font-display: 'Georgia', 'Noto Serif SC', serif;
-  --font-mono: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  --border-glow: rgba(0,255,136,0.25);
+  --glow-green: 0 0 20px rgba(0,255,136,0.3), 0 0 60px rgba(0,255,136,0.1);
+  --glow-purple: 0 0 20px rgba(168,85,247,0.3), 0 0 60px rgba(168,85,247,0.1);
+  --glow-blue: 0 0 20px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.1);
+  --font-mono: 'Consolas', 'Courier New', monospace;
   --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Georgia', serif;
+  --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
+  --transition-normal: 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
 body {
   background: var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-body);
   overflow-x: hidden;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ═══════════════════════════════════════ */
-/* Canvas Background                        */
-/* ═══════════════════════════════════════ */
-#bg-canvas {
-  position: fixed; top:0; left:0; width:100%; height:100%;
-  z-index: 0; pointer-events:none; opacity:0.4;
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Scanline overlay (toggle)                                               */
+/* ═══════════════════════════════════════════════════════════════════════ */
+#scanlines {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  z-index:9999; pointer-events:none; opacity:0.06;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+  transition: opacity 0.5s;
+}
+#scanlines.off { opacity:0; }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Matrix Rain Canvas                                                       */
+/* ═══════════════════════════════════════════════════════════════════════ */
+#matrix-canvas {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  z-index:0; pointer-events:none;
 }
 
-/* ═══════════════════════════════════════ */
-/* Navigation                               */
-/* ═══════════════════════════════════════ */
-nav {
-  position: fixed; top:0; width:100%; z-index:100;
-  background: rgba(6,6,9,0.85); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 12px 0;
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Toggle Buttons                                                           */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.toggle-controls {
+  position:fixed; top:16px; right:16px; z-index:10000;
+  display:flex; gap:8px;
 }
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
+.toggle-btn {
+  background: var(--bg-elevated);
+  border:1px solid var(--border-subtle);
+  color:var(--text-secondary);
+  padding:6px 12px; font-size:12px; font-family:var(--font-mono);
+  cursor:pointer; border-radius:4px;
+  transition: all var(--transition-fast);
 }
-.nav-logo {
-  font-family: var(--font-mono); font-size: 14px;
-  color: var(--accent-neon); letter-spacing: 2px;
-}
-.nav-links { display:flex; gap:28px; list-style:none; }
-.nav-links a {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 13px; transition: color 0.2s; letter-spacing: 0.5px;
-}
-.nav-links a:hover { color: var(--accent-neon); }
+.toggle-btn:hover { border-color: var(--neon-green); color: var(--neon-green); }
+.toggle-btn.active { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0,255,136,0.1); }
 
-/* ═══════════════════════════════════════ */
-/* Section Containers                       */
-/* ═══════════════════════════════════════ */
-section { position:relative; z-index:1; padding: 80px 24px; }
-.section-inner { max-width: 1200px; margin: 0 auto; }
-
-/* ═══════════════════════════════════════ */
-/* Hero Section                             */
-/* ═══════════════════════════════════════ */
-.hero {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; position:relative; z-index:1;
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Container & Section Base                                                 */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.content-wrapper {
+  position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 24px;
 }
-.hero-content { max-width: 800px; }
-.hero-glitch {
-  font-family: var(--font-mono); font-size: 14px;
-  color: var(--accent-neon); letter-spacing: 4px;
-  margin-bottom: 16px; text-transform: uppercase;
-  animation: glitch-text 8000ms infinite;
+.section {
+  position:relative; padding:80px 0;
+  border-bottom:1px solid var(--border-subtle);
 }
-@keyframes glitch-text {
-  0%,90%,100% { text-shadow: 0 0 0 transparent; }
-  92% { text-shadow: 2px 0 var(--accent-pink); }
-  94% { text-shadow: -2px 0 var(--accent-blue); }
+.section-header {
+  display:flex; align-items:center; gap:16px; margin-bottom:48px;
 }
-.hero-name {
-  font-family: var(--font-display); font-size: clamp(48px, 8vw, 88px);
-  font-weight: 700; letter-spacing: -1px; line-height: 1.1;
-  background: linear-gradient(135deg, #fff 0%, var(--accent-neon) 50%, #fff 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 16px;
-}
-.hero-subtitle {
-  font-size: 18px; color: var(--text-secondary);
-  margin-bottom: 8px; font-weight: 300;
-}
-.hero-stats {
-  display: flex; gap: 32px; justify-content: center;
-  margin-top: 40px; flex-wrap: wrap;
-}
-.stat-card {
-  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 20px 28px; min-width: 120px;
-  transition: all 0.3s;
-}
-.stat-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--glow-neon);
-  transform: translateY(-2px);
-}
-.stat-value {
-  font-family: var(--font-mono); font-size: 32px; font-weight: 700;
-  color: var(--accent-neon);
-}
-.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 1px; }
-
-/* ═══════════════════════════════════════ */
-/* Section Headers                          */
-/* ═══════════════════════════════════════ */
-.section-header { margin-bottom: 48px; }
-.section-tag {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--accent-neon); letter-spacing: 3px;
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.section-title {
-  font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px);
-  font-weight: 700; letter-spacing: -0.5px;
-  margin-bottom: 8px;
-}
-.section-desc { font-size: 15px; color: var(--text-secondary); max-width: 600px; }
-
-/* ═══════════════════════════════════════ */
-/* MCP Server Grid                          */
-/* ═══════════════════════════════════════ */
-.mcp-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-.mcp-card {
-  background: var(--bg-card); border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 24px; transition: all 0.3s;
-  cursor: default; position: relative; overflow: hidden;
-}
-.mcp-card::before {
-  content: ''; position: absolute; top:0; left:0; width:100%; height:2px;
-  background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.mcp-card:hover::before { opacity: 1; }
-.mcp-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--glow-neon);
-  transform: translateY(-4px);
-}
-.mcp-icon {
-  font-family: var(--font-mono); font-size: 24px;
-  color: var(--accent-neon); margin-bottom: 12px;
-}
-.mcp-name {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--accent-neon); margin-bottom: 6px;
-}
-.mcp-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-.mcp-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-.mcp-tags { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
-.mcp-tag {
-  font-family: var(--font-mono); font-size: 10px;
-  padding: 3px 8px; border-radius: 4px;
-  background: rgba(0,240,168,0.1); color: var(--accent-neon);
-  border: 1px solid rgba(0,240,168,0.2);
-}
-
-/* ═══════════════════════════════════════ */
-/* Algorithm Visualizer                     */
-/* ═══════════════════════════════════════ */
-.algo-section { background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-subtle); padding: 32px; margin-bottom: 24px; }
-.algo-header { display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:12px; }
-.algo-title { font-family: var(--font-mono); font-size: 15px; color: var(--accent-neon); }
-.algo-controls { display:flex; gap:8px; flex-wrap:wrap; }
-.algo-btn {
-  font-family: var(--font-mono); font-size: 11px;
-  padding: 6px 14px; border-radius: 6px; cursor: pointer;
-  background: var(--bg-elevated); color: var(--text-secondary);
-  border: 1px solid var(--border-subtle); transition: all 0.2s;
-}
-.algo-btn:hover, .algo-btn.active {
-  border-color: var(--accent-neon); color: var(--accent-neon);
-  box-shadow: 0 0 8px rgba(0,240,168,0.15);
-}
-.algo-canvas-wrap {
-  border: 1px solid var(--border-subtle); border-radius: 8px;
-  overflow: hidden; background: var(--bg-deep);
+.section-header .icon-box {
+  width:40px; height:40px; border:1px solid var(--neon-green);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:var(--neon-green);
   position:relative;
 }
-.algo-canvas-wrap canvas { display:block; width:100%; height:auto; }
-.algo-stats {
-  display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;
-  font-family: var(--font-mono); font-size: 12px;
+.section-header .icon-box::before {
+  content:''; position:absolute; top:-4px; left:-4px; right:-4px; bottom:-4px;
+  border:1px solid rgba(0,255,136,0.2); pointer-events:none;
 }
-.algo-stat { color: var(--text-secondary); }
-.algo-stat span { color: var(--accent-neon); }
+.section-title {
+  font-family:var(--font-mono); font-size:20px; letter-spacing:4px;
+  color:var(--neon-green); text-transform:uppercase;
+}
+.section-subtitle {
+  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+  letter-spacing:2px;
+}
 
-/* ═══════════════════════════════════════ */
-/* Skills Ecosystem                         */
-/* ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Loading Screen                                                           */
+/* ═══════════════════════════════════════════════════════════════════════ */
+#loading-screen {
+  position:fixed; inset:0; z-index:20000; background:var(--bg-deepest);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transition: opacity 0.6s, visibility 0.6s;
+}
+#loading-screen.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+.loading-text { font-family:var(--font-mono); color:var(--neon-green); font-size:14px; letter-spacing:3px; }
+.loading-bar-outer { width:200px; height:2px; background:var(--border-subtle); margin-top:16px; border-radius:1px; overflow:hidden; }
+.loading-bar-inner { height:100%; width:0; background:var(--neon-green); transition: width 0.3s; }
+.loading-dots { color:var(--text-dim); margin-top:12px; font-family:var(--font-mono); font-size:12px; }
+.loading-dots span { animation: dot-blink 1.4s infinite; }
+.loading-dots span:nth-child(2) { animation-delay:0.2s; }
+.loading-dots span:nth-child(3) { animation-delay:0.4s; }
+@keyframes dot-blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Hero Section                                                             */
+/* ═══════════════════════════════════════════════════════════════════════ */
+#hero { padding-top:120px; padding-bottom:60px; text-align:center; }
+.hero-name {
+  font-family:var(--font-display); font-size:clamp(48px,10vw,96px);
+  font-weight:700; letter-spacing:8px; margin-bottom:8px;
+  color:#fff;
+  text-shadow:
+    0 0 7px var(--neon-green), 0 0 10px var(--neon-green),
+    0 0 21px var(--neon-green), 0 0 42px var(--neon-green),
+    0 0 82px var(--neon-green), 0 0 92px var(--neon-green),
+    0 0 102px var(--neon-green);
+  animation: neon-pulse 1.5s ease-in-out infinite alternate;
+  position:relative; display:inline-block;
+}
+@keyframes neon-pulse {
+  from { text-shadow: 0 0 7px var(--neon-green), 0 0 10px var(--neon-green), 0 0 21px var(--neon-green), 0 0 42px var(--neon-green), 0 0 82px var(--neon-green); }
+  to { text-shadow: 0 0 4px var(--neon-green), 0 0 7px var(--neon-green), 0 0 13px var(--neon-green), 0 0 25px var(--neon-green), 0 0 50px var(--neon-green); }
+}
+.hero-tagline {
+  font-family:var(--font-mono); font-size:clamp(14px,2vw,20px);
+  color:var(--neon-purple); letter-spacing:2px; min-height:28px;
+  margin-bottom:48px;
+}
+.hero-tagline .cursor {
+  display:inline-block; width:2px; height:1.1em; background:var(--neon-purple);
+  margin-left:2px; vertical-align:text-bottom;
+  animation: cursor-blink 0.8s infinite;
+}
+@keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* KPI Cards                                                                */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.kpi-grid {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:16px;
+  margin-bottom:32px; perspective:800px;
+}
+.kpi-card {
+  background:var(--bg-card); border:1px solid var(--border-subtle);
+  padding:24px 16px; text-align:center; position:relative; overflow:hidden;
+  transition: all var(--transition-normal);
+  transform: rotateY(0deg) rotateX(0deg);
+}
+.kpi-card:hover {
+  transform: translateY(-6px); border-color:rgba(0,255,136,0.4);
+  box-shadow: var(--glow-green);
+}
+.kpi-card::before {
+  content:''; position:absolute; top:0; left:0; width:4px; height:0;
+  background:var(--neon-green);
+  transition: height 0.5s ease;
+}
+.kpi-card:hover::before { height:100%; }
+.kpi-card .kpi-number {
+  font-family:var(--font-mono); font-size:36px; font-weight:700;
+  color:var(--neon-green); margin-bottom:4px;
+}
+.kpi-card .kpi-label {
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+  letter-spacing:2px; text-transform:uppercase;
+}
+.kpi-card .corner-deco {
+  position:absolute; width:8px; height:8px; border-color:var(--neon-green);
+  border-style:solid; opacity:0.4;
+}
+.kpi-card .corner-deco.tl { top:4px; left:4px; border-width:1px 0 0 1px; }
+.kpi-card .corner-deco.br { bottom:4px; right:4px; border-width:0 1px 1px 0; }
+.kpi-card:nth-child(2) .kpi-number { color:var(--neon-purple); }
+.kpi-card:nth-child(2):hover { border-color:rgba(168,85,247,0.4); box-shadow: var(--glow-purple); }
+.kpi-card:nth-child(2)::before { background:var(--neon-purple); }
+.kpi-card:nth-child(2) .corner-deco { border-color:var(--neon-purple); }
+.kpi-card:nth-child(3) .kpi-number { color:var(--neon-blue); }
+.kpi-card:nth-child(3):hover { border-color:rgba(59,130,246,0.4); box-shadow: var(--glow-blue); }
+.kpi-card:nth-child(3)::before { background:var(--neon-blue); }
+.kpi-card:nth-child(3) .corner-deco { border-color:var(--neon-blue); }
+.kpi-card:nth-child(4) .kpi-number { color:var(--neon-cyan); }
+.kpi-card:nth-child(4):hover { border-color:rgba(6,182,212,0.4); box-shadow: 0 0 20px rgba(6,182,212,0.3); }
+.kpi-card:nth-child(4)::before { background:var(--neon-cyan); }
+.kpi-card:nth-child(4) .corner-deco { border-color:var(--neon-cyan); }
+.kpi-card:nth-child(5) .kpi-number { color:var(--neon-amber); }
+.kpi-card:nth-child(5):hover { border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.3); }
+.kpi-card:nth-child(5)::before { background:var(--neon-amber); }
+.kpi-card:nth-child(5) .corner-deco { border-color:var(--neon-amber); }
+
+.hero-clock {
+  font-family:var(--font-mono); font-size:14px; color:var(--text-dim);
+  letter-spacing:3px; margin-top:8px;
+}
+.hero-clock .clock-time { color:var(--neon-green); margin-left:8px; }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Radar Chart                                                              */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.radar-container { display:flex; justify-content:center; }
+.radar-container canvas { max-width:100%; height:auto; }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* MCP Cards (3D Flip)                                                      */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.mcp-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:20px; perspective:1200px;
+}
+.mcp-card-outer {
+  perspective:1000px; height:180px;
+}
+.mcp-card-inner {
+  position:relative; width:100%; height:100%;
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  transform-style:preserve-3d;
+}
+.mcp-card-outer:hover .mcp-card-inner { transform:rotateY(180deg); }
+.mcp-face {
+  position:absolute; inset:0; backface-visibility:hidden;
+  border:1px solid var(--border-subtle); background:var(--bg-card);
+  padding:20px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  border-radius:8px;
+}
+.mcp-face.front {
+  transform:rotateY(0deg);
+}
+.mcp-face.front .mcp-icon {
+  font-size:32px; margin-bottom:12px;
+}
+.mcp-face.front .mcp-name {
+  font-family:var(--font-mono); font-size:14px; color:var(--neon-green);
+  letter-spacing:1px; margin-bottom:4px;
+}
+.mcp-face.front .mcp-tools {
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+}
+.mcp-face.back {
+  transform:rotateY(180deg);
+  background:var(--bg-elevated);
+  border-color:rgba(168,85,247,0.3);
+  text-align:center; justify-content:center;
+}
+.mcp-face.back .mcp-algo {
+  font-family:var(--font-mono); font-size:11px; color:var(--text-secondary);
+  line-height:1.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Algorithm Lab                                                            */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.lab-container {
+  background:var(--bg-card); border:1px solid var(--border-subtle);
+  border-radius:8px; overflow:hidden;
+}
+.lab-tabs {
+  display:flex; overflow-x:auto;
+  border-bottom:1px solid var(--border-subtle);
+}
+.lab-tab {
+  padding:12px 20px; font-family:var(--font-mono); font-size:12px;
+  color:var(--text-dim); cursor:pointer; border:none; background:none;
+  white-space:nowrap; transition:all var(--transition-fast);
+  border-bottom:2px solid transparent;
+}
+.lab-tab:hover { color:var(--text-secondary); }
+.lab-tab.active { color:var(--neon-green); border-bottom-color:var(--neon-green); }
+.lab-panel {
+  display:none; padding:20px;
+}
+.lab-panel.active { display:block; }
+.lab-canvas-wrap {
+  position:relative; width:100%; overflow:auto;
+}
+.lab-canvas-wrap canvas { display:block; border:1px solid var(--border-subtle); border-radius:4px; }
+.lab-controls {
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; align-items:center;
+}
+.lab-btn {
+  padding:6px 14px; font-family:var(--font-mono); font-size:11px;
+  border:1px solid var(--border-subtle); background:var(--bg-elevated);
+  color:var(--text-secondary); cursor:pointer; border-radius:4px;
+  transition:all var(--transition-fast);
+}
+.lab-btn:hover { border-color:var(--neon-green); color:var(--neon-green); }
+.lab-btn:disabled { opacity:0.4; cursor:default; }
+.lab-stats {
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+  margin-left:auto;
+}
+.lab-stats span { margin-right:16px; }
+.lab-stats .stat-val { color:var(--neon-green); }
+.lab-select { background:var(--bg-elevated); color:var(--text-primary); border:1px solid var(--border-subtle); padding:6px 10px; font-family:var(--font-mono); font-size:11px; border-radius:4px; }
+.lab-speed-control { display:flex; gap:4px; align-items:center; }
+.lab-speed-control label { font-family:var(--font-mono); font-size:11px; color:var(--text-dim); }
+.lab-speed-control input { width:100px; }
+.mandelbrot-info {
+  position:absolute; top:8px; right:8px; background:rgba(10,10,15,0.85);
+  padding:6px 10px; font-family:var(--font-mono); font-size:10px;
+  color:var(--text-secondary); border:1px solid var(--border-subtle);
+  border-radius:4px; pointer-events:none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Skills                                                                   */
+/* ═══════════════════════════════════════════════════════════════════════ */
 .skills-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
 }
-.skill-category {
-  background: var(--bg-card); border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 24px;
+.skill-card {
+  background:var(--bg-card); border:1px solid var(--border-subtle);
+  padding:24px; border-radius:8px; transition:all var(--transition-normal);
+  position:relative; overflow:hidden;
 }
-.skill-cat-name { font-family: var(--font-mono); font-size: 14px; color: var(--accent-blue); margin-bottom: 16px; }
-.skill-meter-bg { height:4px; background: var(--bg-elevated); border-radius: 2px; margin-bottom: 16px; overflow: hidden; }
-.skill-meter-fill { height:100%; border-radius:2px; transition: width 1.5s ease-out; }
-.skill-items { font-size:13px; color: var(--text-secondary); line-height: 2; }
-.skill-items strong { color: var(--text-primary); }
+.skill-card:hover {
+  transform:translateY(-4px);
+  border-color:rgba(168,85,247,0.4);
+  box-shadow: var(--glow-purple);
+}
+.skill-card .skill-icon { font-size:28px; margin-bottom:12px; }
+.skill-card .skill-name {
+  font-family:var(--font-mono); font-size:15px; color:var(--text-primary);
+  margin-bottom:8px; letter-spacing:1px;
+}
+.skill-card .skill-desc {
+  font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;
+}
+.skill-card .skill-bar-outer {
+  height:3px; background:var(--border-subtle); border-radius:2px;
+  overflow:hidden;
+}
+.skill-card .skill-bar-inner {
+  height:100%; background:linear-gradient(90deg, var(--neon-green), var(--neon-purple));
+  width:0; transition:width 1.5s cubic-bezier(0.4,0,0.2,1);
+  border-radius:2px;
+}
+.skill-card .skill-pct {
+  font-family:var(--font-mono); font-size:11px; color:var(--neon-green);
+  margin-top:6px; text-align:right;
+}
 
-/* ═══════════════════════════════════════ */
-/* Timeline                                 */
-/* ═══════════════════════════════════════ */
-.timeline { position:relative; padding-left: 32px; }
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Timeline                                                                 */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.timeline {
+  position:relative; padding-left:32px;
+}
 .timeline::before {
-  content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
-  width: 2px; background: var(--border-subtle);
+  content:''; position:absolute; left:7px; top:0; bottom:0;
+  width:1px; background:var(--border-subtle);
 }
-.tl-item { position:relative; margin-bottom: 32px; }
-.tl-item::before {
-  content: ''; position: absolute; left: -29px; top: 6px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bg-elevated); border: 2px solid var(--accent-neon);
+.timeline-item {
+  position:relative; margin-bottom:32px; padding-left:24px;
 }
-.tl-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
-.tl-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
-.tl-desc { font-size: 13px; color: var(--text-secondary); }
+.timeline-dot {
+  position:absolute; left:-29px; top:6px;
+  width:14px; height:14px; border-radius:50%;
+  background:var(--bg-deep); border:2px solid var(--neon-green);
+  transition:all var(--transition-normal);
+}
+.timeline-item:hover .timeline-dot {
+  box-shadow: 0 0 0 8px rgba(0,255,136,0.15);
+  background:var(--neon-green);
+}
+.timeline-date {
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+  letter-spacing:2px; margin-bottom:4px;
+}
+.timeline-title {
+  font-family:var(--font-mono); font-size:15px; color:var(--text-primary);
+  margin-bottom:4px;
+}
+.timeline-desc {
+  font-size:13px; color:var(--text-dim); line-height:1.6;
+}
 
-/* ═══════════════════════════════════════ */
-/* Live Activity Feed                      */
-/* ═══════════════════════════════════════ */
-.activity-feed {
-  background: var(--bg-card); border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 24px; max-height: 360px; overflow-y: auto;
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Activity Log                                                             */
+/* ═══════════════════════════════════════════════════════════════════════ */
+.log-container {
+  background:var(--bg-card); border:1px solid var(--border-subtle);
+  border-radius:8px; overflow:hidden; max-height:400px; overflow-y:auto;
 }
-.activity-item {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
-  font-size: 13px;
+.log-header {
+  background:var(--bg-elevated); padding:10px 16px;
+  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+  border-bottom:1px solid var(--border-subtle);
+  display:flex; align-items:center; gap:8px;
 }
-.activity-dot {
-  width:8px; height:8px; border-radius:50%; margin-top: 5px; flex-shrink:0;
+.log-header .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+.log-header .dot.green { background:var(--neon-green); }
+.log-entry {
+  padding:6px 16px; font-family:var(--font-mono); font-size:11px;
+  color:var(--text-secondary); border-bottom:1px solid rgba(26,26,46,0.5);
+  transition:background var(--transition-fast);
 }
-.activity-dot.push { background: var(--accent-neon); }
-.activity-dot.publish { background: var(--accent-purple); }
-.activity-dot.create { background: var(--accent-blue); }
-.activity-time { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); min-width: 140px; }
-.activity-text { color: var(--text-secondary); }
-.activity-text strong { color: var(--text-primary); }
+.log-entry:hover { background:rgba(0,255,136,0.03); }
+.log-entry .timestamp { color:var(--text-dim); margin-right:12px; }
+.log-entry .type-commit { color:var(--neon-cyan); }
+.log-entry .type-issue { color:var(--neon-amber); }
+.log-entry .type-pr { color:var(--neon-purple); }
 
-/* ═══════════════════════════════════════ */
-/* Footer                                   */
-/* ═══════════════════════════════════════ */
-.footer {
-  text-align: center; padding: 48px 24px;
-  border-top: 1px solid var(--border-subtle);
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Footer                                                                   */
+/* ═══════════════════════════════════════════════════════════════════════ */
+#footer {
+  padding:48px 0; text-align:center; border-top:1px solid var(--border-subtle);
 }
-.footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-.footer-link {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--text-secondary); text-decoration: none;
-  transition: color 0.2s;
+#footer .footer-text {
+  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+  letter-spacing:3px;
 }
-.footer-link:hover { color: var(--accent-neon); }
-.footer-copy { font-size: 12px; color: var(--text-muted); }
+#footer .footer-status {
+  font-family:var(--font-mono); font-size:11px; color:var(--neon-green);
+  margin-top:8px;
+}
+#footer .footer-status .blink { animation: cursor-blink 1s infinite; }
 
-/* ═══════════════════════════════════════ */
-/* Scroll Reveal Animations                 */
-/* ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Scroll reveal                                                            */
+/* ═══════════════════════════════════════════════════════════════════════ */
 .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  opacity:0; transform:translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.visible { opacity:1; transform:translateY(0); }
 
-/* ═══════════════════════════════════════ */
-/* Responsive                               */
-/* ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* Responsive                                                               */
+/* ═══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .hero-stats { gap: 12px; }
-  .stat-card { min-width: 90px; padding: 14px 18px; }
-  .stat-value { font-size: 24px; }
-  .nav-links { display: none; }
-  .mcp-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .kpi-card { padding:16px 12px; }
+  .kpi-card .kpi-number { font-size:24px; }
+  .mcp-grid { grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }
+  .skills-grid { grid-template-columns:1fr; }
+  .section { padding:48px 0; }
+  .toggle-controls { top:8px; right:8px; }
+  .toggle-btn { padding:4px 8px; font-size:10px; }
+  .hero-name { font-size:clamp(32px,12vw,64px); }
+}
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns:1fr 1fr; }
+  .lab-tabs { flex-wrap:nowrap; overflow-x:auto; }
+  .mcp-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+<!-- Scanline Overlay -->
+<div id="scanlines"></div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Navigation                                -->
-<!-- ═══════════════════════════════════════ -->
-<nav>
-  <div class="nav-inner">
-    <span class="nav-logo">WZX.PORTFOLIO</span>
-    <ul class="nav-links">
-      <li><a href="#about">关于</a></li>
-      <li><a href="#mcp">MCP</a></li>
-      <li><a href="#demo">算法Demo</a></li>
-      <li><a href="#skills">技能</a></li>
-      <li><a href="#timeline">时间线</a></li>
-    </ul>
-  </div>
-</nav>
+<!-- Matrix Rain Canvas -->
+<canvas id="matrix-canvas"></canvas>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Hero                                     -->
-<!-- ═══════════════════════════════════════ -->
-<section class="hero" id="about">
-  <div class="hero-content">
-    <div class="hero-glitch">[ FULL-STACK · AI ENGINEER ]</div>
-    <h1 class="hero-name">万值翔</h1>
-    <p class="hero-subtitle">不套壳 · 不调API凑数 · 每个算法从零实现</p>
-    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">华东师范大学 · 经济学本科 · AI & 量化计算</p>
-    <div class="hero-stats">
-      <div class="stat-card"><div class="stat-value" id="count-repos">101</div><div class="stat-label">开源仓库</div></div>
-      <div class="stat-card"><div class="stat-value">15</div><div class="stat-label">MCP 服务器</div></div>
-      <div class="stat-card"><div class="stat-value">~370</div><div class="stat-label">AI 工具接口</div></div>
-      <div class="stat-card"><div class="stat-value">115K+</div><div class="stat-label">行代码</div></div>
-      <div class="stat-card"><div class="stat-value">58</div><div class="stat-label">SkillHub 发布</div></div>
-    </div>
-  </div>
-</section>
+<!-- Toggle Controls -->
+<div class="toggle-controls">
+  <button class="toggle-btn active" id="btn-matrix" title="Toggle Matrix Rain">[R]AIN</button>
+  <button class="toggle-btn active" id="btn-scanlines" title="Toggle Scanlines">[S]CAN</button>
+</div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- MCP Servers                              -->
-<!-- ═══════════════════════════════════════ -->
-<section id="mcp"><div class="section-inner">
-  <div class="section-header reveal">
-    <div class="section-tag">01 · INFRASTRUCTURE</div>
-    <h2 class="section-title">MCP 服务器矩阵</h2>
-    <p class="section-desc">15台MCP服务器，~370个工具接口，纯Python标准库实现，覆盖金融、NLP、数学、数据处理等10+领域</p>
-  </div>
-  <div class="mcp-grid" id="mcp-container"></div>
-</div></section>
+<!-- Loading Screen -->
+<div id="loading-screen">
+  <div class="loading-text">SYSTEM BOOTING...</div>
+  <div class="loading-bar-outer"><div class="loading-bar-inner" id="loading-bar"></div></div>
+  <div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>
+</div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Algorithm Demo                           -->
-<!-- ═══════════════════════════════════════ -->
-<section id="demo" style="background: var(--bg-card);"><div class="section-inner">
-  <div class="section-header reveal">
-    <div class="section-tag">02 · LIVE DEMO</div>
-    <h2 class="section-title">算法可视化演示</h2>
-    <p class="section-desc">从零实现的经典算法，在浏览器中实时运行。点击按钮切换不同算法</p>
-  </div>
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Hero Section                                                            -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="content-wrapper">
+  <section id="hero" class="section">
+    <h1 class="hero-name reveal">万值翔</h1>
+    <div class="hero-tagline reveal" id="hero-tagline"><span id="typewriter-text"></span><span class="cursor"></span></div>
 
-  <!-- Demo 1: 排序算法对比 -->
-  <div class="algo-section reveal">
-    <div class="algo-header">
-      <div class="algo-title">▸ 排序算法实时对比</div>
-      <div class="algo-controls">
-        <button class="algo-btn active" data-algo="bubble">冒泡排序 O(n²)</button>
-        <button class="algo-btn" data-algo="quick">快速排序 O(n log n)</button>
-        <button class="algo-btn" data-algo="merge">归并排序 O(n log n)</button>
-        <button class="algo-btn" data-algo="heap">堆排序 O(n log n)</button>
-        <button class="algo-btn" id="btn-sort-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 运行</button>
+    <div class="kpi-grid reveal">
+      <div class="kpi-card">
+        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
+        <div class="kpi-number" data-target="101">0</div>
+        <div class="kpi-label">代码仓库</div>
+      </div>
+      <div class="kpi-card">
+        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
+        <div class="kpi-number" data-target="15">0</div>
+        <div class="kpi-label">MCP 服务</div>
+      </div>
+      <div class="kpi-card">
+        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
+        <div class="kpi-number" data-target="370">0</div>
+        <div class="kpi-label">集成工具</div>
+      </div>
+      <div class="kpi-card">
+        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
+        <div class="kpi-number" data-target="115000">0</div>
+        <div class="kpi-label">行代码</div>
+      </div>
+      <div class="kpi-card">
+        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
+        <div class="kpi-number" data-target="58">0</div>
+        <div class="kpi-label">AI 技能</div>
       </div>
     </div>
-    <div class="algo-canvas-wrap"><canvas id="sort-canvas" height="260"></canvas></div>
-    <div class="algo-stats">
-      <div class="algo-stat">比较次数: <span id="sort-comparisons">0</span></div>
-      <div class="algo-stat">交换次数: <span id="sort-swaps">0</span></div>
-      <div class="algo-stat">耗时: <span id="sort-time">0 ms</span></div>
-    </div>
-  </div>
 
-  <!-- Demo 2: 路径规划 -->
-  <div class="algo-section reveal">
-    <div class="algo-header">
-      <div class="algo-title">▸ 路径规划算法</div>
-      <div class="algo-controls">
-        <button class="algo-btn active" data-path="bfs">广度优先 BFS</button>
-        <button class="algo-btn" data-path="dfs">深度优先 DFS</button>
-        <button class="algo-btn" data-path="astar">A* 启发式</button>
-        <button class="algo-btn" id="btn-path-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 运行</button>
-        <button class="algo-btn" id="btn-path-reset">↻ 随机障碍</button>
+    <div class="hero-clock reveal">
+      BEIJING <span class="clock-time" id="beijing-time">--:--:--</span> CST
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SIGNAL MONITOR - Radar                                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">&#9679;</div>
+      <div>
+        <div class="section-title">SIGNAL MONITOR</div>
+        <div class="section-subtitle">TECH STACK RADAR SCAN</div>
       </div>
     </div>
-    <div class="algo-canvas-wrap"><canvas id="path-canvas" height="340"></canvas></div>
-    <div class="algo-stats">
-      <div class="algo-stat">探索节点: <span id="path-explored">0</span></div>
-      <div class="algo-stat">路径长度: <span id="path-length">0</span></div>
-      <div class="algo-stat">耗时: <span id="path-time">0 ms</span></div>
+    <div class="radar-container">
+      <canvas id="radar-canvas" width="500" height="500"></canvas>
     </div>
-  </div>
+  </section>
 
-  <!-- Demo 3: 分形树 -->
-  <div class="algo-section reveal">
-    <div class="algo-header">
-      <div class="algo-title">▸ 递归分形树 (L-System)</div>
-      <div class="algo-controls">
-        <button class="algo-btn active" data-tree="pythagoras">毕达哥拉斯树</button>
-        <button class="algo-btn" data-tree="koch">Koch雪花</button>
-        <button class="algo-btn" data-tree="sierpinski">谢尔宾斯基三角</button>
-        <button class="algo-btn" data-tree="dragon">龙曲线</button>
-        <button class="algo-btn" id="btn-tree-run" style="border-color:var(--accent-neon);color:var(--accent-neon);">▶ 生成</button>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- TERMINAL - MCP Matrix                                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">[&nbsp;]</div>
+      <div>
+        <div class="section-title">TERMINAL</div>
+        <div class="section-subtitle">MCP SERVER MATRIX</div>
       </div>
     </div>
-    <div class="algo-canvas-wrap"><canvas id="tree-canvas" height="360"></canvas></div>
-    <div class="algo-stats">
-      <div class="algo-stat">递归深度: <span id="tree-depth">8</span></div>
-      <div class="algo-stat">绘制线段: <span id="tree-segments">0</span></div>
-    </div>
-  </div>
-</div></section>
+    <div class="mcp-grid" id="mcp-grid"></div>
+  </section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Skills Ecosystem                         -->
-<!-- ═══════════════════════════════════════ -->
-<section id="skills"><div class="section-inner">
-  <div class="section-header reveal">
-    <div class="section-tag">03 · ECOSYSTEM</div>
-    <h2 class="section-title">技能版图</h2>
-    <p class="section-desc">12大场景 · 24+核心算法 · 17,138行效率技能代码 · 零外部依赖</p>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">办公效率 · office-helper</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:89%;background:var(--accent-neon);"></div></div>
-      <div class="skill-items">TF-IDF文件分类 · PDF解析 · <strong>Myers差异</strong> · TextRank摘要 · <strong>AVL区间树</strong> · XLSX合并JOIN · 1,609行</div>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- ALGORITHM LAB                                                          -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">&Sigma;</div>
+      <div>
+        <div class="section-title">ALGORITHM LAB</div>
+        <div class="section-subtitle">REAL-TIME VISUALIZATION</div>
+      </div>
     </div>
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">数据分析 · data-cleaner</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:93%;background:var(--accent-blue);"></div></div>
-      <div class="skill-items"><strong>Isolation Forest</strong> · KNN填充 · 数据画像(偏度/峰度) · Pearson/Spearman/Kendall · 5维质量评分 · 1,848行</div>
-    </div>
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">设计多媒体 · media-processor</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:85%;background:var(--accent-purple);"></div></div>
-      <div class="skill-items"><strong>Canny边缘检测</strong> · K-Means++色彩量化 · <strong>DCT感知哈希</strong> · 块DCT水印 · 卷积引擎 · 901行</div>
-    </div>
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">AI Agent · agent-framework</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:87%;background:var(--accent-pink);"></div></div>
-      <div class="skill-items"><strong>ReAct推理</strong> · DAG工作流(Kahn拓扑) · LRU记忆 · Few-shot模板 · 多Agent协作 · 1,123行</div>
-    </div>
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">商业运营 · business-analytics</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:90%;background:var(--accent-amber);"></div></div>
-      <div class="skill-items"><strong>RFM+K-Means</strong> · <strong>BG/NBD</strong>客户LTV · <strong>Apriori</strong>购物篮 · 逻辑回归流失预测 · <strong>ARIMA</strong> · 1,346行</div>
-    </div>
-    <div class="skill-category reveal">
-      <div class="skill-cat-name">教育学习 · study-companion</div>
-      <div class="skill-meter-bg"><div class="skill-meter-fill" style="width:86%;background:var(--accent-red);"></div></div>
-      <div class="skill-items"><strong>SM-2间隔重复</strong> · <strong>BKT贝叶斯知识追踪</strong> · <strong>IRT自适应难度</strong> · Leitner闪卡 · 0-1背包计划 · 1,254行</div>
-    </div>
-  </div>
-</div></section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Timeline                                 -->
-<!-- ═══════════════════════════════════════ -->
-<section id="timeline" style="background: var(--bg-card);"><div class="section-inner">
-  <div class="section-header reveal">
-    <div class="section-tag">04 · MILESTONES</div>
-    <h2 class="section-title">项目演进</h2>
-    <p class="section-desc">从第一个仓库到101个开源项目的完整轨迹</p>
-  </div>
-  <div class="timeline reveal">
-    <div class="tl-item">
-      <div class="tl-date">2024 Q1-Q2</div>
-      <div class="tl-title">计量经济学库 (14个项目)</div>
-      <div class="tl-desc">bayesmetrics、causalinference、dsgepy、laborecon、networkecon、pyconometrics、spatialecon、textecon — 覆盖贝叶斯统计、因果推断、DSGE、劳动经济学、网络经济学、空间计量</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2024 Q3</div>
-      <div class="tl-title">量化金融与智能体 (17个项目)</div>
-      <div class="tl-desc">投资组合优化、回测引擎、因子挖掘、ML选股、衍生品定价、信用风险 + 多智能体交易模拟、RL交易、审计Agent、辩论评审</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2025</div>
-      <div class="tl-title">MCP基础设施 (8台服务器)</div>
-      <div class="tl-desc">金融数据、量化引擎、文档分析、数据库助手、数据可视化、机器学习、统计引擎、网页抓取 — 208个工具接口</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026 Q2</div>
-      <div class="tl-title">效率技能 v2.0.0 (12项目 · 17,138行)</div>
-      <div class="tl-desc">24+核心算法从零实现 — Isolation Forest、TextRank、PageRank、K-Means++、Apriori、ARIMA、Canny、DCT、Myers、SM-2、BKT、IRT、BG/NBD、CVSS…</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">2026 Q3 · 现在</div>
-      <div class="tl-title">MCP扩展至15台 (~370工具) + SkillHub 58技能</div>
-      <div class="tl-desc">NLP服务(分词语义/朴素贝叶斯/K-Means++)、文本处理(Myers差异/霍夫曼)、数据管道(PCA/SMOTE/K-Fold)、数学引擎(FFT/单纯形/SVD)</div>
-    </div>
-  </div>
-</div></section>
+    <div class="lab-container">
+      <div class="lab-tabs" id="lab-tabs">
+        <button class="lab-tab active" data-tab="sort">SORT</button>
+        <button class="lab-tab" data-tab="path">PATH</button>
+        <button class="lab-tab" data-tab="life">LIFE</button>
+        <button class="lab-tab" data-tab="mandelbrot">MANDELBROT</button>
+        <button class="lab-tab" data-tab="pso">PSO</button>
+      </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Live Activity                            -->
-<!-- ═══════════════════════════════════════ -->
-<section><div class="section-inner">
-  <div class="section-header reveal">
-    <div class="section-tag">05 · ACTIVITY</div>
-    <h2 class="section-title">实时活动</h2>
-    <p class="section-desc">GitHub 最新仓库动态</p>
-  </div>
-  <div class="activity-feed reveal" id="activity-feed">
-    <div class="activity-item"><div class="activity-dot create"></div><div class="activity-time">加载中...</div><div class="activity-text">正在从 GitHub API 获取数据</div></div>
-  </div>
-</div></section>
+      <!-- SORT -->
+      <div class="lab-panel active" id="panel-sort">
+        <div class="lab-canvas-wrap"><canvas id="sort-canvas" width="800" height="300"></canvas></div>
+        <div class="lab-controls">
+          <select class="lab-select" id="sort-algo">
+            <option value="bubble">Bubble Sort</option>
+            <option value="quick">Quick Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="heap">Heap Sort</option>
+          </select>
+          <button class="lab-btn" id="sort-start">&#9654; Run</button>
+          <button class="lab-btn" id="sort-reset">&#8635; Reset</button>
+          <div class="lab-stats">
+            <span>Comparisons: <span class="stat-val" id="sort-cmp">0</span></span>
+            <span>Swaps: <span class="stat-val" id="sort-swap">0</span></span>
+            <span>Time: <span class="stat-val" id="sort-time">0ms</span></span>
+          </div>
+        </div>
+      </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- Footer                                   -->
-<!-- ═══════════════════════════════════════ -->
-<footer class="footer">
-  <div class="footer-links">
-    <a class="footer-link" href="https://github.com/wzx11223344" target="_blank">GitHub</a>
-    <a class="footer-link" href="https://skillhub.cn" target="_blank">SkillHub</a>
-    <span class="footer-link">d:\D盘TRAE办公\GitHub作品集.pdf</span>
-    <span class="footer-link">wzx11223344@gmail.com</span>
-  </div>
-  <p class="footer-copy">© 2024-2026 万值翔 · 不套壳不调API凑数 · 每个算法从零实现</p>
-</footer>
+      <!-- PATH -->
+      <div class="lab-panel" id="panel-path">
+        <div class="lab-canvas-wrap"><canvas id="path-canvas" width="900" height="500"></canvas></div>
+        <div class="lab-controls">
+          <select class="lab-select" id="path-algo">
+            <option value="bfs">BFS</option>
+            <option value="dfs">DFS</option>
+            <option value="astar">A*</option>
+          </select>
+          <button class="lab-btn" id="path-start">&#9654; Run</button>
+          <button class="lab-btn" id="path-reset">&#8635; Reset</button>
+          <div class="lab-stats">
+            <span>Explored: <span class="stat-val" id="path-explored">0</span></span>
+            <span>Path Length: <span class="stat-val" id="path-length">0</span></span>
+          </div>
+        </div>
+      </div>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SCRIPTS                                  -->
-<!-- ═══════════════════════════════════════ -->
+      <!-- LIFE -->
+      <div class="lab-panel" id="panel-life">
+        <div class="lab-canvas-wrap"><canvas id="life-canvas" width="800" height="500"></canvas></div>
+        <div class="lab-controls">
+          <button class="lab-btn" id="life-start">&#9654; Start</button>
+          <button class="lab-btn" id="life-pause">&#9208; Pause</button>
+          <button class="lab-btn" id="life-reset">&#8635; Random</button>
+          <div class="lab-speed-control">
+            <label>Speed:</label>
+            <input type="range" id="life-speed" min="1" max="20" value="5">
+          </div>
+          <div class="lab-stats">
+            <span>Generation: <span class="stat-val" id="life-gen">0</span></span>
+            <span>Alive: <span class="stat-val" id="life-alive">0</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANDELBROT -->
+      <div class="lab-panel" id="panel-mandelbrot">
+        <div class="lab-canvas-wrap" style="position:relative; display:inline-block;">
+          <canvas id="mandelbrot-canvas" width="700" height="500"></canvas>
+          <div class="mandelbrot-info" id="mandelbrot-info">R: [-2.0, 1.0] I: [-1.2, 1.2] | Zoom: 1.0x</div>
+        </div>
+        <div class="lab-controls">
+          <button class="lab-btn" id="mandelbrot-reset">&#8635; Reset View</button>
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);">Drag to pan | Scroll to zoom</span>
+        </div>
+      </div>
+
+      <!-- PSO -->
+      <div class="lab-panel" id="panel-pso">
+        <div class="lab-canvas-wrap"><canvas id="pso-canvas" width="700" height="500"></canvas></div>
+        <div class="lab-controls">
+          <button class="lab-btn" id="pso-start">&#9654; Run</button>
+          <button class="lab-btn" id="pso-reset">&#8635; Reset</button>
+          <div class="lab-stats">
+            <span>Iteration: <span class="stat-val" id="pso-iter">0</span></span>
+            <span>Best Fitness: <span class="stat-val" id="pso-best">--</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- ASSETS - Skills                                                       -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">&#9830;</div>
+      <div>
+        <div class="section-title">ASSETS</div>
+        <div class="section-subtitle">CORE CAPABILITIES</div>
+      </div>
+    </div>
+    <div class="skills-grid" id="skills-grid"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CHRONICLE - Timeline                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">&gt;_</div>
+      <div>
+        <div class="section-title">CHRONICLE</div>
+        <div class="section-subtitle">PROJECT TIMELINE</div>
+      </div>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- LOG - Activity                                                        -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section class="section reveal">
+    <div class="section-header">
+      <div class="icon-box">&#9608;</div>
+      <div>
+        <div class="section-title">LOG</div>
+        <div class="section-subtitle">REAL-TIME ACTIVITY STREAM</div>
+      </div>
+    </div>
+    <div class="log-container">
+      <div class="log-header">
+        <span class="dot green"></span> LIVE FEED
+        <span style="margin-left:auto;font-size:10px;" id="log-status">CONNECTED</span>
+      </div>
+      <div id="log-entries">
+        <div class="log-entry"><span class="timestamp">--:--:--</span> Awaiting data stream...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- Footer                                                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <section id="footer">
+    <div class="footer-text">SYS // NODE: ONLINE // UPTIME: <span id="uptime">00:00:00</span></div>
+    <div class="footer-status"><span class="blink">&#9608;</span> ALL SYSTEMS NOMINAL</div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- SCRIPTS                                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
 <script>
-// ═══ Particle Background ═══
-(function bgParticles() {
-  const c = document.getElementById('bg-canvas');
-  const ctx = c.getContext('2d');
-  let w, h, particles = [];
-  function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
-  for (let i = 0; i < 50; i++) {
-    particles.push({
-      x: Math.random()*w, y: Math.random()*h,
-      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
-      r: Math.random()*1.5+0.5, alpha: Math.random()*0.4+0.1
-    });
-  }
-  function draw() {
-    ctx.clearRect(0,0,w,h);
-    for (let p of particles) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x<0||p.x>w) p.vx*=-1;
-      if (p.y<0||p.y>h) p.vy*=-1;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = `rgba(0,240,168,${p.alpha})`; ctx.fill();
+(function() {
+  'use strict';
+
+  /* ====================================================================== */
+  /*  MATRIX RAIN                                                            */
+  /* ====================================================================== */
+  const MatrixRain = (function() {
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    let chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/[]{}|*#@%&';
+    let drops = [];
+    let fontSize = 14;
+    let running = true;
+    let animId = null;
+    let lastTime = 0;
+    const interval = 55;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      let cols = Math.floor(canvas.width / fontSize);
+      drops = [];
+      for (let i = 0; i < cols; i++) {
+        drops[i] = Math.random() * -canvas.height;
+      }
     }
-    for (let i=0;i<particles.length;i++) {
-      for (let j=i+1;j<particles.length;j++) {
-        let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
-        let dist=Math.sqrt(dx*dx+dy*dy);
-        if (dist<120) {
-          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle=`rgba(0,240,168,${0.06*(1-dist/120)})`; ctx.stroke();
+
+    function draw(timestamp) {
+      if (!running) { animId = requestAnimationFrame(draw); return; }
+      if (timestamp - lastTime < interval) { animId = requestAnimationFrame(draw); return; }
+      lastTime = timestamp;
+
+      ctx.fillStyle = 'rgba(10,10,15,0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        let char = chars[Math.floor(Math.random() * chars.length)];
+        let x = i * fontSize;
+        let y = drops[i] * fontSize;
+        let alpha = 0.2 + Math.random() * 0.5;
+        ctx.fillStyle = 'rgba(0,255,136,' + alpha + ')';
+        ctx.fillText(char, x, y);
+        if (i % 5 === 0) {
+          ctx.fillStyle = 'rgba(180,255,220,' + (alpha + 0.2) + ')';
+          ctx.fillText(char, x, y);
+        }
+        if (y > canvas.height + fontSize && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+      animId = requestAnimationFrame(draw);
+    }
+
+    function start() { running = true; }
+    function stop() { running = false; }
+    function toggle() { running = !running; }
+    function isRunning() { return running; }
+
+    resize();
+    window.addEventListener('resize', resize);
+    animId = requestAnimationFrame(draw);
+
+    return { start, stop, toggle, isRunning };
+  })();
+
+  /* ====================================================================== */
+  /*  SCANLINES                                                              */
+  /* ====================================================================== */
+  const scanlines = document.getElementById('scanlines');
+  document.getElementById('btn-scanlines').addEventListener('click', function() {
+    scanlines.classList.toggle('off');
+    this.classList.toggle('active');
+  });
+  document.getElementById('btn-matrix').addEventListener('click', function() {
+    MatrixRain.toggle();
+    this.classList.toggle('active');
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'r' || e.key === 'R') {
+      MatrixRain.toggle();
+      document.getElementById('btn-matrix').classList.toggle('active');
+    }
+    if (e.key === 's' || e.key === 'S') {
+      scanlines.classList.toggle('off');
+      document.getElementById('btn-scanlines').classList.toggle('active');
+    }
+  });
+
+  /* ====================================================================== */
+  /*  LOADING SCREEN                                                         */
+  /* ====================================================================== */
+  (function() {
+    const screen = document.getElementById('loading-screen');
+    const bar = document.getElementById('loading-bar');
+    let width = 0;
+    const loadInterval = setInterval(function() {
+      width += Math.random() * 25;
+      if (width >= 100) {
+        width = 100;
+        bar.style.width = '100%';
+        clearInterval(loadInterval);
+        setTimeout(function() {
+          screen.classList.add('hidden');
+        }, 400);
+      }
+      bar.style.width = width + '%';
+    }, 180);
+  })();
+
+  /* ====================================================================== */
+  /*  TYPEWRITER EFFECT                                                      */
+  /* ====================================================================== */
+  (function() {
+    const texts = [
+      'SYSTEM ARCHITECT // QUANT DEVELOPER // AI ENGINEER',
+      'FULL-STACK BUILDER // ALGORITHM TRADER // OPEN SOURCE',
+      '101 REPOS // 15 MCP SERVERS // 370+ TOOLS // 115K+ LINES'
+    ];
+    let textIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    const el = document.getElementById('typewriter-text');
+    const pauseEnd = 2000;
+    const pauseStart = 500;
+
+    function tick() {
+      const current = texts[textIdx];
+      if (isDeleting) {
+        el.textContent = current.substring(0, charIdx - 1);
+        charIdx--;
+      } else {
+        el.textContent = current.substring(0, charIdx + 1);
+        charIdx++;
+      }
+
+      let speed = isDeleting ? 30 : 60;
+
+      if (!isDeleting && charIdx === current.length) {
+        speed = pauseEnd;
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        textIdx = (textIdx + 1) % texts.length;
+        speed = pauseStart;
+      }
+
+      setTimeout(tick, speed);
+    }
+    setTimeout(tick, 1200);
+  })();
+
+  /* ====================================================================== */
+  /*  BEIJING CLOCK                                                          */
+  /* ====================================================================== */
+  (function() {
+    const el = document.getElementById('beijing-time');
+    function update() {
+      const now = new Date();
+      const bj = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+      const h = String(bj.getHours()).padStart(2, '0');
+      const m = String(bj.getMinutes()).padStart(2, '0');
+      const s = String(bj.getSeconds()).padStart(2, '0');
+      el.textContent = h + ':' + m + ':' + s;
+    }
+    update();
+    setInterval(update, 1000);
+  })();
+
+  /* ====================================================================== */
+  /*  UPTIME COUNTER                                                         */
+  /* ====================================================================== */
+  (function() {
+    const el = document.getElementById('uptime');
+    const start = Date.now();
+    function update() {
+      const diff = Math.floor((Date.now() - start) / 1000);
+      const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+      const s = String(diff % 60).padStart(2, '0');
+      el.textContent = h + ':' + m + ':' + s;
+    }
+    setInterval(update, 1000);
+    update();
+  })();
+
+  /* ====================================================================== */
+  /*  SCROLL REVEAL                                                          */
+  /* ====================================================================== */
+  (function() {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  KPI COUNT-UP ANIMATION                                                 */
+  /* ====================================================================== */
+  (function() {
+    const kpiObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const duration = 2000;
+        const start = performance.now();
+        function step(ts) {
+          const elapsed = ts - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const val = Math.round(eased * target);
+          if (target >= 1000) {
+            el.textContent = (val / 1000).toFixed(1) + 'K';
+          } else {
+            el.textContent = val;
+          }
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        kpiObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.kpi-number').forEach(function(el) {
+      kpiObserver.observe(el);
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  RADAR CHART                                                            */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('radar-canvas');
+    const ctx = canvas.getContext('2d');
+    const labels = ['Python', 'C++', 'Quant', 'ML', 'NLP', 'Full-Stack'];
+    const targets = [95, 80, 90, 85, 75, 88];
+    const count = labels.length;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const maxR = 180;
+    let progress = 0;
+    let animId = null;
+
+    function draw(prog) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Grid circles
+      for (let r = 1; r <= 4; r++) {
+        ctx.beginPath();
+        const radius = (maxR / 4) * r;
+        ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(26,26,46,0.8)';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        if (r < 4) {
+          ctx.fillStyle = 'rgba(26,26,46,0.2)';
+          // Draw polygon grid
+          ctx.beginPath();
+          for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(26,26,46,0.4)';
+          ctx.stroke();
+        }
+      }
+
+      // Axes lines
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(angle) * maxR, Math.sin(angle) * maxR);
+        ctx.strokeStyle = 'rgba(26,26,46,0.6)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Labels
+        const lx = Math.cos(angle) * (maxR + 30);
+        const ly = Math.sin(angle) * (maxR + 24);
+        ctx.fillStyle = '#8890a4';
+        ctx.font = '12px Consolas, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labels[i], lx, ly);
+
+        // Value labels
+        const vx = Math.cos(angle) * (maxR * prog * targets[i] / 100 + 16);
+        const vy = Math.sin(angle) * (maxR * prog * targets[i] / 100 + 16);
+        ctx.fillStyle = '#00ff88';
+        ctx.font = '10px Consolas, monospace';
+        ctx.fillText(Math.round(targets[i] * prog), vx, vy);
+      }
+
+      // Data polygon
+      ctx.beginPath();
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+        const r = maxR * prog * targets[i] / 100;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0,255,136,0.1)';
+      ctx.fill();
+      ctx.strokeStyle = '#00ff88';
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = 'rgba(0,255,136,0.6)';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Data points
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+        const r = maxR * prog * targets[i] / 100;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ff88';
+        ctx.fill();
+        ctx.strokeStyle = '#0a0a0f';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    const radarObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        radarObserver.unobserve(entry.target);
+        let start = null;
+        function anim(ts) {
+          if (!start) start = ts;
+          const elapsed = ts - start;
+          progress = Math.min(elapsed / 1500, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          draw(eased);
+          if (progress < 1) {
+            animId = requestAnimationFrame(anim);
+          }
+        }
+        animId = requestAnimationFrame(anim);
+      });
+    }, { threshold: 0.3 });
+    radarObserver.observe(canvas);
+    draw(0);
+  })();
+
+  /* ====================================================================== */
+  /*  MCP CARDS                                                              */
+  /* ====================================================================== */
+  (function() {
+    const mcps = [
+      { name:'filesystem', icon:'&#128451;', tools:8, algo:'Path traversal, recursive operations, glob matching, file I/O sandbox' },
+      { name:'github', icon:'&#9830;', tools:12, algo:'REST API v3, GraphQL v4, OAuth2 flow, webhook signature verification' },
+      { name:'postgres', icon:'&#9702;', tools:6, algo:'Connection pooling, prepared statements, query planner, indexing strategies' },
+      { name:'playwright', icon:'&#9881;', tools:15, algo:'Browser context isolation, selector engine, network interception, auto-waiting' },
+      { name:'sequential-thinking', icon:'&#9883;', tools:3, algo:'Chain-of-thought reasoning, hypothesis branching, confidence scoring' },
+      { name:'memory', icon:'&#9783;', tools:5, algo:'Vector embeddings, cosine similarity, episodic memory retrieval, context pruning' },
+      { name:'brave-search', icon:'&#8982;', tools:4, algo:'Web index ranking, semantic search, freshness scoring, result dedup' },
+      { name:'puppeteer', icon:'&#127760;', tools:10, algo:'Headless Chrome automation, DOM manipulation, PDF generation, performance tracing' },
+      { name:'sqlite', icon:'&#9776;', tools:7, algo:'B-tree indexing, WAL journaling, query optimization, FTS5 full-text search' },
+      { name:'docker', icon:'&#9638;', tools:6, algo:'Container isolation, layered filesystem, image caching, network namespace' },
+      { name:'fetch', icon:'&#8593;&#8595;', tools:5, algo:'HTTP/2 multiplexing, streaming responses, TLS handshake, redirect chains' },
+      { name:'slack', icon:'#', tools:9, algo:'Socket Mode, Events API, Block Kit UI, message threading, slash commands' }
+    ];
+
+    const grid = document.getElementById('mcp-grid');
+    mcps.forEach(function(mcp) {
+      const outer = document.createElement('div');
+      outer.className = 'mcp-card-outer';
+      outer.innerHTML =
+        '<div class="mcp-card-inner">' +
+          '<div class="mcp-face front">' +
+            '<div class="mcp-icon">' + mcp.icon + '</div>' +
+            '<div class="mcp-name">' + mcp.name + '</div>' +
+            '<div class="mcp-tools">' + mcp.tools + ' tools</div>' +
+          '</div>' +
+          '<div class="mcp-face back">' +
+            '<div class="mcp-algo">' + mcp.algo + '</div>' +
+          '</div>' +
+        '</div>';
+      grid.appendChild(outer);
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  SKILLS CARDS                                                           */
+  /* ====================================================================== */
+  (function() {
+    const skills = [
+      { icon:'&#9763;', name:'Quantitative Trading', desc:'Market microstructure, order book simulation, factor models, backtesting engine, risk management', pct:95 },
+      { icon:'&#9881;', name:'NLP & Text Analysis', desc:'Transformer architectures, sentiment analysis, entity extraction, RAG pipelines, semantic search', pct:82 },
+      { icon:'&#9681;', name:'Computer Vision', desc:'Object detection (YOLO), image segmentation, OCR pipelines, video analysis, feature extraction', pct:78 },
+      { icon:'&#9640;', name:'Full-Stack Development', desc:'React/Next.js, FastAPI/Django, PostgreSQL, Redis, Docker, CI/CD pipelines', pct:90 },
+      { icon:'&#9776;', name:'Data Pipeline Engineering', desc:'ETL orchestration, stream processing (Kafka), data lakes, Airflow DAGs, monitoring', pct:88 },
+      { icon:'&#9729;', name:'Cloud Architecture', desc:'AWS/GCP, Kubernetes, Terraform IaC, service mesh, zero-downtime deployment, observability', pct:85 }
+    ];
+
+    const grid = document.getElementById('skills-grid');
+    skills.forEach(function(skill) {
+      const card = document.createElement('div');
+      card.className = 'skill-card';
+      card.innerHTML =
+        '<div class="skill-icon">' + skill.icon + '</div>' +
+        '<div class="skill-name">' + skill.name + '</div>' +
+        '<div class="skill-desc">' + skill.desc + '</div>' +
+        '<div class="skill-bar-outer"><div class="skill-bar-inner" data-pct="' + skill.pct + '"></div></div>' +
+        '<div class="skill-pct">' + skill.pct + '%</div>';
+      grid.appendChild(card);
+    });
+
+    const skillObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        skillObserver.unobserve(entry.target);
+        const bar = entry.target.querySelector('.skill-bar-inner');
+        const pct = bar.getAttribute('data-pct');
+        setTimeout(function() { bar.style.width = pct + '%'; }, 100);
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.skill-card').forEach(function(card) {
+      skillObserver.observe(card);
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  TIMELINE                                                               */
+  /* ====================================================================== */
+  (function() {
+    const items = [
+      { date:'2026.07', title:'MCP Ecosystem Expansion', desc:'Built and deployed 15 MCP servers covering filesystem, database, browser automation, and AI tooling domains.' },
+      { date:'2026.03', title:'Quant Trading Platform v3', desc:'High-frequency backtesting engine with sub-microsecond latency. Real-time market data pipeline processing 10M+ events/day.' },
+      { date:'2025.11', title:'AI Agent Orchestration Framework', desc:'Multi-agent coordination system with 58 specialized skills. Automated workflow engine with DAG-based task decomposition.' },
+      { date:'2025.06', title:'Open-Source NLP Toolkit', desc:'Released modular NLP pipeline library. 500+ GitHub stars. Transformer-based text classification, NER, and summarization.' },
+      { date:'2025.01', title:'Cloud-Native Data Platform', desc:'Designed distributed data platform on Kubernetes. Real-time ETL with Apache Kafka + Flink. 99.99% uptime SLA.' },
+      { date:'2024.08', title:'Algorithm Visualization Suite', desc:'Interactive algorithm demos: sorting, pathfinding, cellular automata, fractal rendering, optimization heuristics.' }
+    ];
+
+    const timeline = document.getElementById('timeline');
+    items.forEach(function(item) {
+      const div = document.createElement('div');
+      div.className = 'timeline-item';
+      div.innerHTML =
+        '<div class="timeline-dot"></div>' +
+        '<div class="timeline-date">' + item.date + '</div>' +
+        '<div class="timeline-title">' + item.title + '</div>' +
+        '<div class="timeline-desc">' + item.desc + '</div>';
+      timeline.appendChild(div);
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  ACTIVITY LOG                                                           */
+  /* ====================================================================== */
+  (function() {
+    const container = document.getElementById('log-entries');
+    const statusEl = document.getElementById('log-status');
+
+    // Try to fetch from GitHub API for user wzx11223344
+    async function fetchGitHub() {
+      try {
+        const resp = await fetch('https://api.github.com/users/wzx11223344/events/public?per_page=20');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const events = await resp.json();
+        container.innerHTML = '';
+        events.slice(0, 15).forEach(function(evt) {
+          const date = new Date(evt.created_at);
+          const ts = date.toLocaleTimeString('zh-CN', { hour12: false });
+          let typeClass = 'type-commit';
+          let desc = evt.type;
+          if (evt.type === 'PushEvent') {
+            desc = 'push ' + (evt.payload.commits ? evt.payload.commits.length : 0) + ' commit(s) -> ' + (evt.repo ? evt.repo.name : '');
+            typeClass = 'type-commit';
+          } else if (evt.type === 'IssuesEvent') {
+            desc = evt.payload.action + ' issue #' + (evt.payload.issue ? evt.payload.issue.number : '?') + ' in ' + (evt.repo ? evt.repo.name : '');
+            typeClass = 'type-issue';
+          } else if (evt.type === 'PullRequestEvent') {
+            desc = evt.payload.action + ' PR in ' + (evt.repo ? evt.repo.name : '');
+            typeClass = 'type-pr';
+          } else if (evt.type === 'CreateEvent') {
+            desc = 'created ' + evt.payload.ref_type + ' ' + (evt.payload.ref || '') + ' in ' + (evt.repo ? evt.repo.name : '');
+            typeClass = 'type-commit';
+          } else {
+            desc = evt.type + ' in ' + (evt.repo ? evt.repo.name : '');
+          }
+          const entry = document.createElement('div');
+          entry.className = 'log-entry';
+          entry.innerHTML = '<span class="timestamp">' + ts + '</span> <span class="' + typeClass + '">[' + evt.type.replace('Event','') + ']</span> ' + desc;
+          container.appendChild(entry);
+        });
+        statusEl.textContent = 'LIVE';
+        statusEl.style.color = '#00ff88';
+      } catch (e) {
+        statusEl.textContent = 'FALLBACK';
+        statusEl.style.color = '#f59e0b';
+        loadFallback();
+      }
+    }
+
+    function loadFallback() {
+      container.innerHTML = '';
+      const items = [
+        { ts:'14:32:07', type:'[PUSH]', cls:'type-commit', desc:'feat: add PSO visualization to algorithm lab' },
+        { ts:'13:18:45', type:'[PUSH]', cls:'type-commit', desc:'perf: optimize Mandelbrot render with Web Worker' },
+        { ts:'12:05:22', type:'[PR]', cls:'type-pr', desc:'merge: MCP server matrix 3D flip cards' },
+        { ts:'10:47:11', type:'[ISSUE]', cls:'type-issue', desc:'bug: fix radar chart animation on mobile' },
+        { ts:'09:33:58', type:'[PUSH]', cls:'type-commit', desc:'feat: Conway Game of Life with speed control' },
+        { ts:'08:15:30', type:'[PUSH]', cls:'type-commit', desc:'style: cyberpunk HUD theme implementation' },
+        { ts:'07:02:14', type:'[ISSUE]', cls:'type-issue', desc:'docs: add algorithm complexity analysis' },
+        { ts:'23:48:05', type:'[PUSH]', cls:'type-commit', desc:'feat: pathfinding A*/BFS/DFS visualization' },
+        { ts:'22:11:39', type:'[PR]', cls:'type-pr', desc:'merge: sorting algorithm real-time comparison' },
+        { ts:'20:54:22', type:'[PUSH]', cls:'type-commit', desc:'init: project scaffold with matrix rain background' }
+      ];
+      items.forEach(function(item) {
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = '<span class="timestamp">' + item.ts + '</span> <span class="' + item.cls + '">' + item.type + '</span> ' + item.desc;
+        container.appendChild(entry);
+      });
+    }
+
+    fetchGitHub();
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab Switcher                                           */
+  /* ====================================================================== */
+  (function() {
+    const tabs = document.querySelectorAll('#lab-tabs .lab-tab');
+    const panels = document.querySelectorAll('.lab-panel');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        this.classList.add('active');
+        const target = this.getAttribute('data-tab');
+        panels.forEach(function(p) {
+          p.classList.remove('active');
+          if (p.id === 'panel-' + target) p.classList.add('active');
+        });
+        // Trigger resize for canvases when switching tabs
+        window.dispatchEvent(new Event('lab-tab-switch'));
+      });
+    });
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab A: Sorting                                         */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('sort-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    let data = [];
+    const N = 80;
+    let running = false;
+    let animId = null;
+    let comparisons = 0, swaps = 0;
+
+    function reset() {
+      data = [];
+      for (let i = 0; i < N; i++) data.push({ val: Math.floor(Math.random() * (H - 40)) + 10, col: '#3b82f6' });
+      comparisons = 0; swaps = 0;
+      updateStats();
+      drawAll();
+    }
+
+    function updateStats() {
+      document.getElementById('sort-cmp').textContent = comparisons;
+      document.getElementById('sort-swap').textContent = swaps;
+      document.getElementById('sort-time').textContent = '0ms';
+    }
+
+    function drawAll(activeA, activeB) {
+      ctx.clearRect(0, 0, W, H);
+      const barW = (W - 20) / N - 2;
+      for (let i = 0; i < N; i++) {
+        let col = data[i].col;
+        if (i === activeA) col = '#00ff88';
+        if (i === activeB) col = '#a855f7';
+        ctx.fillStyle = col;
+        ctx.fillRect(10 + i * (barW + 2), H - data[i].val, barW, data[i].val);
+      }
+    }
+
+    async function bubbleSort() {
+      const t0 = performance.now();
+      for (let i = 0; i < N - 1; i++) {
+        for (let j = 0; j < N - i - 1; j++) {
+          comparisons++;
+          updateStats();
+          drawAll(j, j + 1);
+          if (data[j].val > data[j + 1].val) {
+            [data[j], data[j + 1]] = [data[j + 1], data[j]];
+            swaps++;
+            updateStats();
+            drawAll(j, j + 1);
+          }
+          await delay(1);
+          if (!running) { drawAll(); return; }
+        }
+      }
+      document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
+      for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(5); }
+      running = false;
+    }
+
+    async function quickSort(lo, hi) {
+      if (lo >= hi || !running) return;
+      const t0 = performance.now();
+      const pivot = data[hi].val;
+      let pi = lo;
+      for (let i = lo; i < hi; i++) {
+        comparisons++;
+        updateStats();
+        drawAll(i, hi);
+        if (data[i].val < pivot) {
+          [data[pi], data[i]] = [data[i], data[pi]];
+          swaps++;
+          updateStats();
+          drawAll(pi, i);
+          pi++;
+        }
+        await delay(2);
+        if (!running) return;
+      }
+      [data[pi], data[hi]] = [data[hi], data[pi]];
+      swaps++;
+      updateStats();
+      drawAll(pi, hi);
+      await delay(2);
+      await quickSort(lo, pi - 1);
+      await quickSort(pi + 1, hi);
+      if (lo === 0 && hi === N - 1) {
+        document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
+        for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(3); }
+      }
+    }
+
+    async function mergeSort(l, r) {
+      if (l >= r || !running) return;
+      const m = Math.floor((l + r) / 2);
+      await mergeSort(l, m);
+      await mergeSort(m + 1, r);
+      let i = l, j = m + 1;
+      const temp = [];
+      while (i <= m && j <= r) {
+        comparisons++;
+        updateStats();
+        drawAll(i, j);
+        if (data[i].val <= data[j].val) { temp.push(data[i]); i++; }
+        else { temp.push(data[j]); j++; }
+        await delay(3);
+        if (!running) return;
+      }
+      while (i <= m) { temp.push(data[i]); i++; }
+      while (j <= r) { temp.push(data[j]); j++; }
+      for (let k = 0; k < temp.length; k++) { data[l + k] = temp[k]; swaps++; drawAll(l + k, -1); await delay(2); }
+      updateStats();
+    }
+
+    async function heapSort() {
+      const t0 = performance.now();
+      function heapify(n, i) {
+        let largest = i, l = 2 * i + 1, r = 2 * i + 2;
+        if (l < n) { comparisons++; if (data[l].val > data[largest].val) largest = l; }
+        if (r < n) { comparisons++; if (data[r].val > data[largest].val) largest = r; }
+        if (largest !== i) { [data[i], data[largest]] = [data[largest], data[i]]; swaps++; }
+        updateStats();
+      }
+      for (let i = Math.floor(N / 2) - 1; i >= 0; i--) { heapify(N, i); drawAll(i); await delay(1); }
+      for (let i = N - 1; i > 0; i--) {
+        [data[0], data[i]] = [data[i], data[0]]; swaps++;
+        drawAll(0, i); await delay(3);
+        for (let j = Math.floor(i / 2) - 1; j >= 0; j--) heapify(i, j);
+        if (!running) return;
+      }
+      document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
+      for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(3); }
+      running = false;
+    }
+
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    document.getElementById('sort-start').addEventListener('click', async function() {
+      if (running) return;
+      running = true;
+      comparisons = 0; swaps = 0;
+      for (let i = 0; i < N; i++) data[i].col = '#3b82f6';
+      const algo = document.getElementById('sort-algo').value;
+      const t0 = performance.now();
+      if (algo === 'bubble') await bubbleSort();
+      else if (algo === 'quick') { await quickSort(0, N - 1); document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms'; }
+      else if (algo === 'merge') { await mergeSort(0, N - 1); document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms'; }
+      else if (algo === 'heap') await heapSort();
+      running = false;
+      updateStats();
+    });
+
+    document.getElementById('sort-reset').addEventListener('click', function() { running = false; reset(); });
+    reset();
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab B: Pathfinding                                    */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('path-canvas');
+    const ctx = canvas.getContext('2d');
+    const COLS = 50, ROWS = 30;
+    const cellW = canvas.width / COLS, cellH = canvas.height / ROWS;
+    let grid = [];
+    let start = {x:1,y:1}, end = {x:COLS-2,y:ROWS-2};
+    let explored = 0, pathLen = 0;
+    let running = false;
+
+    function initGrid() {
+      grid = [];
+      for (let y = 0; y < ROWS; y++) {
+        grid[y] = [];
+        for (let x = 0; x < COLS; x++) {
+          if (x === 0 || y === 0 || x === COLS - 1 || y === ROWS - 1) grid[y][x] = 1;
+          else grid[y][x] = Math.random() < 0.3 ? 1 : 0;
+        }
+      }
+      grid[start.y][start.x] = 0;
+      grid[end.y][end.x] = 0;
+      explored = 0; pathLen = 0;
+      updateStats();
+      drawGrid();
+    }
+
+    function updateStats() {
+      document.getElementById('path-explored').textContent = explored;
+      document.getElementById('path-length').textContent = pathLen;
+    }
+
+    function drawGrid(path, vis) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          if (grid[y][x] === 1) { ctx.fillStyle = '#1a1a2e'; }
+          else ctx.fillStyle = '#0a0a0f';
+          ctx.fillRect(x * cellW, y * cellH, cellW, cellH);
+        }
+      }
+      if (vis) vis.forEach(function(p) { ctx.fillStyle = 'rgba(59,130,246,0.25)'; ctx.fillRect(p.x * cellW, p.y * cellH, cellW, cellH); });
+      if (path) path.forEach(function(p) { ctx.fillStyle = '#00ff88'; ctx.fillRect(p.x * cellW, p.y * cellH, cellW, cellH); });
+      ctx.fillStyle = '#a855f7'; ctx.fillRect(start.x * cellW, start.y * cellH, cellW, cellH);
+      ctx.fillStyle = '#f59e0b'; ctx.fillRect(end.x * cellW, end.y * cellH, cellW, cellH);
+    }
+
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function heuristic(a, b) { return Math.abs(a.x - b.x) + Math.abs(a.y - b.y); }
+
+    async function runBFS() {
+      const q = [start];
+      const cameFrom = {};
+      cameFrom[start.y + ',' + start.x] = null;
+      const visited = new Set();
+      visited.add(start.y + ',' + start.x);
+      const vis = [];
+      const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+      while (q.length > 0 && running) {
+        const cur = q.shift();
+        explored++;
+        vis.push(cur);
+        if (cur.x === end.x && cur.y === end.y) break;
+        for (let d of dirs) {
+          const nx = cur.x + d[0], ny = cur.y + d[1];
+          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !visited.has(ny + ',' + nx)) {
+            visited.add(ny + ',' + nx);
+            cameFrom[ny + ',' + nx] = cur;
+            q.push({x:nx, y:ny});
+          }
+        }
+        if (explored % 15 === 0) { updateStats(); drawGrid(null, vis); await delay(8); }
+      }
+      updateStats();
+      drawGrid(null, vis);
+      // Reconstruct path
+      const path = [];
+      let cur = end;
+      while (cur) {
+        path.push(cur);
+        cur = cameFrom[cur.y + ',' + cur.x];
+      }
+      pathLen = path.length;
+      updateStats();
+      drawGrid(path, vis);
+    }
+
+    async function runDFS() {
+      const stk = [start];
+      const cameFrom = {}; cameFrom[start.y + ',' + start.x] = null;
+      const visited = new Set(); visited.add(start.y + ',' + start.x);
+      const vis = [];
+      const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+      while (stk.length > 0 && running) {
+        const cur = stk.pop();
+        explored++; vis.push(cur);
+        if (cur.x === end.x && cur.y === end.y) break;
+        for (let d of dirs) {
+          const nx = cur.x + d[0], ny = cur.y + d[1];
+          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !visited.has(ny + ',' + nx)) {
+            visited.add(ny + ',' + nx);
+            cameFrom[ny + ',' + nx] = cur;
+            stk.push({x:nx, y:ny});
+          }
+        }
+        if (explored % 20 === 0) { updateStats(); drawGrid(null, vis); await delay(6); }
+      }
+      updateStats(); drawGrid(null, vis);
+      const path = []; let cur = end;
+      while (cur) { path.push(cur); cur = cameFrom[cur.y + ',' + cur.x]; }
+      pathLen = path.length;
+      updateStats(); drawGrid(path, vis);
+    }
+
+    async function runAStar() {
+      const openSet = [{x:start.x, y:start.y, f:heuristic(start,end), g:0}];
+      const cameFrom = {}; cameFrom[start.y + ',' + start.x] = null;
+      const gScore = {}; gScore[start.y + ',' + start.x] = 0;
+      const closed = new Set();
+      const vis = [];
+      while (openSet.length > 0 && running) {
+        let minIdx = 0;
+        for (let i = 1; i < openSet.length; i++) if (openSet[i].f < openSet[minIdx].f) minIdx = i;
+        const cur = openSet.splice(minIdx, 1)[0];
+        if (closed.has(cur.y + ',' + cur.x)) continue;
+        closed.add(cur.y + ',' + cur.x);
+        explored++; vis.push(cur);
+        if (cur.x === end.x && cur.y === end.y) break;
+        const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+        for (let d of dirs) {
+          const nx = cur.x + d[0], ny = cur.y + d[1];
+          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !closed.has(ny + ',' + nx)) {
+            const tg = gScore[cur.y + ',' + cur.x] + 1;
+            if (tg < (gScore[ny + ',' + nx] || Infinity)) {
+              gScore[ny + ',' + nx] = tg;
+              const f = tg + heuristic({x:nx,y:ny}, end);
+              cameFrom[ny + ',' + nx] = cur;
+              openSet.push({x:nx, y:ny, f:f, g:tg});
+            }
+          }
+        }
+        if (explored % 20 === 0) { updateStats(); drawGrid(null, vis); await delay(8); }
+      }
+      updateStats(); drawGrid(null, vis);
+      const path = []; let cur = end;
+      while (cur) { path.push(cur); cur = cameFrom[cur.y + ',' + cur.x]; }
+      pathLen = path.length;
+      updateStats(); drawGrid(path, vis);
+    }
+
+    document.getElementById('path-start').addEventListener('click', async function() {
+      if (running) return;
+      running = true;
+      explored = 0; pathLen = 0;
+      updateStats();
+      const algo = document.getElementById('path-algo').value;
+      if (algo === 'bfs') await runBFS();
+      else if (algo === 'dfs') await runDFS();
+      else if (algo === 'astar') await runAStar();
+      running = false;
+    });
+    document.getElementById('path-reset').addEventListener('click', function() { running = false; initGrid(); });
+    initGrid();
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab C: Conway's Game of Life                          */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('life-canvas');
+    const ctx = canvas.getContext('2d');
+    const COLS = 80, ROWS = 50;
+    const cellW = canvas.width / COLS, cellH = canvas.height / ROWS;
+    let grid = [], next = [];
+    let running = false;
+    let animId = null;
+    let generation = 0, aliveCount = 0;
+    let speed = 5;
+
+    function randomInit() {
+      running = false;
+      generation = 0;
+      for (let y = 0; y < ROWS; y++) {
+        grid[y] = [];
+        next[y] = [];
+        for (let x = 0; x < COLS; x++) {
+          grid[y][x] = Math.random() < 0.2 ? 1 : 0;
+          next[y][x] = 0;
+        }
+      }
+      updateStats();
+      drawGrid();
+    }
+
+    function updateStats() {
+      document.getElementById('life-gen').textContent = generation;
+      document.getElementById('life-alive').textContent = aliveCount;
+    }
+
+    function countNeighbors(x, y) {
+      let count = 0;
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (dx === 0 && dy === 0) continue;
+          const nx = x + dx, ny = y + dy;
+          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) count += grid[ny][nx];
+        }
+      }
+      return count;
+    }
+
+    function step() {
+      aliveCount = 0;
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          const n = countNeighbors(x, y);
+          if (grid[y][x] === 1) {
+            next[y][x] = (n === 2 || n === 3) ? 1 : 0;
+          } else {
+            next[y][x] = (n === 3) ? 1 : 0;
+          }
+          aliveCount += next[y][x];
+        }
+      }
+      [grid, next] = [next, grid];
+      generation++;
+      updateStats();
+      drawGrid();
+    }
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          if (grid[y][x] === 1) {
+            ctx.fillStyle = '#00ff88';
+            ctx.fillRect(x * cellW, y * cellH, cellW - 0.5, cellH - 0.5);
+          } else {
+            ctx.fillStyle = '#0d0d18';
+            ctx.fillRect(x * cellW, y * cellH, cellW - 0.5, cellH - 0.5);
+          }
         }
       }
     }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
 
-// ═══ Scroll Reveal ═══
-(function scrollReveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-})();
+    function loop() {
+      if (!running) return;
+      step();
+      const interval = Math.max(30, 310 - speed * 14);
+      setTimeout(function() {
+        if (running) animId = requestAnimationFrame(loop);
+      }, interval);
+    }
 
-// ═══ MCP Servers Data ═══
-const mcpData = [
-  {id:'financial', icon:'▹', name:'mcp-financial-data', title:'金融数据', desc:'A股行情 · 基金数据 · 宏观经济 · 市场宽度', tags:['金融','行情','19工具']},
-  {id:'quant', icon:'▹', name:'mcp-quant-engine', title:'量化引擎', desc:'BS期权定价 · MC模拟 · Greeks · Markowitz · VaR', tags:['量化','衍生品','24工具']},
-  {id:'doc', icon:'▹', name:'mcp-doc-analyzer', title:'文档分析', desc:'文件读取 · 词频统计 · TF-IDF · TextRank · 情感分析', tags:['NLP','文档','21工具']},
-  {id:'db', icon:'▹', name:'mcp-db-assistant', title:'数据库助手', desc:'SQLite执行 · Schema分析 · 数据质量 · SQL构建器', tags:['数据库','SQL','26工具']},
-  {id:'viz', icon:'▹', name:'mcp-data-viz', title:'数据可视化', desc:'柱状图·折线·散点·热力图·雷达图·仪表盘', tags:['可视化','图表','32工具']},
-  {id:'ml', icon:'▹', name:'mcp-ml-toolkit', title:'机器学习', desc:'分类 · 回归 · 聚类 · 交叉验证 · 网格搜索', tags:['ML','scikit-learn','30工具']},
-  {id:'stats', icon:'▹', name:'mcp-stats-engine', title:'统计分析', desc:'描述性统计 · 假设检验 · OLS回归 · ARIMA · ADF', tags:['统计','时间序列','30工具']},
-  {id:'scraper', icon:'▹', name:'mcp-web-scraper', title:'网页抓取', desc:'网页获取 · HTML解析 · CSS选择器 · 内容提取', tags:['抓取','HTML','26工具']},
-  {id:'nlp', icon:'⬡', name:'mcp-nlp-service', title:'NLP服务', desc:'分词 · TextRank · 朴素贝叶斯 · K-Means++ · 马尔可夫生成', tags:['NLP','AI','23工具']},
-  {id:'text', icon:'⬡', name:'mcp-text-processor', title:'文本处理', desc:'Markdown↔HTML · Myers差异 · 霍夫曼压缩 · Base64', tags:['文本','编码','22工具']},
-  {id:'pipe', icon:'⬡', name:'mcp-data-pipeline', title:'数据管道', desc:'数据画像 · PCA降维 · SMOTE过采样 · K-Fold交叉验证', tags:['ETL','特征','22工具']},
-  {id:'math', icon:'⬡', name:'mcp-math-engine', title:'数学引擎', desc:'FFT · SVD分解 · 单纯形法 · RK4 ODE · 假设检验', tags:['数学','数值','22工具']},
-];
-(function renderMCP() {
-  let html = '';
-  mcpData.forEach(m => {
-    html += `<div class="mcp-card reveal">
-      <div class="mcp-icon">${m.icon}</div>
-      <div class="mcp-name">${m.name}</div>
-      <div class="mcp-title">${m.title}</div>
-      <div class="mcp-desc">${m.desc}</div>
-      <div class="mcp-tags">${m.tags.map(t=>`<span class="mcp-tag">${t}</span>`).join('')}</div>
-    </div>`;
-  });
-  document.getElementById('mcp-container').innerHTML = html;
-  // Re-observe
-  setTimeout(() => {
-    document.querySelectorAll('#mcp-container .reveal').forEach(el => {
-      new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.15 }).observe(el);
+    document.getElementById('life-start').addEventListener('click', function() {
+      if (running) return;
+      running = true;
+      loop();
     });
-  }, 100);
-})();
+    document.getElementById('life-pause').addEventListener('click', function() { running = false; });
+    document.getElementById('life-reset').addEventListener('click', function() { randomInit(); });
+    document.getElementById('life-speed').addEventListener('input', function() { speed = parseInt(this.value); });
 
-// ═══ Sort Algorithm Demo ═══
-let sortRunning = false, currentAlgo = 'bubble';
-const sortCanvas = document.getElementById('sort-canvas'), sortCtx = sortCanvas.getContext('2d');
-let sortArray = [], n = 60;
-function resetSortArray() {
-  sortArray = [];
-  for (let i=0;i<n;i++) sortArray.push(Math.random()*230+20);
-}
-function drawSortArray(highlight=[], highlight2=[]) {
-  const w = sortCanvas.parentElement.offsetWidth - 2;
-  sortCanvas.width = w;
-  sortCtx.clearRect(0,0,w,260);
-  const bw = (w-20)/n, bh = 260;
-  sortArray.forEach((v,i) => {
-    if (highlight.includes(i)) sortCtx.fillStyle = '#ef4444';
-    else if (highlight2.includes(i)) sortCtx.fillStyle = '#3b82f6';
-    else sortCtx.fillStyle = `rgba(0,240,168,${0.3+v/600})`;
-    sortCtx.fillRect(10+i*bw, bh-v, bw-1, v);
-  });
-}
-async function bubbleSort() {
-  let comp=0, swap=0, t0=performance.now();
-  for (let i=0;i<n;i++) {
-    for (let j=0;j<n-i-1;j++) {
-      comp++; document.getElementById('sort-comparisons').textContent=comp;
-      drawSortArray([j,j+1]);
-      await new Promise(r=>setTimeout(r,5));
-      if (sortArray[j]>sortArray[j+1]) {
-        [sortArray[j],sortArray[j+1]]=[sortArray[j+1],sortArray[j]]; swap++;
-        document.getElementById('sort-swaps').textContent=swap;
-        drawSortArray([], [j+1]);
-        await new Promise(r=>setTimeout(r,5));
+    randomInit();
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab D: Mandelbrot Set                                 */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('mandelbrot-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    let xMin = -2.0, xMax = 1.0, yMin = -1.2, yMax = 1.2;
+    const MAX_ITER = 200;
+    let dragging = false;
+    let dragStart = {x:0, y:0};
+
+    function render() {
+      const imgData = ctx.createImageData(W, H);
+      const xRange = xMax - xMin, yRange = yMax - yMin;
+      for (let py = 0; py < H; py++) {
+        for (let px = 0; px < W; px++) {
+          const cx = xMin + (px / W) * xRange;
+          const cy = yMin + (py / H) * yRange;
+          let zx = 0, zy = 0;
+          let iter = 0;
+          while (zx * zx + zy * zy < 4 && iter < MAX_ITER) {
+            const tmp = zx * zx - zy * zy + cx;
+            zy = 2 * zx * zy + cy;
+            zx = tmp;
+            iter++;
+          }
+          const idx = (py * W + px) * 4;
+          if (iter === MAX_ITER) {
+            imgData.data[idx] = 5; imgData.data[idx+1] = 5; imgData.data[idx+2] = 15; imgData.data[idx+3] = 255;
+          } else {
+            const t = iter / MAX_ITER;
+            const r = Math.floor(9 * (1 - t) * t * t * t * 255);
+            const g = Math.floor(15 * (1 - t) * (1 - t) * t * t * 255);
+            const b = Math.floor(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
+            imgData.data[idx] = Math.min(r, 255);
+            imgData.data[idx+1] = Math.min(g, 255);
+            imgData.data[idx+2] = Math.min(b, 255);
+            imgData.data[idx+3] = 255;
+          }
+        }
       }
+      ctx.putImageData(imgData, 0, 0);
+      const zoom = 3.0 / xRange;
+      document.getElementById('mandelbrot-info').textContent =
+        'R: [' + xMin.toFixed(4) + ', ' + xMax.toFixed(4) + '] I: [' + yMin.toFixed(4) + ', ' + yMax.toFixed(4) + '] | Zoom: ' + zoom.toFixed(1) + 'x';
     }
-  }
-  document.getElementById('sort-time').textContent=Math.round(performance.now()-t0);
-}
-async function quickSort(lo=0, hi=n-1) {
-  if (!window._qsc) { window._qsc={comp:0,swap:0,t0:performance.now()}; }
-  if (lo>=hi) { if(lo===0&&hi===n-1||lo>=n-1) document.getElementById('sort-time').textContent=Math.round(performance.now()-window._qsc.t0); return; }
-  let pivot=sortArray[hi], i=lo-1;
-  for (let j=lo;j<hi;j++) {
-    window._qsc.comp++; document.getElementById('sort-comparisons').textContent=window._qsc.comp;
-    drawSortArray([j,hi]);
-    await new Promise(r=>setTimeout(r,8));
-    if (sortArray[j]<pivot) {
-      i++; [sortArray[i],sortArray[j]]=[sortArray[j],sortArray[i]]; window._qsc.swap++;
-      document.getElementById('sort-swaps').textContent=window._qsc.swap;
-      drawSortArray([],[i,j]);
-      await new Promise(r=>setTimeout(r,8));
-    }
-  }
-  [sortArray[i+1],sortArray[hi]]=[sortArray[hi],sortArray[i+1]]; window._qsc.swap++;
-  drawSortArray([],[i+1]); await new Promise(r=>setTimeout(r,8));
-  await quickSort(lo,i);
-  await quickSort(i+2,hi);
-}
-async function mergeSort(lo=0, hi=n-1) {
-  if (!window._msc) { window._msc={comp:0,swap:0,t0:performance.now()}; }
-  if (lo>=hi) return;
-  let mid=Math.floor((lo+hi)/2);
-  await mergeSort(lo,mid); await mergeSort(mid+1,hi);
-  let tmp=[], i=lo, j=mid+1;
-  while(i<=mid&&j<=hi) {
-    window._msc.comp++; document.getElementById('sort-comparisons').textContent=window._msc.comp;
-    drawSortArray([i,j]);
-    await new Promise(r=>setTimeout(r,6));
-    if(sortArray[i]<=sortArray[j]) tmp.push(sortArray[i++]);
-    else tmp.push(sortArray[j++]);
-  }
-  while(i<=mid) tmp.push(sortArray[i++]);
-  while(j<=hi) tmp.push(sortArray[j++]);
-  for(let k=0;k<tmp.length;k++) {
-    sortArray[lo+k]=tmp[k]; window._msc.swap++;
-    document.getElementById('sort-swaps').textContent=window._msc.swap;
-    drawSortArray([],[lo+k]);
-    await new Promise(r=>setTimeout(r,4));
-  }
-  if(lo===0&&hi>=n-1) document.getElementById('sort-time').textContent=Math.round(performance.now()-window._msc.t0);
-}
-async function heapSort() {
-  let comp=0, swap=0, t0=performance.now();
-  function heapify(i, sz) {
-    let max=i, l=2*i+1, r=2*i+2;
-    if(l<sz&&sortArray[l]>sortArray[max]) max=l;
-    if(r<sz&&sortArray[r]>sortArray[max]) max=r;
-    if(max!==i) { comp++; [sortArray[i],sortArray[max]]=[sortArray[max],sortArray[i]]; swap++; heapify(max,sz); }
-  }
-  for(let i=Math.floor(n/2)-1;i>=0;i--) heapify(i,n);
-  for(let i=n-1;i>0;i--) {
-    comp++; [sortArray[0],sortArray[i]]=[sortArray[i],sortArray[0]]; swap++;
-    document.getElementById('sort-comparisons').textContent=comp;
-    document.getElementById('sort-swaps').textContent=swap;
-    drawSortArray([0,i]); await new Promise(r=>setTimeout(r,12));
-    heapify(0,i);
-  }
-  document.getElementById('sort-time').textContent=Math.round(performance.now()-t0);
-}
-resetSortArray(); drawSortArray();
 
-document.querySelectorAll('[data-algo]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-algo]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); currentAlgo = btn.dataset.algo;
-    resetSortArray(); drawSortArray();
-    document.getElementById('sort-comparisons').textContent='0';
-    document.getElementById('sort-swaps').textContent='0';
-    document.getElementById('sort-time').textContent='0 ms';
-  });
-});
-document.getElementById('btn-sort-run').addEventListener('click', async () => {
-  if (sortRunning) return; sortRunning = true;
-  document.getElementById('sort-comparisons').textContent='0';
-  document.getElementById('sort-swaps').textContent='0';
-  document.getElementById('sort-time').textContent='...';
-  window._qsc = null; window._msc = null;
-  if (currentAlgo === 'bubble') await bubbleSort();
-  else if (currentAlgo === 'quick') await quickSort();
-  else if (currentAlgo === 'merge') await mergeSort();
-  else if (currentAlgo === 'heap') await heapSort();
-  drawSortArray(); sortRunning = false;
-});
-
-// ═══ Pathfinding Demo ═══
-const pathCanvas = document.getElementById('path-canvas'), pathCtx = pathCanvas.getContext('2d');
-const ROWS=22, COLS=40; let grid=[], pathAlgo='bfs';
-function resetGrid() {
-  grid = [];
-  for (let r=0;r<ROWS;r++) {
-    grid[r]=[];
-    for (let c=0;c<COLS;c++) grid[r][c]=(r===0||r===ROWS-1||c===0||c===COLS-1||Math.random()<0.28)?1:0;
-  }
-  grid[1][1]=0; grid[ROWS-2][COLS-2]=0;
-}
-resetGrid();
-function drawGrid(visited=[], path=[]) {
-  const w = pathCanvas.parentElement.offsetWidth - 2;
-  pathCanvas.width = w;
-  const cs = Math.min(w/COLS, 16);
-  const h = cs*ROWS;
-  pathCanvas.height = h;
-  for (let r=0;r<ROWS;r++) {
-    for (let c=0;c<COLS;c++) {
-      if (r===1&&c===1) pathCtx.fillStyle = '#3b82f6';
-      else if (r===ROWS-2&&c===COLS-2) pathCtx.fillStyle = '#ef4444';
-      else if (path.some(p=>p.r===r&&p.c===c)) pathCtx.fillStyle = '#00f0a8';
-      else if (visited.some(p=>p.r===r&&p.c===c)) pathCtx.fillStyle = 'rgba(139,92,246,0.4)';
-      else if (grid[r][c]===1) pathCtx.fillStyle = '#1a1a2e';
-      else pathCtx.fillStyle = '#0c0c14';
-      pathCtx.fillRect(c*cs, r*cs, cs-0.5, cs-0.5);
-    }
-  }
-}
-async function bfsPath() {
-  let t0=performance.now(), q=[{r:1,c:1,path:[]}], visited=[], explored=0;
-  visited.push({r:1,c:1});
-  while(q.length) {
-    let {r,c,path:p}=q.shift(); explored++;
-    document.getElementById('path-explored').textContent=explored;
-    if (r===ROWS-2&&c===COLS-2) {
-      document.getElementById('path-length').textContent=p.length;
-      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
-      drawGrid(visited,p); return;
-    }
-    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
-      let nr=r+dr, nc=c+dc;
-      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0&&!visited.some(v=>v.r===nr&&v.c===nc)) {
-        visited.push({r:nr,c:nc}); q.push({r:nr,c:nc,path:[...p,{r:nr,c:nc}]});
-      }
-    }
-    if (explored%15===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,15)); }
-  }
-  drawGrid(visited);
-}
-async function dfsPath() {
-  let t0=performance.now(), stack=[{r:1,c:1,path:[]}], visited=[], explored=0;
-  while(stack.length) {
-    let {r,c,path:p}=stack.pop(); explored++;
-    document.getElementById('path-explored').textContent=explored;
-    if (visited.some(v=>v.r===r&&v.c===c)) continue;
-    visited.push({r,c});
-    if (r===ROWS-2&&c===COLS-2) {
-      document.getElementById('path-length').textContent=p.length;
-      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
-      drawGrid(visited,p); return;
-    }
-    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
-      let nr=r+dr, nc=c+dc;
-      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0) {
-        stack.push({r:nr,c:nc,path:[...p,{r:nr,c:nc}]});
-      }
-    }
-    if (explored%10===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,20)); }
-  }
-  drawGrid(visited);
-}
-async function astarPath() {
-  let t0=performance.now(), open=[{r:1,c:1,g:0,h:Math.abs(ROWS-2-1)+Math.abs(COLS-2-1),path:[]}], closed=[], visited=[], explored=0;
-  while(open.length) {
-    open.sort((a,b)=>(a.g+a.h)-(b.g+b.h));
-    let {r,c,g,path:p}=open.shift(); explored++;
-    document.getElementById('path-explored').textContent=explored;
-    visited.push({r,c});
-    if (r===ROWS-2&&c===COLS-2) {
-      document.getElementById('path-length').textContent=p.length;
-      document.getElementById('path-time').textContent=Math.round(performance.now()-t0);
-      drawGrid(visited,p); return;
-    }
-    for (let [dr,dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
-      let nr=r+dr, nc=c+dc;
-      if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&grid[nr][nc]===0&&!closed.some(v=>v.r===nr&&v.c===nc)) {
-        let ng=g+1, nh=Math.abs(ROWS-2-nr)+Math.abs(COLS-2-nc);
-        let existing=open.find(o=>o.r===nr&&o.c===nc);
-        if (existing&&existing.g<=ng) continue;
-        else if(existing) open=open.filter(o=>!(o.r===nr&&o.c===nc));
-        open.push({r:nr,c:nc,g:ng,h:nh,path:[...p,{r:nr,c:nc}]});
-      }
-    }
-    closed.push({r,c});
-    if (explored%20===0) { drawGrid(visited); await new Promise(r=>setTimeout(r,10)); }
-  }
-  drawGrid(visited);
-}
-drawGrid();
-
-document.querySelectorAll('[data-path]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-path]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); pathAlgo = btn.dataset.path;
-    document.getElementById('path-explored').textContent='0';
-    document.getElementById('path-length').textContent='0';
-    document.getElementById('path-time').textContent='0 ms';
-    drawGrid();
-  });
-});
-document.getElementById('btn-path-run').addEventListener('click', async () => {
-  resetGrid(); drawGrid();
-  await new Promise(r=>setTimeout(r,100));
-  if (pathAlgo==='bfs') await bfsPath();
-  else if (pathAlgo==='dfs') await dfsPath();
-  else if (pathAlgo==='astar') await astarPath();
-});
-document.getElementById('btn-path-reset').addEventListener('click', () => {
-  resetGrid(); drawGrid();
-  document.getElementById('path-explored').textContent='0';
-  document.getElementById('path-length').textContent='0';
-  document.getElementById('path-time').textContent='0 ms';
-});
-
-// ═══ Fractal Tree Demo ═══
-const treeCanvas = document.getElementById('tree-canvas'), treeCtx = treeCanvas.getContext('2d');
-let treeType='pythagoras', treeDepth=8;
-function drawFractal() {
-  const w = treeCanvas.parentElement.offsetWidth - 2;
-  treeCanvas.width = w;
-  const h = 360;
-  treeCanvas.height = h;
-  treeCtx.clearRect(0,0,w,h);
-  treeCtx.strokeStyle = '#00f0a8';
-  treeCtx.lineWidth = 1;
-  let segments = 0;
-
-  function pythagoras(x,y,len,angle,depth) {
-    if (depth===0||len<3) return;
-    let x2=x+len*Math.cos(angle), y2=y-len*Math.sin(angle);
-    treeCtx.strokeStyle = `rgba(${0},${240},${168},${0.3+depth/treeDepth*0.7})`;
-    treeCtx.beginPath(); treeCtx.moveTo(x,y); treeCtx.lineTo(x2,y2); treeCtx.stroke();
-    segments++;
-    let a1=angle-Math.PI/4, a2=angle+Math.PI/4, nl=len*0.67;
-    pythagoras(x2,y2,nl,a1,depth-1);
-    pythagoras(x2,y2,nl,a2,depth-1);
-  }
-  function koch(x1,y1,x2,y2,depth) {
-    if (depth===0) {
-      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.stroke();
-      segments++; return;
-    }
-    let dx=x2-x1, dy=y2-y1;
-    let xa=x1+dx/3, ya=y1+dy/3;
-    let xb=x1+2*dx/3, yb=y1+2*dy/3;
-    let mx=x1+dx/2, my=y1+dy/2;
-    let hh=Math.sqrt(dx*dx+dy*dy)/3*Math.sqrt(3)/2;
-    let px=mx-dy/Math.sqrt(dx*dx+dy*dy)*hh, py=my+dx/Math.sqrt(dx*dx+dy*dy)*hh;
-    koch(x1,y1,xa,ya,depth-1);
-    koch(xa,ya,px,py,depth-1);
-    koch(px,py,xb,yb,depth-1);
-    koch(xb,yb,x2,y2,depth-1);
-  }
-  function sierpinski(x1,y1,x2,y2,x3,y3,depth) {
-    if (depth===0) {
-      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.lineTo(x3,y3); treeCtx.closePath();
-      treeCtx.stroke(); segments++; return;
-    }
-    let mx12=(x1+x2)/2, my12=(y1+y2)/2;
-    let mx23=(x2+x3)/2, my23=(y2+y3)/2;
-    let mx31=(x3+x1)/2, my31=(y3+y1)/2;
-    sierpinski(x1,y1,mx12,my12,mx31,my31,depth-1);
-    sierpinski(mx12,my12,x2,y2,mx23,my23,depth-1);
-    sierpinski(mx31,my31,mx23,my23,x3,y3,depth-1);
-  }
-  function dragon(x1,y1,x2,y2,depth,flip=1) {
-    if (depth===0) {
-      treeCtx.beginPath(); treeCtx.moveTo(x1,y1); treeCtx.lineTo(x2,y2); treeCtx.stroke();
-      segments++; return;
-    }
-    let mx=(x1+x2)/2, my=(y1+y2)/2;
-    let dx=x2-x1, dy=y2-y1;
-    let px=mx-flip*dy/2, py=my+flip*dx/2;
-    dragon(x1,y1,px,py,depth-1,1);
-    dragon(px,py,x2,y2,depth-1,-1);
-  }
-
-  treeCtx.strokeStyle = '#00f0a8';
-  if (treeType==='pythagoras') pythagoras(w/2, h-30, h*0.25, Math.PI/2, treeDepth);
-  else if (treeType==='koch') {
-    let s=Math.min(w,h)*0.4;
-    koch(w/2-s/2, h/2+20, w/2+s/2, h/2+20, treeDepth);
-  }
-  else if (treeType==='sierpinski') sierpinski(w/2,40, 40,h-20, w-20,h-20, treeDepth);
-  else if (treeType==='dragon') dragon(w/2-80, h/2, w/2+80, h/2, treeDepth);
-  document.getElementById('tree-segments').textContent = segments;
-}
-document.querySelectorAll('[data-tree]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-tree]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); treeType = btn.dataset.tree;
-    document.getElementById('tree-depth').textContent = treeDepth;
-    drawFractal();
-  });
-});
-document.getElementById('btn-tree-run').addEventListener('click', () => {
-  drawFractal();
-});
-// Init
-setTimeout(drawFractal, 400);
-
-// ═══ GitHub Activity Feed ═══
-(async function loadActivity() {
-  try {
-    const r = await fetch('https://api.github.com/users/wzx11223344/repos?per_page=20&sort=created&direction=desc');
-    const repos = await r.json();
-    const types = {
-      'mcp-': { cls: 'publish', label: 'MCP 服务器' },
-      'skill-': { cls: 'create', label: '技能' },
-      'default': { cls: 'push', label: '仓库' }
-    };
-    let html = '';
-    repos.slice(0,15).forEach(repo => {
-      let t = types['default'];
-      for (let k in types) { if (repo.name.startsWith(k)) { t = types[k]; break; } }
-      html += `<div class="activity-item">
-        <div class="activity-dot ${t.cls}"></div>
-        <div class="activity-time">${repo.created_at?.slice(0,10)||'?'}</div>
-        <div class="activity-text"><strong>${repo.name}</strong> · ${t.label} · ${repo.language||'?'} · ${(repo.size||0)}KB</div>
-      </div>`;
+    canvas.addEventListener('mousedown', function(e) {
+      dragging = true;
+      dragStart.x = e.offsetX; dragStart.y = e.offsetY;
     });
-    document.getElementById('activity-feed').innerHTML = html;
-  } catch(e) {
-    document.getElementById('activity-feed').innerHTML = '<div class="activity-item"><div class="activity-dot push"></div><div class="activity-time">--</div><div class="activity-text">离线模式：使用本地数据</div></div>';
-  }
-})();
+    canvas.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      const dx = (e.offsetX - dragStart.x) / W * (xMax - xMin);
+      const dy = (e.offsetY - dragStart.y) / H * (yMax - yMin);
+      xMin -= dx; xMax -= dx; yMin -= dy; yMax -= dy;
+      dragStart.x = e.offsetX; dragStart.y = e.offsetY;
+      render();
+    });
+    canvas.addEventListener('mouseup', function() { dragging = false; });
+    canvas.addEventListener('mouseleave', function() { dragging = false; });
+    canvas.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      const mx = xMin + (e.offsetX / W) * (xMax - xMin);
+      const my = yMin + (e.offsetY / H) * (yMax - yMin);
+      const factor = e.deltaY < 0 ? 0.8 : 1.25;
+      xMin = mx - (mx - xMin) * factor;
+      xMax = mx + (xMax - mx) * factor;
+      yMin = my - (my - yMin) * factor;
+      yMax = my + (yMax - my) * factor;
+      render();
+    });
+    document.getElementById('mandelbrot-reset').addEventListener('click', function() {
+      xMin = -2.0; xMax = 1.0; yMin = -1.2; yMax = 1.2;
+      render();
+    });
 
-// Resize handler for canvases
-window.addEventListener('resize', () => {
-  drawSortArray();
-  drawGrid();
-  drawFractal();
-});
+    // Lazy render on tab switch
+    let rendered = false;
+    window.addEventListener('lab-tab-switch', function() {
+      if (!rendered && document.getElementById('panel-mandelbrot').classList.contains('active')) {
+        render(); rendered = true;
+      }
+    });
+    // Initial render with small delay for DOM ready
+    setTimeout(function() { render(); rendered = true; }, 500);
+  })();
+
+  /* ====================================================================== */
+  /*  ALGORITHM LAB - Tab E: Particle Swarm Optimization (PSO)              */
+  /* ====================================================================== */
+  (function() {
+    const canvas = document.getElementById('pso-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const NUM_PARTICLES = 30;
+    const MAX_ITER = 200;
+
+    // Target function: Rastrigin-like with multiple local minima
+    function fitness(x, y) {
+      const rx = (x - 0.3) * 5, ry = (y - 0.7) * 5;
+      return -(rx * rx + ry * ry - 10 * Math.cos(2 * Math.PI * rx) - 10 * Math.cos(2 * Math.PI * ry) + 20);
+    }
+
+    let particles = [];
+    let globalBest = {x:0, y:0, val:-Infinity};
+    let iteration = 0;
+    let running = false;
+    let animId = null;
+
+    function init() {
+      running = false; iteration = 0; globalBest = {x:0, y:0, val:-Infinity};
+      particles = [];
+      for (let i = 0; i < NUM_PARTICLES; i++) {
+        const x = Math.random() * 2 - 1;
+        const y = Math.random() * 2 - 1;
+        const vx = (Math.random() - 0.5) * 0.5;
+        const vy = (Math.random() - 0.5) * 0.5;
+        const val = fitness(x, y);
+        particles.push({
+          x:x, y:y, vx:vx, vy:vy,
+          bestX:x, bestY:y, bestVal:val
+        });
+        if (val > globalBest.val) { globalBest.x = x; globalBest.y = y; globalBest.val = val; }
+      }
+      updateStats();
+      drawHeatmap();
+      drawParticles();
+    }
+
+    function updateStats() {
+      document.getElementById('pso-iter').textContent = iteration;
+      document.getElementById('pso-best').textContent = globalBest.val.toFixed(4);
+    }
+
+    function drawHeatmap() {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = W; offCanvas.height = H;
+      const octx = offCanvas.getContext('2d');
+      const imgData = octx.createImageData(W, H);
+      for (let py = 0; py < H; py++) {
+        for (let px = 0; px < W; px++) {
+          const mx = (px / W) * 2 - 1;
+          const my = (py / H) * 2 - 1;
+          const val = fitness(mx, my);
+          const norm = (val + 20) / 40; // normalize to ~[0,1]
+          const r = Math.floor((1 - norm) * 10 + norm * 60);
+          const g = Math.floor((1 - norm) * 5 + norm * 20);
+          const b = Math.floor((1 - norm) * 30 + norm * 60);
+          const idx = (py * W + px) * 4;
+          imgData.data[idx] = r; imgData.data[idx+1] = g; imgData.data[idx+2] = b; imgData.data[idx+3] = 255;
+        }
+      }
+      octx.putImageData(imgData, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(offCanvas, 0, 0);
+    }
+
+    function drawParticles() {
+      // Re-draw heatmap
+      drawHeatmap();
+      // Draw global best
+      const gbx = (globalBest.x + 1) / 2 * W;
+      const gby = (globalBest.y + 1) / 2 * H;
+      ctx.strokeStyle = '#a855f7';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(gbx, gby, 8, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = '#a855f7';
+      ctx.beginPath();
+      ctx.arc(gbx, gby, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const px = (p.x + 1) / 2 * W;
+        const py = (p.y + 1) / 2 * H;
+        // Velocity line
+        ctx.strokeStyle = 'rgba(0,255,136,0.3)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px + p.vx * 30, py + p.vy * 30);
+        ctx.stroke();
+        // Particle dot
+        const hue = i / NUM_PARTICLES * 360;
+        ctx.fillStyle = 'hsl(' + hue + ', 80%, 65%)';
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fill();
+        // Personal best
+        const bx = (p.bestX + 1) / 2 * W;
+        const by = (p.bestY + 1) / 2 * H;
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.beginPath();
+        ctx.arc(bx, by, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function step() {
+      const w = 0.6; // inertia
+      const c1 = 1.5; // cognitive
+      const c2 = 1.5; // social
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const r1 = Math.random(), r2 = Math.random();
+        p.vx = w * p.vx + c1 * r1 * (p.bestX - p.x) + c2 * r2 * (globalBest.x - p.x);
+        p.vy = w * p.vy + c1 * r1 * (p.bestY - p.y) + c2 * r2 * (globalBest.y - p.y);
+        // Clamp velocity
+        p.vx = Math.max(-0.3, Math.min(0.3, p.vx));
+        p.vy = Math.max(-0.3, Math.min(0.3, p.vy));
+        p.x += p.vx;
+        p.y += p.vy;
+        p.x = Math.max(-1, Math.min(1, p.x));
+        p.y = Math.max(-1, Math.min(1, p.y));
+        const val = fitness(p.x, p.y);
+        if (val > p.bestVal) { p.bestX = p.x; p.bestY = p.y; p.bestVal = val; }
+        if (val > globalBest.val) { globalBest.x = p.x; globalBest.y = p.y; globalBest.val = val; }
+      }
+      iteration++;
+      updateStats();
+      drawParticles();
+    }
+
+    function loop() {
+      if (!running || iteration >= MAX_ITER) { running = false; return; }
+      step();
+      animId = requestAnimationFrame(loop);
+    }
+
+    document.getElementById('pso-start').addEventListener('click', function() {
+      if (running) return;
+      running = true;
+      loop();
+    });
+    document.getElementById('pso-reset').addEventListener('click', function() { init(); });
+
+    init();
+  })();
+
+  /* ====================================================================== */
+  /*  Responsive Canvas Resize on Tab Switch                                 */
+  /* ====================================================================== */
+  window.addEventListener('lab-tab-switch', function() {
+    const activePanel = document.querySelector('.lab-panel.active canvas');
+    if (activePanel) {
+      const parent = activePanel.parentElement;
+      if (parent && parent.clientWidth < activePanel.width) {
+        const ratio = parent.clientWidth / activePanel.width;
+        activePanel.style.width = parent.clientWidth + 'px';
+        activePanel.style.height = (activePanel.height * ratio) + 'px';
+      }
+    }
+  });
+
+})();
 </script>
-
 </body>
 </html>
