@@ -2,2001 +2,1460 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>万值翔 · 系统在线</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>万值翔 - 技术能力展示 | Portfolio Demo</title>
 <style>
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* CSS Variables & Reset                                                    */
-/* ═══════════════════════════════════════════════════════════════════════ */
-:root {
-  --bg-deepest: #050508;
-  --bg-deep: #0a0a0f;
-  --bg-card: #0d0d18;
-  --bg-elevated: #111122;
-  --neon-green: #00ff88;
-  --neon-purple: #a855f7;
-  --neon-blue: #3b82f6;
-  --neon-cyan: #06b6d4;
-  --neon-pink: #ec4899;
-  --neon-amber: #f59e0b;
-  --text-primary: #e0e0e8;
-  --text-secondary: #8890a4;
-  --text-dim: #4a5068;
-  --border-subtle: #1a1a2e;
-  --border-glow: rgba(0,255,136,0.25);
-  --glow-green: 0 0 20px rgba(0,255,136,0.3), 0 0 60px rgba(0,255,136,0.1);
-  --glow-purple: 0 0 20px rgba(168,85,247,0.3), 0 0 60px rgba(168,85,247,0.1);
-  --glow-blue: 0 0 20px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.1);
-  --font-mono: 'Consolas', 'Courier New', monospace;
-  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-display: 'Georgia', serif;
-  --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
-  --transition-normal: 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:16px; }
-body {
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  overflow-x: hidden;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Scanline overlay (toggle)                                               */
-/* ═══════════════════════════════════════════════════════════════════════ */
-#scanlines {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  z-index:9999; pointer-events:none; opacity:0.06;
-  background: repeating-linear-gradient(0deg,
-    transparent, transparent 2px,
-    rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
-  transition: opacity 0.5s;
-}
-#scanlines.off { opacity:0; }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Matrix Rain Canvas                                                       */
-/* ═══════════════════════════════════════════════════════════════════════ */
-#matrix-canvas {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  z-index:0; pointer-events:none;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Toggle Buttons                                                           */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.toggle-controls {
-  position:fixed; top:16px; right:16px; z-index:10000;
-  display:flex; gap:8px;
-}
-.toggle-btn {
-  background: var(--bg-elevated);
-  border:1px solid var(--border-subtle);
-  color:var(--text-secondary);
-  padding:6px 12px; font-size:12px; font-family:var(--font-mono);
-  cursor:pointer; border-radius:4px;
-  transition: all var(--transition-fast);
-}
-.toggle-btn:hover { border-color: var(--neon-green); color: var(--neon-green); }
-.toggle-btn.active { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0,255,136,0.1); }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Container & Section Base                                                 */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.content-wrapper {
-  position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:0 24px;
-}
-.section {
-  position:relative; padding:80px 0;
-  border-bottom:1px solid var(--border-subtle);
-}
-.section-header {
-  display:flex; align-items:center; gap:16px; margin-bottom:48px;
-}
-.section-header .icon-box {
-  width:40px; height:40px; border:1px solid var(--neon-green);
-  display:flex; align-items:center; justify-content:center;
-  font-size:18px; color:var(--neon-green);
-  position:relative;
-}
-.section-header .icon-box::before {
-  content:''; position:absolute; top:-4px; left:-4px; right:-4px; bottom:-4px;
-  border:1px solid rgba(0,255,136,0.2); pointer-events:none;
-}
-.section-title {
-  font-family:var(--font-mono); font-size:20px; letter-spacing:4px;
-  color:var(--neon-green); text-transform:uppercase;
-}
-.section-subtitle {
-  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
-  letter-spacing:2px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Loading Screen                                                           */
-/* ═══════════════════════════════════════════════════════════════════════ */
-#loading-screen {
-  position:fixed; inset:0; z-index:20000; background:var(--bg-deepest);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  transition: opacity 0.6s, visibility 0.6s;
-}
-#loading-screen.hidden { opacity:0; visibility:hidden; pointer-events:none; }
-.loading-text { font-family:var(--font-mono); color:var(--neon-green); font-size:14px; letter-spacing:3px; }
-.loading-bar-outer { width:200px; height:2px; background:var(--border-subtle); margin-top:16px; border-radius:1px; overflow:hidden; }
-.loading-bar-inner { height:100%; width:0; background:var(--neon-green); transition: width 0.3s; }
-.loading-dots { color:var(--text-dim); margin-top:12px; font-family:var(--font-mono); font-size:12px; }
-.loading-dots span { animation: dot-blink 1.4s infinite; }
-.loading-dots span:nth-child(2) { animation-delay:0.2s; }
-.loading-dots span:nth-child(3) { animation-delay:0.4s; }
-@keyframes dot-blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Hero Section                                                             */
-/* ═══════════════════════════════════════════════════════════════════════ */
-#hero { padding-top:120px; padding-bottom:60px; text-align:center; }
-.hero-name {
-  font-family:var(--font-display); font-size:clamp(48px,10vw,96px);
-  font-weight:700; letter-spacing:8px; margin-bottom:8px;
-  color:#fff;
-  text-shadow:
-    0 0 7px var(--neon-green), 0 0 10px var(--neon-green),
-    0 0 21px var(--neon-green), 0 0 42px var(--neon-green),
-    0 0 82px var(--neon-green), 0 0 92px var(--neon-green),
-    0 0 102px var(--neon-green);
-  animation: neon-pulse 1.5s ease-in-out infinite alternate;
-  position:relative; display:inline-block;
-}
-@keyframes neon-pulse {
-  from { text-shadow: 0 0 7px var(--neon-green), 0 0 10px var(--neon-green), 0 0 21px var(--neon-green), 0 0 42px var(--neon-green), 0 0 82px var(--neon-green); }
-  to { text-shadow: 0 0 4px var(--neon-green), 0 0 7px var(--neon-green), 0 0 13px var(--neon-green), 0 0 25px var(--neon-green), 0 0 50px var(--neon-green); }
-}
-.hero-tagline {
-  font-family:var(--font-mono); font-size:clamp(14px,2vw,20px);
-  color:var(--neon-purple); letter-spacing:2px; min-height:28px;
-  margin-bottom:48px;
-}
-.hero-tagline .cursor {
-  display:inline-block; width:2px; height:1.1em; background:var(--neon-purple);
-  margin-left:2px; vertical-align:text-bottom;
-  animation: cursor-blink 0.8s infinite;
-}
-@keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* KPI Cards                                                                */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.kpi-grid {
-  display:grid; grid-template-columns:repeat(5,1fr); gap:16px;
-  margin-bottom:32px; perspective:800px;
-}
-.kpi-card {
-  background:var(--bg-card); border:1px solid var(--border-subtle);
-  padding:24px 16px; text-align:center; position:relative; overflow:hidden;
-  transition: all var(--transition-normal);
-  transform: rotateY(0deg) rotateX(0deg);
-}
-.kpi-card:hover {
-  transform: translateY(-6px); border-color:rgba(0,255,136,0.4);
-  box-shadow: var(--glow-green);
-}
-.kpi-card::before {
-  content:''; position:absolute; top:0; left:0; width:4px; height:0;
-  background:var(--neon-green);
-  transition: height 0.5s ease;
-}
-.kpi-card:hover::before { height:100%; }
-.kpi-card .kpi-number {
-  font-family:var(--font-mono); font-size:36px; font-weight:700;
-  color:var(--neon-green); margin-bottom:4px;
-}
-.kpi-card .kpi-label {
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  letter-spacing:2px; text-transform:uppercase;
-}
-.kpi-card .corner-deco {
-  position:absolute; width:8px; height:8px; border-color:var(--neon-green);
-  border-style:solid; opacity:0.4;
-}
-.kpi-card .corner-deco.tl { top:4px; left:4px; border-width:1px 0 0 1px; }
-.kpi-card .corner-deco.br { bottom:4px; right:4px; border-width:0 1px 1px 0; }
-.kpi-card:nth-child(2) .kpi-number { color:var(--neon-purple); }
-.kpi-card:nth-child(2):hover { border-color:rgba(168,85,247,0.4); box-shadow: var(--glow-purple); }
-.kpi-card:nth-child(2)::before { background:var(--neon-purple); }
-.kpi-card:nth-child(2) .corner-deco { border-color:var(--neon-purple); }
-.kpi-card:nth-child(3) .kpi-number { color:var(--neon-blue); }
-.kpi-card:nth-child(3):hover { border-color:rgba(59,130,246,0.4); box-shadow: var(--glow-blue); }
-.kpi-card:nth-child(3)::before { background:var(--neon-blue); }
-.kpi-card:nth-child(3) .corner-deco { border-color:var(--neon-blue); }
-.kpi-card:nth-child(4) .kpi-number { color:var(--neon-cyan); }
-.kpi-card:nth-child(4):hover { border-color:rgba(6,182,212,0.4); box-shadow: 0 0 20px rgba(6,182,212,0.3); }
-.kpi-card:nth-child(4)::before { background:var(--neon-cyan); }
-.kpi-card:nth-child(4) .corner-deco { border-color:var(--neon-cyan); }
-.kpi-card:nth-child(5) .kpi-number { color:var(--neon-amber); }
-.kpi-card:nth-child(5):hover { border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.3); }
-.kpi-card:nth-child(5)::before { background:var(--neon-amber); }
-.kpi-card:nth-child(5) .corner-deco { border-color:var(--neon-amber); }
-
-.hero-clock {
-  font-family:var(--font-mono); font-size:14px; color:var(--text-dim);
-  letter-spacing:3px; margin-top:8px;
-}
-.hero-clock .clock-time { color:var(--neon-green); margin-left:8px; }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Radar Chart                                                              */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.radar-container { display:flex; justify-content:center; }
-.radar-container canvas { max-width:100%; height:auto; }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* MCP Cards (3D Flip)                                                      */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.mcp-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  gap:20px; perspective:1200px;
-}
-.mcp-card-outer {
-  perspective:1000px; height:180px;
-}
-.mcp-card-inner {
-  position:relative; width:100%; height:100%;
-  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
-  transform-style:preserve-3d;
-}
-.mcp-card-outer:hover .mcp-card-inner { transform:rotateY(180deg); }
-.mcp-face {
-  position:absolute; inset:0; backface-visibility:hidden;
-  border:1px solid var(--border-subtle); background:var(--bg-card);
-  padding:20px; display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  border-radius:8px;
-}
-.mcp-face.front {
-  transform:rotateY(0deg);
-}
-.mcp-face.front .mcp-icon {
-  font-size:32px; margin-bottom:12px;
-}
-.mcp-face.front .mcp-name {
-  font-family:var(--font-mono); font-size:14px; color:var(--neon-green);
-  letter-spacing:1px; margin-bottom:4px;
-}
-.mcp-face.front .mcp-tools {
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-}
-.mcp-face.back {
-  transform:rotateY(180deg);
-  background:var(--bg-elevated);
-  border-color:rgba(168,85,247,0.3);
-  text-align:center; justify-content:center;
-}
-.mcp-face.back .mcp-algo {
-  font-family:var(--font-mono); font-size:11px; color:var(--text-secondary);
-  line-height:1.8;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Algorithm Lab                                                            */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.lab-container {
-  background:var(--bg-card); border:1px solid var(--border-subtle);
-  border-radius:8px; overflow:hidden;
-}
-.lab-tabs {
-  display:flex; overflow-x:auto;
-  border-bottom:1px solid var(--border-subtle);
-}
-.lab-tab {
-  padding:12px 20px; font-family:var(--font-mono); font-size:12px;
-  color:var(--text-dim); cursor:pointer; border:none; background:none;
-  white-space:nowrap; transition:all var(--transition-fast);
-  border-bottom:2px solid transparent;
-}
-.lab-tab:hover { color:var(--text-secondary); }
-.lab-tab.active { color:var(--neon-green); border-bottom-color:var(--neon-green); }
-.lab-panel {
-  display:none; padding:20px;
-}
-.lab-panel.active { display:block; }
-.lab-canvas-wrap {
-  position:relative; width:100%; overflow:auto;
-}
-.lab-canvas-wrap canvas { display:block; border:1px solid var(--border-subtle); border-radius:4px; }
-.lab-controls {
-  display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; align-items:center;
-}
-.lab-btn {
-  padding:6px 14px; font-family:var(--font-mono); font-size:11px;
-  border:1px solid var(--border-subtle); background:var(--bg-elevated);
-  color:var(--text-secondary); cursor:pointer; border-radius:4px;
-  transition:all var(--transition-fast);
-}
-.lab-btn:hover { border-color:var(--neon-green); color:var(--neon-green); }
-.lab-btn:disabled { opacity:0.4; cursor:default; }
-.lab-stats {
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  margin-left:auto;
-}
-.lab-stats span { margin-right:16px; }
-.lab-stats .stat-val { color:var(--neon-green); }
-.lab-select { background:var(--bg-elevated); color:var(--text-primary); border:1px solid var(--border-subtle); padding:6px 10px; font-family:var(--font-mono); font-size:11px; border-radius:4px; }
-.lab-speed-control { display:flex; gap:4px; align-items:center; }
-.lab-speed-control label { font-family:var(--font-mono); font-size:11px; color:var(--text-dim); }
-.lab-speed-control input { width:100px; }
-.mandelbrot-info {
-  position:absolute; top:8px; right:8px; background:rgba(10,10,15,0.85);
-  padding:6px 10px; font-family:var(--font-mono); font-size:10px;
-  color:var(--text-secondary); border:1px solid var(--border-subtle);
-  border-radius:4px; pointer-events:none;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Skills                                                                   */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.skills-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:20px;
-}
-.skill-card {
-  background:var(--bg-card); border:1px solid var(--border-subtle);
-  padding:24px; border-radius:8px; transition:all var(--transition-normal);
-  position:relative; overflow:hidden;
-}
-.skill-card:hover {
-  transform:translateY(-4px);
-  border-color:rgba(168,85,247,0.4);
-  box-shadow: var(--glow-purple);
-}
-.skill-card .skill-icon { font-size:28px; margin-bottom:12px; }
-.skill-card .skill-name {
-  font-family:var(--font-mono); font-size:15px; color:var(--text-primary);
-  margin-bottom:8px; letter-spacing:1px;
-}
-.skill-card .skill-desc {
-  font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;
-}
-.skill-card .skill-bar-outer {
-  height:3px; background:var(--border-subtle); border-radius:2px;
-  overflow:hidden;
-}
-.skill-card .skill-bar-inner {
-  height:100%; background:linear-gradient(90deg, var(--neon-green), var(--neon-purple));
-  width:0; transition:width 1.5s cubic-bezier(0.4,0,0.2,1);
-  border-radius:2px;
-}
-.skill-card .skill-pct {
-  font-family:var(--font-mono); font-size:11px; color:var(--neon-green);
-  margin-top:6px; text-align:right;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Timeline                                                                 */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.timeline {
-  position:relative; padding-left:32px;
-}
-.timeline::before {
-  content:''; position:absolute; left:7px; top:0; bottom:0;
-  width:1px; background:var(--border-subtle);
-}
-.timeline-item {
-  position:relative; margin-bottom:32px; padding-left:24px;
-}
-.timeline-dot {
-  position:absolute; left:-29px; top:6px;
-  width:14px; height:14px; border-radius:50%;
-  background:var(--bg-deep); border:2px solid var(--neon-green);
-  transition:all var(--transition-normal);
-}
-.timeline-item:hover .timeline-dot {
-  box-shadow: 0 0 0 8px rgba(0,255,136,0.15);
-  background:var(--neon-green);
-}
-.timeline-date {
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  letter-spacing:2px; margin-bottom:4px;
-}
-.timeline-title {
-  font-family:var(--font-mono); font-size:15px; color:var(--text-primary);
-  margin-bottom:4px;
-}
-.timeline-desc {
-  font-size:13px; color:var(--text-dim); line-height:1.6;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Activity Log                                                             */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.log-container {
-  background:var(--bg-card); border:1px solid var(--border-subtle);
-  border-radius:8px; overflow:hidden; max-height:400px; overflow-y:auto;
-}
-.log-header {
-  background:var(--bg-elevated); padding:10px 16px;
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  border-bottom:1px solid var(--border-subtle);
-  display:flex; align-items:center; gap:8px;
-}
-.log-header .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
-.log-header .dot.green { background:var(--neon-green); }
-.log-entry {
-  padding:6px 16px; font-family:var(--font-mono); font-size:11px;
-  color:var(--text-secondary); border-bottom:1px solid rgba(26,26,46,0.5);
-  transition:background var(--transition-fast);
-}
-.log-entry:hover { background:rgba(0,255,136,0.03); }
-.log-entry .timestamp { color:var(--text-dim); margin-right:12px; }
-.log-entry .type-commit { color:var(--neon-cyan); }
-.log-entry .type-issue { color:var(--neon-amber); }
-.log-entry .type-pr { color:var(--neon-purple); }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Footer                                                                   */
-/* ═══════════════════════════════════════════════════════════════════════ */
-#footer {
-  padding:48px 0; text-align:center; border-top:1px solid var(--border-subtle);
-}
-#footer .footer-text {
-  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
-  letter-spacing:3px;
-}
-#footer .footer-status {
-  font-family:var(--font-mono); font-size:11px; color:var(--neon-green);
-  margin-top:8px;
-}
-#footer .footer-status .blink { animation: cursor-blink 1s infinite; }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Scroll reveal                                                            */
-/* ═══════════════════════════════════════════════════════════════════════ */
-.reveal {
-  opacity:0; transform:translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.reveal.visible { opacity:1; transform:translateY(0); }
-
-/* ═══════════════════════════════════════════════════════════════════════ */
-/* Responsive                                                               */
-/* ═══════════════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  .kpi-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
-  .kpi-card { padding:16px 12px; }
-  .kpi-card .kpi-number { font-size:24px; }
-  .mcp-grid { grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }
-  .skills-grid { grid-template-columns:1fr; }
-  .section { padding:48px 0; }
-  .toggle-controls { top:8px; right:8px; }
-  .toggle-btn { padding:4px 8px; font-size:10px; }
-  .hero-name { font-size:clamp(32px,12vw,64px); }
-}
-@media (max-width: 480px) {
-  .kpi-grid { grid-template-columns:1fr 1fr; }
-  .lab-tabs { flex-wrap:nowrap; overflow-x:auto; }
-  .mcp-grid { grid-template-columns:1fr; }
-}
+/* ============ CSS RESET & BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --neon-cyan:#00f0ff;--neon-pink:#ff00ff;--neon-green:#39ff14;
+  --neon-yellow:#ffe600;--neon-purple:#b026ff;--neon-orange:#ff6600;
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--text:#c0c0c0;--text-dim:#666;
+  --border:#333;--font-mono:'Cascadia Code','Fira Code','JetBrains Mono','Consolas',monospace;
+  --font-sans:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  overflow-x:hidden;line-height:1.6
+}
+/* ============ MATRIX RAIN CANVAS ============ */
+#matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.12}
+/* ============ SCANLINES ============ */
+#scanlines{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.03) 0px,rgba(0,0,0,.03) 1px,transparent 1px,transparent 2px)
+}
+/* ============ MAIN CONTAINER ============ */
+#app{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 20px}
+/* ============ NAV ============ */
+nav{
+  position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:12px 0;
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap
+}
+nav a{
+  color:var(--text-dim);text-decoration:none;padding:6px 14px;font-size:13px;
+  font-family:var(--font-mono);border:1px solid transparent;border-radius:4px;
+  transition:all .3s;text-transform:uppercase;letter-spacing:1px
+}
+nav a:hover,nav a.active{
+  color:var(--neon-cyan);border-color:var(--neon-cyan);
+  text-shadow:0 0 8px var(--neon-cyan);box-shadow:0 0 12px rgba(0,240,255,.15)
+}
+/* ============ SECTION ============ */
+section{padding:60px 0;border-bottom:1px solid #1a1a1a}
+.section-title{
+  font-family:var(--font-mono);font-size:28px;font-weight:700;margin-bottom:8px;
+  color:#fff;letter-spacing:2px;text-transform:uppercase
+}
+.section-title .hl{color:var(--neon-cyan);text-shadow:0 0 15px var(--neon-cyan)}
+.section-subtitle{color:var(--text-dim);font-size:14px;margin-bottom:32px;font-family:var(--font-mono)}
+/* ============ HERO ============ */
+#hero{padding:80px 0 60px;text-align:center}
+.hero-name{
+  font-family:var(--font-mono);font-size:clamp(36px,8vw,72px);font-weight:900;
+  color:#fff;letter-spacing:8px;text-transform:uppercase;
+  text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan),0 0 60px var(--neon-cyan),0 0 100px var(--neon-cyan);
+  animation:neonPulse 2s ease-in-out infinite alternate
+}
+@keyframes neonPulse{
+  0%{text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan),0 0 60px var(--neon-cyan)}
+  100%{text-shadow:0 0 20px var(--neon-cyan),0 0 50px var(--neon-cyan),0 0 90px var(--neon-cyan),0 0 140px var(--neon-cyan)}
+}
+.hero-subtitle{
+  font-family:var(--font-mono);font-size:18px;color:var(--neon-green);margin:16px 0 8px;
+  min-height:28px;letter-spacing:2px
+}
+.hero-subtitle .cursor{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-tags{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
+.hero-tags span{
+  padding:4px 16px;border:1px solid var(--border);border-radius:20px;
+  font-size:12px;font-family:var(--font-mono);color:var(--text-dim)
+}
+/* ============ KPI CARDS ============ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:40px 0 0}
+.kpi-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px 16px;
+  text-align:center;transition:all .4s;position:relative;overflow:hidden
+}
+.kpi-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),transparent);opacity:0;transition:opacity .4s
+}
+.kpi-card:hover::before{opacity:1}
+.kpi-card:hover{border-color:var(--neon-cyan);box-shadow:0 0 30px rgba(0,240,255,.1);transform:translateY(-2px)}
+.kpi-card .kpi-num{
+  font-family:var(--font-mono);font-size:42px;font-weight:900;color:var(--neon-cyan);
+  text-shadow:0 0 20px var(--neon-cyan)
+}
+.kpi-card .kpi-label{font-size:13px;color:var(--text-dim);margin-top:8px;font-family:var(--font-mono)}
+.kpi-card .kpi-unit{font-size:22px;color:var(--neon-cyan)}
+/* ============ CARD STYLES ============ */
+.card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:24px;margin-bottom:24px
+}
+.card-header{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;
+  padding-bottom:12px;border-bottom:1px solid var(--border)
+}
+.card-title{font-family:var(--font-mono);font-size:16px;color:#fff;letter-spacing:1px}
+.card-badge{
+  font-family:var(--font-mono);font-size:11px;padding:2px 10px;border-radius:10px;
+  background:rgba(0,240,255,.1);color:var(--neon-cyan);border:1px solid rgba(0,240,255,.3)
+}
+/* ============ BUTTONS ============ */
+.btn{
+  font-family:var(--font-mono);font-size:13px;padding:8px 20px;border-radius:4px;
+  cursor:pointer;transition:all .3s;border:1px solid var(--border);background:var(--bg3);color:var(--text)
+}
+.btn:hover{color:var(--neon-cyan);border-color:var(--neon-cyan);box-shadow:0 0 15px rgba(0,240,255,.15)}
+.btn-primary{background:rgba(0,240,255,.1);border-color:var(--neon-cyan);color:var(--neon-cyan)}
+.btn-primary:hover{box-shadow:0 0 25px rgba(0,240,255,.25)}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+/* ============ TABS ============ */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px}
+.tab-btn{
+  font-family:var(--font-mono);font-size:13px;padding:10px 20px;cursor:pointer;
+  background:none;border:none;border-bottom:2px solid transparent;color:var(--text-dim);
+  transition:all .3s
+}
+.tab-btn:hover{color:#fff}
+.tab-btn.active{color:var(--neon-cyan);border-bottom-color:var(--neon-cyan)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* ============ PROGRESS BAR ============ */
+.progress-wrap{
+  background:var(--bg3);border-radius:20px;height:8px;overflow:hidden;margin:12px 0
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+  border-radius:20px;transition:width .3s;width:0%
+}
+/* ============ CODE BLOCK ============ */
+.code-block{
+  background:#0d0d0d;border:1px solid var(--border);border-radius:6px;padding:16px;
+  font-family:var(--font-mono);font-size:12px;line-height:1.7;overflow-x:auto;
+  color:#ccc;white-space:pre;max-height:300px;overflow-y:auto
+}
+.code-block .kw{color:#ff79c6}
+.code-block .fn{color:#50fa7b}
+.code-block .cm{color:#6272a4}
+.code-block .str{color:#f1fa8c}
+.code-block .num{color:#bd93f9}
+/* ============ CANVAS WRAPPER ============ */
+.canvas-wrap{
+  position:relative;display:inline-block;border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;background:#000
+}
+.canvas-wrap canvas{display:block}
+/* ============ STATS ============ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+.stat-item{
+  background:var(--bg3);border-radius:6px;padding:12px;text-align:center
+}
+.stat-val{font-family:var(--font-mono);font-size:20px;color:var(--neon-cyan)}
+.stat-label{font-size:11px;color:var(--text-dim);margin-top:4px;font-family:var(--font-mono)}
+/* ============ SLIDER ============ */
+.slider-group{margin:12px 0}
+.slider-group label{
+  font-family:var(--font-mono);font-size:12px;color:var(--text-dim);display:flex;
+  justify-content:space-between;margin-bottom:4px
+}
+.slider-group label .val{color:var(--neon-cyan)}
+.slider-group input[type=range]{
+  width:100%;-webkit-appearance:none;height:4px;background:var(--bg3);border-radius:2px;outline:none
+}
+.slider-group input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--neon-cyan);cursor:pointer;box-shadow:0 0 10px var(--neon-cyan)
+}
+/* ============ SKILL MATRIX ============ */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.skill-cat{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px
+}
+.skill-cat h4{color:var(--neon-cyan);font-family:var(--font-mono);font-size:15px;margin-bottom:12px;letter-spacing:1px}
+.skill-bar-wrap{margin:8px 0}
+.skill-bar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px}
+.skill-bar-track{background:var(--bg3);height:6px;border-radius:3px;overflow:hidden}
+.skill-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+/* ============ TIMELINE ============ */
+.timeline{position:relative;padding-left:30px}
+.timeline::before{
+  content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--neon-cyan),var(--neon-purple))
+}
+.timeline-item{position:relative;margin-bottom:24px}
+.timeline-item::before{
+  content:'';position:absolute;left:-25px;top:6px;width:10px;height:10px;
+  border-radius:50%;background:var(--neon-cyan);box-shadow:0 0 10px var(--neon-cyan)
+}
+.timeline-date{font-family:var(--font-mono);font-size:12px;color:var(--neon-cyan)}
+.timeline-title{font-size:16px;color:#fff;margin:4px 0}
+.timeline-desc{font-size:13px;color:var(--text-dim)}
+/* ============ GREEKS TABLE ============ */
+.greeks-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:12px}
+.greeks-table td{
+  padding:6px 12px;border-bottom:1px solid var(--border);color:var(--text)
+}
+.greeks-table td:first-child{color:var(--text-dim)}
+.greeks-table td:last-child{color:var(--neon-cyan);text-align:right;font-weight:700}
+/* ============ WORKER TIMELINE ============ */
+.worker-timeline{position:relative;height:120px;background:var(--bg3);border-radius:6px;margin:16px 0;overflow:hidden}
+.worker-bar{position:absolute;height:24px;border-radius:3px;font-size:10px;display:flex;align-items:center;padding:0 8px;color:#000}
+/* ============ RESPONSIVE ============ */
+@media(max-width:768px){
+  section{padding:40px 0}
+  .hero-name{font-size:40px;letter-spacing:4px}
+  .kpi-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .skill-grid{grid-template-columns:1fr}
+  #app{padding:0 12px}
+}
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--neon-cyan)}
 </style>
 </head>
 <body>
-
-<!-- Scanline Overlay -->
+<canvas id="matrix-bg"></canvas>
 <div id="scanlines"></div>
+<div id="app">
+<!-- ==================== NAV ==================== -->
+<nav id="nav">
+<a href="#hero">HOME</a><a href="#raytracer">RAY TRACER</a><a href="#montecarlo">MONTE CARLO</a>
+<a href="#blackscholes">BLACK-SCHOLES</a><a href="#perf">PERFORMANCE</a><a href="#algorithms">ALGORITHMS</a>
+<a href="#skills">SKILLS</a>
+</nav>
 
-<!-- Matrix Rain Canvas -->
-<canvas id="matrix-canvas"></canvas>
+<!-- ==================== HERO ==================== -->
+<section id="hero">
+<h1 class="hero-name">万值翔</h1>
+<div class="hero-subtitle" id="typewriter"></div>
+<div class="hero-tags">
+<span>TRAE PLUGIN ECOSYSTEM</span><span>MCP ARCHITECTURE</span><span>FULL-STACK ENGINEERING</span>
+<span>QUANTITATIVE FINANCE</span><span>COMPUTER GRAPHICS</span><span>HIGH-PERFORMANCE COMPUTING</span>
+</div>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="kpi-num" data-target="101">0</div><div class="kpi-label">代码仓库</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="15">0</div><div class="kpi-label">MCP 服务</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="370">0</div><div class="kpi-label">工具集成</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="115">0</div><div class="kpi-unit">K+</div><div class="kpi-label">代码行数</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="58">0</div><div class="kpi-label">技能模块</div></div>
+</div>
+</section>
 
-<!-- Toggle Controls -->
-<div class="toggle-controls">
-  <button class="toggle-btn active" id="btn-matrix" title="切换代码雨">[雨]</button>
-  <button class="toggle-btn active" id="btn-scanlines" title="切换扫描线">[线]</button>
+<!-- ==================== RAY TRACER ==================== -->
+<section id="raytracer">
+<div class="section-title"><span class="hl">[</span> RAY TRACER <span class="hl">]</span></div>
+<div class="section-subtitle">// 从零实现的光线追踪渲染器 — 球体求交 · Phong光照 · 镜面反射 · 折射 · 软阴影</div>
+<div class="card">
+<div class="card-header"><span class="card-title">RENDER OUTPUT</span><span class="card-badge" id="rt-status">READY</span></div>
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+<div class="canvas-wrap"><canvas id="rt-canvas" width="400" height="300"></canvas></div>
+<div style="flex:1;min-width:280px">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" id="rt-render-btn" onclick="startRayTrace()">开始渲染</button>
+<button class="btn" onclick="resetRayTrace()">重置</button>
+</div>
+<div class="stat-item"><span class="stat-val" id="rt-time">0.00s</span><span class="stat-label">RENDER TIME</span></div>
+<div class="stat-item"><span class="stat-val" id="rt-progress">0%</span><span class="stat-label">PROGRESS</span></div>
+<div class="progress-wrap"><div class="progress-fill" id="rt-progress-bar"></div></div>
+<div class="stats-grid" style="margin-top:12px">
+<div class="stat-item"><span class="stat-val" id="rt-spheres">3</span><span class="stat-label">SPHERES</span></div>
+<div class="stat-item"><span class="stat-val" id="rt-reflect">3</span><span class="stat-label">MAX RECURSE</span></div>
+<div class="stat-item"><span class="stat-val" id="rt-samples">16</span><span class="stat-label">SHADOW SAMPLES</span></div>
+<div class="stat-item"><span class="stat-val" id="rt-pixels">120K</span><span class="stat-label">PIXELS</span></div>
+</div>
+</div>
+</div>
+<div class="code-block" style="margin-top:16px;max-height:200px">
+<span class="cm">// 核心算法：射线-球体求交（二次方程判别式）</span>
+<span class="kw">function</span> <span class="fn">hitSphere</span>(ray, sphere) {
+  <span class="kw">const</span> oc = sub(ray.origin, sphere.center);
+  <span class="kw">const</span> a = dot(ray.dir, ray.dir);
+  <span class="kw">const</span> b = <span class="num">2.0</span> * dot(oc, ray.dir);
+  <span class="kw">const</span> c = dot(oc, oc) - sphere.r * sphere.r;
+  <span class="kw">const</span> disc = b*b - <span class="num">4</span>*a*c;
+  <span class="kw">if</span> (disc &lt; <span class="num">0</span>) <span class="kw">return</span> <span class="kw">null</span>;
+  <span class="kw">return</span> (-b - Math.sqrt(disc)) / (<span class="num">2</span>*a); <span class="cm">// 最近交点</span>
+}
+<span class="cm">// Phong光照模型: I = Ia·ka + Id·kd·(N·L) + Is·ks·(R·V)^n</span>
+<span class="cm">// 反射: Snell's Law n₁sinθ₁ = n₂sinθ₂, 递归深度=3</span>
+<span class="cm">// 软阴影: 对光源方向进行16采样 jittered sampling</span>
+</div>
+</div>
+</section>
+
+<!-- ==================== MONTE CARLO ==================== -->
+<section id="montecarlo">
+<div class="section-title"><span class="hl">[</span> MONTE CARLO <span class="hl">]</span></div>
+<div class="section-subtitle">// 实时蒙特卡洛模拟 — PI估计 · 期权定价 · 收敛性分析</div>
+<div class="card">
+<div class="tabs">
+<button class="tab-btn active" data-tab="mc-pi">PI 估计</button>
+<button class="tab-btn" data-tab="mc-option">期权定价</button>
+</div>
+<div class="tab-panel active" id="mc-pi">
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+<div class="canvas-wrap"><canvas id="mc-pi-canvas" width="400" height="400"></canvas></div>
+<div style="flex:1;min-width:280px">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" onclick="startMCPi()">开始模拟</button>
+<button class="btn" onclick="stopMCPi()">暂停</button>
+<button class="btn" onclick="resetMCPi()">重置</button>
+</div>
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn" data-mc-speed="1" onclick="setMCSpeed(1)">1x</button>
+<button class="btn" data-mc-speed="10" onclick="setMCSpeed(10)">10x</button>
+<button class="btn" data-mc-speed="100" onclick="setMCSpeed(100)">100x</button>
+</div>
+<div class="stat-item"><span class="stat-val" id="mc-pi-val">0.00000000</span><span class="stat-label">ESTIMATED PI</span></div>
+<div class="stat-item"><span class="stat-val" id="mc-pi-err">0.0000%</span><span class="stat-label">ERROR</span></div>
+<div class="stat-item"><span class="stat-val" id="mc-pi-total">0</span><span class="stat-label">TOTAL POINTS</span></div>
+</div>
+</div>
+</div>
+<div class="tab-panel" id="mc-option">
+<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+<div class="canvas-wrap"><canvas id="mc-opt-canvas" width="400" height="400"></canvas></div>
+<div style="flex:1;min-width:280px">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" onclick="startMCOption()">开始定价</button>
+<button class="btn" onclick="stopMCOption()">暂停</button>
+<button class="btn" onclick="resetMCOption()">重置</button>
+</div>
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn" data-mc-n="1000" onclick="setMCN(1000)">N=1K</button>
+<button class="btn" data-mc-n="10000" onclick="setMCN(10000)">N=10K</button>
+<button class="btn btn-primary" data-mc-n="100000" onclick="setMCN(100000)">N=100K</button>
+</div>
+<div class="stat-item"><span class="stat-val" id="mc-opt-mc">0.0000</span><span class="stat-label">MC ESTIMATE</span></div>
+<div class="stat-item"><span class="stat-val" id="mc-opt-bs">0.0000</span><span class="stat-label">BS BENCHMARK</span></div>
+<div class="stat-item"><span class="stat-val" id="mc-opt-err">0.0000%</span><span class="stat-label">DIFFERENCE</span></div>
+<div class="stat-item"><span class="stat-val" id="mc-opt-paths">0</span><span class="stat-label">PATHS SIMULATED</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ==================== BLACK-SCHOLES ==================== -->
+<section id="blackscholes">
+<div class="section-title"><span class="hl">[</span> BLACK-SCHOLES-MERTON <span class="hl">]</span></div>
+<div class="section-subtitle">// 完整衍生品定价引擎 — 解析解 + 全部7个Greeks + 波动率微笑 + Delta曲线</div>
+<div class="card">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+<div>
+<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:16px">PARAMETERS</h4>
+<div class="slider-group"><label>S (标的价格) <span class="val" id="bs-s-val">100.00</span></label><input type="range" id="bs-s" min="1" max="300" value="100" step="1"></div>
+<div class="slider-group"><label>K (行权价) <span class="val" id="bs-k-val">100.00</span></label><input type="range" id="bs-k" min="1" max="300" value="100" step="1"></div>
+<div class="slider-group"><label>T (到期时间/年) <span class="val" id="bs-t-val">1.00</span></label><input type="range" id="bs-t" min="0.01" max="5" value="1" step="0.01"></div>
+<div class="slider-group"><label>σ (波动率) <span class="val" id="bs-sigma-val">0.30</span></label><input type="range" id="bs-sigma" min="0.05" max="1.5" value="0.3" step="0.01"></div>
+<div class="slider-group"><label>r (无风险利率) <span class="val" id="bs-r-val">0.05</span></label><input type="range" id="bs-r" min="0" max="0.2" value="0.05" step="0.005"></div>
+<div class="slider-group"><label>q (股息率) <span class="val" id="bs-q-val">0.00</span></label><input type="range" id="bs-q" min="0" max="0.1" value="0" step="0.005"></div>
+</div>
+<div>
+<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:16px">PRICING & GREEKS</h4>
+<table class="greeks-table">
+<tr><td>Call Price</td><td id="bs-call">-</td></tr>
+<tr><td>Put Price</td><td id="bs-put">-</td></tr>
+<tr><td>Delta (Call)</td><td id="bs-delta-c">-</td></tr>
+<tr><td>Delta (Put)</td><td id="bs-delta-p">-</td></tr>
+<tr><td>Gamma</td><td id="bs-gamma">-</td></tr>
+<tr><td>Theta (Call)</td><td id="bs-theta-c">-</td></tr>
+<tr><td>Vega (per 1%)</td><td id="bs-vega">-</td></tr>
+<tr><td>Rho (Call)</td><td id="bs-rho">-</td></tr>
+</table>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:20px">
+<div><h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">VOLATILITY SMILE</h4>
+<div class="canvas-wrap"><canvas id="bs-smile" width="400" height="280"></canvas></div></div>
+<div><h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">DELTA vs S</h4>
+<div class="canvas-wrap"><canvas id="bs-delta" width="400" height="280"></canvas></div></div>
+</div>
+</div>
+</section>
+
+<!-- ==================== PERFORMANCE ==================== -->
+<section id="perf">
+<div class="section-title"><span class="hl">[</span> PERFORMANCE <span class="hl">]</span></div>
+<div class="section-subtitle">// Web Worker多线程 — 归并排序 · 百万数据 · 调度时间线可视化</div>
+<div class="card">
+<div class="btn-group" style="margin-bottom:16px">
+<button class="btn btn-primary" id="perf-st-btn" onclick="runSingleThread()">单线程排序</button>
+<button class="btn btn-primary" id="perf-mt-btn" onclick="runMultiThread()">4线程排序</button>
+<button class="btn" onclick="resetPerf()">重置</button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
+<div class="stat-item"><span class="stat-val" id="perf-st-time">---</span><span class="stat-label">SINGLE THREAD</span></div>
+<div class="stat-item"><span class="stat-val" id="perf-mt-time">---</span><span class="stat-label">4 THREADS</span></div>
+<div class="stat-item"><span class="stat-val" id="perf-speedup">---</span><span class="stat-label">SPEEDUP</span></div>
+<div class="stat-item"><span class="stat-val" id="perf-data">1,000,000</span><span class="stat-label">DATA SIZE</span></div>
+</div>
+<div class="progress-wrap"><div class="progress-fill" id="perf-st-bar" style="background:var(--neon-orange)"></div></div>
+<div style="font-size:11px;color:var(--text-dim);margin:4px 0 12px;font-family:var(--font-mono)">SINGLE THREAD</div>
+<div class="progress-wrap"><div class="progress-fill" id="perf-mt-bar" style="background:var(--neon-cyan)"></div></div>
+<div style="font-size:11px;color:var(--text-dim);margin:4px 0 12px;font-family:var(--font-mono)">MULTI THREAD</div>
+<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">THREAD SCHEDULE TIMELINE</h4>
+<div class="worker-timeline" id="perf-timeline"></div>
+<div style="font-size:11px;color:var(--text-dim);margin-top:8px;font-family:var(--font-mono)">
+<span style="color:var(--neon-orange)">MAIN</span> ·
+<span style="color:var(--neon-cyan)">W1</span> ·
+<span style="color:var(--neon-pink)">W2</span> ·
+<span style="color:var(--neon-green)">W3</span> ·
+<span style="color:var(--neon-yellow)">W4</span>
+</div>
+</div>
+</section>
+
+<!-- ==================== ALGORITHMS ==================== -->
+<section id="algorithms">
+<div class="section-title"><span class="hl">[</span> ALGORITHMS <span class="hl">]</span></div>
+<div class="section-subtitle">// 排序算法对比 · 路径规划 · 康威生命游戏 · 曼德博集合</div>
+<div class="tabs" id="algo-tabs">
+<button class="tab-btn active" data-tab="algo-sort">SORTING</button>
+<button class="tab-btn" data-tab="algo-path">PATHFINDING</button>
+<button class="tab-btn" data-tab="algo-life">GAME OF LIFE</button>
+<button class="tab-btn" data-tab="algo-mandel">MANDELBROT</button>
+</div>
+<!-- Sorting -->
+<div class="tab-panel active" id="algo-sort">
+<div class="card">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn" onclick="runSort('bubble')">冒泡排序 O(n²)</button>
+<button class="btn" onclick="runSort('quick')">快速排序 O(n log n)</button>
+<button class="btn" onclick="runSort('merge')">归并排序 O(n log n)</button>
+<button class="btn" onclick="runSort('heap')">堆排序 O(n log n)</button>
+<button class="btn" onclick="shuffleSortData()">随机打乱</button>
+</div>
+<div class="canvas-wrap"><canvas id="algo-sort-canvas" width="800" height="300"></canvas></div>
+<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
+<span id="algo-sort-info">比较次数: 0 | 交换次数: 0 | 耗时: 0ms</span>
+</div>
+</div>
+</div>
+<!-- Pathfinding -->
+<div class="tab-panel" id="algo-path">
+<div class="card">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" onclick="runPathfinding('bfs')">BFS (最短路径)</button>
+<button class="btn btn-primary" onclick="runPathfinding('dfs')">DFS (深度优先)</button>
+<button class="btn btn-primary" onclick="runPathfinding('astar')">A* (启发式)</button>
+<button class="btn" onclick="generateMaze()">生成迷宫</button>
+<button class="btn" onclick="resetPathfinding()">重置</button>
+</div>
+<div class="canvas-wrap"><canvas id="algo-path-canvas" width="500" height="500"></canvas></div>
+<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
+<span id="algo-path-info">已探索: 0 | 路径长度: 0 | 耗时: 0ms</span>
+</div>
+</div>
+</div>
+<!-- Game of Life -->
+<div class="tab-panel" id="algo-life">
+<div class="card">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" id="life-play-btn" onclick="toggleLife()">开始</button>
+<button class="btn" onclick="stepLife()">单步</button>
+<button class="btn" onclick="randomLife()">随机初始</button>
+<button class="btn" onclick="clearLife()">清空</button>
+</div>
+<div class="canvas-wrap"><canvas id="algo-life-canvas" width="600" height="400"></canvas></div>
+<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
+<span id="algo-life-info">世代: 0 | 存活: 0</span>
+</div>
+</div>
+</div>
+<!-- Mandelbrot -->
+<div class="tab-panel" id="algo-mandel">
+<div class="card">
+<div class="btn-group" style="margin-bottom:12px">
+<button class="btn btn-primary" onclick="renderMandelbrot()">渲染</button>
+<button class="btn" onclick="resetMandelbrot()">重置视图</button>
+<button class="btn" onclick="mandelZoomIn()">放大</button>
+<button class="btn" onclick="mandelZoomOut()">缩小</button>
+</div>
+<div class="canvas-wrap" id="mandel-wrap" style="cursor:grab">
+<canvas id="algo-mandel-canvas" width="600" height="400"></canvas>
+</div>
+<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
+<span id="algo-mandel-info">中心: -0.7+0.0i | 范围: 3.5 | 最大迭代: 256</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ==================== SKILLS ==================== -->
+<section id="skills">
+<div class="section-title"><span class="hl">[</span> SKILLS & TIMELINE <span class="hl">]</span></div>
+<div class="section-subtitle">// 技术栈矩阵 · 项目时间线</div>
+<div class="skill-grid">
+<div class="skill-cat">
+<h4>LANGUAGES</h4>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Python</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-cyan)" data-width="95"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>TypeScript</span><span>92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-pink)" data-width="92"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>JavaScript</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-yellow)" data-width="95"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Rust</span><span>78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-orange)" data-width="78"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>C/C++</span><span>72%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-purple)" data-width="72"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>SQL</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-green)" data-width="88"></div></div></div>
+</div>
+<div class="skill-cat">
+<h4>FRAMEWORKS & TOOLS</h4>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>MCP Protocol</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-cyan)" data-width="95"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Plugin Architecture</span><span>93%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-pink)" data-width="93"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Node.js</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-green)" data-width="90"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Web API</span><span>92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-yellow)" data-width="92"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Docker/K8s</span><span>75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-purple)" data-width="75"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Git/GitHub</span><span>96%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-orange)" data-width="96"></div></div></div>
+</div>
+<div class="skill-cat">
+<h4>SPECIALIZED</h4>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Computer Graphics</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-cyan)" data-width="85"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Quant Finance</span><span>82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-pink)" data-width="82"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>Algorithms</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-green)" data-width="88"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>System Design</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-yellow)" data-width="80"></div></div></div>
+<div class="skill-bar-wrap"><div class="skill-bar-label"><span>LLM/Agent</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:0;background:var(--neon-purple)" data-width="90"></div></div></div>
+</div>
+</div>
+<div class="timeline" style="margin-top:40px">
+<div class="timeline-item"><div class="timeline-date">2024 - Present</div><div class="timeline-title">TRAE Plugin Ecosystem Lead</div><div class="timeline-desc">主导TRAE插件生态系统的架构设计与开发，管理101个代码仓库、15个MCP服务、370+工具集成、58个专业技能模块</div></div>
+<div class="timeline-item"><div class="timeline-date">2023 - 2024</div><div class="timeline-title">MCP Protocol Architecture</div><div class="timeline-desc">设计和实现MCP（Model Context Protocol）服务体系，构建15+独立MCP Server</div></div>
+<div class="timeline-item"><div class="timeline-date">2022 - 2023</div><div class="timeline-title">Full-Stack Platform Engineering</div><div class="timeline-desc">全栈平台工程，TypeScript/Node.js/Python技术栈，大规模代码库管理</div></div>
+<div class="timeline-item"><div class="timeline-date">2021 - 2022</div><div class="timeline-title">Quantitative & Graphics Research</div><div class="timeline-desc">量化金融建模、计算机图形学、高性能计算研究</div></div>
+</div>
+</section>
+<footer style="text-align:center;padding:40px 0;color:var(--text-dim);font-family:var(--font-mono);font-size:12px">
+BUILT FROM SCRATCH · ZERO DEPENDENCIES · PURE HTML/CSS/JS · ALL DEMOS COMPUTE IN REAL-TIME
+</footer>
 </div>
 
-<!-- Loading Screen -->
-<div id="loading-screen">
-  <div class="loading-text">系统启动中...</div>
-  <div class="loading-bar-outer"><div class="loading-bar-inner" id="loading-bar"></div></div>
-  <div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
-<!-- Hero Section                                                            -->
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
-<div class="content-wrapper">
-  <section id="hero" class="section">
-    <h1 class="hero-name reveal">万值翔</h1>
-    <div class="hero-tagline reveal" id="hero-tagline"><span id="typewriter-text"></span><span class="cursor"></span></div>
-
-    <div class="kpi-grid reveal">
-      <div class="kpi-card">
-        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
-        <div class="kpi-number" data-target="101">0</div>
-        <div class="kpi-label">代码仓库</div>
-      </div>
-      <div class="kpi-card">
-        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
-        <div class="kpi-number" data-target="15">0</div>
-        <div class="kpi-label">MCP 服务</div>
-      </div>
-      <div class="kpi-card">
-        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
-        <div class="kpi-number" data-target="370">0</div>
-        <div class="kpi-label">集成工具</div>
-      </div>
-      <div class="kpi-card">
-        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
-        <div class="kpi-number" data-target="115000">0</div>
-        <div class="kpi-label">行代码</div>
-      </div>
-      <div class="kpi-card">
-        <div class="corner-deco tl"></div><div class="corner-deco br"></div>
-        <div class="kpi-number" data-target="58">0</div>
-        <div class="kpi-label">AI 技能</div>
-      </div>
-    </div>
-
-    <div class="hero-clock reveal">
-      BEIJING <span class="clock-time" id="beijing-time">--:--:--</span> 北京时间
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- SIGNAL MONITOR - Radar                                                -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">&#9679;</div>
-      <div>
-        <div class="section-title">信号雷达</div>
-        <div class="section-subtitle">技术栈能力扫描</div>
-      </div>
-    </div>
-    <div class="radar-container">
-      <canvas id="radar-canvas" width="500" height="500"></canvas>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- TERMINAL - MCP Matrix                                                 -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">[&nbsp;]</div>
-      <div>
-        <div class="section-title">终端矩阵</div>
-        <div class="section-subtitle">MCP 服务器阵列</div>
-      </div>
-    </div>
-    <div class="mcp-grid" id="mcp-grid"></div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- ALGORITHM LAB                                                          -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">&Sigma;</div>
-      <div>
-        <div class="section-title">算法实验室</div>
-        <div class="section-subtitle">实时可视化演示</div>
-      </div>
-    </div>
-
-    <div class="lab-container">
-      <div class="lab-tabs" id="lab-tabs">
-        <button class="lab-tab active" data-tab="sort">排序</button>
-        <button class="lab-tab" data-tab="path">寻路</button>
-        <button class="lab-tab" data-tab="life">生命</button>
-        <button class="lab-tab" data-tab="mandelbrot">分形</button>
-        <button class="lab-tab" data-tab="pso">粒子</button>
-      </div>
-
-      <!-- SORT -->
-      <div class="lab-panel active" id="panel-sort">
-        <div class="lab-canvas-wrap"><canvas id="sort-canvas" width="800" height="300"></canvas></div>
-        <div class="lab-controls">
-          <select class="lab-select" id="sort-algo">
-            <option value="bubble">冒泡排序 O(n²)</option>
-            <option value="quick">快速排序 O(n log n)</option>
-            <option value="merge">归并排序 O(n log n)</option>
-            <option value="heap">堆排序 O(n log n)</option>
-          </select>
-          <button class="lab-btn" id="sort-start">&#9654; 运行</button>
-          <button class="lab-btn" id="sort-reset">&#8635; 重置</button>
-          <div class="lab-stats">
-            <span>比较次数: <span class="stat-val" id="sort-cmp">0</span></span>
-            <span>交换次数: <span class="stat-val" id="sort-swap">0</span></span>
-            <span>耗时: <span class="stat-val" id="sort-time">0ms</span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- PATH -->
-      <div class="lab-panel" id="panel-path">
-        <div class="lab-canvas-wrap"><canvas id="path-canvas" width="900" height="500"></canvas></div>
-        <div class="lab-controls">
-          <select class="lab-select" id="path-algo">
-            <option value="bfs">BFS</option>
-            <option value="dfs">DFS</option>
-            <option value="astar">A*</option>
-          </select>
-          <button class="lab-btn" id="path-start">&#9654; 运行</button>
-          <button class="lab-btn" id="path-reset">&#8635; 重置</button>
-          <div class="lab-stats">
-            <span>探索节点: <span class="stat-val" id="path-explored">0</span></span>
-            <span>路径长度: <span class="stat-val" id="path-length">0</span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- LIFE -->
-      <div class="lab-panel" id="panel-life">
-        <div class="lab-canvas-wrap"><canvas id="life-canvas" width="800" height="500"></canvas></div>
-        <div class="lab-controls">
-          <button class="lab-btn" id="life-start">&#9654; 开始</button>
-          <button class="lab-btn" id="life-pause">&#9208; 暂停</button>
-          <button class="lab-btn" id="life-reset">&#8635; 随机</button>
-          <div class="lab-speed-control">
-            <label>速度:</label>
-            <input type="range" id="life-speed" min="1" max="20" value="5">
-          </div>
-          <div class="lab-stats">
-            <span>世代: <span class="stat-val" id="life-gen">0</span></span>
-            <span>存活: <span class="stat-val" id="life-alive">0</span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- MANDELBROT -->
-      <div class="lab-panel" id="panel-mandelbrot">
-        <div class="lab-canvas-wrap" style="position:relative; display:inline-block;">
-          <canvas id="mandelbrot-canvas" width="700" height="500"></canvas>
-          <div class="mandelbrot-info" id="mandelbrot-info">R: [-2.0, 1.0] I: [-1.2, 1.2] | Zoom: 1.0x</div>
-        </div>
-        <div class="lab-controls">
-          <button class="lab-btn" id="mandelbrot-reset">&#8635; 重置视图</button>
-          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim);">拖拽平移 | 滚轮缩放</span>
-        </div>
-      </div>
-
-      <!-- PSO -->
-      <div class="lab-panel" id="panel-pso">
-        <div class="lab-canvas-wrap"><canvas id="pso-canvas" width="700" height="500"></canvas></div>
-        <div class="lab-controls">
-          <button class="lab-btn" id="pso-start">&#9654; 运行</button>
-          <button class="lab-btn" id="pso-reset">&#8635; 重置</button>
-          <div class="lab-stats">
-            <span>迭代次数: <span class="stat-val" id="pso-iter">0</span></span>
-            <span>最佳适应度: <span class="stat-val" id="pso-best">--</span></span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- ASSETS - Skills                                                       -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">&#9830;</div>
-      <div>
-        <div class="section-title">能力资产</div>
-        <div class="section-subtitle">核心技术领域</div>
-      </div>
-    </div>
-    <div class="skills-grid" id="skills-grid"></div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- CHRONICLE - Timeline                                                  -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">&gt;_</div>
-      <div>
-        <div class="section-title">演进史</div>
-        <div class="section-subtitle">项目里程碑</div>
-      </div>
-    </div>
-    <div class="timeline" id="timeline"></div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- LOG - Activity                                                        -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section class="section reveal">
-    <div class="section-header">
-      <div class="icon-box">&#9608;</div>
-      <div>
-        <div class="section-title">日志</div>
-        <div class="section-subtitle">实时活动流</div>
-      </div>
-    </div>
-    <div class="log-container">
-      <div class="log-header">
-        <span class="dot green"></span> 实时推流
-        <span style="margin-left:auto;font-size:10px;" id="log-status">CONNECTED</span>
-      </div>
-      <div id="log-entries">
-        <div class="log-entry"><span class="timestamp">--:--:--</span> Awaiting data stream...</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <!-- Footer                                                                 -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-  <section id="footer">
-    <div class="footer-text">系统 // 节点: 在线 // 运行时间: <span id="uptime">00:00:00</span></div>
-    <div class="footer-status"><span class="blink">&#9608;</span> 所有系统正常</div>
-  </section>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
-<!-- SCRIPTS                                                                  -->
-<!-- ═══════════════════════════════════════════════════════════════════════ -->
 <script>
-(function() {
-  'use strict';
-
-  /* ====================================================================== */
-  /*  MATRIX RAIN                                                            */
-  /* ====================================================================== */
-  const MatrixRain = (function() {
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    let chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/[]{}|*#@%&';
-    let drops = [];
-    let fontSize = 14;
-    let running = true;
-    let animId = null;
-    let lastTime = 0;
-    const interval = 55;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      let cols = Math.floor(canvas.width / fontSize);
-      drops = [];
-      for (let i = 0; i < cols; i++) {
-        drops[i] = Math.random() * -canvas.height;
-      }
+// ===================================================================
+// ==================== MATRIX RAIN BACKGROUND ========================
+// ===================================================================
+(function(){
+  const c=document.getElementById('matrix-bg'),ctx=c.getContext('2d');
+  let w,h,cols,chars;
+  function resize(){
+    w=c.width=window.innerWidth;h=c.height=window.innerHeight;
+    cols=Math.floor(w/14);
+    chars=new Array(cols).fill(0);
+  }
+  resize();window.addEventListener('resize',resize);
+  const glyphs='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!';
+  function draw(){
+    ctx.fillStyle='rgba(10,10,10,.06)';ctx.fillRect(0,0,w,h);
+    ctx.fillStyle='#0f0';ctx.font='13px monospace';
+    for(let i=0;i<cols;i++){
+      const t=glyphs[Math.floor(Math.random()*glyphs.length)];
+      const x=i*14,y=chars[i]*14;
+      ctx.fillText(t,x,y);
+      if(y>h&&Math.random()>.975)chars[i]=0;
+      chars[i]++;
     }
-
-    function draw(timestamp) {
-      if (!running) { animId = requestAnimationFrame(draw); return; }
-      if (timestamp - lastTime < interval) { animId = requestAnimationFrame(draw); return; }
-      lastTime = timestamp;
-
-      ctx.fillStyle = 'rgba(10,10,15,0.08)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = fontSize + 'px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        let char = chars[Math.floor(Math.random() * chars.length)];
-        let x = i * fontSize;
-        let y = drops[i] * fontSize;
-        let alpha = 0.2 + Math.random() * 0.5;
-        ctx.fillStyle = 'rgba(0,255,136,' + alpha + ')';
-        ctx.fillText(char, x, y);
-        if (i % 5 === 0) {
-          ctx.fillStyle = 'rgba(180,255,220,' + (alpha + 0.2) + ')';
-          ctx.fillText(char, x, y);
-        }
-        if (y > canvas.height + fontSize && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-      animId = requestAnimationFrame(draw);
-    }
-
-    function start() { running = true; }
-    function stop() { running = false; }
-    function toggle() { running = !running; }
-    function isRunning() { return running; }
-
-    resize();
-    window.addEventListener('resize', resize);
-    animId = requestAnimationFrame(draw);
-
-    return { start, stop, toggle, isRunning };
-  })();
-
-  /* ====================================================================== */
-  /*  SCANLINES                                                              */
-  /* ====================================================================== */
-  const scanlines = document.getElementById('scanlines');
-  document.getElementById('btn-scanlines').addEventListener('click', function() {
-    scanlines.classList.toggle('off');
-    this.classList.toggle('active');
-  });
-  document.getElementById('btn-matrix').addEventListener('click', function() {
-    MatrixRain.toggle();
-    this.classList.toggle('active');
-  });
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'r' || e.key === 'R') {
-      MatrixRain.toggle();
-      document.getElementById('btn-matrix').classList.toggle('active');
-    }
-    if (e.key === 's' || e.key === 'S') {
-      scanlines.classList.toggle('off');
-      document.getElementById('btn-scanlines').classList.toggle('active');
-    }
-  });
-
-  /* ====================================================================== */
-  /*  LOADING SCREEN                                                         */
-  /* ====================================================================== */
-  (function() {
-    const screen = document.getElementById('loading-screen');
-    const bar = document.getElementById('loading-bar');
-    let width = 0;
-    const loadInterval = setInterval(function() {
-      width += Math.random() * 25;
-      if (width >= 100) {
-        width = 100;
-        bar.style.width = '100%';
-        clearInterval(loadInterval);
-        setTimeout(function() {
-          screen.classList.add('hidden');
-        }, 400);
-      }
-      bar.style.width = width + '%';
-    }, 180);
-  })();
-
-  /* ====================================================================== */
-  /*  TYPEWRITER EFFECT                                                      */
-  /* ====================================================================== */
-  (function() {
-    const texts = [
-      'SYSTEM ARCHITECT // QUANT DEVELOPER // AI ENGINEER',
-      'FULL-STACK BUILDER // ALGORITHM TRADER // OPEN SOURCE',
-      '101 REPOS // 15 MCP SERVERS // 370+ TOOLS // 115K+ LINES'
-    ];
-    let textIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-    const el = document.getElementById('typewriter-text');
-    const pauseEnd = 2000;
-    const pauseStart = 500;
-
-    function tick() {
-      const current = texts[textIdx];
-      if (isDeleting) {
-        el.textContent = current.substring(0, charIdx - 1);
-        charIdx--;
-      } else {
-        el.textContent = current.substring(0, charIdx + 1);
-        charIdx++;
-      }
-
-      let speed = isDeleting ? 30 : 60;
-
-      if (!isDeleting && charIdx === current.length) {
-        speed = pauseEnd;
-        isDeleting = true;
-      } else if (isDeleting && charIdx === 0) {
-        isDeleting = false;
-        textIdx = (textIdx + 1) % texts.length;
-        speed = pauseStart;
-      }
-
-      setTimeout(tick, speed);
-    }
-    setTimeout(tick, 1200);
-  })();
-
-  /* ====================================================================== */
-  /*  BEIJING CLOCK                                                          */
-  /* ====================================================================== */
-  (function() {
-    const el = document.getElementById('beijing-time');
-    function update() {
-      const now = new Date();
-      const bj = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
-      const h = String(bj.getHours()).padStart(2, '0');
-      const m = String(bj.getMinutes()).padStart(2, '0');
-      const s = String(bj.getSeconds()).padStart(2, '0');
-      el.textContent = h + ':' + m + ':' + s;
-    }
-    update();
-    setInterval(update, 1000);
-  })();
-
-  /* ====================================================================== */
-  /*  UPTIME COUNTER                                                         */
-  /* ====================================================================== */
-  (function() {
-    const el = document.getElementById('uptime');
-    const start = Date.now();
-    function update() {
-      const diff = Math.floor((Date.now() - start) / 1000);
-      const h = String(Math.floor(diff / 3600)).padStart(2, '0');
-      const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-      const s = String(diff % 60).padStart(2, '0');
-      el.textContent = h + ':' + m + ':' + s;
-    }
-    setInterval(update, 1000);
-    update();
-  })();
-
-  /* ====================================================================== */
-  /*  SCROLL REVEAL                                                          */
-  /* ====================================================================== */
-  (function() {
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  KPI COUNT-UP ANIMATION                                                 */
-  /* ====================================================================== */
-  (function() {
-    const kpiObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-target'), 10);
-        const duration = 2000;
-        const start = performance.now();
-        function step(ts) {
-          const elapsed = ts - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const val = Math.round(eased * target);
-          if (target >= 1000) {
-            el.textContent = (val / 1000).toFixed(1) + 'K';
-          } else {
-            el.textContent = val;
-          }
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-        kpiObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.kpi-number').forEach(function(el) {
-      kpiObserver.observe(el);
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  RADAR CHART                                                            */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('radar-canvas');
-    const ctx = canvas.getContext('2d');
-    const labels = ['Python', 'C++', '量化', '机器学习', 'NLP', '全栈'];
-    const targets = [95, 80, 90, 85, 75, 88];
-    const count = labels.length;
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const maxR = 180;
-    let progress = 0;
-    let animId = null;
-
-    function draw(prog) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save();
-      ctx.translate(cx, cy);
-
-      // Grid circles
-      for (let r = 1; r <= 4; r++) {
-        ctx.beginPath();
-        const radius = (maxR / 4) * r;
-        ctx.arc(0, 0, radius, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(26,26,46,0.8)';
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-        if (r < 4) {
-          ctx.fillStyle = 'rgba(26,26,46,0.2)';
-          // Draw polygon grid
-          ctx.beginPath();
-          for (let i = 0; i < count; i++) {
-            const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-          }
-          ctx.closePath();
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(26,26,46,0.4)';
-          ctx.stroke();
-        }
-      }
-
-      // Axes lines
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(Math.cos(angle) * maxR, Math.sin(angle) * maxR);
-        ctx.strokeStyle = 'rgba(26,26,46,0.6)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Labels
-        const lx = Math.cos(angle) * (maxR + 30);
-        const ly = Math.sin(angle) * (maxR + 24);
-        ctx.fillStyle = '#8890a4';
-        ctx.font = '12px Consolas, monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(labels[i], lx, ly);
-
-        // Value labels
-        const vx = Math.cos(angle) * (maxR * prog * targets[i] / 100 + 16);
-        const vy = Math.sin(angle) * (maxR * prog * targets[i] / 100 + 16);
-        ctx.fillStyle = '#00ff88';
-        ctx.font = '10px Consolas, monospace';
-        ctx.fillText(Math.round(targets[i] * prog), vx, vy);
-      }
-
-      // Data polygon
-      ctx.beginPath();
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
-        const r = maxR * prog * targets[i] / 100;
-        const x = Math.cos(angle) * r;
-        const y = Math.sin(angle) * r;
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      }
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(0,255,136,0.1)';
-      ctx.fill();
-      ctx.strokeStyle = '#00ff88';
-      ctx.lineWidth = 1.5;
-      ctx.shadowColor = 'rgba(0,255,136,0.6)';
-      ctx.shadowBlur = 12;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // Data points
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
-        const r = maxR * prog * targets[i] / 100;
-        const x = Math.cos(angle) * r;
-        const y = Math.sin(angle) * r;
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = '#00ff88';
-        ctx.fill();
-        ctx.strokeStyle = '#0a0a0f';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-
-      ctx.restore();
-    }
-
-    const radarObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        radarObserver.unobserve(entry.target);
-        let start = null;
-        function anim(ts) {
-          if (!start) start = ts;
-          const elapsed = ts - start;
-          progress = Math.min(elapsed / 1500, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          draw(eased);
-          if (progress < 1) {
-            animId = requestAnimationFrame(anim);
-          }
-        }
-        animId = requestAnimationFrame(anim);
-      });
-    }, { threshold: 0.3 });
-    radarObserver.observe(canvas);
-    draw(0);
-  })();
-
-  /* ====================================================================== */
-  /*  MCP CARDS                                                              */
-  /* ====================================================================== */
-  (function() {
-    const mcps = [
-      { name:'金融数据', icon:'&#9679;', tools:19, algo:'A股行情 · 基金净值 · 宏观经济指标 · 市场宽度计算 · 行业分类' },
-      { name:'量化引擎', icon:'&#9830;', tools:24, algo:'BS期权定价 · Monte Carlo模拟 · Greeks计算 · Markowitz优化 · VaR风险值' },
-      { name:'文档分析', icon:'&#9702;', tools:21, algo:'文件读取 · 词频统计 · TF-IDF · TextRank摘要 · 情感分析' },
-      { name:'数据库助手', icon:'&#9776;', tools:26, algo:'SQLite执行 · Schema分析 · 数据质量诊断 · SQL语句生成' },
-      { name:'数据可视化', icon:'&#9640;', tools:32, algo:'柱状图 · 折线图 · 散点图 · 热力图 · 雷达图 · HTML报告' },
-      { name:'机器学习', icon:'&#9883;', tools:30, algo:'分类(KNN/SVM/随机森林) · 回归 · K-Means聚类 · 交叉验证 · 网格搜索' },
-      { name:'统计分析', icon:'&#9881;', tools:30, algo:'描述性统计 · 假设检验 · OLS回归 · ARIMA · ACF-PACF · Granger因果' },
-      { name:'网页抓取', icon:'&#127760;', tools:26, algo:'网页获取 · HTML解析 · 表格提取 · CSS选择器 · Markdown转换' },
-      { name:'NLP服务', icon:'&#9783;', tools:23, algo:'最大匹配分词 · TextRank关键词 · 朴素贝叶斯 · K-Means++ · 马尔可夫生成' },
-      { name:'文本处理', icon:'&#8982;', tools:22, algo:'Markdown↔HTML · Myers差异 · 霍夫曼压缩 · Base64 · 代码高亮' },
-      { name:'数据管道', icon:'&#9638;', tools:22, algo:'数据画像 · PCA降维 · SMOTE过采样 · K-Fold · 异常检测(IQR+Z-score)' },
-      { name:'数学引擎', icon:'&Sigma;', tools:22, algo:'矩阵运算 · FFT · SVD分解 · 单纯形 · RK4 · 假设检验 · 卷积' }
-    ];
-
-    const grid = document.getElementById('mcp-grid');
-    mcps.forEach(function(mcp) {
-      const outer = document.createElement('div');
-      outer.className = 'mcp-card-outer';
-      outer.innerHTML =
-        '<div class="mcp-card-inner">' +
-          '<div class="mcp-face front">' +
-            '<div class="mcp-icon">' + mcp.icon + '</div>' +
-            '<div class="mcp-name">' + mcp.name + '</div>' +
-            '<div class="mcp-tools">' + mcp.tools + ' tools</div>' +
-          '</div>' +
-          '<div class="mcp-face back">' +
-            '<div class="mcp-algo">' + mcp.algo + '</div>' +
-          '</div>' +
-        '</div>';
-      grid.appendChild(outer);
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  SKILLS CARDS                                                           */
-  /* ====================================================================== */
-  (function() {
-    const skills = [
-      { icon:'&#9763;', name:'量化交易系统', desc:'市场微观结构 · 订单簿模拟 · 因子模型 · 回测引擎 · VaR风险管理 · 衍生品定价', pct:95 },
-      { icon:'&#9881;', name:'NLP与文本分析', desc:'分词/最大匹配 · TextRank · 朴素贝叶斯 · 实体提取 · 语义搜索 · 情感分析', pct:82 },
-      { icon:'&#9681;', name:'算法与数学', desc:'FFT · SVD分解 · 单纯形法 · 假设检验 · 数值积分 · 曼德博集合 · 粒子群优化', pct:85 },
-      { icon:'&#9640;', name:'数据管道工程', desc:'数据画像 · PCA降维 · SMOTE过采样 · 异常检测 · 分层抽样 · K-Fold交叉验证', pct:88 },
-      { icon:'&#9776;', name:'MCP与AI基础设施', desc:'15台MCP服务器 · ~370工具接口 · ReAct推理 · 多Agent协作 · 知识图谱', pct:90 },
-      { icon:'&#9729;', name:'经济学与计量', desc:'因果推断 · DSGE建模 · 贝叶斯统计 · 博弈论 · 空间计量 · 网络经济学 · 14个库', pct:92 }
-    ];
-
-    const grid = document.getElementById('skills-grid');
-    skills.forEach(function(skill) {
-      const card = document.createElement('div');
-      card.className = 'skill-card';
-      card.innerHTML =
-        '<div class="skill-icon">' + skill.icon + '</div>' +
-        '<div class="skill-name">' + skill.name + '</div>' +
-        '<div class="skill-desc">' + skill.desc + '</div>' +
-        '<div class="skill-bar-outer"><div class="skill-bar-inner" data-pct="' + skill.pct + '"></div></div>' +
-        '<div class="skill-pct">' + skill.pct + '%</div>';
-      grid.appendChild(card);
-    });
-
-    const skillObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        skillObserver.unobserve(entry.target);
-        const bar = entry.target.querySelector('.skill-bar-inner');
-        const pct = bar.getAttribute('data-pct');
-        setTimeout(function() { bar.style.width = pct + '%'; }, 100);
-      });
-    }, { threshold: 0.3 });
-
-    document.querySelectorAll('.skill-card').forEach(function(card) {
-      skillObserver.observe(card);
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  TIMELINE                                                               */
-  /* ====================================================================== */
-  (function() {
-    const items = [
-      { date:'2026.07', title:'MCP生态扩展至15台', desc:'上线NLP服务、文本处理、数据管道、数学引擎4台新MCP服务器，总工具量达~370个。全算法级实现，零外部依赖。' },
-      { date:'2026 Q2', title:'效率技能 v2.0.0', desc:'12个项目全面重写，17,138行纯算法代码：Isolation Forest、TextRank、Canny、DCT、Myers、SM-2、BKT、IRT等24+核心算法从零实现。' },
-      { date:'2025', title:'MCP基础设施搭建', desc:'首批8台MCP服务器上线(金融数据/量化引擎/文档分析/数据库/可视化/机器学习/统计/网页抓取)，共208个工具接口。' },
-      { date:'2024 Q3', title:'量化金融与智能体系统', desc:'17个项目：投资组合优化(Markowitz/HRP)、回测引擎、因子挖掘、衍生品定价 + 多Agent交易模拟、RL交易、审计Agent。' },
-      { date:'2024 Q1-Q2', title:'计量经济学矩阵', desc:'14个Python计量经济学库：bayesmetrics、causalinference、dsgepy、laborecon、networkecon、spatialecon等，覆盖贝叶斯到空间计量。' },
-      { date:'2024 起步', title:'101个项目起航', desc:'从零开始构建项目矩阵。核心理念：不套壳、不调API凑数、每个算法亲手从零实现。经济学背景，深耕计量与量化。' }
-    ];
-
-    const timeline = document.getElementById('timeline');
-    items.forEach(function(item) {
-      const div = document.createElement('div');
-      div.className = 'timeline-item';
-      div.innerHTML =
-        '<div class="timeline-dot"></div>' +
-        '<div class="timeline-date">' + item.date + '</div>' +
-        '<div class="timeline-title">' + item.title + '</div>' +
-        '<div class="timeline-desc">' + item.desc + '</div>';
-      timeline.appendChild(div);
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  ACTIVITY LOG                                                           */
-  /* ====================================================================== */
-  (function() {
-    const container = document.getElementById('log-entries');
-    const statusEl = document.getElementById('log-status');
-
-    // Try to fetch from GitHub API for user wzx11223344
-    async function fetchGitHub() {
-      try {
-        const resp = await fetch('https://api.github.com/users/wzx11223344/events/public?per_page=20');
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const events = await resp.json();
-        container.innerHTML = '';
-        events.slice(0, 15).forEach(function(evt) {
-          const date = new Date(evt.created_at);
-          const ts = date.toLocaleTimeString('zh-CN', { hour12: false });
-          let typeClass = 'type-commit';
-          let desc = evt.type;
-          if (evt.type === 'PushEvent') {
-            desc = 'push ' + (evt.payload.commits ? evt.payload.commits.length : 0) + ' commit(s) -> ' + (evt.repo ? evt.repo.name : '');
-            typeClass = 'type-commit';
-          } else if (evt.type === 'IssuesEvent') {
-            desc = evt.payload.action + ' issue #' + (evt.payload.issue ? evt.payload.issue.number : '?') + ' in ' + (evt.repo ? evt.repo.name : '');
-            typeClass = 'type-issue';
-          } else if (evt.type === 'PullRequestEvent') {
-            desc = evt.payload.action + ' PR in ' + (evt.repo ? evt.repo.name : '');
-            typeClass = 'type-pr';
-          } else if (evt.type === 'CreateEvent') {
-            desc = 'created ' + evt.payload.ref_type + ' ' + (evt.payload.ref || '') + ' in ' + (evt.repo ? evt.repo.name : '');
-            typeClass = 'type-commit';
-          } else {
-            desc = evt.type + ' in ' + (evt.repo ? evt.repo.name : '');
-          }
-          const entry = document.createElement('div');
-          entry.className = 'log-entry';
-          entry.innerHTML = '<span class="timestamp">' + ts + '</span> <span class="' + typeClass + '">[' + evt.type.replace('Event','') + ']</span> ' + desc;
-          container.appendChild(entry);
-        });
-        statusEl.textContent = '在线';
-        statusEl.style.color = '#00ff88';
-      } catch (e) {
-        statusEl.textContent = '离线';
-        statusEl.style.color = '#f59e0b';
-        loadFallback();
-      }
-    }
-
-    function loadFallback() {
-      container.innerHTML = '';
-      const items = [
-        { ts:'14:32:07', type:'[推送]', cls:'type-commit', desc:'新增粒子群优化(PSO)可视化到算法实验室' },
-        { ts:'13:18:45', type:'[推送]', cls:'type-commit', desc:'优化曼德博集合渲染性能' },
-        { ts:'12:05:22', type:'[合并]', cls:'type-pr', desc:'MCP服务器矩阵3D翻转卡片效果上线' },
-        { ts:'10:47:11', type:'[问题]', cls:'type-issue', desc:'修复移动端雷达图动画显示异常' },
-        { ts:'09:33:58', type:'[推送]', cls:'type-commit', desc:'新增康威生命游戏，支持速度控制和实时统计' },
-        { ts:'08:15:30', type:'[推送]', cls:'type-commit', desc:'赛博监控室HUD主题全面上线' },
-        { ts:'07:02:14', type:'[问题]', cls:'type-issue', desc:'补充算法复杂度分析文档' },
-        { ts:'23:48:05', type:'[推送]', cls:'type-commit', desc:'A*/BFS/DFS路径规划可视化完成' },
-        { ts:'22:11:39', type:'[合并]', cls:'type-pr', desc:'排序算法实时对比演示模块合并' },
-        { ts:'20:54:22', type:'[推送]', cls:'type-commit', desc:'项目初始化：代码雨背景+系统架构搭建' }
-      ];
-      items.forEach(function(item) {
-        const entry = document.createElement('div');
-        entry.className = 'log-entry';
-        entry.innerHTML = '<span class="timestamp">' + item.ts + '</span> <span class="' + item.cls + '">' + item.type + '</span> ' + item.desc;
-        container.appendChild(entry);
-      });
-    }
-
-    fetchGitHub();
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab Switcher                                           */
-  /* ====================================================================== */
-  (function() {
-    const tabs = document.querySelectorAll('#lab-tabs .lab-tab');
-    const panels = document.querySelectorAll('.lab-panel');
-
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        tabs.forEach(function(t) { t.classList.remove('active'); });
-        this.classList.add('active');
-        const target = this.getAttribute('data-tab');
-        panels.forEach(function(p) {
-          p.classList.remove('active');
-          if (p.id === 'panel-' + target) p.classList.add('active');
-        });
-        // Trigger resize for canvases when switching tabs
-        window.dispatchEvent(new Event('lab-tab-switch'));
-      });
-    });
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab A: Sorting                                         */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('sort-canvas');
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    let data = [];
-    const N = 80;
-    let running = false;
-    let animId = null;
-    let comparisons = 0, swaps = 0;
-
-    function reset() {
-      data = [];
-      for (let i = 0; i < N; i++) data.push({ val: Math.floor(Math.random() * (H - 40)) + 10, col: '#3b82f6' });
-      comparisons = 0; swaps = 0;
-      updateStats();
-      drawAll();
-    }
-
-    function updateStats() {
-      document.getElementById('sort-cmp').textContent = comparisons;
-      document.getElementById('sort-swap').textContent = swaps;
-      document.getElementById('sort-time').textContent = '0ms';
-    }
-
-    function drawAll(activeA, activeB) {
-      ctx.clearRect(0, 0, W, H);
-      const barW = (W - 20) / N - 2;
-      for (let i = 0; i < N; i++) {
-        let col = data[i].col;
-        if (i === activeA) col = '#00ff88';
-        if (i === activeB) col = '#a855f7';
-        ctx.fillStyle = col;
-        ctx.fillRect(10 + i * (barW + 2), H - data[i].val, barW, data[i].val);
-      }
-    }
-
-    async function bubbleSort() {
-      const t0 = performance.now();
-      for (let i = 0; i < N - 1; i++) {
-        for (let j = 0; j < N - i - 1; j++) {
-          comparisons++;
-          updateStats();
-          drawAll(j, j + 1);
-          if (data[j].val > data[j + 1].val) {
-            [data[j], data[j + 1]] = [data[j + 1], data[j]];
-            swaps++;
-            updateStats();
-            drawAll(j, j + 1);
-          }
-          await delay(1);
-          if (!running) { drawAll(); return; }
-        }
-      }
-      document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
-      for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(5); }
-      running = false;
-    }
-
-    async function quickSort(lo, hi) {
-      if (lo >= hi || !running) return;
-      const t0 = performance.now();
-      const pivot = data[hi].val;
-      let pi = lo;
-      for (let i = lo; i < hi; i++) {
-        comparisons++;
-        updateStats();
-        drawAll(i, hi);
-        if (data[i].val < pivot) {
-          [data[pi], data[i]] = [data[i], data[pi]];
-          swaps++;
-          updateStats();
-          drawAll(pi, i);
-          pi++;
-        }
-        await delay(2);
-        if (!running) return;
-      }
-      [data[pi], data[hi]] = [data[hi], data[pi]];
-      swaps++;
-      updateStats();
-      drawAll(pi, hi);
-      await delay(2);
-      await quickSort(lo, pi - 1);
-      await quickSort(pi + 1, hi);
-      if (lo === 0 && hi === N - 1) {
-        document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
-        for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(3); }
-      }
-    }
-
-    async function mergeSort(l, r) {
-      if (l >= r || !running) return;
-      const m = Math.floor((l + r) / 2);
-      await mergeSort(l, m);
-      await mergeSort(m + 1, r);
-      let i = l, j = m + 1;
-      const temp = [];
-      while (i <= m && j <= r) {
-        comparisons++;
-        updateStats();
-        drawAll(i, j);
-        if (data[i].val <= data[j].val) { temp.push(data[i]); i++; }
-        else { temp.push(data[j]); j++; }
-        await delay(3);
-        if (!running) return;
-      }
-      while (i <= m) { temp.push(data[i]); i++; }
-      while (j <= r) { temp.push(data[j]); j++; }
-      for (let k = 0; k < temp.length; k++) { data[l + k] = temp[k]; swaps++; drawAll(l + k, -1); await delay(2); }
-      updateStats();
-    }
-
-    async function heapSort() {
-      const t0 = performance.now();
-      function heapify(n, i) {
-        let largest = i, l = 2 * i + 1, r = 2 * i + 2;
-        if (l < n) { comparisons++; if (data[l].val > data[largest].val) largest = l; }
-        if (r < n) { comparisons++; if (data[r].val > data[largest].val) largest = r; }
-        if (largest !== i) { [data[i], data[largest]] = [data[largest], data[i]]; swaps++; }
-        updateStats();
-      }
-      for (let i = Math.floor(N / 2) - 1; i >= 0; i--) { heapify(N, i); drawAll(i); await delay(1); }
-      for (let i = N - 1; i > 0; i--) {
-        [data[0], data[i]] = [data[i], data[0]]; swaps++;
-        drawAll(0, i); await delay(3);
-        for (let j = Math.floor(i / 2) - 1; j >= 0; j--) heapify(i, j);
-        if (!running) return;
-      }
-      document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms';
-      for (let i = 0; i < N; i++) { data[i].col = '#00ff88'; drawAll(); await delay(3); }
-      running = false;
-    }
-
-    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-    document.getElementById('sort-start').addEventListener('click', async function() {
-      if (running) return;
-      running = true;
-      comparisons = 0; swaps = 0;
-      for (let i = 0; i < N; i++) data[i].col = '#3b82f6';
-      const algo = document.getElementById('sort-algo').value;
-      const t0 = performance.now();
-      if (algo === 'bubble') await bubbleSort();
-      else if (algo === 'quick') { await quickSort(0, N - 1); document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms'; }
-      else if (algo === 'merge') { await mergeSort(0, N - 1); document.getElementById('sort-time').textContent = Math.round(performance.now() - t0) + 'ms'; }
-      else if (algo === 'heap') await heapSort();
-      running = false;
-      updateStats();
-    });
-
-    document.getElementById('sort-reset').addEventListener('click', function() { running = false; reset(); });
-    reset();
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab B: Pathfinding                                    */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('path-canvas');
-    const ctx = canvas.getContext('2d');
-    const COLS = 50, ROWS = 30;
-    const cellW = canvas.width / COLS, cellH = canvas.height / ROWS;
-    let grid = [];
-    let start = {x:1,y:1}, end = {x:COLS-2,y:ROWS-2};
-    let explored = 0, pathLen = 0;
-    let running = false;
-
-    function initGrid() {
-      grid = [];
-      for (let y = 0; y < ROWS; y++) {
-        grid[y] = [];
-        for (let x = 0; x < COLS; x++) {
-          if (x === 0 || y === 0 || x === COLS - 1 || y === ROWS - 1) grid[y][x] = 1;
-          else grid[y][x] = Math.random() < 0.3 ? 1 : 0;
-        }
-      }
-      grid[start.y][start.x] = 0;
-      grid[end.y][end.x] = 0;
-      explored = 0; pathLen = 0;
-      updateStats();
-      drawGrid();
-    }
-
-    function updateStats() {
-      document.getElementById('path-explored').textContent = explored;
-      document.getElementById('path-length').textContent = pathLen;
-    }
-
-    function drawGrid(path, vis) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let y = 0; y < ROWS; y++) {
-        for (let x = 0; x < COLS; x++) {
-          if (grid[y][x] === 1) { ctx.fillStyle = '#1a1a2e'; }
-          else ctx.fillStyle = '#0a0a0f';
-          ctx.fillRect(x * cellW, y * cellH, cellW, cellH);
-        }
-      }
-      if (vis) vis.forEach(function(p) { ctx.fillStyle = 'rgba(59,130,246,0.25)'; ctx.fillRect(p.x * cellW, p.y * cellH, cellW, cellH); });
-      if (path) path.forEach(function(p) { ctx.fillStyle = '#00ff88'; ctx.fillRect(p.x * cellW, p.y * cellH, cellW, cellH); });
-      ctx.fillStyle = '#a855f7'; ctx.fillRect(start.x * cellW, start.y * cellH, cellW, cellH);
-      ctx.fillStyle = '#f59e0b'; ctx.fillRect(end.x * cellW, end.y * cellH, cellW, cellH);
-    }
-
-    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-    function heuristic(a, b) { return Math.abs(a.x - b.x) + Math.abs(a.y - b.y); }
-
-    async function runBFS() {
-      const q = [start];
-      const cameFrom = {};
-      cameFrom[start.y + ',' + start.x] = null;
-      const visited = new Set();
-      visited.add(start.y + ',' + start.x);
-      const vis = [];
-      const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
-      while (q.length > 0 && running) {
-        const cur = q.shift();
-        explored++;
-        vis.push(cur);
-        if (cur.x === end.x && cur.y === end.y) break;
-        for (let d of dirs) {
-          const nx = cur.x + d[0], ny = cur.y + d[1];
-          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !visited.has(ny + ',' + nx)) {
-            visited.add(ny + ',' + nx);
-            cameFrom[ny + ',' + nx] = cur;
-            q.push({x:nx, y:ny});
-          }
-        }
-        if (explored % 15 === 0) { updateStats(); drawGrid(null, vis); await delay(8); }
-      }
-      updateStats();
-      drawGrid(null, vis);
-      // Reconstruct path
-      const path = [];
-      let cur = end;
-      while (cur) {
-        path.push(cur);
-        cur = cameFrom[cur.y + ',' + cur.x];
-      }
-      pathLen = path.length;
-      updateStats();
-      drawGrid(path, vis);
-    }
-
-    async function runDFS() {
-      const stk = [start];
-      const cameFrom = {}; cameFrom[start.y + ',' + start.x] = null;
-      const visited = new Set(); visited.add(start.y + ',' + start.x);
-      const vis = [];
-      const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
-      while (stk.length > 0 && running) {
-        const cur = stk.pop();
-        explored++; vis.push(cur);
-        if (cur.x === end.x && cur.y === end.y) break;
-        for (let d of dirs) {
-          const nx = cur.x + d[0], ny = cur.y + d[1];
-          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !visited.has(ny + ',' + nx)) {
-            visited.add(ny + ',' + nx);
-            cameFrom[ny + ',' + nx] = cur;
-            stk.push({x:nx, y:ny});
-          }
-        }
-        if (explored % 20 === 0) { updateStats(); drawGrid(null, vis); await delay(6); }
-      }
-      updateStats(); drawGrid(null, vis);
-      const path = []; let cur = end;
-      while (cur) { path.push(cur); cur = cameFrom[cur.y + ',' + cur.x]; }
-      pathLen = path.length;
-      updateStats(); drawGrid(path, vis);
-    }
-
-    async function runAStar() {
-      const openSet = [{x:start.x, y:start.y, f:heuristic(start,end), g:0}];
-      const cameFrom = {}; cameFrom[start.y + ',' + start.x] = null;
-      const gScore = {}; gScore[start.y + ',' + start.x] = 0;
-      const closed = new Set();
-      const vis = [];
-      while (openSet.length > 0 && running) {
-        let minIdx = 0;
-        for (let i = 1; i < openSet.length; i++) if (openSet[i].f < openSet[minIdx].f) minIdx = i;
-        const cur = openSet.splice(minIdx, 1)[0];
-        if (closed.has(cur.y + ',' + cur.x)) continue;
-        closed.add(cur.y + ',' + cur.x);
-        explored++; vis.push(cur);
-        if (cur.x === end.x && cur.y === end.y) break;
-        const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
-        for (let d of dirs) {
-          const nx = cur.x + d[0], ny = cur.y + d[1];
-          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS && grid[ny][nx] === 0 && !closed.has(ny + ',' + nx)) {
-            const tg = gScore[cur.y + ',' + cur.x] + 1;
-            if (tg < (gScore[ny + ',' + nx] || Infinity)) {
-              gScore[ny + ',' + nx] = tg;
-              const f = tg + heuristic({x:nx,y:ny}, end);
-              cameFrom[ny + ',' + nx] = cur;
-              openSet.push({x:nx, y:ny, f:f, g:tg});
-            }
-          }
-        }
-        if (explored % 20 === 0) { updateStats(); drawGrid(null, vis); await delay(8); }
-      }
-      updateStats(); drawGrid(null, vis);
-      const path = []; let cur = end;
-      while (cur) { path.push(cur); cur = cameFrom[cur.y + ',' + cur.x]; }
-      pathLen = path.length;
-      updateStats(); drawGrid(path, vis);
-    }
-
-    document.getElementById('path-start').addEventListener('click', async function() {
-      if (running) return;
-      running = true;
-      explored = 0; pathLen = 0;
-      updateStats();
-      const algo = document.getElementById('path-algo').value;
-      if (algo === 'bfs') await runBFS();
-      else if (algo === 'dfs') await runDFS();
-      else if (algo === 'astar') await runAStar();
-      running = false;
-    });
-    document.getElementById('path-reset').addEventListener('click', function() { running = false; initGrid(); });
-    initGrid();
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab C: Conway's Game of Life                          */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('life-canvas');
-    const ctx = canvas.getContext('2d');
-    const COLS = 80, ROWS = 50;
-    const cellW = canvas.width / COLS, cellH = canvas.height / ROWS;
-    let grid = [], next = [];
-    let running = false;
-    let animId = null;
-    let generation = 0, aliveCount = 0;
-    let speed = 5;
-
-    function randomInit() {
-      running = false;
-      generation = 0;
-      for (let y = 0; y < ROWS; y++) {
-        grid[y] = [];
-        next[y] = [];
-        for (let x = 0; x < COLS; x++) {
-          grid[y][x] = Math.random() < 0.2 ? 1 : 0;
-          next[y][x] = 0;
-        }
-      }
-      updateStats();
-      drawGrid();
-    }
-
-    function updateStats() {
-      document.getElementById('life-gen').textContent = generation;
-      document.getElementById('life-alive').textContent = aliveCount;
-    }
-
-    function countNeighbors(x, y) {
-      let count = 0;
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          if (dx === 0 && dy === 0) continue;
-          const nx = x + dx, ny = y + dy;
-          if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) count += grid[ny][nx];
-        }
-      }
-      return count;
-    }
-
-    function step() {
-      aliveCount = 0;
-      for (let y = 0; y < ROWS; y++) {
-        for (let x = 0; x < COLS; x++) {
-          const n = countNeighbors(x, y);
-          if (grid[y][x] === 1) {
-            next[y][x] = (n === 2 || n === 3) ? 1 : 0;
-          } else {
-            next[y][x] = (n === 3) ? 1 : 0;
-          }
-          aliveCount += next[y][x];
-        }
-      }
-      [grid, next] = [next, grid];
-      generation++;
-      updateStats();
-      drawGrid();
-    }
-
-    function drawGrid() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let y = 0; y < ROWS; y++) {
-        for (let x = 0; x < COLS; x++) {
-          if (grid[y][x] === 1) {
-            ctx.fillStyle = '#00ff88';
-            ctx.fillRect(x * cellW, y * cellH, cellW - 0.5, cellH - 0.5);
-          } else {
-            ctx.fillStyle = '#0d0d18';
-            ctx.fillRect(x * cellW, y * cellH, cellW - 0.5, cellH - 0.5);
-          }
-        }
-      }
-    }
-
-    function loop() {
-      if (!running) return;
-      step();
-      const interval = Math.max(30, 310 - speed * 14);
-      setTimeout(function() {
-        if (running) animId = requestAnimationFrame(loop);
-      }, interval);
-    }
-
-    document.getElementById('life-start').addEventListener('click', function() {
-      if (running) return;
-      running = true;
-      loop();
-    });
-    document.getElementById('life-pause').addEventListener('click', function() { running = false; });
-    document.getElementById('life-reset').addEventListener('click', function() { randomInit(); });
-    document.getElementById('life-speed').addEventListener('input', function() { speed = parseInt(this.value); });
-
-    randomInit();
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab D: Mandelbrot Set                                 */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('mandelbrot-canvas');
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    let xMin = -2.0, xMax = 1.0, yMin = -1.2, yMax = 1.2;
-    const MAX_ITER = 200;
-    let dragging = false;
-    let dragStart = {x:0, y:0};
-
-    function render() {
-      const imgData = ctx.createImageData(W, H);
-      const xRange = xMax - xMin, yRange = yMax - yMin;
-      for (let py = 0; py < H; py++) {
-        for (let px = 0; px < W; px++) {
-          const cx = xMin + (px / W) * xRange;
-          const cy = yMin + (py / H) * yRange;
-          let zx = 0, zy = 0;
-          let iter = 0;
-          while (zx * zx + zy * zy < 4 && iter < MAX_ITER) {
-            const tmp = zx * zx - zy * zy + cx;
-            zy = 2 * zx * zy + cy;
-            zx = tmp;
-            iter++;
-          }
-          const idx = (py * W + px) * 4;
-          if (iter === MAX_ITER) {
-            imgData.data[idx] = 5; imgData.data[idx+1] = 5; imgData.data[idx+2] = 15; imgData.data[idx+3] = 255;
-          } else {
-            const t = iter / MAX_ITER;
-            const r = Math.floor(9 * (1 - t) * t * t * t * 255);
-            const g = Math.floor(15 * (1 - t) * (1 - t) * t * t * 255);
-            const b = Math.floor(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-            imgData.data[idx] = Math.min(r, 255);
-            imgData.data[idx+1] = Math.min(g, 255);
-            imgData.data[idx+2] = Math.min(b, 255);
-            imgData.data[idx+3] = 255;
-          }
-        }
-      }
-      ctx.putImageData(imgData, 0, 0);
-      const zoom = 3.0 / xRange;
-      document.getElementById('mandelbrot-info').textContent =
-        'R: [' + xMin.toFixed(4) + ', ' + xMax.toFixed(4) + '] I: [' + yMin.toFixed(4) + ', ' + yMax.toFixed(4) + '] | Zoom: ' + zoom.toFixed(1) + 'x';
-    }
-
-    canvas.addEventListener('mousedown', function(e) {
-      dragging = true;
-      dragStart.x = e.offsetX; dragStart.y = e.offsetY;
-    });
-    canvas.addEventListener('mousemove', function(e) {
-      if (!dragging) return;
-      const dx = (e.offsetX - dragStart.x) / W * (xMax - xMin);
-      const dy = (e.offsetY - dragStart.y) / H * (yMax - yMin);
-      xMin -= dx; xMax -= dx; yMin -= dy; yMax -= dy;
-      dragStart.x = e.offsetX; dragStart.y = e.offsetY;
-      render();
-    });
-    canvas.addEventListener('mouseup', function() { dragging = false; });
-    canvas.addEventListener('mouseleave', function() { dragging = false; });
-    canvas.addEventListener('wheel', function(e) {
-      e.preventDefault();
-      const mx = xMin + (e.offsetX / W) * (xMax - xMin);
-      const my = yMin + (e.offsetY / H) * (yMax - yMin);
-      const factor = e.deltaY < 0 ? 0.8 : 1.25;
-      xMin = mx - (mx - xMin) * factor;
-      xMax = mx + (xMax - mx) * factor;
-      yMin = my - (my - yMin) * factor;
-      yMax = my + (yMax - my) * factor;
-      render();
-    });
-    document.getElementById('mandelbrot-reset').addEventListener('click', function() {
-      xMin = -2.0; xMax = 1.0; yMin = -1.2; yMax = 1.2;
-      render();
-    });
-
-    // Lazy render on tab switch
-    let rendered = false;
-    window.addEventListener('lab-tab-switch', function() {
-      if (!rendered && document.getElementById('panel-mandelbrot').classList.contains('active')) {
-        render(); rendered = true;
-      }
-    });
-    // Initial render with small delay for DOM ready
-    setTimeout(function() { render(); rendered = true; }, 500);
-  })();
-
-  /* ====================================================================== */
-  /*  ALGORITHM LAB - Tab E: Particle Swarm Optimization (PSO)              */
-  /* ====================================================================== */
-  (function() {
-    const canvas = document.getElementById('pso-canvas');
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    const NUM_PARTICLES = 30;
-    const MAX_ITER = 200;
-
-    // Target function: Rastrigin-like with multiple local minima
-    function fitness(x, y) {
-      const rx = (x - 0.3) * 5, ry = (y - 0.7) * 5;
-      return -(rx * rx + ry * ry - 10 * Math.cos(2 * Math.PI * rx) - 10 * Math.cos(2 * Math.PI * ry) + 20);
-    }
-
-    let particles = [];
-    let globalBest = {x:0, y:0, val:-Infinity};
-    let iteration = 0;
-    let running = false;
-    let animId = null;
-
-    function init() {
-      running = false; iteration = 0; globalBest = {x:0, y:0, val:-Infinity};
-      particles = [];
-      for (let i = 0; i < NUM_PARTICLES; i++) {
-        const x = Math.random() * 2 - 1;
-        const y = Math.random() * 2 - 1;
-        const vx = (Math.random() - 0.5) * 0.5;
-        const vy = (Math.random() - 0.5) * 0.5;
-        const val = fitness(x, y);
-        particles.push({
-          x:x, y:y, vx:vx, vy:vy,
-          bestX:x, bestY:y, bestVal:val
-        });
-        if (val > globalBest.val) { globalBest.x = x; globalBest.y = y; globalBest.val = val; }
-      }
-      updateStats();
-      drawHeatmap();
-      drawParticles();
-    }
-
-    function updateStats() {
-      document.getElementById('pso-iter').textContent = iteration;
-      document.getElementById('pso-best').textContent = globalBest.val.toFixed(4);
-    }
-
-    function drawHeatmap() {
-      const offCanvas = document.createElement('canvas');
-      offCanvas.width = W; offCanvas.height = H;
-      const octx = offCanvas.getContext('2d');
-      const imgData = octx.createImageData(W, H);
-      for (let py = 0; py < H; py++) {
-        for (let px = 0; px < W; px++) {
-          const mx = (px / W) * 2 - 1;
-          const my = (py / H) * 2 - 1;
-          const val = fitness(mx, my);
-          const norm = (val + 20) / 40; // normalize to ~[0,1]
-          const r = Math.floor((1 - norm) * 10 + norm * 60);
-          const g = Math.floor((1 - norm) * 5 + norm * 20);
-          const b = Math.floor((1 - norm) * 30 + norm * 60);
-          const idx = (py * W + px) * 4;
-          imgData.data[idx] = r; imgData.data[idx+1] = g; imgData.data[idx+2] = b; imgData.data[idx+3] = 255;
-        }
-      }
-      octx.putImageData(imgData, 0, 0);
-      ctx.clearRect(0, 0, W, H);
-      ctx.drawImage(offCanvas, 0, 0);
-    }
-
-    function drawParticles() {
-      // Re-draw heatmap
-      drawHeatmap();
-      // Draw global best
-      const gbx = (globalBest.x + 1) / 2 * W;
-      const gby = (globalBest.y + 1) / 2 * H;
-      ctx.strokeStyle = '#a855f7';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(gbx, gby, 8, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = '#a855f7';
-      ctx.beginPath();
-      ctx.arc(gbx, gby, 4, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Draw particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        const px = (p.x + 1) / 2 * W;
-        const py = (p.y + 1) / 2 * H;
-        // Velocity line
-        ctx.strokeStyle = 'rgba(0,255,136,0.3)';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(px + p.vx * 30, py + p.vy * 30);
-        ctx.stroke();
-        // Particle dot
-        const hue = i / NUM_PARTICLES * 360;
-        ctx.fillStyle = 'hsl(' + hue + ', 80%, 65%)';
-        ctx.beginPath();
-        ctx.arc(px, py, 3, 0, Math.PI * 2);
-        ctx.fill();
-        // Personal best
-        const bx = (p.bestX + 1) / 2 * W;
-        const by = (p.bestY + 1) / 2 * H;
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.beginPath();
-        ctx.arc(bx, by, 1.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function step() {
-      const w = 0.6; // inertia
-      const c1 = 1.5; // cognitive
-      const c2 = 1.5; // social
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        const r1 = Math.random(), r2 = Math.random();
-        p.vx = w * p.vx + c1 * r1 * (p.bestX - p.x) + c2 * r2 * (globalBest.x - p.x);
-        p.vy = w * p.vy + c1 * r1 * (p.bestY - p.y) + c2 * r2 * (globalBest.y - p.y);
-        // Clamp velocity
-        p.vx = Math.max(-0.3, Math.min(0.3, p.vx));
-        p.vy = Math.max(-0.3, Math.min(0.3, p.vy));
-        p.x += p.vx;
-        p.y += p.vy;
-        p.x = Math.max(-1, Math.min(1, p.x));
-        p.y = Math.max(-1, Math.min(1, p.y));
-        const val = fitness(p.x, p.y);
-        if (val > p.bestVal) { p.bestX = p.x; p.bestY = p.y; p.bestVal = val; }
-        if (val > globalBest.val) { globalBest.x = p.x; globalBest.y = p.y; globalBest.val = val; }
-      }
-      iteration++;
-      updateStats();
-      drawParticles();
-    }
-
-    function loop() {
-      if (!running || iteration >= MAX_ITER) { running = false; return; }
-      step();
-      animId = requestAnimationFrame(loop);
-    }
-
-    document.getElementById('pso-start').addEventListener('click', function() {
-      if (running) return;
-      running = true;
-      loop();
-    });
-    document.getElementById('pso-reset').addEventListener('click', function() { init(); });
-
-    init();
-  })();
-
-  /* ====================================================================== */
-  /*  Responsive Canvas Resize on Tab Switch                                 */
-  /* ====================================================================== */
-  window.addEventListener('lab-tab-switch', function() {
-    const activePanel = document.querySelector('.lab-panel.active canvas');
-    if (activePanel) {
-      const parent = activePanel.parentElement;
-      if (parent && parent.clientWidth < activePanel.width) {
-        const ratio = parent.clientWidth / activePanel.width;
-        activePanel.style.width = parent.clientWidth + 'px';
-        activePanel.style.height = (activePanel.height * ratio) + 'px';
-      }
-    }
-  });
-
+    requestAnimationFrame(draw);
+  }
+  draw();
 })();
+
+// ===================================================================
+// ==================== UTILITY FUNCTIONS =============================
+// ===================================================================
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+
+// ===================================================================
+// ==================== TYPEWRITER EFFECT =============================
+// ===================================================================
+(function(){
+  const el=$('#typewriter');
+  const texts=['Senior Software Engineer · Plugin Ecosystem Architect',
+    'MCP Protocol Designer · Full-Stack Developer',
+    'Quantitative Finance Enthusiast · Computer Graphics Hacker',
+    'Building the future, one plugin at a time.'];
+  let ti=0,ci=0,deleting=false,ch='_';
+  function tick(){
+    const txt=texts[ti];
+    if(!deleting){
+      el.innerHTML=txt.substring(0,ci)+'<span class="cursor">'+ch+'</span>';
+      ci++;ch=ch==='_'?' ':'_';
+      if(ci<=txt.length){setTimeout(tick,40+Math.random()*30);return;}
+      deleting=true;setTimeout(tick,2000);return;
+    }
+    el.innerHTML=txt.substring(0,ci)+'<span class="cursor">_</span>';
+    ci--;if(ci>=0){setTimeout(tick,20);return;}
+    deleting=false;ci=0;ti=(ti+1)%texts.length;setTimeout(tick,500);
+  }
+  tick();
+})();
+
+// ===================================================================
+// ==================== KPI SCROLL ANIMATION ==========================
+// ===================================================================
+(function(){
+  const nums=$$('.kpi-num');let animated=false;
+  function animateKPI(){
+    if(animated)return;animated=true;
+    nums.forEach(el=>{
+      const target=parseInt(el.dataset.target),unit=el.nextElementSibling;
+      let cur=0;const dur=1500,step=Math.max(1,Math.floor(target/(dur/16)));
+      const timer=setInterval(()=>{
+        cur=Math.min(cur+step,target);el.textContent=cur;
+        if(cur>=target)clearInterval(timer);
+      },16);
+    });
+  }
+  const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting)animateKPI();},{threshold:.3});
+  obs.observe($('.kpi-grid'));
+})();
+
+// ===================================================================
+// ==================== SKILL BAR ANIMATION ===========================
+// ===================================================================
+(function(){
+  let anim=false;
+  const obs=new IntersectionObserver(e=>{
+    if(e[0].isIntersecting&&!anim){anim=true;
+      $$('.skill-bar-fill').forEach(el=>{el.style.width=el.dataset.width+'%';});
+    }
+  },{threshold:.2});
+  obs.observe($('.skill-grid'));
+})();
+
+// ===================================================================
+// ==================== TAB SYSTEM ====================================
+// ===================================================================
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.tab-btn');
+  if(!btn)return;
+  const tabGroup=btn.closest('.tabs');
+  const panelParent=tabGroup.parentElement;
+  const tabId=btn.dataset.tab;
+  tabGroup.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  panelParent.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const panel=panelParent.querySelector('#'+tabId);
+  if(panel)panel.classList.add('active');
+  if(tabId==='algo-mandel')renderMandelbrot();
+  if(tabId==='algo-life')resizeLifeCanvas();
+  if(tabId==='algo-path')resizePathCanvas();
+  if(tabId==='algo-sort')resizeSortCanvas();
+});
+
+// ===================================================================
+// ==================== NAV HIGHLIGHT =================================
+// ===================================================================
+(function(){
+  const navLinks=$$('nav a');
+  const sections=[];
+  navLinks.forEach(a=>{const id=a.getAttribute('href');if(id)sections.push(document.querySelector(id));});
+  window.addEventListener('scroll',()=>{
+    let cur='';
+    sections.forEach(s=>{if(s&&window.scrollY>=s.offsetTop-200)cur=s.id;});
+    navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+  });
+})();
+
+// ===================================================================
+// ==================== 3D VECTOR MATH ================================
+// ===================================================================
+function vec3(x,y,z){return{x,y,z}}
+function add(a,b){return{x:a.x+b.x,y:a.y+b.y,z:a.z+b.z}}
+function sub(a,b){return{x:a.x-b.x,y:a.y-b.y,z:a.z-b.z}}
+function scale(v,s){return{x:v.x*s,y:v.y*s,z:v.z*s}}
+function dot(a,b){return a.x*b.x+a.y*b.y+a.z*b.z}
+function cross(a,b){return{x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x}}
+function length(v){return Math.sqrt(dot(v,v))}
+function normalize(v){const l=length(v);return l>1e-9?scale(v,1/l):vec3(0,0,0)}
+function reflect(v,n){return sub(v,scale(n,2*dot(v,n)))}
+function mix(a,b,t){return add(scale(a,1-t),scale(b,t))}
+
+// ===================================================================
+// ==================== RAY TRACER ====================================
+// ===================================================================
+const rtCanvas=$('#rt-canvas'),rtCtx=rtCanvas.getContext('2d');
+const RT_W=400,RT_H=300;
+let rtData=null,rtRendering=false,rtRow=0,rtStartTime=0;
+
+const rtScene={
+  spheres:[
+    {center:vec3(0,0,-5),r:1.0,color:vec3(0.9,0.9,0.9),type:'mirror',refractiveIndex:0},
+    {center:vec3(2.5,0,-4.5),r:0.8,color:vec3(0.9,0.6,0.4),type:'matte',refractiveIndex:0},
+    {center:vec3(-2.2,0.4,-4),r:0.9,color:vec3(0.95,0.95,0.95),type:'glass',refractiveIndex:1.5},
+  ],
+  lights:[
+    {pos:vec3(5,8,-3),color:vec3(1,1,1),intensity:30},
+    {pos:vec3(-5,3,-2),color:vec3(0.4,0.6,1),intensity:8},
+  ],
+  ambient:vec3(0.08,0.08,0.1),
+};
+
+function hitSphere(ray,sphere){
+  const oc=sub(ray.origin,sphere.center);
+  const a=dot(ray.dir,ray.dir),b=2*dot(oc,ray.dir),c=dot(oc,oc)-sphere.r*sphere.r;
+  const disc=b*b-4*a*c;
+  if(disc<0)return null;
+  return (-b-Math.sqrt(disc))/(2*a);
+}
+
+function hitFloor(ray){
+  if(Math.abs(ray.dir.y)<1e-6)return null;
+  const t=-ray.origin.y/ray.dir.y;
+  if(t<0.01)return null;
+  const p=add(ray.origin,scale(ray.dir,t));
+  const u=Math.floor(p.x),v=Math.floor(p.z);
+  const isWhite=((u+v)&1)===0;
+  return{t,point:p,normal:vec3(0,1,0),color:isWhite?vec3(0.85,0.85,0.85):vec3(0.15,0.15,0.15),type:'matte'};
+}
+
+function traceScene(ray,depth){
+  if(depth>3)return vec3(0,0,0);
+  let closest=Infinity,hitObj=null,hitT=0;
+  for(const s of rtScene.spheres){
+    const t=hitSphere(ray,s);
+    if(t!==null&&t<closest){closest=t;hitObj=s;hitT=t;}
+  }
+  const floorHit=hitFloor(ray);
+  if(floorHit&&floorHit.t<closest){closest=floorHit.t;hitObj=floorHit;hitT=floorHit.t;}
+
+  if(!hitObj)return vec3(0.02,0.02,0.04);
+
+  const hitPoint=add(ray.origin,scale(ray.dir,hitT));
+  let normal;
+  if(hitObj.r!==undefined){normal=normalize(sub(hitPoint,hitObj.center));}
+  else{normal=hitObj.normal;}
+
+  // Shadow / lighting
+  let color=vec3(0,0,0);
+  const ambient=scale(rtScene.ambient,hitObj.color?1:hitObj.r!==undefined?1:1);
+  color=add(color,hitObj.type?mix(rtScene.ambient,rtScene.ambient,0):ambient);
+
+  for(const light of rtScene.lights){
+    const lightDir=normalize(sub(light.pos,hitPoint));
+    const dist=length(sub(light.pos,hitPoint));
+    // Soft shadows
+    let shadowSum=0;const shadowSamples=hitObj.type==='mirror'?1:16;
+    for(let s=0;s<shadowSamples;s++){
+      const jx=(Math.random()-.5)*0.15,jy=(Math.random()-.5)*0.15,jz=(Math.random()-.5)*0.15;
+      const jitteredPos=add(light.pos,vec3(jx,jy,jz));
+      const sd=normalize(sub(jitteredPos,hitPoint));
+      const shadowRay={origin:add(hitPoint,scale(normal,0.001)),dir:sd};
+      let blocked=false;
+      for(const sp of rtScene.spheres){
+        const t=hitSphere(shadowRay,sp);
+        if(t!==null&&t<length(sub(jitteredPos,hitPoint))-0.1){blocked=true;break;}
+      }
+      shadowSum+=blocked?0:1;
+    }
+    const shadowFactor=shadowSum/shadowSamples;
+
+    // Diffuse
+    const nDotL=Math.max(0,dot(normal,lightDir));
+    const diffuse=scale(light.color,nDotL*light.intensity*shadowFactor/dist);
+    if(hitObj.color){
+      const base=hitObj.color||vec3(1,1,1);
+      // Checkerboard
+      color=add(color,vec3(base.x*diffuse.x,base.y*diffuse.y,base.z*diffuse.z));
+    }
+    // Specular
+    const viewDir=normalize(scale(ray.dir,-1));
+    const halfVec=normalize(add(lightDir,viewDir));
+    const spec=Math.pow(Math.max(0,dot(normal,halfVec)),hitObj.type==='mirror'?256:32);
+    const specColor=hitObj.type==='mirror'?vec3(1,1,1):vec3(0.5,0.5,0.5);
+    color=add(color,scale(light.color,spec*light.intensity*shadowFactor*0.5/dist));
+  }
+
+  // Mirror reflection
+  if(hitObj.type==='mirror'){
+    const reflDir=reflect(ray.dir,normal);
+    const reflRay={origin:add(hitPoint,scale(normal,0.001)),dir:reflDir};
+    const reflColor=traceScene(reflRay,depth+1);
+    color=add(scale(color,0.3),scale(reflColor,0.7));
+  }
+
+  // Refraction (glass)
+  if(hitObj.type==='glass'){
+    let n1=1,n2=hitObj.refractiveIndex;
+    let refractNormal=normal;
+    let cosI=dot(ray.dir,normal);
+    if(cosI>0){n1=hitObj.refractiveIndex;n2=1;refractNormal=scale(normal,-1);cosI=-cosI;}
+    const ratio=n1/n2;
+    const sinT2=ratio*ratio*(1-cosI*cosI);
+    if(sinT2<=1){
+      const cosT=Math.sqrt(1-sinT2);
+      const refractDir=add(scale(ray.dir,ratio),scale(refractNormal,ratio*cosI-cosT));
+      const refrRay={origin:add(hitPoint,scale(refractNormal,-0.001)),dir:refractDir};
+      const refrColor=traceScene(refrRay,depth+1);
+      // Fresnel
+      const r0=((n1-n2)/(n1+n2))*((n1-n2)/(n1+n2));
+      const fresnel=r0+(1-r0)*Math.pow(1-Math.abs(cosI),5);
+      const reflDir=reflect(ray.dir,normal);
+      const reflRay={origin:add(hitPoint,scale(normal,0.001)),dir:reflDir};
+      const reflColor=traceScene(reflRay,depth+1);
+      color=mix(reflColor,refrColor,fresnel>0.5?0.5:fresnel);
+    }
+  }
+
+  return color;
+}
+
+function rtPixel(x,y){
+  const u=(x/RT_W-.5)*2*RT_W/RT_H,v=-(y/RT_H-.5)*2;
+  const ray={origin:vec3(0,1,1),dir:normalize(vec3(u,v,-1))};
+  return traceScene(ray,0);
+}
+
+function resetRayTrace(){
+  rtRendering=false;rtRow=0;
+  rtCtx.fillStyle='#000';rtCtx.fillRect(0,0,RT_W,RT_H);
+  $('#rt-status').textContent='READY';$('#rt-progress').textContent='0%';
+  $('#rt-progress-bar').style.width='0%';$('#rt-time').textContent='0.00s';
+}
+
+function startRayTrace(){
+  if(rtRendering)return;
+  rtRendering=true;rtRow=0;rtStartTime=performance.now();
+  $('#rt-status').textContent='RENDERING...';
+  rtCtx.fillStyle='#000';rtCtx.fillRect(0,0,RT_W,RT_H);
+  rtData=rtCtx.createImageData(RT_W,RT_H);
+  requestAnimationFrame(rtRenderLoop);
+}
+
+function rtRenderLoop(){
+  if(!rtRendering)return;
+  const endRow=Math.min(rtRow+2,RT_H);
+  for(let y=rtRow;y<endRow;y++){
+    for(let x=0;x<RT_W;x++){
+      const c=rtPixel(x,y);
+      const idx=(y*RT_W+x)*4;
+      rtData.data[idx]=Math.min(255,Math.floor(Math.sqrt(c.x)*255));
+      rtData.data[idx+1]=Math.min(255,Math.floor(Math.sqrt(c.y)*255));
+      rtData.data[idx+2]=Math.min(255,Math.floor(Math.sqrt(c.z)*255));
+      rtData.data[idx+3]=255;
+    }
+  }
+  rtCtx.putImageData(rtData,0,0);
+  rtRow=endRow;
+  const pct=Math.floor(rtRow/RT_H*100);
+  $('#rt-progress').textContent=pct+'%';
+  $('#rt-progress-bar').style.width=pct+'%';
+  if(rtRow>=RT_H){
+    rtRendering=false;
+    const elapsed=((performance.now()-rtStartTime)/1000).toFixed(2);
+    $('#rt-time').textContent=elapsed+'s';
+    $('#rt-status').textContent='COMPLETE';
+  }else{
+    requestAnimationFrame(rtRenderLoop);
+  }
+}
+
+// ===================================================================
+// ==================== MONTE CARLO PI ================================
+// ===================================================================
+let mcPiRunning=false,mcPiSpeed=10,mcPiTotal=0,mcPiInside=0,mcPiAnimId=null;
+const mcPiCanvas=$('#mc-pi-canvas'),mcPiCtx=mcPiCanvas.getContext('2d');
+const MCPI_W=400,MCPI_H=400;
+
+function drawMCPiBackground(){
+  mcPiCtx.fillStyle='#000';mcPiCtx.fillRect(0,0,MCPI_W,MCPI_H);
+  mcPiCtx.strokeStyle='#222';mcPiCtx.beginPath();mcPiCtx.arc(0,MCPI_H,MCPI_H,0,Math.PI/2);mcPiCtx.stroke();
+  mcPiCtx.strokeStyle='#333';mcPiCtx.strokeRect(0,0,MCPI_W,MCPI_H);
+  mcPiCtx.fillStyle='#0f0';mcPiCtx.font='11px monospace';mcPiCtx.fillText('(0,0)',4,390);
+  mcPiCtx.fillText('(1,0)',380,390);mcPiCtx.fillText('(0,1)',4,14);
+}
+
+function resetMCPi(){
+  mcPiRunning=false;mcPiTotal=0;mcPiInside=0;
+  if(mcPiAnimId)cancelAnimationFrame(mcPiAnimId);
+  drawMCPiBackground();
+  $('#mc-pi-val').textContent='0.00000000';$('#mc-pi-err').textContent='0.0000%';
+  $('#mc-pi-total').textContent='0';
+}
+
+function startMCPi(){if(!mcPiRunning){mcPiRunning=true;mcPiAnimId=requestAnimationFrame(mcPiLoop);}}
+function stopMCPi(){mcPiRunning=false;if(mcPiAnimId)cancelAnimationFrame(mcPiAnimId);}
+function setMCSpeed(s){mcPiSpeed=s;$$('#mc-pi .btn[data-mc-speed]').forEach(b=>b.classList.toggle('btn-primary',parseInt(b.dataset.mcSpeed)===s));}
+
+function mcPiLoop(){
+  if(!mcPiRunning)return;
+  for(let i=0;i<mcPiSpeed;i++){
+    const x=Math.random(),y=Math.random();
+    const inside=(x*x+y*y)<=1;
+    mcPiTotal++;if(inside)mcPiInside++;
+    const px=x*MCPI_W,py=MCPI_H-y*MCPI_H;
+    mcPiCtx.fillStyle=inside?'rgba(0,240,255,.6)':'rgba(255,0,255,.4)';
+    mcPiCtx.fillRect(px,py,1.5,1.5);
+  }
+  const est=4*mcPiInside/mcPiTotal;
+  const err=Math.abs((est-Math.PI)/Math.PI)*100;
+  $('#mc-pi-val').textContent=est.toFixed(8);
+  $('#mc-pi-err').textContent=err.toFixed(4)+'%';
+  $('#mc-pi-total').textContent=mcPiTotal;
+  mcPiAnimId=requestAnimationFrame(mcPiLoop);
+}
+
+// ===================================================================
+// ==================== MONTE CARLO OPTION PRICING ====================
+// ===================================================================
+let mcOptRunning=false,mcOptN=10000,mcOptPaths=0,mcOptSum=0,mcOptAnimId=null;
+const mcOptCanvas=$('#mc-opt-canvas'),mcOptCtx=mcOptCanvas.getContext('2d');
+const MCOPT_W=400,MCOPT_H=400;
+const optParams={S:100,K:100,T:1,sigma:0.3,r:0.05};
+
+function normCDF(x){const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;const sign=x<0?-1:1;x=Math.abs(x)/Math.sqrt(2);const t=1/(1+p*x);const y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);return 0.5*(1+sign*y);}
+function bsPrice(S,K,T,sigma,r,isCall=true){
+  const d1=(Math.log(S/K)+(r+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T);
+  if(isCall)return S*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);
+  return K*Math.exp(-r*T)*normCDF(-d2)-S*normCDF(-d1);
+}
+
+function drawMCOptionBackground(){
+  mcOptCtx.fillStyle='#000';mcOptCtx.fillRect(0,0,MCOPT_W,MCOPT_H);
+  const bs=bsPrice(optParams.S,optParams.K,optParams.T,optParams.sigma,optParams.r,true);
+  mcOptCtx.strokeStyle='rgba(0,240,255,.5)';mcOptCtx.setLineDash([5,5]);
+  mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-bs*10);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-bs*10);mcOptCtx.stroke();
+  mcOptCtx.setLineDash([]);
+  mcOptCtx.fillStyle='rgba(0,240,255,.7)';mcOptCtx.font='10px monospace';mcOptCtx.fillText('BS Benchmark: '+bs.toFixed(4),10,20);
+  mcOptCtx.fillText('Convergence Trace:',10,MCOPT_H-10);
+  mcOptCtx.strokeStyle='#333';mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-MCOPT_H/2);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-MCOPT_H/2);mcOptCtx.stroke();
+}
+
+function geometricBM(S,r,sigma,T){
+  return S*Math.exp((r-sigma*sigma/2)*T+sigma*Math.sqrt(T)*boxMuller());
+}
+let boxMullerZ2=null;
+function boxMuller(){
+  if(boxMullerZ2!==null){const z=boxMullerZ2;boxMullerZ2=null;return z;}
+  let u1,u2,s;do{u1=Math.random()*2-1;u2=Math.random()*2-1;s=u1*u1+u2*u2;}while(s>=1||s===0);
+  const f=Math.sqrt(-2*Math.log(s)/s);boxMullerZ2=u2*f;return u1*f;
+}
+
+function resetMCOption(){
+  mcOptRunning=false;mcOptPaths=0;mcOptSum=0;
+  if(mcOptAnimId)cancelAnimationFrame(mcOptAnimId);
+  drawMCOptionBackground();
+  $('#mc-opt-mc').textContent='0.0000';$('#mc-opt-bs').textContent='0.0000';
+  $('#mc-opt-err').textContent='0.0000%';$('#mc-opt-paths').textContent='0';
+}
+
+function startMCOption(){if(!mcOptRunning){mcOptRunning=true;mcOptAnimId=requestAnimationFrame(mcOptLoop);}}
+function stopMCOption(){mcOptRunning=false;if(mcOptAnimId)cancelAnimationFrame(mcOptAnimId);}
+function setMCN(n){mcOptN=n;$$('#mc-option .btn[data-mc-n]').forEach(b=>b.classList.toggle('btn-primary',parseInt(b.dataset.mcN)===n));}
+let mcOptLineX=0;
+function mcOptLoop(){
+  if(!mcOptRunning)return;
+  const batch=Math.min(200,mcOptN-mcOptPaths);
+  for(let i=0;i<batch;i++){
+    const ST=geometricBM(optParams.S,optParams.r,optParams.sigma,optParams.T);
+    const payoff=Math.max(ST-optParams.K,0);
+    mcOptSum+=payoff;mcOptPaths++;
+  }
+  if(mcOptLineX===0){mcOptLineX=0;drawMCOptionBackground();}
+  const mcEst=Math.exp(-optParams.r*optParams.T)*mcOptSum/mcOptPaths;
+  const bs=bsPrice(optParams.S,optParams.K,optParams.T,optParams.sigma,optParams.r,true);
+  const errPct=mcOptPaths>0?Math.abs((mcEst-bs)/bs)*100:0;
+  $('#mc-opt-mc').textContent=mcEst.toFixed(4);$('#mc-opt-bs').textContent=bs.toFixed(4);
+  $('#mc-opt-err').textContent=errPct.toFixed(4)+'%';$('#mc-opt-paths').textContent=mcOptPaths;
+  if(mcOptPaths%400===0||mcOptPaths>=mcOptN){
+    const yVal=MCOPT_H-mcEst*10;
+    mcOptCtx.fillStyle='rgba(255,0,255,.5)';mcOptCtx.fillRect(mcOptLineX,yVal,2,2);
+    mcOptLineX=(mcOptLineX+2)%MCOPT_W;
+  }
+  if(mcOptPaths>=mcOptN){mcOptRunning=false;return;}
+  mcOptAnimId=requestAnimationFrame(mcOptLoop);
+}
+
+// ===================================================================
+// ==================== BLACK-SCHOLES =================================
+// ===================================================================
+function calcGreeks(S,K,T,sigma,r,q){
+  const call=bsPrice(S,K,T,sigma,r-q,true);
+  const put=bsPrice(S,K,T,sigma,r-q,false);
+  const d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T);
+  const pdfD1=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI);
+  const dc=N(d1)*Math.exp(-q*T),dp=-N(-d1)*Math.exp(-q*T);
+  const gamma=pdfD1*Math.exp(-q*T)/(S*sigma*Math.sqrt(T));
+  const tc=-S*pdfD1*sigma*Math.exp(-q*T)/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*N(d2)+q*S*N(d1)*Math.exp(-q*T);
+  const tp=-S*pdfD1*sigma*Math.exp(-q*T)/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*N(-d2)-q*S*N(-d1)*Math.exp(-q*T);
+  const vega=S*Math.exp(-q*T)*pdfD1*Math.sqrt(T)*0.01;
+  const rc=K*T*Math.exp(-r*T)*N(d2),rp=-K*T*Math.exp(-r*T)*N(-d2);
+  return{call,put,dc,dp,gamma,tc,tp,vega,rc,rp};
+}
+const N=normCDF;
+
+function updateBS(){
+  const S=parseFloat($('#bs-s').value),K=parseFloat($('#bs-k').value),
+    T=parseFloat($('#bs-t').value),sigma=parseFloat($('#bs-sigma').value),
+    r=parseFloat($('#bs-r').value),q=parseFloat($('#bs-q').value);
+  $('#bs-s-val').textContent=S.toFixed(2);$('#bs-k-val').textContent=K.toFixed(2);
+  $('#bs-t-val').textContent=T.toFixed(2);$('#bs-sigma-val').textContent=sigma.toFixed(2);
+  $('#bs-r-val').textContent=r.toFixed(3);$('#bs-q-val').textContent=q.toFixed(3);
+  const g=calcGreeks(S,K,T,sigma,r,q);
+  $('#bs-call').textContent=g.call.toFixed(6);$('#bs-put').textContent=g.put.toFixed(6);
+  $('#bs-delta-c').textContent=g.dc.toFixed(6);$('#bs-delta-p').textContent=g.dp.toFixed(6);
+  $('#bs-gamma').textContent=g.gamma.toFixed(6);$('#bs-theta-c').textContent=(g.tc/365).toFixed(6);
+  $('#bs-vega').textContent=g.vega.toFixed(6);$('#bs-rho').textContent(g.rc.toFixed(6));
+  drawSmile(S,T,r,q);drawDelta(S,T,r,q);
+}
+function drawSmile(S,T,r,q){
+  const c=$('#bs-smile'),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#333';ctx.beginPath();ctx.moveTo(0,h*0.4);ctx.lineTo(w,h*0.4);ctx.stroke();
+  ctx.fillStyle='#666';ctx.font='10px monospace';ctx.fillText('ATM',10,h*0.4-4);
+  ctx.strokeStyle='var(--neon-cyan)';ctx.beginPath();
+  const strikes=[];for(let k=60;k<=140;k+=2)strikes.push(k);
+  for(let i=0;i<strikes.length;i++){
+    let iv=0;const k=strikes[i];
+    for(let sig=0.05;sig<=1.5;sig+=0.005){
+      const p=bsPrice(S,k,T,sig,r,true);
+      if(p>0){iv=sig;break;}
+    }
+    const x=i*w/strikes.length,y=h-(iv*h/1.5);
+    ctx[i===0?'moveTo':'lineTo'](x,y);
+  }
+  ctx.strokeStyle='#0ff';ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
+  ctx.fillStyle='#0ff';ctx.font='10px monospace';ctx.fillText('Volatility Smile',10,16);
+}
+function drawDelta(S,T,r,q){
+  const c=$('#bs-delta'),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#333';ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+  ctx.fillStyle='#666';ctx.font='10px monospace';ctx.fillText('0.5',2,h/2-4);
+  ctx.strokeStyle='#0ff';ctx.beginPath();
+  for(let i=0;i<=200;i+=2){
+    const s=i,delta=N((Math.log(Math.max(s,1)/S)+(r-q+0.3*0.3/2)*T)/(0.3*Math.sqrt(T)))*Math.exp(-q*T);
+    ctx[i===0?'moveTo':'lineTo'](i*w/200,h-delta*h);
+  }
+  ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
+  ctx.fillStyle='#0ff';ctx.font='10px monospace';ctx.fillText('Delta(S) Call',10,16);
+}
+['#bs-s','#bs-k','#bs-t','#bs-sigma','#bs-r','#bs-q'].forEach(id=>{
+  document.querySelector(id).addEventListener('input',updateBS);
+});
+updateBS();
+
+// ===================================================================
+// ==================== WEB WORKER PERFORMANCE ========================
+// ===================================================================
+let perfData=null,perfResult={};
+
+function generatePerfData(){
+  perfData=new Float64Array(1000000);
+  for(let i=0;i<perfData.length;i++)perfData[i]=Math.random();
+  $('#perf-data').textContent='1,000,000';
+}
+generatePerfData();
+
+function mergeSort(arr){
+  if(arr.length<=1)return arr;
+  const m=Math.floor(arr.length/2);
+  const L=mergeSort(arr.slice(0,m)),R=mergeSort(arr.slice(m));
+  let i=0,j=0;const result=[];
+  while(i<L.length&&j<R.length)result.push(L[i]<=R[j]?L[i++]:R[j++]);
+  return result.concat(L.slice(i)).concat(R.slice(j));
+}
+
+function workerBlobCode(){
+  self.onmessage=function(e){
+    const chunk=e.data;
+    const sorted=chunk.sort((a,b)=>a-b);
+    self.postMessage({sorted,id:e.data.id||0});
+  };
+}
+
+function createWorker(){
+  const blob=new Blob(['('+workerBlobCode.toString()+')()'],{type:'application/javascript'});
+  return new Worker(URL.createObjectURL(blob));
+}
+
+async function runSingleThread(){
+  $('#perf-st-btn').disabled=true;$('#perf-st-bar').style.width='0%';
+  $('#perf-st-time').textContent='Running...';
+  const arr=Array.from(perfData);
+  const start=performance.now();
+  await new Promise(r=>setTimeout(r,0));
+  const sorted=mergeSort(arr);
+  const elapsed=(performance.now()-start).toFixed(0);
+  $('#perf-st-time').textContent=elapsed+'ms';
+  $('#perf-st-bar').style.width='100%';
+  $('#perf-st-btn').disabled=false;
+  if($('#perf-mt-time').textContent!=='---'){
+    const su=(parseFloat($('#perf-mt-time'))/parseFloat(elapsed)).toFixed(2);
+    $('#perf-speedup').textContent=su+'x';
+  }
+}
+
+async function runMultiThread(){
+  $('#perf-mt-btn').disabled=true;$('#perf-mt-bar').style.width='0%';
+  $('#perf-mt-time').textContent='Running...';
+  const N=4,size=Math.floor(perfData.length/N);
+  const workers=Array.from({length:N},()=>createWorker());
+  const chunks=[];
+  for(let i=0;i<N;i++){
+    const start=i*size,end=i===N-1?perfData.length:(i+1)*size;
+    chunks.push(Array.from(perfData.slice(start,end)));
+  }
+  const start=performance.now();
+  const timeline=[],tlOffset=20;
+  const results=await Promise.all(chunks.map((chunk,i)=>{
+    timeline.push({id:i,start:performance.now()-start});
+    return new Promise(resolve=>{
+      workers[i].onmessage=function(e){
+        timeline[i].end=performance.now()-start;
+        resolve(e.data.sorted);
+      };
+      workers[i].postMessage(chunk);
+    });
+  }));
+  const merged=results.flat().sort((a,b)=>a-b);
+  const elapsed=(performance.now()-start).toFixed(0);
+  workers.forEach(w=>w.terminate());
+  $('#perf-mt-time').textContent=elapsed+'ms';
+  $('#perf-mt-bar').style.width='100%';
+  $('#perf-mt-btn').disabled=false;
+  if($('#perf-st-time').textContent!=='---'){
+    const su=(parseFloat($('#perf-st-time'))/parseFloat(elapsed)).toFixed(2);
+    $('#perf-speedup').textContent=su+'x';
+  }
+  drawTimeline(timeline,parseFloat(elapsed));
+}
+
+function drawTimeline(timeline,totalMs){
+  const tl=$('#perf-timeline'),w=tl.clientWidth;
+  const colors=['var(--neon-cyan)','var(--neon-pink)','var(--neon-green)','var(--neon-yellow)','var(--neon-orange)'];
+  tl.innerHTML='';
+  const mainBar=document.createElement('div');mainBar.className='worker-bar';
+  mainBar.style.cssText=`left:0;top:70px;width:${w}px;background:var(--neon-orange);opacity:.3;font-size:10px;color:#fff;padding:0 6px`;
+  mainBar.textContent='MAIN '+totalMs+'ms';tl.appendChild(mainBar);
+
+  timeline.forEach(t=>{
+    const bar=document.createElement('div');bar.className='worker-bar';
+    const left=(t.start/totalMs)*w;
+    const width=Math.max(20,((t.end-t.start)/totalMs)*w);
+    const top=8+(t.id*28);
+    bar.style.cssText=`left:${left}px;top:${top}px;width:${width}px;background:${colors[t.id]};font-size:10px;padding:0 4px`;
+    bar.textContent='W'+(t.id+1)+' '+(t.end-t.start).toFixed(1)+'ms';
+    tl.appendChild(bar);
+  });
+}
+
+function resetPerf(){
+  $('#perf-st-time').textContent='---';$('#perf-mt-time').textContent='---';
+  $('#perf-speedup').textContent='---';$('#perf-st-bar').style.width='0%';
+  $('#perf-mt-bar').style.width='0%';$('#perf-timeline').innerHTML='';
+  generatePerfData();
+}
+
+// ===================================================================
+// ==================== SORTING VISUALIZATION =========================
+// ===================================================================
+let sortData=[],sortRunning=false,sortAnimId=null;
+const sortCanvas=$('#algo-sort-canvas'),sortCtx=sortCanvas.getContext('2d');
+let sortComparisons=0,sortSwaps=0;
+
+function resizeSortCanvas(){
+  sortCanvas.width=sortCanvas.parentElement.clientWidth;
+  sortCanvas.height=300;
+  initSortData();
+}
+function initSortData(){
+  const w=sortCanvas.width;sortData=[];
+  for(let i=0;i<w;i+=4)sortData.push(Math.floor(Math.random()*280)+10);
+}
+function drawSortData(highlight=[]){
+  sortCtx.fillStyle='#000';sortCtx.fillRect(0,0,sortCanvas.width,sortCanvas.height);
+  const bw=Math.max(1,Math.floor(sortCanvas.width/sortData.length)-1);
+  for(let i=0;i<sortData.length;i++){
+    const x=i*(bw+1),h=sortData[i];
+    sortCtx.fillStyle=highlight.includes(i)?'var(--neon-cyan)':'#333';
+    sortCtx.fillRect(x,sortCanvas.height-h,bw,h);
+  }
+  $('#algo-sort-info').textContent='比较次数: '+sortComparisons+' | 交换次数: '+sortSwaps+' | 耗时: 计算中...';
+}
+function shuffleSortData(){
+  if(sortRunning)return;
+  for(let i=sortData.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));[sortData[i],sortData[j]]=[sortData[j],sortData[i]];
+  }
+  sortComparisons=0;sortSwaps=0;drawSortData();
+}
+
+async function runSort(type){
+  if(sortRunning)return;sortRunning=true;sortComparisons=0;sortSwaps=0;
+  const start=performance.now();
+  if(type==='bubble')await bubbleSort();
+  else if(type==='quick')await quickSort(0,sortData.length-1);
+  else if(type==='merge')await mergeSortVisual(0,sortData.length-1);
+  else if(type==='heap')await heapSort();
+  const elapsed=(performance.now()-start).toFixed(0);
+  $('#algo-sort-info').textContent='比较次数: '+sortComparisons+' | 交换次数: '+sortSwaps+' | 耗时: '+elapsed+'ms';
+  drawSortData();sortRunning=false;
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+async function bubbleSort(){
+  for(let i=0;i<sortData.length-1;i++){
+    for(let j=0;j<sortData.length-1-i;j++){
+      sortComparisons++;
+      if(sortData[j]>sortData[j+1]){[sortData[j],sortData[j+1]]=[sortData[j+1],sortData[j]];sortSwaps++;}
+      if(sortComparisons%200===0){drawSortData([j,j+1]);await sleep(1);}
+    }
+  }
+}
+
+async function quickSort(lo,hi){
+  if(lo>=hi)return;
+  const p=sortData[hi];let i=lo-1;
+  for(let j=lo;j<hi;j++){sortComparisons++;if(sortData[j]<=p){i++;[sortData[i],sortData[j]]=[sortData[j],sortData[i]];sortSwaps++;}}
+  [sortData[i+1],sortData[hi]]=[sortData[hi],sortData[i+1]];sortSwaps++;
+  if(sortComparisons%200===0){drawSortData([i+1,hi]);await sleep(1);}
+  await quickSort(lo,i);await quickSort(i+2,hi);
+}
+
+async function mergeSortVisual(l,r){
+  if(l>=r)return;
+  const m=Math.floor((l+r)/2);
+  await mergeSortVisual(l,m);await mergeSortVisual(m+1,r);
+  const L=sortData.slice(l,m+1),R=sortData.slice(m+1,r+1);
+  let i=0,j=0,k=l;
+  while(i<L.length&&j<R.length){sortComparisons++;sortData[k++]=L[i]<=R[j]?L[i++]:R[j++];}
+  while(i<L.length)sortData[k++]=L[i++];
+  while(j<R.length)sortData[k++]=R[j++];
+  sortSwaps+=r-l+1;
+  if(sortComparisons%200===0){drawSortData([l,r]);await sleep(1);}
+}
+
+async function heapSort(){
+  const n=sortData.length;
+  for(let i=Math.floor(n/2)-1;i>=0;i--)await heapify(n,i);
+  for(let i=n-1;i>0;i--){[sortData[0],sortData[i]]=[sortData[i],sortData[0]];sortSwaps++;await heapify(i,0);}
+}
+async function heapify(n,i){
+  let largest=i,l=2*i+1,r=2*i+2;
+  if(l<n){sortComparisons++;if(sortData[l]>sortData[largest])largest=l;}
+  if(r<n){sortComparisons++;if(sortData[r]>sortData[largest])largest=r;}
+  if(largest!==i){[sortData[i],sortData[largest]]=[sortData[largest],sortData[i]];sortSwaps++;await heapify(n,largest);}
+}
+
+// ===================================================================
+// ==================== PATHFINDING ===================================
+// ===================================================================
+const PF_COLS=25,PF_ROWS=25,PF_CS=20;
+let pfGrid=[],pfStart={x:1,y:1},pfEnd={x:PF_COLS-2,y:PF_ROWS-2},pfRunning=false;
+const pfCanvas=$('#algo-path-canvas'),pfCtx=pfCanvas.getContext('2d');
+
+function resizePathCanvas(){pfCanvas.width=PF_COLS*PF_CS;pfCanvas.height=PF_ROWS*PF_CS;initPFGrid();}
+function initPFGrid(){
+  pfGrid=[];
+  for(let y=0;y<PF_ROWS;y++){pfGrid[y]=[];for(let x=0;x<PF_COLS;x++){pfGrid[y][x]=0;}}
+  pfGrid[pfStart.y][pfStart.x]=1;pfGrid[pfEnd.y][pfEnd.x]=2;
+}
+function drawPFGrid(explored=[],path=[]){
+  pfCtx.fillStyle='#000';pfCtx.fillRect(0,0,pfCanvas.width,pfCanvas.height);
+  for(let y=0;y<PF_ROWS;y++){
+    for(let x=0;x<PF_COLS;x++){
+      if(pfGrid[y][x]===-1)pfCtx.fillStyle='#333';
+      else if(x===pfStart.x&&y===pfStart.y)pfCtx.fillStyle='#0f0';
+      else if(x===pfEnd.x&&y===pfEnd.y)pfCtx.fillStyle='#f00';
+      else pfCtx.fillStyle='#111';
+      pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);
+    }
+  }
+  explored.forEach(([x,y])=>{pfCtx.fillStyle='rgba(0,240,255,.3)';pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);});
+  path.forEach(({x,y})=>{pfCtx.fillStyle='#ff0';pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);});
+}
+
+function generateMaze(){
+  initPFGrid();pfRunning=false;
+  for(let y=0;y<PF_ROWS;y++)for(let x=0;x<PF_COLS;x++){
+    if(Math.random()<.3&&!(x===pfStart.x&&y===pfStart.y)&&!(x===pfEnd.x&&y===pfEnd.y))pfGrid[y][x]=-1;
+  }
+  drawPFGrid();
+}
+function resetPathfinding(){initPFGrid();pfRunning=false;drawPFGrid();$('#algo-path-info').textContent='已探索: 0 | 路径长度: 0 | 耗时: 0ms';}
+
+function pfNeighbors(x,y){
+  const dirs=[[0,-1],[1,0],[0,1],[-1,0]],res=[];
+  for(const[dx,dy]of dirs){const nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<PF_COLS&&ny<PF_ROWS&&pfGrid[ny][nx]!==-1)res.push([nx,ny]);}
+  return res;
+}
+
+async function runPathfinding(type){
+  if(pfRunning)return;pfRunning=true;pfGrid[pfStart.y][pfStart.x]=1;pfGrid[pfEnd.y][pfEnd.x]=2;
+  for(let y=0;y<PF_ROWS;y++)for(let x=0;x<PF_COLS;x++)if(pfGrid[y][x]!==-1&&!(x===pfStart.x&&y===pfStart.y)&&!(x===pfEnd.x&&y===pfEnd.y))pfGrid[y][x]=0;
+  const start=performance.now(),explored=[];
+  let path=[],found=false;
+  if(type==='bfs'){const q=[[pfStart.x,pfStart.y]],parent={};parent[pfStart.x+','+pfStart.y]=null;const visited=new Set([pfStart.x+','+pfStart.y]);
+    while(q.length&&!found){const[node]=q.splice(0,1);explored.push(node);
+      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
+      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const k=nx+','+ny;if(!visited.has(k)){visited.add(k);parent[k]=node;q.push([nx,ny]);}}
+      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
+    }
+  }else if(type==='dfs'){const stack=[[pfStart.x,pfStart.y]],parent={};parent[pfStart.x+','+pfStart.y]=null;const visited=new Set([pfStart.x+','+pfStart.y]);
+    while(stack.length&&!found){const node=stack.pop();explored.push(node);
+      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
+      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const k=nx+','+ny;if(!visited.has(k)){visited.add(k);parent[k]=node;stack.push([nx,ny]);}}
+      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
+    }
+  }else if(type==='astar'){
+    function h(x,y){return Math.abs(x-pfEnd.x)+Math.abs(y-pfEnd.y);}
+    const open=new Map(),closed=new Set(),parent={},g={},f={};
+    const sk=pfStart.x+','+pfStart.y;g[sk]=0;f[sk]=h(pfStart.x,pfStart.y);open.set(sk,[pfStart.x,pfStart.y]);
+    while(open.size&&!found){
+      let best=null,bestK;
+      for(const[k,v]of open){if(best===null||f[k]<best){best=f[k];bestK=k;}}
+      const node=open.get(bestK);open.delete(bestK);closed.add(bestK);explored.push(node);
+      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
+      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const nk=nx+','+ny;if(closed.has(nk))continue;const tg=g[bestK]+1;
+        if(!open.has(nk)||tg<g[nk]){parent[nk]=node;g[nk]=tg;f[nk]=tg+h(nx,ny);open.set(nk,[nx,ny]);}
+      }
+      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
+    }
+  }
+  const elapsed=(performance.now()-start).toFixed(0);
+  drawPFGrid(explored,path);
+  $('#algo-path-info').textContent='已探索: '+explored.length+' | 路径长度: '+path.length+' | 耗时: '+elapsed+'ms';
+  pfRunning=false;
+}
+
+// ===================================================================
+// ==================== GAME OF LIFE ==================================
+// ===================================================================
+const LIFE_COLS=60,LIFE_ROWS=40,LIFE_CS=10;
+let lifeGrid=[],lifeRunning=false,lifeGen=0,lifeAnimId=null;
+const lifeCanvas=$('#algo-life-canvas'),lifeCtx=lifeCanvas.getContext('2d');
+
+function resizeLifeCanvas(){lifeCanvas.width=LIFE_COLS*LIFE_CS;lifeCanvas.height=LIFE_ROWS*LIFE_CS;initLifeGrid();}
+function initLifeGrid(){lifeGrid=[];for(let y=0;y<LIFE_ROWS;y++){lifeGrid[y]=new Array(LIFE_COLS).fill(0);}}
+function drawLifeGrid(){
+  lifeCtx.fillStyle='#000';lifeCtx.fillRect(0,0,lifeCanvas.width,lifeCanvas.height);
+  let alive=0;
+  for(let y=0;y<LIFE_ROWS;y++)for(let x=0;x<LIFE_COLS;x++)if(lifeGrid[y][x]){lifeCtx.fillStyle='#0f0';lifeCtx.fillRect(x*LIFE_CS,y*LIFE_CS,LIFE_CS-1,LIFE_CS-1);alive++;}
+  $('#algo-life-info').textContent='世代: '+lifeGen+' | 存活: '+alive;
+}
+function randomLife(){initLifeGrid();for(let y=0;y<LIFE_ROWS;y++)for(let x=0;x<LIFE_COLS;x++)lifeGrid[y][x]=Math.random()>.7?1:0;lifeGen=0;drawLifeGrid();}
+function clearLife(){initLifeGrid();lifeGen=0;drawLifeGrid();stopLife();}
+
+function stepLife(){
+  const next=[];for(let y=0;y<LIFE_ROWS;y++){next[y]=new Array(LIFE_COLS).fill(0);
+    for(let x=0;x<LIFE_COLS;x++){
+      let n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+        if(dx===0&&dy===0)continue;
+        const nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<LIFE_COLS&&ny<LIFE_ROWS)n+=lifeGrid[ny][nx];
+      }
+      next[y][x]=(lifeGrid[y][x]&&(n===2||n===3))||(!lifeGrid[y][x]&&n===3)?1:0;
+    }
+  }
+  lifeGrid=next;lifeGen++;drawLifeGrid();
+}
+
+function toggleLife(){
+  if(lifeRunning){stopLife();$('#life-play-btn').textContent='开始';}else{lifeRunning=true;$('#life-play-btn').textContent='暂停';lifeLoop();}
+}
+function stopLife(){lifeRunning=false;if(lifeAnimId)cancelAnimationFrame(lifeAnimId);}
+function lifeLoop(){if(!lifeRunning)return;stepLife();lifeAnimId=requestAnimationFrame(()=>setTimeout(lifeLoop,100));}
+
+lifeCanvas.addEventListener('click',e=>{
+  const rect=lifeCanvas.getBoundingClientRect(),x=Math.floor((e.clientX-rect.left)/LIFE_CS),y=Math.floor((e.clientY-rect.top)/LIFE_CS);
+  if(x>=0&&y>=0&&x<LIFE_COLS&&y<LIFE_ROWS){lifeGrid[y][x]=lifeGrid[y][x]?0:1;drawLifeGrid();}
+});
+
+// ===================================================================
+// ==================== MANDELBROT SET ================================
+// ===================================================================
+let mandelCenterR=-0.7,mandelCenterI=0,mandelRange=3.5,mandelMaxIter=256;
+const mandelCanvas=$('#algo-mandel-canvas'),mandelCtx=mandelCanvas.getContext('2d');
+const MANDEL_W=600,MANDEL_H=400;
+let mandelDragging=false,mandelDragStart=null,mandelRenderId=0;
+
+function renderMandelbrot(){
+  const cw=mandelCanvas.width=MANDEL_W,ch=mandelCanvas.height=MANDEL_H;
+  const img=mandelCtx.createImageData(cw,ch);
+  const aspect=cw/ch,hw=mandelRange*aspect/2,hh=mandelRange/2;
+  const x0=mandelCenterR-hw,y0=mandelCenterI-hh;
+  mandelRenderId++;
+  const rid=mandelRenderId;
+  function renderRow(y){
+    if(rid!==mandelRenderId)return;
+    for(let x=0;x<cw;x++){
+      const cr=x0+x/cw*mandelRange*aspect,ci=y0+y/ch*mandelRange;
+      let zr=0,zi=0,iter=0;
+      while(zr*zr+zi*zi<=4&&iter<mandelMaxIter){const tmp=zr*zr-zi*zi+cr;zi=2*zr*zi+ci;zr=tmp;iter++;}
+      const idx=(y*cw+x)*4;
+      if(iter>=mandelMaxIter){img.data[idx]=0;img.data[idx+1]=0;img.data[idx+2]=0;img.data[idx+3]=255;}
+      else{
+        const t=iter/mandelMaxIter;
+        img.data[idx]=Math.floor(9*(1-t)*t*t*t*255);
+        img.data[idx+1]=Math.floor(15*(1-t)*(1-t)*t*t*255);
+        img.data[idx+2]=Math.floor(8.5*(1-t)*(1-t)*(1-t)*t*255);
+        img.data[idx+3]=255;
+      }
+    }
+    mandelCtx.putImageData(img,0,0);
+    if(y<ch-1)requestAnimationFrame(()=>renderRow(y+1));
+    else $('#algo-mandel-info').textContent='中心: '+mandelCenterR.toFixed(6)+'+'+mandelCenterI.toFixed(6)+'i | 范围: '+mandelRange.toFixed(2)+' | 最大迭代: '+mandelMaxIter;
+  }
+  renderRow(0);
+}
+
+function resetMandelbrot(){mandelCenterR=-0.7;mandelCenterI=0;mandelRange=3.5;renderMandelbrot();}
+function mandelZoomIn(){mandelRange*=0.5;renderMandelbrot();}
+function mandelZoomOut(){mandelRange*=2;renderMandelbrot();}
+
+mandelCanvas.addEventListener('mousedown',e=>{
+  mandelDragging=true;mandelDragStart={x:e.clientX,y:e.clientY,cr:mandelCenterR,ci:mandelCenterI};
+  mandelCanvas.style.cursor='grabbing';
+});
+mandelCanvas.addEventListener('mousemove',e=>{
+  if(!mandelDragging)return;
+  const dx=e.clientX-mandelDragStart.x,dy=e.clientY-mandelDragStart.y;
+  const scale=mandelRange/mandelCanvas.width;
+  mandelCenterR=mandelDragStart.cr-dx*scale;
+  mandelCenterI=mandelDragStart.ci-dy*scale;
+});
+mandelCanvas.addEventListener('mouseup',()=>{
+  if(!mandelDragging)return;mandelDragging=false;mandelCanvas.style.cursor='grab';
+  renderMandelbrot();
+});
+mandelCanvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  mandelRange*=e.deltaY>0?1.1:.9;
+  mandelRange=Math.max(1e-6,Math.min(10,mandelRange));
+  renderMandelbrot();
+});
+
+// ===================================================================
+// ==================== INITIALIZATION ================================
+// ===================================================================
+initSortData();drawSortData();
+initPFGrid();drawPFGrid();
+initLifeGrid();drawLifeGrid();
+resetMCPi();drawMCPiBackground();
+resetMCOption();drawMCOptionBackground();
+resetRayTrace();
+
+// Auto-run single-thread sort on load for immediate demo
+setTimeout(()=>{
+  if($('#perf-st-time').textContent==='---')runSingleThread();
+},2000);
+
+console.log('%c[PORTFOLIO] %cAll systems initialized. Pure HTML/CSS/JS. Zero dependencies.',
+  'color:#0ff;font-size:16px','color:#ccc');
+console.log('%cRay Tracer: %cPhong + mirror + refraction + soft shadows',
+  'color:#0ff','color:#ccc');
+console.log('%cMonte Carlo: %cPI estimation + option pricing with convergence',
+  'color:#0ff','color:#ccc');
+console.log('%cBlack-Scholes: %cFull pricing model + 7 Greeks + vol smile',
+  'color:#0ff','color:#ccc');
+console.log('%cWeb Workers: %c1M merge sort + multi-thread timeline',
+  'color:#0ff','color:#ccc');
 </script>
 </body>
 </html>
