@@ -2,64 +2,75 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>万值翔 · 作品集导航</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background: #0a0a0f; color: #e0e0e8; font-family: 'Segoe UI',system-ui,sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; }
-.container { max-width: 800px; padding: 40px 20px; text-align: center; }
-h1 { font-size: 48px; background: linear-gradient(135deg,#00ff88,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px; }
-.sub { color: #8890a4; font-size: 14px; margin-bottom: 48px; }
-.grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:16px; }
-.card { background: #111122; border:1px solid #1a1a2e; border-radius:12px; padding:24px; text-decoration:none; transition:all 0.3s; display:block; }
-.card:hover { border-color: rgba(0,255,136,0.4); box-shadow:0 0 20px rgba(0,255,136,0.15); transform:translateY(-2px); }
-.card .icon { font-size:36px; margin-bottom:12px; }
-.card .title { font-size:16px; color: #00ff88; font-weight:600; margin-bottom:4px; }
-.card .desc { font-size:12px; color: #8890a4; line-height:1.5; }
-.footer { margin-top:48px; font-size:12px; color:#4a5068; }
-.footer a { color:#00ff88; text-decoration:none; }
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>万值翔 · 岗位作品集导航</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
 </head>
 <body>
-<div class="container">
-  <h1>万值翔</h1>
-  <p class="sub">经济学本科 · 不套壳不调API · 每个算法从零实现</p>
-  <div class="grid">
-    <a class="card" href="general.html">
-      <div class="icon">🌐</div>
-      <div class="title">通用综合</div>
-      <div class="desc">全栈技术能力展示，15台MCP、~370工具、24+算法</div>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
+
+<nav>
+  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <div class="nav-inner">
+    <a href="../index.html">◀ 主站 / 技术演示总览</a>
+  </div>
+</nav>
+
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>PORTFOLIO · 数据驱动岗位作品集</div>
+  <h1 class="hero-name">岗位<span class="accent">作品集</span></h1>
+  <div class="hero-sub" data-typed='["以互联网运营数据岗方法论重构 · 每个方向都含数据看板","数据分析 · 用户增长 · 转化漏斗 · A/B 测试 · 指标监控","点开任意方向，查看专属交互演示"]'></div>
+  <div class="hero-tags"><span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>指标监控</span></div>
+</section>
+
+<!-- ═══ 方向卡片 ═══ -->
+<section class="reveal">
+  <div class="section-title"><span class="section-index">✧</span><h2>选择你的<span class="hl">岗位方向</span></h2></div>
+  <div class="section-sub">// 每个方向都是一套含数据看板 / 漏斗 / A-B 的独立交互作品集</div>
+  <div class="feature-grid">
+    <a class="feature-card" href="internet.html">
+      <div class="ic">📊</div><h3>互联网数据运营 <span style="color:var(--emerald);font-size:11px">· 旗舰</span></h3>
+      <p>运营看板、留存曲线、RFM 分层、转化漏斗、A/B 测试、行为热力。</p><span class="meta">internet.html →</span>
     </a>
-    <a class="card" href="hr.html">
-      <div class="icon">👥</div>
-      <div class="title">人事/HR</div>
-      <div class="desc">数据化人事管理，培训系统，文档与流程自动化</div>
+    <a class="feature-card" href="hr.html">
+      <div class="ic">👥</div><h3>人事 / HR</h3>
+      <p>人才看板、招聘漏斗、能力雷达、人岗匹配、渠道 A/B ROI。</p><span class="meta">hr.html →</span>
     </a>
-    <a class="card" href="bank.html">
-      <div class="icon">🏦</div>
-      <div class="title">银行/金融</div>
-      <div class="desc">量化分析，风险管理，金融数据，基金从业+银行从业双证</div>
+    <a class="feature-card" href="bank.html">
+      <div class="ic">🏦</div><h3>银行 / 金融</h3>
+      <p>风险看板、BSM 定价、蒙特卡洛、波动率微笑、客户漏斗。</p><span class="meta">bank.html →</span>
     </a>
-    <a class="card" href="finance.html">
-      <div class="icon">💰</div>
-      <div class="title">财务/会计</div>
-      <div class="desc">财报分析，Excel/Python自动化，初级会计职称</div>
+    <a class="feature-card" href="finance.html">
+      <div class="ic">💰</div><h3>财务 / 会计</h3>
+      <p>财务运营看板、异常检测、杜邦分解、营收趋势预测。</p><span class="meta">finance.html →</span>
     </a>
-    <a class="card" href="state.html">
-      <div class="icon">🏛️</div>
-      <div class="title">国企综合</div>
-      <div class="desc">公文写作，政策调研，数据治理，合规安全，经信委实习</div>
+    <a class="feature-card" href="state.html">
+      <div class="ic">🏛️</div><h3>国企综合</h3>
+      <p>产业看板、政策主题分析、合规审计、数据治理漏斗。</p><span class="meta">state.html →</span>
     </a>
-    <a class="card" href="internet.html">
-      <div class="icon">📊</div>
-      <div class="title">互联网数据运营</div>
-      <div class="desc">数据分析增长，AI Agent，可视化，内容运营，爬虫</div>
+    <a class="feature-card" href="general.html">
+      <div class="ic">🌐</div><h3>通用综合</h3>
+      <p>分析引擎看板、神经网络、卷积、K-Means、开源项目实证。</p><span class="meta">general.html →</span>
     </a>
   </div>
-  <div class="footer">
-    <a href="https://github.com/wzx11223344">github.com/wzx11223344</a> · <a href="https://github.com/wzx11223344/portfolio-demo">源码</a> · <a href="../index.html">技术演示总览</a>
+</section>
+
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="https://github.com/wzx11223344/portfolio-demo" target="_blank">源码</a>
+    <a href="../index.html">技术演示总览</a>
   </div>
-</div>
+  <div>万值翔 · 数据驱动岗位作品集 · 从零实现</div>
+</footer>
+</main>
+<script src="../assets/app.js"></script>
 </body>
 </html>

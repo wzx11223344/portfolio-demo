@@ -1,176 +1,230 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>财报异常检测 · 杜邦分析 · 智能审计</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>财务运营 · 数据驱动的智能分析</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e0e0e8;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
-canvas{display:block;width:100%;height:auto;background:#050508}
-#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at 70% 30%,#1a1a0a 0%,#0a0a0f 70%)}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;padding:12px}
-nav a{color:#888;text-decoration:none;padding:6px 14px;font-size:12px;font-family:monospace;border:1px solid #222;border-radius:6px;transition:.3s}
-nav a:hover{color:#f59e0b;border-color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,.15)}
-.hero{text-align:center;padding:40px 0}
-h1{font-size:clamp(32px,5vw,52px);font-weight:700;background:linear-gradient(135deg,#f59e0b,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.sub{color:#666;font-size:13px;font-family:monospace}
-.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:24px 0}
-.stat{background:#111;border:1px solid #1a1a2e;border-radius:8px;padding:14px 20px;text-align:center;min-width:90px}
-.stat-num{font-size:26px;font-weight:700;font-family:monospace;color:#f59e0b}.stat-lbl{font-size:10px;color:#555}
-.card{background:#0d0d18;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:20px}
-.card-title{font-family:monospace;font-size:14px;color:#f59e0b;margin-bottom:16px;letter-spacing:1px}.card-title span{color:#ec4899}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.btn{padding:6px 14px;border:1px solid #222;background:#111;color:#888;border-radius:6px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s}
-.btn:hover{border-color:#f59e0b;color:#f59e0b}.btn-primary{border-color:#f59e0b;color:#f59e0b}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
-.stat-line{display:flex;justify-content:space-between;padding:4px 0;font-family:monospace;font-size:11px;color:#888;border-bottom:1px solid #111}
-.stat-line span{color:#e0e0e8}
-.alert{padding:8px 12px;border-radius:6px;font-family:monospace;font-size:11px;margin:4px 0}.alert-red{background:rgba(255,68,68,.12);color:#f44;border:1px solid rgba(255,68,68,.2)}
-.alert-green{background:rgba(0,255,136,.08);color:#0f0;border:1px solid rgba(0,255,136,.15)}
-.footer{text-align:center;padding:40px;font-size:11px;color:#444;font-family:monospace}
-.hub-back{position:fixed;top:10px;left:10px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(8,8,14,.82);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;text-decoration:none;font:600 12px/1 monospace;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s}
-.hub-back:hover{border-color:#f59e0b;color:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.35)}
-@media(max-width:768px){.hub-back{top:8px;left:8px;padding:5px 10px;font-size:11px}}
+/* finance accent: amber */
+.card-title{color:#f59e0b}
+.card-badge{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .hl{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-row .hl{color:#f59e0b}
+.alert{padding:8px 12px;border-radius:6px;font-family:var(--font-mono);font-size:11px;margin:4px 0}
+.alert-red{background:rgba(244,68,68,.12);color:#f87171;border:1px solid rgba(244,68,68,.2)}
+.alert-green{background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)}
+#dupont-canvas,#anomaly-canvas,#forecast-canvas{width:auto;max-width:100%;margin:0 auto}
 </style>
 </head>
 <body>
-<a class="hub-back" href="index.html">← 返回全部作品集</a>
-<div id="bg"></div>
-<div class="container">
-<nav><a href="#dupont">杜邦分析</a><a href="#anomaly">异常检测</a><a href="#tech">技术体系</a></nav>
-<div class="hero">
-<h1>财报智能分析系统</h1>
-<div class="sub">// 杜邦分解 · 异常检测 · Z-score预警 · 趋势可视化</div>
-<div class="stats">
-<div class="stat"><div class="stat-num">15.8%</div><div class="stat-lbl">ROE净资产收益率</div></div>
-<div class="stat"><div class="stat-num" id="zscore">2.31</div><div class="stat-lbl">Altman Z值</div></div>
-<div class="stat"><div class="stat-num">3</div><div class="stat-lbl">异常检测项</div></div>
-</div></div>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
 
-<div class="grid-2">
-<div class="card">
-<div class="card-title" id="dupont"><span>#</span> 杜邦分析 · ROE三层分解</div>
-<canvas id="dupont-canvas" width="500" height="340"></canvas>
-<div class="stat-line">净利率<span id="npm">7.2%</span><span>资产周转率<span id="tat">1.15</span></span><span>权益乘数<span id="em">1.91</span></span></div>
-<div class="stat-line" style="color:#f59e0b;font-weight:700">ROE = 净利率×资产周转率×权益乘数 = <span id="roe-val">15.8%</span></div>
-</div>
+<nav>
+  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <div class="nav-inner">
+    <a href="../index.html">◀ 主站</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#dashboard">运营看板</a>
+    <a href="#anomaly">异常检测</a>
+    <a href="#dupont">杜邦分析</a>
+    <a href="#forecast">营收预测</a>
+  </div>
+</nav>
 
-<div class="card">
-<div class="card-title" id="anomaly"><span>#</span> 异常检测 · 多维扫描 · Z-score+MAD+IQR</div>
-<canvas id="anomaly-canvas" width="500" height="340"></canvas>
-<div class="controls" style="margin-top:8px"><button class="btn btn-primary" id="scan-btn">▶ 扫描异常</button><button class="btn" id="reset-anomaly">↻ 重置</button></div>
-<div id="anomaly-results"></div>
-</div></div>
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>FINANCE · 财务数字化与智能风控</div>
+  <h1 class="hero-name">财务<span class="accent">数据运营</span></h1>
+  <div class="hero-sub" data-typed='["财务比率 · 异常检测 · Z-score 预警 · 营收预测","Excel / WPS 自动化 · 数据治理 · 风险建模","初级会计职称 · 基金从业资格"]'></div>
+  <div class="hero-tags"><span>财务分析</span><span>异常检测</span><span>杜邦分解</span><span>风险建模</span></div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="15.8" data-dec="1">0</div><div class="kpi-label">ROE 净资产收益率 %</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" id="zscore">2.31</div><div class="kpi-label">Altman Z 值</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">异常检测项</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="93">0</div><div class="kpi-label">自动化覆盖率 %</div></div>
+  </div>
+</section>
 
-<div class="card">
-<div class="card-title" id="tech"><span>#</span> 技术体系 · 财务数字化</div>
-<div class="grid-3">
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#f59e0b;font-size:11px;font-family:monospace">财务报表分析</div>
-<div class="stat-line">杜邦分析·财务比率·趋势分析<span>95%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#ec4899;font-size:11px;font-family:monospace">Excel/WPS自动化</div>
-<div class="stat-line">数据透视·Power Query·VBA·模板<span>93%</span></div></div>
-<div style="background:#111;border-radius:8px;padding:14px">
-<div style="color:#3b82f6;font-size:11px;font-family:monospace">数据清洗与治理</div>
-<div class="stat-line">异常检测·缺失填充·5维评分<span>90%</span></div></div>
-</div></div>
+<!-- ═══ 运营看板 ═══ -->
+<section id="dashboard" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">运营看板</span> 财务指标监控</h2></div>
+  <div class="section-sub">// 毛利率 · 现金周转 · 应收账龄 · 费用率 · 实时监控</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">财务运营核心指标</span><span class="card-badge">Live</span></div>
+    <div class="stats-grid" style="margin-top:0">
+      <div class="stat-item"><div class="stat-val" id="kpi-gm">0%</div><div class="stat-label">毛利率</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-ccc">0</div><div class="stat-label">现金周转天数</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-exp">0%</div><div class="stat-label">期间费用率</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-npm">0%</div><div class="stat-label">净利率</div></div>
+    </div>
+    <div style="margin-top:18px">
+      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">财务事件流</div>
+      <div id="event-stream"></div>
+    </div>
+  </div>
+</section>
 
-<div class="footer"><a href="https://github.com/wzx11223344" style="color:#f59e0b;text-decoration:none">github.com/wzx11223344</a> · 万值翔 · 初级会计职称</div>
-</div>
+<!-- ═══ 异常检测 ═══ -->
+<section id="anomaly" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">异常检测</span> 多维扫描</h2></div>
+  <div class="section-sub">// Z-score + MAD + IQR · 财务指标异常自动识别与预警</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">异常检测 · Z-score + MAD + IQR</span><span class="card-badge">AI 扫描</span></div>
+    <canvas id="anomaly-canvas" width="500" height="340"></canvas>
+    <div class="btn-group" style="margin-top:14px"><button class="btn btn-primary" id="scan-btn">▶ 扫描异常</button><button class="btn" id="reset-anomaly">↻ 重置</button></div>
+    <div id="anomaly-results" style="margin-top:12px"></div>
+  </div>
+</section>
 
+<!-- ═══ 杜邦分析 ═══ -->
+<section id="dupont" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">杜邦分析</span> ROE 三层分解</h2></div>
+  <div class="section-sub">// ROE = 净利率 × 资产周转率 × 权益乘数</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">杜邦分析 · ROE 三层分解</span><span class="card-badge">DuPont</span></div>
+    <canvas id="dupont-canvas" width="500" height="340"></canvas>
+    <div class="stat-row" style="margin-top:12px">净利率<span id="npm">7.2%</span><span>资产周转率<span id="tat">1.15</span></span><span>权益乘数<span id="em">1.91</span></span></div>
+    <div class="stat-row" style="border:none">ROE = 净利率 × 资产周转率 × 权益乘数 = <span class="hl" id="roe-val">15.8%</span></div>
+  </div>
+</section>
+
+<!-- ═══ 营收预测 ═══ -->
+<section id="forecast" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">营收预测</span> 趋势与区间</h2></div>
+  <div class="section-sub">// 时间序列趋势外推 · 置信区间 · 辅助预算与滚动预测</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">季度营收 · 趋势预测</span><span class="card-badge">Forecast</span></div>
+    <canvas id="forecast-canvas" width="700" height="300"></canvas>
+    <div class="btn-group" style="margin-top:14px"><button class="btn btn-primary" id="forecast-btn">▶ 生成预测</button></div>
+    <div class="stat-row" style="margin-top:14px;border:none"><span>下季预测中枢</span><span class="hl" id="fc-mid">-</span><span>同比增长</span><span class="hl" id="fc-yoy">-</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="../index.html">← 返回全部作品集</a>
+  </div>
+  <div>万值翔 · 初级会计职称 · 基金从业资格</div>
+  <div class="award">🏆 <strong>财务数字化</strong> · 异常检测 · 风险建模</div>
+</footer>
+</main>
+
+<script src="../assets/app.js"></script>
 <script>
-// ═══ DuPont Canvas ═══
+// ═══ 运营看板 ═══
+PD.Dashboard({
+  'kpi-gm': {base:28.6, jitter:1.5, dec:1, suffix:'%'},
+  'kpi-ccc':{base:64,   jitter:6,   dec:0},
+  'kpi-exp':{base:14.2, jitter:0.8, dec:1, suffix:'%'},
+  'kpi-npm':{base:7.2,  jitter:0.5, dec:1, suffix:'%'}
+});
+PD.EventStream('event-stream',{verbs:['凭证过账','应收核销','费用报销','月末结账','报表生成','发票开具','银行对账','预算执行']});
+
+// ═══ 异常检测 ═══
+const ac=document.getElementById('anomaly-canvas'),actx=ac.getContext('2d');
+function genData(){return Array.from({length:60},()=>Math.random()*8+12);}
+function drawAnomaly(data,anomalies){
+  actx.fillStyle='#05080f';actx.fillRect(0,0,500,340);
+  const maxV=Math.max.apply(null,data)*1.2,minV=Math.min.apply(null,data)*0.8;
+  data.forEach((v,i)=>{ const x=10+i*8,y=320-(v-minV)/(maxV-minV)*280;
+    actx.fillStyle=anomalies&&anomalies.includes(i)?'#f87171':'#f59e0b';
+    actx.beginPath();actx.arc(x,y,4,0,Math.PI*2);actx.fill();
+    if(anomalies&&anomalies.includes(i)){ actx.strokeStyle='rgba(248,113,113,.5)';actx.lineWidth=2; actx.beginPath();actx.arc(x,y,10,0,Math.PI*2);actx.stroke(); } });
+  const mean=data.reduce((a,b)=>a+b)/data.length;
+  const my=320-(mean-minV)/(maxV-minV)*280;
+  actx.strokeStyle='rgba(52,211,153,.5)';actx.setLineDash([4,4]); actx.beginPath();actx.moveTo(10,my);actx.lineTo(490,my);actx.stroke(); actx.setLineDash([]);actx.fillStyle='#34d399';actx.font='8px monospace'; actx.fillText('均值 '+(mean.toFixed(1)),450,my-5);
+  const std=Math.sqrt(data.reduce((s,v)=>s+(v-mean)*(v-mean),0)/data.length);
+  [mean+2*std,mean-2*std].forEach((z)=>{ const zy=320-(z-minV)/(maxV-minV)*280; actx.strokeStyle='rgba(251,191,36,.3)';actx.beginPath(); actx.moveTo(10,zy);actx.lineTo(490,zy);actx.stroke(); });
+  actx.fillStyle='#888';actx.font='10px monospace'; actx.fillText('Z-score 异常检测 (±2σ)',180,20);
+}
+let anomalyData=genData(); drawAnomaly(anomalyData);
+document.getElementById('scan-btn').onclick=()=>{
+  anomalyData=genData();
+  const mean=anomalyData.reduce((a,b)=>a+b)/anomalyData.length;
+  const std=Math.sqrt(anomalyData.reduce((s,v)=>s+(v-mean)*(v-mean),0)/anomalyData.length);
+  const anomalies=[]; anomalyData.forEach((v,i)=>{if(Math.abs(v-mean)>2*std)anomalies.push(i);});
+  drawAnomaly(anomalyData,anomalies);
+  const res=document.getElementById('anomaly-results'); res.innerHTML='';
+  anomalies.forEach(i=>{ const d=document.createElement('div'); d.className='alert alert-red'; d.innerHTML='⚠ 异常点 #'+(i+1)+' · 值 '+anomalyData[i].toFixed(2)+' (Z '+Math.abs((anomalyData[i]-mean)/std).toFixed(2)+')'; res.appendChild(d); });
+  if(!anomalies.length)res.innerHTML='<div class="alert alert-green">✓ 未检测到异常值，数据正常</div>';
+  else document.getElementById('zscore').textContent=(Math.random()*3+1).toFixed(2);
+};
+document.getElementById('reset-anomaly').onclick=()=>{anomalyData=genData();drawAnomaly(anomalyData);document.getElementById('anomaly-results').innerHTML='';};
+
+// ═══ 杜邦分析 ═══
 const dc=document.getElementById('dupont-canvas'),dctx=dc.getContext('2d');
 const dw=500,dh=340;
 function drawDuPont(){
-  dctx.fillStyle='#050508';dctx.fillRect(0,0,dw,dh);
+  dctx.fillStyle='#05080f';dctx.fillRect(0,0,dw,dh);
   const npm=0.072,tat=1.15,em=1.91,roe=npm*tat*em;
   document.getElementById('npm').textContent=(npm*100).toFixed(1)+'%';
   document.getElementById('tat').textContent=tat.toFixed(2);
   document.getElementById('em').textContent=em.toFixed(2);
   document.getElementById('roe-val').textContent=(roe*100).toFixed(1)+'%';
-  // ROE center
   dctx.fillStyle='#f59e0b';dctx.beginPath();dctx.arc(dw/2,60,35,0,Math.PI*2);dctx.fill();
-  dctx.fillStyle='#000';dctx.font='bold 12px monospace';dctx.textAlign='center';
-  dctx.fillText('ROE',dw/2,55);dctx.fillStyle='#fff';dctx.font='9px monospace';dctx.fillText('15.8%',dw/2,70);
-  // 3 factors
-  const facs=[{y:160,val:npm*100,unit:'%',lbl:'净利率 7.2%'},{y:250,val:tat,lbl:'资产周转率 1.15'},{y:340,val:em,lbl:'权益乘数 1.91'}];
-  const colors=['#3b82f6','#00ff88','#a855f7'];
-  facs.forEach((f,i)=>{
-    dctx.fillStyle=colors[i];
-    dctx.beginPath();dctx.arc((i+1)*dw/4,f.y,28,0,Math.PI*2);dctx.fill();
-    dctx.fillStyle='#000';dctx.font='9px monospace';dctx.textAlign='center';
-    dctx.fillText(f.lbl.split(' ')[0],(i+1)*dw/4,f.y-4);dctx.fillStyle='#fff';
-    dctx.fillText(f.val.toFixed(2)+f.unit||'',(i+1)*dw/4,f.y+12);
-    // Lines to ROE
-    dctx.strokeStyle=colors[i];dctx.lineWidth=2;dctx.setLineDash([4,4]);
-    dctx.beginPath();dctx.moveTo(dw/2,95);dctx.lineTo((i+1)*dw/4,f.y-28);dctx.stroke();
-    dctx.setLineDash([]);
-  });
-  // Formula
-  dctx.fillStyle='#555';dctx.font='9px monospace';dctx.textAlign='center';
-  dctx.fillText('ROE = 净利率 × 资产周转率 × 权益乘数',dw/2,330);
+  dctx.fillStyle='#000';dctx.font='bold 12px monospace';dctx.textAlign='center'; dctx.fillText('ROE',dw/2,55);dctx.fillStyle='#fff';dctx.font='9px monospace';dctx.fillText((roe*100).toFixed(1)+'%',dw/2,70);
+  const facs=[{y:160,val:npm*100,unit:'%',lbl:'净利率'},{y:250,val:tat,lbl:'资产周转率'},{y:340,val:em,lbl:'权益乘数'}];
+  const colors=['#3b82f6','#34d399','#a78bfa'];
+  facs.forEach((f,i)=>{ dctx.fillStyle=colors[i]; dctx.beginPath();dctx.arc((i+1)*dw/4,f.y,28,0,Math.PI*2);dctx.fill();
+    dctx.fillStyle='#000';dctx.font='9px monospace';dctx.textAlign='center'; dctx.fillText(f.lbl,(i+1)*dw/4,f.y-4);dctx.fillStyle='#fff'; dctx.fillText(f.val.toFixed(2)+(f.unit||''),(i+1)*dw/4,f.y+12);
+    dctx.strokeStyle=colors[i];dctx.lineWidth=2;dctx.setLineDash([4,4]); dctx.beginPath();dctx.moveTo(dw/2,95);dctx.lineTo((i+1)*dw/4,f.y-28);dctx.stroke(); dctx.setLineDash([]); });
+  dctx.fillStyle='#555';dctx.font='9px monospace';dctx.textAlign='center'; dctx.fillText('ROE = 净利率 × 资产周转率 × 权益乘数',dw/2,330);
 }
 drawDuPont();
 
-// ═══ Anomaly Detection ═══
-const ac=document.getElementById('anomaly-canvas'),actx=ac.getContext('2d');
-function genData(){return Array.from({length:60},()=>Math.random()*8+12);}
-function drawAnomaly(data,anomalies){
-  actx.fillStyle='#050508';actx.fillRect(0,0,500,340);
-  const maxV=Math.max(...data)*1.2,minV=Math.min(...data)*0.8;
-  data.forEach((v,i)=>{
-    const x=10+i*8,y=320-(v-minV)/(maxV-minV)*280;
-    actx.fillStyle=anomalies&&anomalies.includes(i)?'#ff4444':'#3b82f6';
-    actx.beginPath();actx.arc(x,y,4,0,Math.PI*2);actx.fill();
-    if(anomalies&&anomalies.includes(i)){
-      actx.strokeStyle='rgba(255,68,68,.5)';actx.lineWidth=2;
-      actx.beginPath();actx.arc(x,y,10,0,Math.PI*2);actx.stroke();
-    }
-  });
-  // Mean line
-  const mean=data.reduce((a,b)=>a+b)/data.length;
-  const my=320-(mean-minV)/(maxV-minV)*280;
-  actx.strokeStyle='rgba(0,255,136,.5)';actx.setLineDash([4,4]);
-  actx.beginPath();actx.moveTo(10,my);actx.lineTo(490,my);actx.stroke();
-  actx.setLineDash([]);actx.fillStyle='#0f0';actx.font='8px monospace';
-  actx.fillText('均值 '+(mean.toFixed(1)),450,my-5);
-  
-  // Z-score + upper/lower bounds
-  const std=Math.sqrt(data.reduce((s,v)=>s+(v-mean)**2,0)/data.length);
-  const zUpper=mean+2*std,zLower=mean-2*std;
-  [zUpper,zLower].forEach((z,i)=>{
-    const zy=320-(z-minV)/(maxV-minV)*280;
-    actx.strokeStyle='rgba(255,255,0,.3)';actx.beginPath();
-    actx.moveTo(10,zy);actx.lineTo(490,zy);actx.stroke();
-  });
-  // Title
-  actx.fillStyle='#888';actx.font='10px monospace';
-  actx.fillText('Z-score 异常检测 (±2σ)',180,20);
+// ═══ 营收预测 ═══
+const fc=document.getElementById('forecast-canvas'),fctx=fc.getContext('2d');
+function drawForecast(){
+  const W=700,H=300,pad=36;
+  fctx.fillStyle='#05080f';fctx.fillRect(0,0,W,H);
+  // history (8 quarters, 万)
+  const hist=[820,860,905,890,950,1010,1035,1090];
+  const all=hist.slice(); const fcLen=3;
+  for(let i=0;i<fcLen;i++){ const last=all[all.length-1]; all.push(last*(1+0.03+Math.random()*0.03)); }
+  const min=Math.min.apply(null,all)*0.92, max=Math.max.apply(null,all)*1.05, span=max-min;
+  const n=all.length;
+  function xy(i,v){ return [pad+(W-2*pad)*i/(n-1), H-pad-((v-min)/span)*(H-2*pad)]; }
+  // grid
+  fctx.strokeStyle='rgba(255,255,255,.06)';fctx.lineWidth=1;
+  for(let g=0;g<=4;g++){ const y=pad+(H-2*pad)*g/4; fctx.beginPath();fctx.moveTo(pad,y);fctx.lineTo(W-pad,y);fctx.stroke(); }
+  // confidence band for forecast
+  const fcStart=hist.length-1;
+  fctx.beginPath();
+  for(let i=fcStart;i<n;i++){ const p=xy(i,all[i]*1.06); i===fcStart?fctx.moveTo(p[0],p[1]):fctx.lineTo(p[0],p[1]); }
+  for(let i=n-1;i>=fcStart;i--){ const p=xy(i,all[i]*0.94); fctx.lineTo(p[0],p[1]); }
+  fctx.closePath(); fctx.fillStyle='rgba(245,158,11,.12)'; fctx.fill();
+  // history line
+  fctx.beginPath();
+  hist.forEach((v,i)=>{ const p=xy(i,v); i===0?fctx.moveTo(p[0],p[1]):fctx.lineTo(p[0],p[1]); });
+  fctx.strokeStyle='#f59e0b';fctx.lineWidth=2.5;fctx.stroke();
+  // forecast line (dashed)
+  fctx.beginPath();
+  for(let i=fcStart;i<n;i++){ const p=xy(i,all[i]); i===fcStart?fctx.moveTo(p[0],p[1]):fctx.lineTo(p[0],p[1]); }
+  fctx.strokeStyle='#fbbf24';fctx.setLineDash([6,5]);fctx.lineWidth=2;fctx.stroke();fctx.setLineDash([]);
+  // points
+  all.forEach((v,i)=>{ const p=xy(i,v); fctx.beginPath();fctx.arc(p[0],p[1],3,0,Math.PI*2); fctx.fillStyle=i<fcStart?'#f59e0b':'#fbbf24';fctx.fill(); });
+  // labels
+  fctx.fillStyle='rgba(154,166,189,.6)';fctx.font='9px monospace';fctx.textAlign='center';
+  for(let i=0;i<n;i++){ const p=xy(i,all[i]); fctx.fillText('Q'+(i+1), p[0], H-pad+14); }
+  fctx.fillStyle='#f59e0b';fctx.textAlign='left';fctx.font='10px monospace'; fctx.fillText('— 历史', pad+6, pad-8);
+  fctx.fillStyle='#fbbf24'; fctx.fillText('┄ 预测', pad+70, pad-8);
+  // stats
+  const nextQ=all[hist.length];
+  document.getElementById('fc-mid').textContent='¥'+Math.round(nextQ)+' 万';
+  const yoy=((all[hist.length+fcLen-1]/hist[hist.length-1])-1)*100;
+  document.getElementById('fc-yoy').textContent='+'+yoy.toFixed(1)+'%';
 }
-let anomalyData=genData();
-drawAnomaly(anomalyData);
-document.getElementById('scan-btn').onclick=()=>{
-  anomalyData=genData();
-  const mean=anomalyData.reduce((a,b)=>a+b)/anomalyData.length;
-  const std=Math.sqrt(anomalyData.reduce((s,v)=>s+(v-mean)**2,0)/anomalyData.length);
-  const anomalies=[];
-  anomalyData.forEach((v,i)=>{if(Math.abs(v-mean)>2*std)anomalies.push(i);});
-  drawAnomaly(anomalyData,anomalies);
-  const res=document.getElementById('anomaly-results');
-  res.innerHTML='';
-  anomalies.forEach(i=>{
-    const d=document.createElement('div');d.className='stat-line';d.style.color='#f44';
-    d.innerHTML=`<span>⚠ 异常点 #${i+1}</span><span>值: ${anomalyData[i].toFixed(2)} (Z-score: ${Math.abs((anomalyData[i]-mean)/std).toFixed(2)})</span>`;
-    res.appendChild(d);
-  });
-  if(!anomalies.length)res.innerHTML='<div class="alert alert-green">✓ 未检测到异常值，数据正常</div>';
-  else document.getElementById('zscore').textContent=(Math.random()*3+1).toFixed(2);
-};
-document.getElementById('reset-anomaly').onclick=()=>{anomalyData=genData();drawAnomaly(anomalyData);document.getElementById('anomaly-results').innerHTML='';};
+drawForecast();
+document.getElementById('forecast-btn').onclick=drawForecast;
 </script>
 </body>
 </html>

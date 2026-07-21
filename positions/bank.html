@@ -3,373 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>金融量化引擎 · 期权定价与风控系统</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
+<title>银行金融 · 量化与风险运营</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a1628;color:#c8d0dc;font-family:'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif;overflow-x:hidden}
-::selection{background:#f59e0b;color:#0a1628}
-
-/* ── 浮动K线背景 ── */
-#kline-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.35}
-
-/* ── 固定导航 ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:4px;padding:10px 16px;background:rgba(10,22,40,0.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,0.15);flex-wrap:wrap}
-nav a{color:#8899aa;text-decoration:none;padding:6px 16px;font-size:13px;font-weight:500;letter-spacing:0.5px;border-radius:6px;transition:.3s;position:relative;cursor:pointer}
-nav a:hover,nav a.active{color:#f59e0b;background:rgba(245,158,11,0.08)}
-nav a.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#f59e0b,transparent);border-radius:2px}
-
-/* ── 容器 ── */
-.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:70px 20px 30px}
-
-/* ── 英雄区 ── */
-.hero{text-align:center;padding:40px 0 30px}
-h1{font-size:clamp(28px,5vw,52px);font-weight:800;letter-spacing:2px;line-height:1.2}
-h1 .gold{background:linear-gradient(180deg,#fbbf24 0%,#f59e0b 25%,#d97706 50%,#fbbf24 70%,#b45309 100%);background-size:100% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:metalShine 3s ease-in-out infinite alternate}
-h1 .ice{background:linear-gradient(135deg,#60a5fa,#3b82f6,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-@keyframes metalShine{0%{background-position-y:0%}100%{background-position-y:100%}}
-.sub{color:#5a6a7a;font-size:13px;font-family:monospace;letter-spacing:2px;margin-top:6px}
-.sub span{color:#f59e0b}
-
-/* ── KPI统计 ── */
-.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:24px 0 32px}
-.stat{background:linear-gradient(145deg,rgba(20,40,70,0.6),rgba(10,22,40,0.8));border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:16px 22px;text-align:center;min-width:100px;box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(245,158,11,0.1);transition:.3s}
-.stat:hover{border-color:rgba(245,158,11,0.5);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,0.1)}
-.stat-num{font-size:28px;font-weight:700;font-family:monospace;background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-lbl{font-size:10px;color:#6a7a8a;margin-top:3px;text-transform:uppercase;letter-spacing:1px}
-
-/* ── 卡片 ── */
-.card{background:linear-gradient(160deg,rgba(15,30,55,0.85),rgba(10,22,40,0.95));border:1px solid rgba(59,130,246,0.12);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 2px 0 rgba(245,158,11,0.08),0 8px 32px rgba(0,0,0,0.25),inset 0 1px 0 rgba(245,158,11,0.06);position:relative;overflow:hidden;transition:.3s}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.4),rgba(59,130,246,0.4),transparent)}
-.card:hover{border-color:rgba(245,158,11,0.2);box-shadow:0 2px 0 rgba(245,158,11,0.12),0 12px 40px rgba(0,0,0,0.35)}
-.card-title{font-size:14px;font-weight:600;color:#f59e0b;margin-bottom:16px;letter-spacing:1px;display:flex;align-items:center;gap:8px}
-.card-title .badge{display:inline-block;background:rgba(245,158,11,0.15);color:#f59e0b;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:400}
-
-/* ── 滑块 ── */
-.slider-group{margin-bottom:10px}
-.slider-group .lbl{display:flex;justify-content:space-between;font-size:11px;color:#6a7a8a;font-family:monospace;margin-bottom:2px}
-.slider-group .lbl .val{color:#f59e0b;font-weight:600}
-input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:linear-gradient(90deg,#1a2744,#3b82f6);border-radius:3px;outline:none;border:none;margin:2px 0}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);border:2px solid rgba(255,255,255,0.15);box-shadow:0 0 12px rgba(245,158,11,0.35);cursor:pointer;transition:.2s}
-input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(245,158,11,0.5);transform:scale(1.12)}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);border:2px solid rgba(255,255,255,0.15);cursor:pointer}
-
-/* ── 按钮 ── */
-.btn{padding:7px 16px;border:1px solid rgba(59,130,246,0.25);background:rgba(59,130,246,0.08);color:#8899aa;border-radius:8px;cursor:pointer;font-family:monospace;font-size:11px;transition:.2s;letter-spacing:0.5px}
-.btn:hover{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,0.08)}
-.btn-gold{border-color:rgba(245,158,11,0.4);color:#f59e0b;background:rgba(245,158,11,0.1)}
-.btn-gold:hover{background:rgba(245,158,11,0.18);box-shadow:0 0 16px rgba(245,158,11,0.15)}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
-
-/* ── 布局 ── */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
-
-/* ── Greeks表格 ── */
-.greeks-wrap{overflow-x:auto}
-.greeks-table{width:100%;border-collapse:collapse;font-size:12px;font-family:monospace}
-.greeks-table tr{border-bottom:1px solid rgba(59,130,246,0.06)}
-.greeks-table tr:nth-child(even){background:rgba(59,130,246,0.04)}
-.greeks-table td{padding:7px 10px}
-.greeks-table td:first-child{color:#6a7a8a;letter-spacing:0.3px}
-.greeks-table .val{color:#f59e0b;text-align:right;font-weight:600}
-
-/* ── 状态行 ── */
-.stat-line{display:flex;justify-content:space-between;padding:5px 0;font-family:monospace;font-size:11px;color:#6a7a8a;border-bottom:1px solid rgba(59,130,246,0.06)}
-.stat-line span{color:#c8d0dc}
-
-/* ── 技能区 ── */
-.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
-@media(max-width:600px){.skills{grid-template-columns:repeat(2,1fr)}}
-.skill-card{background:rgba(15,30,55,0.6);border:1px solid rgba(245,158,11,0.1);border-radius:10px;padding:16px;text-align:center;transition:.3s}
-.skill-card:hover{border-color:rgba(245,158,11,0.3);transform:translateY(-2px)}
-.skill-name{font-size:12px;color:#8899aa;margin-bottom:8px}
-.skill-bar{height:6px;background:rgba(59,130,246,0.1);border-radius:3px;overflow:hidden;position:relative}
-.skill-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#f59e0b);border-radius:3px;transition:width 1s ease;width:0}
-.skill-pct{font-size:13px;font-weight:700;color:#f59e0b;font-family:monospace;margin-top:5px}
-
-/* ── Footer ── */
-.footer{text-align:center;padding:40px 0 20px;font-size:12px;color:#4a5a6a;font-family:monospace;border-top:1px solid rgba(245,158,11,0.06);margin-top:20px}
-.footer a{color:#f59e0b;text-decoration:none;transition:.3s}
-.footer a:hover{text-shadow:0 0 12px rgba(245,158,11,0.3)}
-.footer .badge{display:inline-block;background:rgba(245,158,11,0.08);color:#f59e0b;font-size:10px;padding:2px 10px;border-radius:4px;margin:0 4px}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#0a1628}
-::-webkit-scrollbar-thumb{background:rgba(245,158,11,0.2);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(245,158,11,0.4)}
-
-/* ── Animations ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.hero,.card,.skills,.footer{animation:fadeUp .6s ease both}
-.card:nth-child(2){animation-delay:.1s}
-.skills{animation-delay:.2s}
-.hub-back{position:fixed;top:10px;left:10px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(8,8,14,.82);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;text-decoration:none;font:600 12px/1 monospace;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s}
-.hub-back:hover{border-color:#0ff;color:#0ff;box-shadow:0 0 14px rgba(0,255,255,.35)}
-@media(max-width:768px){.hub-back{top:8px;left:8px;padding:5px 10px;font-size:11px}}
+/* bank accent: gold */
+.card-title{color:#f59e0b}
+.card-badge{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .hl{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-row .hl{color:#f59e0b}
+#mc-canvas,#smile-canvas{width:auto;max-width:100%;margin:0 auto}
 </style>
 </head>
 <body>
-<a class="hub-back" href="index.html">← 返回全部作品集</a>
-
-<canvas id="kline-bg"></canvas>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
 
 <nav>
-<a class="active" data-target="pricing">定价模型</a>
-<a data-target="greeks">Greeks</a>
-<a data-target="mc">蒙特卡洛</a>
-<a data-target="smile">波动率</a>
-<a data-target="skills">技能</a>
+  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <div class="nav-inner">
+    <a href="../index.html">◀ 主站</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#risk">风险看板</a>
+    <a href="#pricing">期权定价</a>
+    <a href="#mc">蒙特卡洛</a>
+    <a href="#smile">波动率微笑</a>
+    <a href="#funnel">客户漏斗</a>
+  </div>
 </nav>
 
-<div class="container">
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>BANK · 量化分析与风险运营</div>
+  <h1 class="hero-name">量化<span class="accent">风险运营</span></h1>
+  <div class="hero-sub" data-typed='["BSM 定价 · 希腊值 · 蒙特卡洛 · 波动率微笑","风险管理 · 金融数据 · 客户分层运营","基金从业资格 · 银行从业资格"]'></div>
+  <div class="hero-tags"><span>量化分析</span><span>风险管理</span><span>衍生品</span><span>客户运营</span></div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" id="kpi-bs-call">0</div><div class="kpi-label">看涨期权价格</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" id="kpi-delta">0</div><div class="kpi-label">Delta</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" id="kpi-var">0%</div><div class="kpi-label">VaR (95%)</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="2">0</div><div class="kpi-label">金融从业资格</div></div>
+  </div>
+</section>
 
-<div class="hero">
-<h1><span class="gold">量化定价</span> <span class="ice">引擎</span></h1>
-<div class="sub">// Black-Scholes-Merton · <span>Monte Carlo</span> · Greeks 风控矩阵</div>
-<div class="stats">
-<div class="stat"><div class="stat-num" id="bs-call">0.00</div><div class="stat-lbl">看涨期权 Call</div></div>
-<div class="stat"><div class="stat-num" id="bs-put">0.00</div><div class="stat-lbl">看跌期权 Put</div></div>
-<div class="stat"><div class="stat-num" id="mc-bs-ref">0.00</div><div class="stat-lbl">BS 解析解</div></div>
-<div class="stat"><div class="stat-num" id="ntime">0 ms</div><div class="stat-lbl">计算耗时</div></div>
-</div>
-</div>
+<!-- ═══ 风险看板 ═══ -->
+<section id="risk" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">风险看板</span> 核心监控</h2></div>
+  <div class="section-sub">// VaR · 波动率 · 最大回撤 · 夏普比率 · 实时刷新</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">组合风险指标</span><span class="card-badge">Live</span></div>
+    <div class="stats-grid" style="margin-top:0">
+      <div class="stat-item"><div class="stat-val" id="risk-var">0%</div><div class="stat-label">VaR (95%, 1日)</div></div>
+      <div class="stat-item"><div class="stat-val" id="risk-vol">0%</div><div class="stat-label">年化波动率</div></div>
+      <div class="stat-item"><div class="stat-val" id="risk-mdd">0%</div><div class="stat-label">最大回撤</div></div>
+      <div class="stat-item"><div class="stat-val" id="risk-sharpe">0</div><div class="stat-label">夏普比率</div></div>
+    </div>
+    <div style="margin-top:18px">
+      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">风控事件流</div>
+      <div id="event-stream"></div>
+    </div>
+  </div>
+</section>
 
-<div class="grid-2">
-<div class="card" id="pricing">
-<div class="card-title">BSM 解析定价 <span class="badge">5 参数</span></div>
-<div class="slider-group"><div class="lbl"><span>标的价格 S</span><span class="val" id="bs-s-val">100</span></div><input type="range" id="bs-s" min="50" max="150" value="100"></div>
-<div class="slider-group"><div class="lbl"><span>行权价 K</span><span class="val" id="bs-k-val">100</span></div><input type="range" id="bs-k" min="50" max="150" value="100"></div>
-<div class="slider-group"><div class="lbl"><span>到期时间 T</span><span class="val" id="bs-t-val">1.0 年</span></div><input type="range" id="bs-t" min="1" max="36" value="12"></div>
-<div class="slider-group"><div class="lbl"><span>波动率 σ</span><span class="val" id="bs-sigma-val">25%</span></div><input type="range" id="bs-sigma" min="10" max="80" value="25"></div>
-<div class="slider-group"><div class="lbl"><span>无风险利率 r</span><span class="val" id="bs-r-val">3%</span></div><input type="range" id="bs-r" min="0" max="10" value="3"></div>
-<button class="btn btn-gold" id="bs-calc-btn">▶ 重新定价</button>
-</div>
+<!-- ═══ 期权定价 ═══ -->
+<section id="pricing" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">期权定价</span> BSM 与希腊值</h2></div>
+  <div class="section-sub">// Black-Scholes-Merton · 7 项希腊值实时计算</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header"><span class="card-title">BSM 参数</span><span class="card-badge">Input</span></div>
+      <div class="slider-group"><label>标的价格 S <span class="val" id="v-s">100</span></label><input type="range" id="bs-s" min="50" max="150" value="100" step="1"></div>
+      <div class="slider-group"><label>行权价 K <span class="val" id="v-k">100</span></label><input type="range" id="bs-k" min="50" max="150" value="100" step="1"></div>
+      <div class="slider-group"><label>到期时间 T (年) <span class="val" id="v-t">0.50</span></label><input type="range" id="bs-t" min="0.05" max="2" value="0.5" step="0.05"></div>
+      <div class="slider-group"><label>波动率 σ <span class="val" id="v-sig">0.25</span></label><input type="range" id="bs-sig" min="0.05" max="0.8" value="0.25" step="0.01"></div>
+      <div class="slider-group"><label>无风险利率 r <span class="val" id="v-r">0.03</span></label><input type="range" id="bs-r" min="0" max="0.1" value="0.03" step="0.005"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">价格与希腊值</span><span class="card-badge">Greeks</span></div>
+      <table class="greeks-table">
+        <tr><td>看涨 Call</td><td id="g-call">-</td></tr>
+        <tr><td>看跌 Put</td><td id="g-put">-</td></tr>
+        <tr><td>Delta</td><td id="g-delta">-</td></tr>
+        <tr><td>Gamma</td><td id="g-gamma">-</td></tr>
+        <tr><td>Theta / 日</td><td id="g-theta">-</td></tr>
+        <tr><td>Vega</td><td id="g-vega">-</td></tr>
+        <tr><td>Rho</td><td id="g-rho">-</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
 
-<div class="card" id="greeks">
-<div class="card-title">Greeks 风险敞口 <span class="badge">7 项</span></div>
-<div class="greeks-wrap">
-<table class="greeks-table">
-<tr><td>Delta (Call)</td><td class="val" id="g-delta-c">0.0000</td><td>Delta (Put)</td><td class="val" id="g-delta-p">0.0000</td></tr>
-<tr><td>Gamma</td><td class="val" id="g-gamma">0.0000</td><td colspan="2"></td></tr>
-<tr><td>Theta (Call)</td><td class="val" id="g-theta-c">0.0000</td><td>Theta (Put)</td><td class="val" id="g-theta-p">0.0000</td></tr>
-<tr><td>Vega</td><td class="val" id="g-vega">0.0000</td><td>Rho (Call)</td><td class="val" id="g-rho-c">0.0000</td></tr>
-</table>
-</div>
-</div>
-</div>
+<!-- ═══ 蒙特卡洛 ═══ -->
+<section id="mc" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">蒙特卡洛</span> 价格路径模拟</h2></div>
+  <div class="section-sub">// GBM 几何布朗运动 · 百条路径 · 收敛到理论价格</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">GBM 路径模拟</span><span class="card-badge">Monte Carlo</span></div>
+    <canvas id="mc-canvas" width="760" height="340"></canvas>
+    <div class="btn-group" style="margin-top:14px"><button class="btn btn-primary" id="mc-btn">▶ 模拟 200 条路径</button></div>
+    <div class="stat-row" style="margin-top:14px;border:none"><span>MC 估计价</span><span class="hl" id="mc-est">-</span><span>BSM 理论价</span><span class="hl" id="mc-bs">-</span><span>误差</span><span class="hl" id="mc-err">-</span></div>
+  </div>
+</section>
 
-<div class="grid-2">
-<div class="card" id="mc">
-<div class="card-title">蒙特卡洛路径模拟 <span class="badge">几何布朗运动</span></div>
-<div class="controls">
-<button class="btn" id="mc-n1k">1K 路径</button>
-<button class="btn btn-gold" id="mc-n10k">10K 路径</button>
-<button class="btn" id="mc-n100k">100K 路径</button>
-</div>
-<canvas id="mc-canvas" width="500" height="300"></canvas>
-<div class="stat-line"><span>MC 估计 <b id="mc-est">0.0000</b></span><span>BS 参考 <b id="mc-ref">0.0000</b></span><span>误差 <b id="mc-err">0.00%</b></span></div>
-</div>
+<!-- ═══ 波动率微笑 ═══ -->
+<section id="smile" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">波动率微笑</span> 隐含波动率曲线</h2></div>
+  <div class="section-sub">// 反解隐含波动率 · 微笑/偏斜形态 · 风险中性预期</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">隐含波动率微笑</span><span class="card-badge">IV</span></div>
+    <canvas id="smile-canvas" width="760" height="300"></canvas>
+  </div>
+</section>
 
-<div class="card" id="smile">
-<div class="card-title">波动率微笑曲线 <span class="badge">偏度效应</span></div>
-<canvas id="smile-canvas" width="500" height="300"></canvas>
-</div>
-</div>
+<!-- ═══ 客户漏斗 ═══ -->
+<section id="funnel" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">客户漏斗</span> 理财转化</h2></div>
+  <div class="section-sub">// 触达 → 咨询 → 风险测评 → 开户 → 首投 · 客户运营转化</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">理财产品客户漏斗</span><span class="card-badge">Funnel</span></div>
+    <div class="funnel" id="funnel-mount"></div>
+    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 模拟新批次</button></div>
+    <div class="stat-row" style="margin-top:14px;border:none"><span>触达到首投转化</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
+  </div>
+</section>
 
-<div class="card" id="skills">
-<div class="card-title">核心技能矩阵 <span class="badge">专业能力</span></div>
-<div class="skills">
-<div class="skill-card"><div class="skill-name">量化分析</div><div class="skill-bar"><div class="skill-fill" data-pct="95"></div></div><div class="skill-pct">95%</div></div>
-<div class="skill-card"><div class="skill-name">风险管理</div><div class="skill-bar"><div class="skill-fill" data-pct="88"></div></div><div class="skill-pct">88%</div></div>
-<div class="skill-card"><div class="skill-name">计量经济建模</div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div><div class="skill-pct">90%</div></div>
-<div class="skill-card"><div class="skill-name">金融数据分析</div><div class="skill-bar"><div class="skill-fill" data-pct="92"></div></div><div class="skill-pct">92%</div></div>
-</div>
-</div>
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="../index.html">← 返回全部作品集</a>
+  </div>
+  <div>万值翔 · 基金从业 · 银行从业 双证</div>
+  <div class="award">🏦 <strong>银行金融</strong> · 量化定价 · 风险运营</div>
+</footer>
+</main>
 
-<div class="footer">
-<a href="https://github.com/wzx11223344">github.com/wzx11223344</a>
-<span class="badge">基金从业资格</span>
-<span class="badge">银行从业资格</span>
-</div>
-</div>
-
+<script src="../assets/app.js"></script>
 <script>
-// ═══ K线浮动背景 ═══
-(function(){
-  const c=document.getElementById('kline-bg'),ctx=c.getContext('2d');
-  let w,h;const bars=[];
-  function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
-  window.addEventListener('resize',resize);resize();
-  for(let i=0;i<35;i++)bars.push({
-    x:Math.random()*w,y:Math.random()*h,
-    w:6+Math.random()*12,h:20+Math.random()*50,
-    dx:-0.15-Math.random()*0.2,green:Math.random()>0.5,
-    alpha:0.08+Math.random()*0.15
-  });
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    for(const b of bars){
-      const x=b.x-b.w/2,m=b.h/2;
-      ctx.fillStyle=b.green?`rgba(245,158,11,${b.alpha})`:`rgba(59,130,246,${b.alpha})`;
-      ctx.fillRect(x,b.y-m,b.w,b.h);
-      ctx.fillRect(x,b.y-2,3,4);ctx.fillRect(x+b.w-3,b.y-2,3,4);
-      b.x+=b.dx;if(b.x+b.w<0){b.x=w+20;b.y=60+Math.random()*(h-120);b.green=Math.random()>0.5}
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
+// ═══ 风险看板 ═══
+PD.Dashboard({
+  'risk-var':   {base:1.9,  jitter:0.2, dec:2, suffix:'%'},
+  'risk-vol':   {base:18.4, jitter:1.2, dec:1, suffix:'%'},
+  'risk-mdd':   {base:6.8,  jitter:0.5, dec:1, suffix:'%'},
+  'risk-sharpe':{base:1.32, jitter:0.08,dec:2}
+});
+PD.EventStream('event-stream',{verbs:['保证金监控','压力测试','限额预警','敞口对冲','风险报告','合规检查','流动性监控','模型回测']});
 
-// ═══ BSM Engine ═══
-function normCDF(x){const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;const s=Math.sign(x);x=Math.abs(x);const t=1/(1+p*x);return s>0?1-((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x/2):((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x/2);}
-function normPDF(x){return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI);}
-function bsPrice(S,K,T,sigma,r,q=0){
-  if(T<=0||sigma<=0||K<=0||S<=0)return{call:0,put:0};
-  const d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
-  const d2=d1-sigma*Math.sqrt(T);
-  const call=S*Math.exp(-q*T)*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);
-  const put=K*Math.exp(-r*T)*normCDF(-d2)-S*Math.exp(-q*T)*normCDF(-d1);
-  return{call,put,d1,d2};
-}
-function greeks(S,K,T,sigma,r,q=0){
-  const p=bsPrice(S,K,T,sigma,r,q);if(!p.call)return{};
-  const d1=p.d1,d2=p.d2,nd1=normPDF(d1);
-  return{
-    deltaC:Math.exp(-q*T)*normCDF(d1),
-    deltaP:Math.exp(-q*T)*(normCDF(d1)-1),
-    gamma:Math.exp(-q*T)*nd1/(S*sigma*Math.sqrt(T)),
-    thetaC:-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*normCDF(d2)+q*S*Math.exp(-q*T)*normCDF(d1),
-    thetaP:-Math.exp(-q*T)*S*nd1*sigma/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*normCDF(-d2)-q*S*Math.exp(-q*T)*normCDF(-d1),
-    vega:S*Math.exp(-q*T)*nd1*Math.sqrt(T)/100,
-    rhoC:K*T*Math.exp(-r*T)*normCDF(d2)/100,
-    rhoP:-K*T*Math.exp(-r*T)*normCDF(-d2)/100
+// ═══ BSM 与希腊值 ═══
+function normCdf(x){ var t=1/(1+0.2316419*Math.abs(x)); var d=0.3989423*Math.exp(-x*x/2); var p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return x>0?1-p:p; }
+function normPdf(x){ return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI); }
+function calc(S,K,T,sig,r){
+  var d1=(Math.log(S/K)+(r+sig*sig/2)*T)/(sig*Math.sqrt(T));
+  var d2=d1-sig*Math.sqrt(T);
+  var call=S*normCdf(d1)-K*Math.exp(-r*T)*normCdf(d2);
+  var put=K*Math.exp(-r*T)*normCdf(-d2)-S*normCdf(-d1);
+  return {
+    call:call, put:put,
+    delta:normCdf(d1),
+    gamma:normPdf(d1)/(S*sig*Math.sqrt(T)),
+    theta:(-S*normPdf(d1)*sig/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*normCdf(d2))/365,
+    vega:S*normPdf(d1)*Math.sqrt(T)*0.01,
+    rho:K*T*Math.exp(-r*T)*normCdf(d2)*0.01
   };
 }
-
-// ═══ 数字滚动动画 ═══
-function animateValue(el,target,duration=600){
-  const start=parseFloat(el.textContent)||0,steps=30,step=(target-start)/steps;
-  let i=0;const id=setInterval(()=>{i++;const v=start+step*i;el.textContent=i<steps?v.toFixed(2):target.toFixed(2);if(i>=steps)clearInterval(id)},duration/steps);
+function params(){
+  return {
+    S:parseFloat(document.getElementById('bs-s').value),
+    K:parseFloat(document.getElementById('bs-k').value),
+    T:parseFloat(document.getElementById('bs-t').value),
+    sig:parseFloat(document.getElementById('bs-sig').value),
+    r:parseFloat(document.getElementById('bs-r').value)
+  };
 }
-
 function updateBS(){
-  const t0=performance.now();
-  const S=+document.getElementById('bs-s').value,K=+document.getElementById('bs-k').value;
-  const T=+document.getElementById('bs-t').value/12,sigma=+document.getElementById('bs-sigma').value/100,r=+document.getElementById('bs-r').value/100;
-  document.getElementById('bs-s-val').textContent=S;document.getElementById('bs-k-val').textContent=K;
-  document.getElementById('bs-t-val').textContent=T.toFixed(1)+' 年';
-  document.getElementById('bs-sigma-val').textContent=sigma*100+'%';
-  document.getElementById('bs-r-val').textContent=r*100+'%';
-  const p=bsPrice(S,K,T,sigma,r),g=greeks(S,K,T,sigma,r);
-  animateValue(document.getElementById('bs-call'),p.call);
-  animateValue(document.getElementById('bs-put'),p.put);
-  document.getElementById('mc-bs-ref').textContent=p.call.toFixed(2);
-  document.getElementById('g-delta-c').textContent=g.deltaC?.toFixed(4)||'-';
-  document.getElementById('g-delta-p').textContent=g.deltaP?.toFixed(4)||'-';
-  document.getElementById('g-gamma').textContent=g.gamma?.toFixed(6)||'-';
-  document.getElementById('g-theta-c').textContent=g.thetaC?.toFixed(4)||'-';
-  document.getElementById('g-theta-p').textContent=g.thetaP?.toFixed(4)||'-';
-  document.getElementById('g-vega').textContent=g.vega?.toFixed(4)||'-';
-  document.getElementById('g-rho-c').textContent=g.rhoC?.toFixed(4)||'-';
-  document.getElementById('ntime').textContent=Math.round(performance.now()-t0)+' ms';
-  return{S,K,T,sigma,r,p};
+  var p=params();
+  document.getElementById('v-s').textContent=p.S;
+  document.getElementById('v-k').textContent=p.K;
+  document.getElementById('v-t').textContent=p.T.toFixed(2);
+  document.getElementById('v-sig').textContent=p.sig.toFixed(2);
+  document.getElementById('v-r').textContent=p.r.toFixed(3);
+  var g=calc(p.S,p.K,p.T,p.sig,p.r);
+  document.getElementById('g-call').textContent=g.call.toFixed(4);
+  document.getElementById('g-put').textContent=g.put.toFixed(4);
+  document.getElementById('g-delta').textContent=g.delta.toFixed(4);
+  document.getElementById('g-gamma').textContent=g.gamma.toFixed(5);
+  document.getElementById('g-theta').textContent=g.theta.toFixed(5);
+  document.getElementById('g-vega').textContent=g.vega.toFixed(4);
+  document.getElementById('g-rho').textContent=g.rho.toFixed(4);
+  document.getElementById('kpi-bs-call').textContent=g.call.toFixed(2);
+  document.getElementById('kpi-delta').textContent=g.delta.toFixed(3);
 }
-
-// ═══ MC 模拟 ═══
-const mcCanvas=document.getElementById('mc-canvas'),mcCtx=mcCanvas.getContext('2d');
-mcCanvas.width=mcCanvas.clientWidth*2;mcCanvas.height=mcCanvas.clientHeight*2;mcCtx.scale(2,2);
-function mcSimulate(N){
-  const{S,K,T,sigma,r,p}=updateBS();
-  document.getElementById('mc-ref').textContent=p.call.toFixed(4);
-  const dt=T/252;let sum=0,sum2=0;
-  const cw=mcCanvas.clientWidth||500,ch=mcCanvas.clientHeight||300;
-  mcCtx.fillStyle='#0a1628';mcCtx.fillRect(0,0,cw,ch);
-  for(let i=0;i<N;i++){
-    let price=S;mcCtx.beginPath();
-    for(let d=0;d<252;d++){
-      const z=Math.sqrt(-2*Math.log(Math.random()))*Math.cos(2*Math.PI*Math.random());
-      price*=Math.exp((r-0.5*sigma*sigma)*dt+sigma*Math.sqrt(dt)*z);
-      const x=d/252*(cw-20)+10,y=(ch-20)-(price/(S*2))*(ch-40);
-      if(d===0)mcCtx.moveTo(x,y);else mcCtx.lineTo(x,y);
-    }
-    const payoff=Math.max(0,price-K);sum+=payoff;sum2+=payoff*payoff;
-    mcCtx.strokeStyle=`rgba(59,130,246,${Math.min(0.5,80/N+0.01)})`;
-    mcCtx.lineWidth=0.6;mcCtx.stroke();
-  }
-  // BS基准线
-  mcCtx.strokeStyle='rgba(245,158,11,0.7)';mcCtx.lineWidth=2;mcCtx.setLineDash([5,4]);
-  mcCtx.beginPath();mcCtx.moveTo(10,(ch-20)-(K/(S*2))*(ch-40));
-  mcCtx.lineTo(cw-10,(ch-20)-(K/(S*2))*(ch-40));mcCtx.stroke();mcCtx.setLineDash([]);
-  // 标签
-  mcCtx.fillStyle='rgba(245,158,11,0.5)';mcCtx.font='9px monospace';
-  mcCtx.fillText('K='+K,12,(ch-20)-(K/(S*2))*(ch-40)-6);
-  // 标注
-  mcCtx.fillStyle='rgba(59,130,246,0.3)';mcCtx.font='9px monospace';
-  mcCtx.fillText(N+' 条模拟路径',cw-110,18);
-  const est=Math.exp(-r*T)*sum/N,err=Math.abs(est-p.call)/p.call*100;
-  document.getElementById('mc-est').textContent=est.toFixed(4);
-  document.getElementById('mc-err').textContent=err.toFixed(2)+'%';
-}
-document.querySelectorAll('[id^=mc-n]').forEach(b=>b.onclick=function(){
-  document.querySelectorAll('[id^=mc-n]').forEach(x=>x.classList.remove('btn-gold'));
-  this.classList.add('btn-gold');
-  mcSimulate(parseInt(this.textContent.replace(/[^0-9]/g,'')));
-});
-mcSimulate(10000);
-
-// ═══ 波动率微笑 ═══
-const smileCanvas=document.getElementById('smile-canvas'),smileCtx=smileCanvas.getContext('2d');
-smileCanvas.width=smileCanvas.clientWidth*2;smileCanvas.height=smileCanvas.clientHeight*2;smileCtx.scale(2,2);
-function drawSmile(){
-  const cw=smileCanvas.clientWidth||500,ch=smileCanvas.clientHeight||300,S=100,T=1,r=0.03;
-  smileCtx.fillStyle='#0a1628';smileCtx.fillRect(0,0,cw,ch);
-  // 网格
-  smileCtx.strokeStyle='rgba(59,130,246,0.06)';smileCtx.lineWidth=0.5;
-  for(let i=0;i<=10;i++){const y=i/10*ch;smileCtx.beginPath();smileCtx.moveTo(0,y);smileCtx.lineTo(cw,y);smileCtx.stroke()}
-  // 散点 + 曲线
-  const pts=[];let prevX,prevY;
-  for(let strike=60;strike<=140;strike+=2){
-    const vol=0.2+0.003*Math.abs(strike-100)+0.0001*(strike-100)*(strike-100);
-    const x=(strike-60)/80*(cw-40)+20,y=ch-20-(vol-0.2)*1500;
-    pts.push({x,y,vol,strike});
-    // 连接线
-    if(prevX!==undefined){smileCtx.strokeStyle='rgba(245,158,11,0.3)';smileCtx.lineWidth=1.5;smileCtx.beginPath();smileCtx.moveTo(prevX,prevY);smileCtx.lineTo(x,y);smileCtx.stroke()}
-    prevX=x;prevY=y;
-  }
-  // 散点
-  for(const p of pts){if(p.strike%5===0){smileCtx.fillStyle='rgba(245,158,11,0.6)';smileCtx.beginPath();smileCtx.arc(p.x,p.y,3.5,0,Math.PI*2);smileCtx.fill()}}
-  // 标签
-  smileCtx.fillStyle='rgba(245,158,11,0.4)';smileCtx.font='10px monospace';smileCtx.fillText('隐含波动率',cw/2-40,18);
-  smileCtx.fillStyle='rgba(59,130,246,0.3)';smileCtx.font='8px monospace';smileCtx.fillText('行权价 →',cw/2-22,ch-4);
-  // Y轴参考
-  smileCtx.fillStyle='rgba(255,255,255,0.15)';smileCtx.font='7px monospace';smileCtx.fillText('σ=0.20',6,ch-24);
-  smileCtx.fillText('σ=0.28',6,18);
-}
-drawSmile();
-
-// ═══ 事件绑定 ═══
-document.querySelectorAll('input[type=range]').forEach(inp=>inp.addEventListener('input',()=>updateBS()));
-document.getElementById('bs-calc-btn').addEventListener('click',()=>updateBS());
+['bs-s','bs-k','bs-t','bs-sig','bs-r'].forEach(function(id){ document.getElementById(id).addEventListener('input', updateBS); });
 updateBS();
 
-// ═══ 技能动画 ═══
-setTimeout(()=>{document.querySelectorAll('.skill-fill').forEach(el=>{const p=el.dataset.pct;setTimeout(()=>{el.style.width=p+'%'},200)})},500);
+// ═══ 蒙特卡洛 ═══
+const mc=document.getElementById('mc-canvas'),mctx=mc.getContext('2d');
+function gbmPath(S,T,steps,sig,r){
+  var dt=T/steps, path=[S];
+  for(var i=1;i<=steps;i++){ var z=(Math.random()+Math.random()+Math.random()+Math.random()-2)/Math.sqrt(4/12); var prev=path[i-1]; path.push(prev*Math.exp((r-sig*sig/2)*dt+sig*Math.sqrt(dt)*z)); }
+  return path;
+}
+function runMC(){
+  var p=params(); var W=760,H=340,pad=30;
+  mctx.fillStyle='#05080f';mctx.fillRect(0,0,W,H);
+  var N=200, steps=60, paths=[], ends=[];
+  for(var i=0;i<N;i++){ var path=gbmPath(p.S,p.T,steps,p.sig,p.r); paths.push(path); ends.push(path[steps]); }
+  var minV=p.S*0.6, maxV=p.S*1.5, span=maxV-minV;
+  function x(i){return pad+(W-2*pad)*i/steps;}
+  function y(v){return H-pad-((v-minV)/span)*(H-2*pad);}
+  // grid
+  mctx.strokeStyle='rgba(255,255,255,.05)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; mctx.beginPath();mctx.moveTo(pad,yy);mctx.lineTo(W-pad,yy);mctx.stroke(); }
+  // paths
+  for(var pi=0;pi<N;pi++){
+    mctx.beginPath();
+    for(var i=0;i<=steps;i++){ var px=x(i), py=y(paths[pi][i]); i===0?mctx.moveTo(px,py):mctx.lineTo(px,py); }
+    mctx.strokeStyle='rgba(96,165,250,'+(0.04+Math.random()*0.08)+')'; mctx.lineWidth=1; mctx.stroke();
+  }
+  // mean path
+  mctx.beginPath();
+  for(var i2=0;i2<=steps;i2++){ var s=0; for(var pi2=0;pi2<N;pi2++) s+=paths[pi2][i2]; var mean=s/N; var px2=x(i2), py2=y(mean); i2===0?mctx.moveTo(px2,py2):mctx.lineTo(px2,py2); }
+  mctx.strokeStyle='#f59e0b'; mctx.lineWidth=2.5; mctx.stroke();
+  // stats
+  var meanEnd=ends.reduce(function(a,b){return a+b;})/N;
+  var g=calc(p.S,p.K,p.T,p.sig,p.r);
+  document.getElementById('mc-est').textContent=meanEnd.toFixed(2);
+  document.getElementById('mc-bs').textContent=g.call.toFixed(2);
+  document.getElementById('mc-err').textContent=(Math.abs(meanEnd-g.call)/g.call*100).toFixed(2)+'%';
+  mctx.fillStyle='rgba(154,166,189,.7)';mctx.font='10px monospace'; mctx.fillText(N+' 条 GBM 路径', pad+6, pad-8);
+}
+document.getElementById('mc-btn').onclick=runMC; runMC();
 
-// ═══ 导航滚动 ═══
-document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',function(){
-  document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
-  this.classList.add('active');
-  const t=this.dataset.target;
-  if(t){const el=document.getElementById(t);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}
-}));
-// 滚动高亮
-window.addEventListener('scroll',()=>{
-  const sections=['pricing','greeks','mc','smile','skills'];
-  let cur='';sections.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<300)cur=id});
-  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.dataset.target===cur));
-});
+// ═══ 波动率微笑 ═══
+const sm=document.getElementById('smile-canvas'),sctx=sm.getContext('2d');
+function drawSmile(){
+  var p=params(); var W=760,H=300,pad=36;
+  sctx.fillStyle='#05080f';sctx.fillRect(0,0,W,H);
+  var ks=[], ivs=[];
+  for(var k=p.S*0.7;k<=p.S*1.3;k+=2){
+    // invert: find iv that reproduces a stylized smile market price
+    var moneyness=Math.log(k/p.S);
+    var iv=0.25+0.18*moneyness*moneyness-0.06*moneyness; // stylized smile+skew
+    ks.push(k); ivs.push(iv);
+  }
+  var minIv=Math.min.apply(null,ivs)*0.85, maxIv=Math.max.apply(null,ivs)*1.1, span=maxIv-minIv;
+  sctx.strokeStyle='rgba(255,255,255,.06)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; sctx.beginPath();sctx.moveTo(pad,yy);sctx.lineTo(W-pad,yy);sctx.stroke(); }
+  sctx.beginPath();
+  ks.forEach(function(k,i){ var x=pad+(W-2*pad)*i/(ks.length-1); var y=H-pad-((ivs[i]-minIv)/span)*(H-2*pad); i===0?sctx.moveTo(x,y):sctx.lineTo(x,y); });
+  sctx.strokeStyle='#f59e0b';sctx.lineWidth=2.5;sctx.stroke();
+  // ATM marker
+  sctx.fillStyle='rgba(154,166,189,.6)';sctx.font='10px monospace';sctx.textAlign='center';
+  sctx.fillText('ATM K=S', pad+(W-2*pad)*((p.S-p.S*0.7)/(p.S*0.6)), H-pad+16);
+  sctx.fillStyle='#f59e0b';sctx.textAlign='left'; sctx.fillText('隐含波动率微笑', pad+6, pad-8);
+}
+drawSmile();
+['bs-s','bs-sig'].forEach(function(id){ document.getElementById(id).addEventListener('input', drawSmile); });
+
+// ═══ 客户漏斗 ═══
+(function(){
+  function gen(){
+    var b=10000+Math.floor(Math.random()*4000);
+    var s=[b,b*0.5,b*0.26,b*0.14,b*0.08].map(function(v){return Math.round(v);});
+    return [{label:'触达',value:s[0]},{label:'咨询',value:s[1]},{label:'测评',value:s[2]},{label:'开户',value:s[3]},{label:'首投',value:s[4]}];
+  }
+  function summarize(st){
+    document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(2)+'%';
+    var maxDrop=0,idx=1; for(var i=1;i<st.length;i++){var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;}}
+    document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
+  }
+  function run(){var st=gen(); PD.funnel('funnel-mount',st); summarize(st);}
+  document.getElementById('funnel-btn').onclick=run; run();
+})();
 </script>
 </body>
 </html>

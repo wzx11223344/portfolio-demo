@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>万值翔 - 技术能力展示 | Portfolio Demo</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/theme.css">
 <style>
-/* ============ CSS RESET & BASE ============ */
+/* ============ HUB legacy tokens → bridged to shared dark-tech palette ============ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --neon-cyan:#00f0ff;--neon-pink:#ff00ff;--neon-green:#39ff14;
-  --neon-yellow:#ffe600;--neon-purple:#b026ff;--neon-orange:#ff6600;
-  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--text:#c0c0c0;--text-dim:#666;
-  --border:#333;--font-mono:'Cascadia Code','Fira Code','JetBrains Mono','Consolas',monospace;
+  --neon-cyan:#22d3ee;--neon-pink:#f472b6;--neon-green:#34d399;
+  --neon-yellow:#fbbf24;--neon-purple:#a78bfa;--neon-orange:#fb923c;
+  --bg:#070a12;--bg2:#0e1422;--bg3:#131b2c;--text:#e7edf7;--text-dim:#9aa6bd;
+  --border:rgba(255,255,255,.07);--font-mono:'Cascadia Code','Fira Code','JetBrains Mono','Consolas',monospace;
   --font-sans:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif
 }
 html{scroll-behavior:smooth;font-size:16px}
@@ -20,13 +21,10 @@ body{
   background:var(--bg);color:var(--text);font-family:var(--font-sans);
   overflow-x:hidden;line-height:1.6
 }
-/* ============ MATRIX RAIN CANVAS ============ */
-#matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.12}
-/* ============ SCANLINES ============ */
-#scanlines{
-  position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(0,0,0,.03) 0px,rgba(0,0,0,.03) 1px,transparent 1px,transparent 2px)
-}
+/* ============ MATRIX RAIN CANVAS (legacy, replaced by shared bg layers) ============ */
+#matrix-bg{display:none}
+/* ============ SCANLINES (legacy, replaced by #bg-scan) ============ */
+#scanlines{display:none}
 /* ============ MAIN CONTAINER ============ */
 #app{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 20px}
 /* ============ NAV ============ */
@@ -57,12 +55,8 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 .hero-name{
   font-family:var(--font-mono);font-size:clamp(36px,8vw,72px);font-weight:900;
   color:#fff;letter-spacing:8px;text-transform:uppercase;
-  text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan),0 0 60px var(--neon-cyan),0 0 100px var(--neon-cyan);
-  animation:neonPulse 2s ease-in-out infinite alternate
-}
-@keyframes neonPulse{
-  0%{text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan),0 0 60px var(--neon-cyan)}
-  100%{text-shadow:0 0 20px var(--neon-cyan),0 0 50px var(--neon-cyan),0 0 90px var(--neon-cyan),0 0 140px var(--neon-cyan)}
+  background:linear-gradient(180deg,#fff 30%,#9fb3d6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent
 }
 .hero-subtitle{
   font-family:var(--font-mono);font-size:18px;color:var(--neon-green);margin:16px 0 8px;
@@ -223,14 +217,17 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 </style>
 </head>
 <body>
-<canvas id="matrix-bg"></canvas>
-<div id="scanlines"></div>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
 <div id="app">
 <!-- ==================== NAV ==================== -->
 <nav id="nav">
 <a href="#hero">首页</a><a href="#raytracer">光线追踪</a><a href="#montecarlo">蒙特卡洛</a>
 <a href="#blackscholes">期权定价</a><a href="#perf">性能测试</a><a href="#algorithms">算法演示</a>
-<a href="#skills">技能</a>
+<a href="#skills">技能</a><a href="positions/index.html">岗位作品集 →</a>
 </nav>
 
 <!-- ==================== HERO ==================== -->
@@ -541,7 +538,9 @@ section{padding:60px 0;border-bottom:1px solid #1a1a1a}
 // ==================== MATRIX RAIN BACKGROUND ========================
 // ===================================================================
 (function(){
-  const c=document.getElementById('matrix-bg'),ctx=c.getContext('2d');
+  const c=document.getElementById('matrix-bg');
+  if(!c){ return; } // matrix rain replaced by shared bg layers; skip if absent
+  const ctx=c.getContext('2d');
   let w,h,cols,chars;
   function resize(){
     w=c.width=window.innerWidth;h=c.height=window.innerHeight;
@@ -657,7 +656,14 @@ document.addEventListener('click',e=>{
 (function(){
   const navLinks=$$('nav a');
   const sections=[];
-  navLinks.forEach(a=>{const id=a.getAttribute('href');if(id)sections.push(document.querySelector(id));});
+  navLinks.forEach(a=>{
+    const id=a.getAttribute('href');
+    // only same-page anchors ("#id"); skip external/file links
+    if(id && id.charAt(0)==='#'){
+      const sec=document.getElementById(id.slice(1));
+      if(sec) sections.push(sec);
+    }
+  });
   window.addEventListener('scroll',()=>{
     let cur='hero';
     sections.forEach(s=>{if(s&&window.scrollY>=s.offsetTop-200)cur=s.id;});
@@ -1005,7 +1011,7 @@ function updateBS(){
   $('#bs-call').textContent=g.call.toFixed(6);$('#bs-put').textContent=g.put.toFixed(6);
   $('#bs-delta-c').textContent=g.dc.toFixed(6);$('#bs-delta-p').textContent=g.dp.toFixed(6);
   $('#bs-gamma').textContent=g.gamma.toFixed(6);$('#bs-theta-c').textContent=(g.tc/365).toFixed(6);
-  $('#bs-vega').textContent=g.vega.toFixed(6);$('#bs-rho').textContent(g.rc.toFixed(6));
+  $('#bs-vega').textContent=g.vega.toFixed(6);$('#bs-rho').textContent=g.rc.toFixed(6);
   drawSmile(S,T,r,q);drawDelta(S,T,r,q);
 }
 function drawSmile(S,T,r,q){
@@ -1464,5 +1470,6 @@ console.log('%cBlack-Scholes: %cFull pricing model + 7 Greeks + vol smile',
 console.log('%cWeb Workers: %c1M merge sort + multi-thread timeline',
   'color:#0ff','color:#ccc');
 </script>
+<script src="assets/app.js"></script>
 </body>
 </html>

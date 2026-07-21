@@ -1,283 +1,167 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>作品集 · 赛博综合引擎</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>通用综合 · 全栈分析与算法引擎</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23a78bfa'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23a78bfa'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23a78bfa'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;cursor:none}
-:root{--cy:#00f0ff;--pk:#ff00ff;--bg:#0a0a12;--c1:#0d0d1a;--c2:#151528;--c3:#1a1a35}
-body{background:var(--bg);color:#c8c8e0;font-family:'Segoe UI','Microsoft YaHei',sans-serif;overflow-x:hidden;min-height:100vh}
-
-/* ── Cursor ── */
-#cursor{position:fixed;width:40px;height:40px;border-radius:50%;pointer-events:none;z-index:9999;
-  background:radial-gradient(circle,rgba(0,240,255,.25),transparent 70%);transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen}
-
-/* ── Grain ── */
-#grain{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;pointer-events:none;opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
-
-/* ── BG Grid Canvas ── */
-#bg-grid{position:fixed;top:0;left:0;z-index:0;width:100%;height:100%;pointer-events:none;opacity:.25}
-
-/* ── Nav ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;gap:6px;padding:10px 12px;
-  background:rgba(10,10,18,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,240,255,.1);flex-wrap:wrap}
-nav a{color:#888;text-decoration:none;padding:6px 16px;font-size:12px;font-family:monospace;
-  border:1px solid transparent;border-radius:4px;transition:.3s;letter-spacing:1px}
-nav a:hover{color:var(--cy);border-color:var(--cy);box-shadow:0 0 15px rgba(0,240,255,.2),inset 0 0 15px rgba(0,240,255,.05)}
-
-/* ── Containers ── */
-.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:70px 16px 30px}
-
-/* ── Hero ── */
-.hero{text-align:center;padding:60px 0 30px;opacity:0;transform:translateY(30px);transition:1s}.hero.show{opacity:1;transform:none}
-.cyber-title{font-size:clamp(32px,5.5vw,56px);font-weight:800;letter-spacing:2px;margin-bottom:6px}
-.cyber-title .c{color:var(--cy);text-shadow:0 0 20px var(--cy),0 0 60px var(--cy)}
-.cyber-title .p{color:var(--pk);text-shadow:0 0 20px var(--pk),0 0 60px var(--pk)}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.blink{animation:blink 1.2s infinite}
-
-/* ── Stats ── */
-.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:22px 0}
-.stat{background:rgba(13,13,26,.7);border:1px solid rgba(0,240,255,.12);border-radius:10px;padding:14px 20px;min-width:88px;text-align:center;
-  backdrop-filter:blur(6px);transition:.3s}
-.stat:hover{border-color:var(--cy);box-shadow:0 0 20px rgba(0,240,255,.08)}
-.stat-num{font-family:monospace;font-size:26px;color:var(--cy);font-weight:700;text-shadow:0 0 10px rgba(0,240,255,.4)}
-.stat-lbl{font-size:10px;color:#666;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
-
-/* ── Glass Card ── */
-.card{background:rgba(13,13,26,.65);border:1px solid rgba(0,240,255,.1);border-radius:14px;padding:22px;margin-bottom:22px;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transform:translateY(30px);transition:1s ease}
-.card.show{opacity:1;transform:none}
-.card:hover{border-color:rgba(0,240,255,.2);box-shadow:0 0 30px rgba(0,240,255,.04)}
-.card-title{font-family:monospace;font-size:13px;color:var(--cy);margin-bottom:14px;letter-spacing:1px;text-shadow:0 0 8px rgba(0,240,255,.3)}
-.card-title .p{color:var(--pk);text-shadow:0 0 8px rgba(0,240,255,.3)}
-
-/* ── Buttons ── */
-.controls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.btn{padding:6px 14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#888;border-radius:6px;cursor:none;
-  font-family:monospace;font-size:11px;transition:.3s}
-.btn:hover{border-color:var(--cy);color:var(--cy);box-shadow:0 0 12px rgba(0,240,255,.15),inset 0 0 12px rgba(0,240,255,.04)}
-@keyframes breathe{0%,100%{border-color:var(--cy);box-shadow:0 0 8px rgba(0,240,255,.2),inset 0 0 8px rgba(0,240,255,.05)}
-  50%{border-color:var(--pk);box-shadow:0 0 20px rgba(255,0,255,.3),inset 0 0 20px rgba(255,0,255,.08)}}
-.btn-primary{border-color:var(--cy);color:var(--cy);animation:breathe 2.5s infinite}
-
-/* ── Grid ── */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
-
-/* ── Canvas ── */
-canvas{display:block;width:100%;height:auto;background:#05050a;border-radius:8px;border:1px solid rgba(0,240,255,.06)}
-
-/* ── Stat Line ── */
-.stat-line{display:flex;justify-content:space-between;padding:3px 0;font-family:monospace;font-size:11px;color:#666}
-.stat-line span{color:#c8c8e0}
-
-/* ── Skills ── */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.skill-card{background:rgba(255,255,255,.02);border:1px solid rgba(0,240,255,.08);border-radius:10px;padding:14px;transition:.3s}
-.skill-card:hover{border-color:var(--cy);box-shadow:0 0 20px rgba(0,240,255,.06);transform:translateY(-2px)}
-.skill-name{font-family:monospace;font-size:12px;color:var(--cy);margin-bottom:6px;text-shadow:0 0 6px rgba(0,240,255,.2)}
-.skill-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:6px;overflow:hidden}
-.skill-fill{height:100%;border-radius:2px;transition:width 1.5s ease;width:0}
-.skill-fill.cy{background:linear-gradient(90deg,var(--cy),var(--pk))}
-
-/* ── Projects ── */
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.proj-card{display:block;background:rgba(255,255,255,.02);border:1px solid rgba(0,240,255,.08);border-radius:10px;padding:16px;transition:.3s;text-decoration:none;cursor:none}
-.proj-card:hover{border-color:var(--cy);box-shadow:0 0 24px rgba(0,240,255,.08);transform:translateY(-3px)}
-.proj-name{font-family:monospace;font-size:13px;color:var(--cy);margin-bottom:6px;text-shadow:0 0 8px rgba(0,240,255,.3)}
-.proj-card:hover .proj-name{color:#fff}
-.proj-desc{font-size:11px;color:#888;line-height:1.5;margin-bottom:10px}
-.proj-tags{display:flex;gap:6px;flex-wrap:wrap}
-.proj-tags span{font-family:monospace;font-size:9px;color:var(--pk);border:1px solid rgba(255,0,255,.2);border-radius:4px;padding:1px 6px}
-
-/* ── Contact ── */
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.contact-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.02);border:1px solid rgba(0,240,255,.1);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:12px;color:#c8c8e0;text-decoration:none;transition:.3s;cursor:none}
-.contact-item:hover{border-color:var(--cy);color:var(--cy);box-shadow:0 0 18px rgba(0,240,255,.08)}
-.contact-item b{color:var(--pk);font-weight:400}
-
-/* ── Footer ── */
-.footer{text-align:center;padding:30px;font-size:11px;color:#444;font-family:monospace;opacity:0;transition:1s}
-.footer.show{opacity:1}
-.footer a{color:var(--cy);text-decoration:none;transition:.3s}
-.footer a:hover{text-shadow:0 0 15px var(--cy)}
-.hub-back{position:fixed;top:10px;left:10px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(8,8,14,.82);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;text-decoration:none;font:600 12px/1 monospace;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s}
-.hub-back:hover{border-color:#0ff;color:#0ff;box-shadow:0 0 14px rgba(0,255,255,.35)}
-@media(max-width:768px){.hub-back{top:8px;left:8px;padding:5px 10px;font-size:11px}}
+/* general accent: violet / pink */
+.card-title{color:#a78bfa}
+.card-badge{color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .hl{background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-row .hl{color:#a78bfa}
+#nn-canvas,#conv-canvas,#kmeans-canvas{width:auto;max-width:100%;margin:0 auto}
+.stat-line{display:flex;justify-content:space-between;padding:3px 0;font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
+.stat-line span{color:var(--text)}
 </style>
 </head>
 <body>
-<a class="hub-back" href="index.html">← 返回全部作品集</a>
-
-<div id="cursor"></div>
-<div id="grain"></div>
-<canvas id="bg-grid"></canvas>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
 
 <nav>
-<a href="#hero">首页</a><a href="#nn">神经网络</a><a href="#conv">卷积演示</a><a href="#kmeans">聚类分析</a><a href="#projects">项目</a><a href="#skills">技能</a><a href="#contact">联系</a>
+  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <div class="nav-inner">
+    <a href="../index.html">◀ 主站</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#analytics">分析看板</a>
+    <a href="#nn">神经网络</a>
+    <a href="#conv">卷积</a>
+    <a href="#kmeans">聚类</a>
+    <a href="#funnel">增长漏斗</a>
+    <a href="#projects">项目</a>
+  </div>
 </nav>
 
-<div class="container">
-<div id="hero" class="hero show">
-<div class="cyber-title"><span class="c">赛博</span><span class="p">综合</span><span class="c blink">_</span></div>
-<div style="color:#666;font-family:monospace;font-size:13px;letter-spacing:2px">// 万值翔 · 算法引擎 · 从零实现一切</div>
-<div class="stats">
-<div class="stat"><div class="stat-num">101</div><div class="stat-lbl">项目</div></div>
-<div class="stat"><div class="stat-num">15</div><div class="stat-lbl">MCP</div></div>
-<div class="stat"><div class="stat-num">~370</div><div class="stat-lbl">工具</div></div>
-<div class="stat"><div class="stat-num">115K+</div><div class="stat-lbl">代码</div></div>
-<div class="stat"><div class="stat-num">58</div><div class="stat-lbl">技能</div></div>
-</div>
-</div>
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>GENERAL · 全栈分析引擎</div>
+  <h1 class="hero-name">全栈<span class="accent">分析引擎</span></h1>
+  <div class="hero-sub" data-typed='["量化金融 · 计量经济 · 因果推断 · NLP","从零实现 · 不套壳不调API · 每个算法手写","Python · SQL · 可视化 · AI Agent"]'></div>
+  <div class="hero-tags"><span>量化金融</span><span>计量经济</span><span>机器学习</span><span>MCP 生态</span></div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="101">0</div><div class="kpi-label">项目</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="15">0</div><div class="kpi-label">MCP</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="370">0</div><div class="kpi-label">工具 ~</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="58">0</div><div class="kpi-label">技能</div></div>
+  </div>
+</section>
 
-<div id="nn" class="card">
-<div class="card-title"><span class="p">◆</span> 神经网络 · 实时训练 (XOR)</div>
-<div class="controls">
-<button class="btn btn-primary" id="nn-train">▶ 训练</button>
-<button class="btn" id="nn-stop">⏸ 暂停</button>
-<button class="btn" id="nn-reset">↻ 重置</button>
-<span style="font-family:monospace;font-size:10px;color:#555;flex:1;text-align:right">LR: <span id="nn-lr">0.01</span></span>
-</div>
-<canvas id="nn-canvas" width="700" height="360"></canvas>
-<div class="grid-2" style="margin-top:14px">
-<div>
-<div class="stat-line">损失 (MSE)<span id="nn-loss">0.0000</span></div>
-<div class="stat-line">训练样本<span id="nn-samples">0</span></div>
-<div class="stat-line">轮次 <span id="epoch-count">0</span> · 准确率 <span id="acc-count">0.0%</span></div>
-</div>
-<div>
-<div class="stat-line">架构<span>2 → 8 → 1</span></div>
-<div class="stat-line">激活<span>Sigmoid + ReLU</span></div>
-<div class="stat-line">优化<span>SGD 批处理</span></div>
-</div>
-</div>
-</div>
+<!-- ═══ 分析看板 ═══ -->
+<section id="analytics" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">分析看板</span> 系统运行指标</h2></div>
+  <div class="section-sub">// 任务吞吐 · 模型准确率 · 数据管线 · 实时刷新</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">分析引擎核心指标</span><span class="card-badge">Live</span></div>
+    <div class="stats-grid" style="margin-top:0">
+      <div class="stat-item"><div class="stat-val" id="kpi-tps">0</div><div class="stat-label">任务吞吐 / 秒</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-acc">0%</div><div class="stat-label">模型准确率</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-pipe">0%</div><div class="stat-label">数据管线健康度</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-jobs">0</div><div class="stat-label">在跑任务</div></div>
+    </div>
+    <div style="margin-top:18px">
+      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">分析事件流</div>
+      <div id="event-stream"></div>
+    </div>
+  </div>
+</section>
 
-<div class="grid-2">
-<div id="conv" class="card">
-<div class="card-title"><span class="p">◆</span> 卷积核演示</div>
-<canvas id="conv-canvas" width="340" height="340"></canvas>
-<div class="controls" style="margin-top:10px">
-<button class="btn" id="conv-sharpen">锐化</button>
-<button class="btn" id="conv-edge">边缘</button>
-<button class="btn" id="conv-blur">模糊</button>
-<button class="btn" id="conv-emboss">浮雕</button>
-</div>
-</div>
+<!-- ═══ 神经网络 ═══ -->
+<section id="nn" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">神经网络</span> 实时训练 (XOR)</h2></div>
+  <div class="section-sub">// 手写反向传播 · 2→8→1 · Sigmoid+ReLU · 从零实现</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">神经网络 · XOR 实时训练</span><span class="card-badge">Backprop</span></div>
+    <div class="btn-group" style="margin-bottom:14px"><button class="btn btn-primary" id="nn-train">▶ 训练</button><button class="btn" id="nn-stop">⏸ 暂停</button><button class="btn" id="nn-reset">↻ 重置</button><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-left:auto">LR: 0.01</span></div>
+    <canvas id="nn-canvas" width="700" height="360"></canvas>
+    <div class="card-grid" style="margin-top:14px;gap:16px">
+      <div>
+        <div class="stat-line">损失 (MSE)<span id="nn-loss">0.0000</span></div>
+        <div class="stat-line">训练样本<span id="nn-samples">0</span></div>
+        <div class="stat-line">轮次 <span id="epoch-count">0</span> · 准确率 <span id="acc-count">0.0%</span></div>
+      </div>
+      <div>
+        <div class="stat-line">架构<span>2 → 8 → 1</span></div>
+        <div class="stat-line">激活<span>Sigmoid + ReLU</span></div>
+        <div class="stat-line">优化<span>SGD 批处理</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div id="kmeans" class="card">
-<div class="card-title"><span class="p">◆</span> K-Means 聚类</div>
-<canvas id="kmeans-canvas" width="340" height="340"></canvas>
-<div class="controls" style="margin-top:10px">
-<button class="btn btn-primary" id="km-step">▶ 单步</button>
-<button class="btn" id="km-run">▶ 自动</button>
-<button class="btn" id="km-reset">↻ 重置</button>
-</div>
-</div>
-</div>
+<!-- ═══ 卷积 + K-Means ═══ -->
+<section id="conv" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">卷积 &amp; 聚类</span> 经典算法</h2></div>
+  <div class="section-sub">// 卷积核可视化 · K-Means 无监督聚类</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header"><span class="card-title">卷积核演示</span><span class="card-badge">Conv</span></div>
+      <canvas id="conv-canvas" width="340" height="340"></canvas>
+      <div class="btn-group" style="margin-top:12px"><button class="btn" id="conv-sharpen">锐化</button><button class="btn" id="conv-edge">边缘</button><button class="btn" id="conv-blur">模糊</button><button class="btn" id="conv-emboss">浮雕</button></div>
+    </div>
+    <div class="card" id="kmeans">
+      <div class="card-header"><span class="card-title">K-Means 聚类</span><span class="card-badge">Cluster</span></div>
+      <canvas id="kmeans-canvas" width="340" height="340"></canvas>
+      <div class="btn-group" style="margin-top:12px"><button class="btn btn-primary" id="km-step">▶ 单步</button><button class="btn" id="km-run">▶ 自动</button><button class="btn" id="km-reset">↻ 重置</button></div>
+    </div>
+  </div>
+</section>
 
-<div id="skills" class="card">
-<div class="card-title"><span class="p">◆</span> 技术体系</div>
-<div class="skills-grid">
-<div class="skill-card"><div class="skill-name">量化金融系统</div><div class="stat-line">因子挖掘 · 回测 · CVaR<span>95%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="95%"></div></div></div>
-<div class="skill-card"><div class="skill-name" style="color:var(--pk);text-shadow:0 0 6px rgba(255,0,255,.2)">NLP 文本分析</div><div class="stat-line">TextRank · 贝叶斯 · TF-IDF<span>85%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="85%"></div></div></div>
-<div class="skill-card"><div class="skill-name">计量经济学</div><div class="stat-line">因果推断 · ARIMA · DSGE<span>88%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="88%"></div></div></div>
-<div class="skill-card"><div class="skill-name" style="color:var(--pk);text-shadow:0 0 6px rgba(255,0,255,.2)">MCP 生态</div><div class="stat-line">15台 · ~370接口 · 58技能<span>92%</span></div><div class="skill-bar"><div class="skill-fill cy" data-w="92%"></div></div></div>
-</div>
-</div>
+<!-- ═══ 增长漏斗 ═══ -->
+<section id="funnel" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">增长漏斗</span> 分析转化</h2></div>
+  <div class="section-sub">// 数据获取 → 清洗 → 建模 → 洞察 → 决策 · 分析价值链</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">分析价值链漏斗</span><span class="card-badge">Funnel</span></div>
+    <div class="funnel" id="funnel-mount"></div>
+    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 模拟新流程</button></div>
+    <div class="stat-row" style="margin-top:14px;border:none"><span>分析转化率</span><span class="hl" id="funnel-total">0%</span></div>
+  </div>
+</section>
 
-<div id="projects" class="card">
-<div class="card-title"><span class="p">◆</span> 项目作品 · 开源实证</div>
-<div class="proj-grid">
-<a class="proj-card" href="https://github.com/wzx11223344/pyconometrics" target="_blank">
-<div class="proj-name">pyconometrics</div>
-<div class="proj-desc">计量经济工具库：面板固定效应、工具变量(IV)、稳健标准误与异方差修正，覆盖经典与双重机器学习估计。</div>
-<div class="proj-tags"><span>Python</span><span>Stata</span><span>面板</span></div></a>
-<a class="proj-card" href="https://github.com/wzx11223344/quantlab" target="_blank">
-<div class="proj-name">quantlab</div>
-<div class="proj-desc">量化金融回测框架：因子挖掘、信号合成、CVaR 风险度量与绩效归因，支持多资产组合优化。</div>
-<div class="proj-tags"><span>Python</span><span>回测</span><span>CVaR</span></div></a>
-<a class="proj-card" href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">
-<div class="proj-name">causal-inference-ml</div>
-<div class="proj-desc">因果推断 + 机器学习：双重差分(DID)、断点回归(RD)、匹配与 uplift 建模的可复现实验代码。</div>
-<div class="proj-tags"><span>DID</span><span>RD</span><span>ML</span></div></a>
-<a class="proj-card" href="https://github.com/wzx11223344/china-econ-pulse" target="_blank">
-<div class="proj-name">china-econ-pulse</div>
-<div class="proj-desc">中国经济数据可视化：城市/省份面板指标动态仪表盘，融合年鉴、IFR 机器人渗透率等权威数据源。</div>
-<div class="proj-tags"><span>可视化</span><span>面板</span><span>Web</span></div></a>
-<a class="proj-card" href="https://github.com/wzx11223344/policysim" target="_blank">
-<div class="proj-name">policysim</div>
-<div class="proj-desc">政策模拟仿真：基于 DSGE 与可计算一般均衡的可视化政策冲击推演，支持参数敏感度分析。</div>
-<div class="proj-tags"><span>DSGE</span><span>仿真</span><span>政策</span></div></a>
-<a class="proj-card" href="https://github.com/wzx11223344/express-consumption" target="_blank">
-<div class="proj-name">express-consumption</div>
-<div class="proj-desc">正大杯 1,352 份问卷计量建模可复现代码，体现规范的问卷清洗、信效度检验与实证分析全流程。</div>
-<div class="proj-tags"><span>问卷</span><span>计量</span><span>复现</span></div></a>
-</div>
-</div>
+<!-- ═══ 项目 ═══ -->
+<section id="projects" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">项目作品</span> 开源实证</h2></div>
+  <div class="section-sub">// GitHub 开源 · 可复现实证代码</div>
+  <div class="feature-grid">
+    <a class="feature-card" href="https://github.com/wzx11223344/pyconometrics" target="_blank"><div class="ic">📐</div><h3>pyconometrics</h3><p>计量经济工具库：面板固定效应、IV、稳健标准误与双重机器学习估计。</p><span class="meta">Python · 面板</span></a>
+    <a class="feature-card" href="https://github.com/wzx11223344/quantlab" target="_blank"><div class="ic">📊</div><h3>quantlab</h3><p>量化回测框架：因子挖掘、信号合成、CVaR 风险度量与绩效归因。</p><span class="meta">Python · 回测</span></a>
+    <a class="feature-card" href="https://github.com/wzx11223344/causal-inference-ml" target="_blank"><div class="ic">🧪</div><h3>causal-inference-ml</h3><p>因果推断 + ML：DID、RD、匹配与 uplift 建模的可复现代码。</p><span class="meta">DID · RD</span></a>
+    <a class="feature-card" href="https://github.com/wzx11223344/china-econ-pulse" target="_blank"><div class="ic">🌏</div><h3>china-econ-pulse</h3><p>中国经济数据可视化：城市/省份面板动态仪表盘，融合权威数据源。</p><span class="meta">可视化 · 面板</span></a>
+    <a class="feature-card" href="https://github.com/wzx11223344/policysim" target="_blank"><div class="ic">🏛️</div><h3>policysim</h3><p>政策模拟仿真：DSGE 与 CGE 的可视化政策冲击推演。</p><span class="meta">DSGE · 仿真</span></a>
+    <a class="feature-card" href="https://github.com/wzx11223344/express-consumption" target="_blank"><div class="ic">📋</div><h3>express-consumption</h3><p>正大杯 1,352 份问卷计量建模可复现代码，规范全流程。</p><span class="meta">问卷 · 计量</span></a>
+  </div>
+</section>
 
-<div id="contact" class="card">
-<div class="card-title"><span class="p">◆</span> 联系方式</div>
-<div class="contact-grid">
-<a class="contact-item" href="https://github.com/wzx11223344" target="_blank"><b>GitHub</b> · wzx11223344</a>
-<a class="contact-item" href="https://space.bilibili.com/502800415" target="_blank"><b>B站</b> · 黎明之剑11</a>
-<a class="contact-item" href="mailto:13388736755@163.com"><b>Email</b> · 13388736755@163.com</a>
-<a class="contact-item" href="tel:13388736755"><b>电话</b> · 13388736755</a>
-</div>
-</div>
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="../index.html">← 返回全部作品集</a>
+  </div>
+  <div>万值翔 · 全栈分析引擎 · 从零实现一切</div>
+  <div class="award">🌐 <strong>通用综合</strong> · 量化 · 计量 · ML</div>
+</footer>
+</main>
 
-<div class="footer">
-<a href="https://github.com/wzx11223344" target="_blank">[ github.com/wzx11223344 ]</a> · 万值翔 · 算法作品集
-</div>
-</div>
-
+<script src="../assets/app.js"></script>
 <script>
-// ═══ BG Grid ═══
-const bgC=document.getElementById('bg-grid'),bgCtx=bgC.getContext('2d');
-let bw,bh;
-function resizeBg(){bw=bgC.width=innerWidth;bh=bgC.height=innerHeight}
-resizeBg();window.addEventListener('resize',resizeBg);
-let gTime=0;
-function drawGrid(){
-  bgCtx.clearRect(0,0,bw,bh);gTime+=.005;
-  const sp=50,off=30;
-  bgCtx.strokeStyle='rgba(0,240,255,.06)';bgCtx.lineWidth=.5;
-  for(let x=-1;x<bw/sp+1;x++){const px=x*sp+Math.sin(gTime+x*.3+off)*4;bgCtx.beginPath();bgCtx.moveTo(px,0);bgCtx.lineTo(px,bh);bgCtx.stroke()}
-  bgCtx.strokeStyle='rgba(255,0,255,.04)';bgCtx.lineWidth=.5;
-  for(let y=-1;y<bh/sp+1;y++){const py=y*sp+Math.cos(gTime+y*.3)*4;bgCtx.beginPath();bgCtx.moveTo(0,py);bgCtx.lineTo(bw,py);bgCtx.stroke()}
-  // accent dots
-  for(let y=0;y<bh;y+=sp)for(let x=0;x<bw;x+=sp){
-    const dx=x+Math.sin(gTime+x*.2+y*.15)*6,dy=y+Math.cos(gTime+y*.2+x*.15)*6;
-    bgCtx.fillStyle=`rgba(0,240,255,${.06+Math.sin(gTime*2+x*.05+y*.05)*.03})`;
-    bgCtx.beginPath();bgCtx.arc(dx,dy,1.2,0,Math.PI*2);bgCtx.fill()
-  }
-  requestAnimationFrame(drawGrid)
-}
-drawGrid();
-
-// ═══ Cursor ═══
-const cursor=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
-document.querySelectorAll('a,button,.btn').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.width='60px';cursor.style.height='60px'});
-  el.addEventListener('mouseleave',()=>{cursor.style.width='40px';cursor.style.height='40px'})
+// ═══ 分析看板 ═══
+PD.Dashboard({
+  'kpi-tps': {base:184, jitter:22, dec:0},
+  'kpi-acc': {base:94.6,jitter:0.8, dec:1, suffix:'%'},
+  'kpi-pipe':{base:99.2,jitter:0.4, dec:1, suffix:'%'},
+  'kpi-jobs':{base:12,  jitter:3, dec:0}
 });
+PD.EventStream('event-stream',{verbs:['任务调度','模型训练','数据清洗','特征工程','回测完成','报告生成','管线校验','结果推送']});
 
-// ═══ Scroll Reveal ═══
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach((e)=>{
-    if(e.isIntersecting){
-      e.target.classList.add('show');
-      const fills=e.target.querySelectorAll('.skill-fill');
-      fills.forEach((f)=>{ f.style.width=f.dataset.w; });
-    }
-  });
-},{threshold:.1});
-document.querySelectorAll('.card,.footer').forEach(el=>obs.observe(el));
-
-// ═══ Neural Network ═══
+// ═══ 神经网络 ═══
 const nnCanvas=document.getElementById('nn-canvas'),nnCtx=nnCanvas.getContext('2d');
 const W=nnCanvas.width,H=nnCanvas.height;
 let nnRunning=false,nnEpoch=0,nnLoss=0;
@@ -323,46 +207,43 @@ function trainNN(){
   drawNN();setTimeout(trainNN,16);
 }
 function drawNN(){
-  nnCtx.fillStyle='#05050a';nnCtx.fillRect(0,0,W,H);
+  nnCtx.fillStyle='#05080f';nnCtx.fillRect(0,0,W,H);
   const colW=W/4;
-  // Input
   for(let i=0;i<2;i++){
     const x=colW,y=H/2-30+i*60;
-    for(let j=0;j<8;j++){nnCtx.strokeStyle=`rgba(0,240,255,${Math.abs(nn.wih[j%2][j])*.25})`;nnCtx.lineWidth=.6+Math.abs(nn.wih[j%2][j])*.5;
+    for(let j=0;j<8;j++){nnCtx.strokeStyle='rgba(34,211,238,'+(Math.abs(nn.wih[j%2][j])*.25)+')';nnCtx.lineWidth=.6+Math.abs(nn.wih[j%2][j])*.5;
       nnCtx.beginPath();nnCtx.moveTo(x,y);nnCtx.lineTo(colW*2,30+j*40);nnCtx.stroke()}
-    nnCtx.beginPath();nnCtx.arc(x,y,10,0,Math.PI*2);nnCtx.fillStyle='#00f0ff';nnCtx.shadowColor='#00f0ff';nnCtx.shadowBlur=12;nnCtx.fill();nnCtx.shadowBlur=0;
+    nnCtx.beginPath();nnCtx.arc(x,y,10,0,Math.PI*2);nnCtx.fillStyle='#22d3ee';nnCtx.fill();
     nnCtx.fillStyle='#fff';nnCtx.font='9px monospace';nnCtx.textAlign='center';nnCtx.fillText(['x','y'][i],x,y+3);
   }
-  // Hidden
   for(let i=0;i<8;i++){
     const x=colW*2,y=30+i*40;
     const wa=nn.wih[0][i],wb=nn.wih[1][i],hue=Math.floor((Math.atan2(wb,wa)/Math.PI*180+180)%360);
-    for(let j=0;j<1;j++){nnCtx.strokeStyle=`rgba(255,0,255,${Math.abs(nn.who[i][0])*.2})`;nnCtx.lineWidth=.5+Math.abs(nn.who[i][0])*.4;
-      nnCtx.beginPath();nnCtx.moveTo(x,y);nnCtx.lineTo(colW*3,H/2);nnCtx.stroke()}
-    nnCtx.beginPath();nnCtx.arc(x,y,9,0,Math.PI*2);nnCtx.fillStyle=`hsl(${hue},80%,55%)`;nnCtx.shadowColor='#ff00ff';nnCtx.shadowBlur=10;nnCtx.fill();nnCtx.shadowBlur=0;
+    nnCtx.strokeStyle='rgba(244,114,182,'+(Math.abs(nn.who[i][0])*.2)+')';nnCtx.lineWidth=.5+Math.abs(nn.who[i][0])*.4;
+    nnCtx.beginPath();nnCtx.moveTo(x,y);nnCtx.lineTo(colW*3,H/2);nnCtx.stroke();
+    nnCtx.beginPath();nnCtx.arc(x,y,9,0,Math.PI*2);nnCtx.fillStyle='hsl('+hue+',80%,55%)';nnCtx.fill();
   }
-  // Output
   const x=colW*3,y=H/2;
   const outVal=nn.bo[0];
   nnCtx.beginPath();nnCtx.arc(x,y,12,0,Math.PI*2);
-  nnCtx.fillStyle=outVal>0?'#00f0ff':'#ff00ff';nnCtx.shadowColor=outVal>0?'#00f0ff':'#ff00ff';nnCtx.shadowBlur=15;nnCtx.fill();nnCtx.shadowBlur=0;
+  nnCtx.fillStyle=outVal>0?'#22d3ee':'#f472b6';nnCtx.fill();
   nnCtx.fillStyle='#fff';nnCtx.font='10px monospace';nnCtx.textAlign='center';nnCtx.fillText(outVal>0?'1':'0',x,y+3);
-  nnCtx.fillStyle='#555';nnCtx.font='9px monospace';nnCtx.textAlign='center';
-  nnCtx.fillText('输入',colW,H+16);nnCtx.fillText('隐藏(8)',colW*2,H+16);nnCtx.fillText('输出',colW*3,H+16);
+  nnCtx.fillStyle='#5d687e';nnCtx.font='9px monospace';nnCtx.textAlign='center';
+  nnCtx.fillText('输入',colW,H-6);nnCtx.fillText('隐藏(8)',colW*2,H-6);nnCtx.fillText('输出',colW*3,H-6);
 }
 initNN();drawNN();
 document.getElementById('nn-train').onclick=()=>{if(!nnRunning){nnRunning=true;trainNN()}};
 document.getElementById('nn-stop').onclick=()=>{nnRunning=false};
 document.getElementById('nn-reset').onclick=()=>{nnRunning=false;initNN();drawNN()};
 
-// ═══ Convolution ═══
+// ═══ 卷积 ═══
 const convCanvas=document.getElementById('conv-canvas'),convCtx=convCanvas.getContext('2d');
-const cW=340,cH=340,gs=5;
+const gs=5;
 let convImg=Array.from({length:68},()=>Array(68).fill(0));
 function genCircle(){
   convImg=Array.from({length:68},()=>Array(68).fill(0));
   for(let y=0;y<68;y++)for(let x=0;x<68;x++){
-    if(Math.sqrt((x-34)**2+(y-34)**2)<20)convImg[y][x]=1;
+    if(Math.sqrt((x-34)*(x-34)+(y-34)*(y-34))<20)convImg[y][x]=1;
     else if(Math.abs(x-34)<10&&Math.abs(y-34)<30)convImg[y][x]=.5;
   }
 }
@@ -379,7 +260,7 @@ function applyConv(kernel){
 function drawConv(){
   for(let y=0;y<68;y++)for(let x=0;x<68;x++){
     const v=Math.floor(convImg[y][x]*255);
-    convCtx.fillStyle=`rgb(${v},${v},${v})`;convCtx.fillRect(x*gs,y*gs,gs,gs);
+    convCtx.fillStyle='rgb('+v+','+v+','+v+')';convCtx.fillRect(x*gs,y*gs,gs,gs);
   }
 }
 genCircle();drawConv();
@@ -390,7 +271,6 @@ document.getElementById('conv-emboss').onclick=()=>{genCircle();applyConv([[-2,-
 
 // ═══ K-Means ═══
 const kmCanvas=document.getElementById('kmeans-canvas'),kmCtx=kmCanvas.getContext('2d');
-const kW=340,kH=340;
 let kmPoints=[],kmCenters=[],kmRunning=false;
 function genKM(){
   kmPoints=[];const clusters=[[60,80],[170,170],[280,260]];
@@ -398,14 +278,14 @@ function genKM(){
   kmCenters=Array.from({length:3},()=>({x:Math.random()*340,y:Math.random()*340}));drawKM();
 }
 function drawKM(){
-  kmCtx.fillStyle='#05050a';kmCtx.fillRect(0,0,kW,kH);
+  kmCtx.fillStyle='#05080f';kmCtx.fillRect(0,0,340,340);
   kmPoints.forEach(p=>{
     let md=Infinity,lb=0;kmCenters.forEach((c,i)=>{const d=Math.hypot(p.x-c.x,p.y-c.y);if(d<md){md=d;lb=i}});
-    kmCtx.fillStyle=`hsl(${lb*120},80%,55%)`;kmCtx.beginPath();kmCtx.arc(p.x,p.y,3,0,Math.PI*2);kmCtx.fill();
+    kmCtx.fillStyle='hsl('+(lb*120)+',80%,55%)';kmCtx.beginPath();kmCtx.arc(p.x,p.y,3,0,Math.PI*2);kmCtx.fill();
   });
   kmCenters.forEach((c,i)=>{
     kmCtx.strokeStyle='#fff';kmCtx.lineWidth=2;kmCtx.beginPath();kmCtx.arc(c.x,c.y,7,0,Math.PI*2);kmCtx.stroke();
-    kmCtx.fillStyle=`hsl(${i*120},100%,65%)`;kmCtx.beginPath();kmCtx.arc(c.x,c.y,5,0,Math.PI*2);kmCtx.fill();
+    kmCtx.fillStyle='hsl('+(i*120)+',100%,65%)';kmCtx.beginPath();kmCtx.arc(c.x,c.y,5,0,Math.PI*2);kmCtx.fill();
   });
 }
 function stepKM(){
@@ -418,6 +298,17 @@ genKM();
 document.getElementById('km-step').onclick=stepKM;
 document.getElementById('km-run').onclick=()=>{if(!kmRunning){kmRunning=true;(function loop(){stepKM();setTimeout(loop,300)})()}};
 document.getElementById('km-reset').onclick=()=>{kmRunning=false;genKM()};
+
+// ═══ 增长漏斗 ═══
+(function(){
+  function gen(){
+    var b=8000+Math.floor(Math.random()*3000);
+    var s=[b,b*0.8,b*0.6,b*0.42,b*0.3].map(function(v){return Math.round(v);});
+    return [{label:'获取',value:s[0]},{label:'清洗',value:s[1]},{label:'建模',value:s[2]},{label:'洞察',value:s[3]},{label:'决策',value:s[4]}];
+  }
+  function run(){var st=gen(); PD.funnel('funnel-mount',st); document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(1)+'%';}
+  document.getElementById('funnel-btn').onclick=run; run();
+})();
 </script>
 </body>
 </html>

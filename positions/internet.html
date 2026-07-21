@@ -3,630 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>互联网数据运营 · 作品集</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2300f0ff'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2300f0ff'/%3E%3C/svg%3E">
+<title>互联网运营数据 · 增长分析与数据驱动作品集</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
-body{background:#fff;color:#1e293b;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;overflow-x:hidden}
-::selection{background:#06b6d4;color:#fff}
-canvas{display:block}
-
-/* ── Dot Grid Background ── */
-#dot-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-
-/* ── Layout ── */
-.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px}
-
-/* ── Nav ── */
-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:center;gap:4px;padding:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(6,182,212,.1);margin-bottom:40px}
-nav a{color:#94a3b8;text-decoration:none;padding:8px 20px;font-size:13px;font-weight:500;border-radius:999px;transition:all .3s ease;cursor:pointer}
-nav a:hover,nav a.active{color:#06b6d4;background:rgba(6,182,212,.08)}
-nav a.active{color:#fff;background:#06b6d4}
-
-/* ── Hero ── */
-.hero{text-align:center;padding:60px 0 48px}
-.hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.05;color:#0f172a;margin-bottom:8px}
-.hero .sub{font-size:15px;font-weight:350;color:#94a3b8;letter-spacing:2px}
-.hero .sub em{font-style:normal;color:#06b6d4}
-.hero .divider{width:48px;height:3px;background:linear-gradient(90deg,#06b6d4,#10b981);border-radius:2px;margin:20px auto}
-
-/* ── KPI Stats ── */
-.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:0 0 40px}
-.stat-card{background:#fff;border-radius:20px;padding:24px 32px;text-align:center;min-width:150px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.04);transition:all .4s ease;border:1px solid rgba(0,0,0,.03)}
-.stat-card:hover{transform:translateY(-4px);box-shadow:0 4px 12px rgba(0,0,0,.06),0 12px 32px rgba(0,0,0,.06)}
-.stat-num{font-size:32px;font-weight:700;color:#0f172a;font-feature-settings:"tnum";letter-spacing:-1px;line-height:1.2}
-.stat-num .unit{font-size:14px;font-weight:400;color:#94a3b8;margin-left:2px}
-.stat-lbl{font-size:12px;color:#94a3b8;margin-top:4px;font-weight:500;letter-spacing:.5px}
-.stat-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle}
-.stat-dot.cyan{background:#06b6d4}
-.stat-dot.green{background:#10b981}
-
-/* ── Section ── */
-.section{padding:40px 0 20px;scroll-margin-top:80px}
-.section-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.section-title .icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff}
-.section-title .icon.cyan{background:linear-gradient(135deg,#06b6d4,#0ea5e9)}
-.section-title .icon.green{background:linear-gradient(135deg,#10b981,#34d399)}
-.section-title .icon.purple{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
-.section-title .icon.orange{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
-.section-title .icon.blue{background:linear-gradient(135deg,#3b82f6,#60a5fa)}
-.section-title h2{font-size:20px;font-weight:700;color:#0f172a;letter-spacing:-.3px}
-.section-title .badge{background:rgba(6,182,212,.1);color:#06b6d4;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600}
-
-/* ── Cards ── */
-.card{background:#fff;border-radius:20px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.03),0 4px 12px rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.03);transition:all .4s ease}
-.card:hover{box-shadow:0 2px 8px rgba(0,0,0,.05),0 12px 32px rgba(0,0,0,.05)}
-.card-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.card-hd h3{font-size:14px;font-weight:600;color:#475569}
-.card-hd .tag{font-size:10px;background:rgba(6,182,212,.08);color:#06b6d4;padding:3px 10px;border-radius:999px;font-weight:600}
-
-/* ── Grids ── */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-@media(max-width:900px){.grid-2,.grid-4{grid-template-columns:1fr}}
-
-/* ── Controls ── */
-.controls{display:flex;gap:10px;margin-top:16px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border:none;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s ease;font-family:inherit}
-.btn-primary{background:#06b6d4;color:#fff;box-shadow:0 2px 8px rgba(6,182,212,.25)}
-.btn-primary:hover{background:#0891b2;transform:translateY(-1px);box-shadow:0 4px 16px rgba(6,182,212,.35)}
-.btn-outline{background:transparent;color:#64748b;border:1px solid #e2e8f0}
-.btn-outline:hover{background:#f8fafc;border-color:#06b6d4;color:#06b6d4}
-
-/* ── Event Stream ── */
-#event-stream{max-height:260px;overflow-y:auto;font-size:12px;line-height:1.6;scrollbar-width:thin;scrollbar-color:#e2e8f0 transparent}
-#event-stream::-webkit-scrollbar{width:4px}
-#event-stream::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:4px}
-.event-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f1f5f9;animation:fadeSlide .4s ease}
-.event-time{color:#94a3b8;font-size:11px;font-family:'SF Mono',monospace;white-space:nowrap;min-width:70px}
-.event-channel{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px}
-.event-channel.web{background:#dbeafe;color:#2563eb}
-.event-channel.ios{background:#e0e7ff;color:#4f46e5}
-.event-channel.android{background:#d1fae5;color:#059669}
-.event-channel.mini{background:#fef3c7;color:#d97706}
-.event-text{color:#334155;font-weight:500}
-.event-text.highlight{color:#10b981;font-weight:700}
-.event-count{font-size:10px;color:#cbd5e1}
-@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;margin-right:6px;animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-
-/* ── Funnel ── */
-.funnel-step{display:flex;align-items:center;gap:20px;padding:12px 0;position:relative}
-.funnel-step:not(:last-child)::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:1px;height:12px;background:#e2e8f0}
-.funnel-bar-wrap{flex:1;display:flex;align-items:center;gap:12px}
-.funnel-bar{height:40px;border-radius:10px;transition:width 1s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;padding:0 14px;min-width:60px}
-.funnel-bar span{font-size:12px;font-weight:600;color:#fff;white-space:nowrap}
-.funnel-info{min-width:100px;text-align:right}
-.funnel-info .val{font-size:15px;font-weight:700;color:#0f172a}
-.funnel-info .pct{font-size:11px;color:#94a3b8}
-.funnel-loss{font-size:10px;color:#f43f5e;font-weight:600;margin-top:2px}
-
-/* ── Skill Bars ── */
-.skill-item{margin-bottom:18px}
-.skill-hd{display:flex;justify-content:space-between;margin-bottom:6px}
-.skill-hd .name{font-size:13px;font-weight:600;color:#334155}
-.skill-hd .pct{font-size:12px;font-weight:700;color:#06b6d4;font-feature-settings:"tnum"}
-.skill-track{height:6px;background:#f1f5f9;border-radius:999px;overflow:hidden}
-.skill-bar{height:100%;border-radius:999px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);position:relative}
-.skill-bar.cyan{background:linear-gradient(90deg,#06b6d4,#0ea5e9)}
-.skill-bar.green{background:linear-gradient(90deg,#10b981,#34d399)}
-.skill-bar.purple{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
-.skill-bar.orange{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
-
-/* ── Footer ── */
-.footer{text-align:center;padding:48px 0 40px;border-top:1px solid #f1f5f9;margin-top:40px}
-.footer .links{display:flex;justify-content:center;gap:24px;margin-bottom:12px}
-.footer a{color:#06b6d4;text-decoration:none;font-size:13px;font-weight:600;transition:color .3s}
-.footer a:hover{color:#0891b2}
-.footer .copy{font-size:12px;color:#94a3b8}
-.footer .award{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(6,182,212,.08),rgba(16,185,129,.08));padding:6px 16px;border-radius:999px;font-size:12px;color:#475569;margin-top:10px}
-.footer .award strong{color:#06b6d4}
-
-/* ── Smooth Section Reveal ── */
-.section{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
-.section.visible{opacity:1;transform:translateY(0)}
-.hub-back{position:fixed;top:10px;left:10px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(8,8,14,.82);border:1px solid rgba(255,255,255,.18);border-radius:20px;color:#fff;text-decoration:none;font:600 12px/1 monospace;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s}
-.hub-back:hover{border-color:#0ff;color:#0ff;box-shadow:0 0 14px rgba(0,255,255,.35)}
-@media(max-width:768px){.hub-back{top:8px;left:8px;padding:5px 10px;font-size:11px}}
+/* internet accent: cyan — all shell styles come from theme.css */
+.card-title{color:#22d3ee}
+.card-badge{color:#22d3ee;border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#22d3ee,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
 </style>
 </head>
 <body>
-<a class="hub-back" href="index.html">← 返回全部作品集</a>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
 
-<canvas id="dot-canvas"></canvas>
-
-<nav id="nav">
-  <a class="active" data-section="dashboard">实时看板</a>
-  <a data-section="retention">留存分析</a>
-  <a data-section="rfm">用户分群</a>
-  <a data-section="funnel">漏斗转化</a>
-  <a data-section="skills">技能</a>
+<nav>
+  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <div class="nav-inner">
+    <a href="../index.html">◀ 主站</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#dashboard">运营看板</a>
+    <a href="#retention">留存分析</a>
+    <a href="#funnel">转化漏斗</a>
+    <a href="#ab">A/B 测试</a>
+    <a href="#behavior">用户行为</a>
+    <a href="#growth">增长策略</a>
+  </div>
 </nav>
 
-<div class="container">
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>INTERNET · 数据驱动运营与增长</div>
+  <h1 class="hero-name">数据驱动<span class="accent">增长运营</span></h1>
+  <div class="hero-sub" data-typed='["用户增长 · 留存分析 · 转化漏斗 · A/B 测试","埋点采集 · 实时看板 · RFM 分层 · 增长策略","Python · SQL · Tableau · AI Agent · 爬虫"]'></div>
+  <div class="hero-tags">
+    <span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>留存</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="128" data-suffix="万">0</div><div class="kpi-label">累计触达用户</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="42.6" data-dec="1" data-suffix="万">0</div><div class="kpi-label">内容点赞量</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="650.7" data-dec="1" data-suffix="万">0</div><div class="kpi-label">累计播放量</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="18">0</div><div class="kpi-label">运营分析工具</div></div>
+  </div>
+</section>
 
-<!-- ═══ Hero ═══ -->
-<div class="hero">
-  <h1>数据运营增长</h1>
-  <div class="sub">实时行为分析 · 留存建模 · <em>RFM</em> 分群 · 漏斗诊断</div>
-  <div class="divider"></div>
-</div>
-
-<!-- ═══ KPI Stats ═══ -->
-<div class="stats">
-  <div class="stat-card">
-    <div class="stat-num"><span id="live-users">1,247</span><span class="unit">人</span></div>
-    <div class="stat-lbl"><span class="stat-dot cyan"></span>当前活跃</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num"><span id="ret-rate">42.3</span><span class="unit">%</span></div>
-    <div class="stat-lbl"><span class="stat-dot cyan"></span>次日留存</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num"><span id="conv-rate">3.2</span><span class="unit">%</span></div>
-    <div class="stat-lbl"><span class="stat-dot green"></span>转化率</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num"><span id="mau">6.8</span><span class="unit">万</span></div>
-    <div class="stat-lbl"><span class="stat-dot green"></span>月活跃用户</div>
-  </div>
-</div>
-
-<!-- ═══ Section 1: Dashboard / Real-time ═══ -->
-<div class="section visible" id="dashboard">
-  <div class="section-title">
-    <div class="icon cyan">&#9889;</div>
-    <h2>实时事件流</h2>
-    <span class="badge">WebSocket 模拟</span>
-  </div>
+<!-- ═══ 运营看板 ═══ -->
+<section id="dashboard" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">运营看板</span> 核心指标监控</h2></div>
+  <div class="section-sub">// DAU / 留存 / 转化率 / ARPU · 实时刷新模拟 · 秒级指标看板</div>
   <div class="card">
-    <div class="card-hd">
-      <h3>用户行为事件流水</h3>
-      <span class="tag"><span class="pulse-dot"></span>LIVE</span>
+    <div class="card-header"><span class="card-title">核心指标 · 实时监控</span><span class="card-badge">Live</span></div>
+    <div class="stats-grid" style="margin-top:0">
+      <div class="stat-item"><div class="stat-val" id="kpi-dau">0</div><div class="stat-label">DAU 日活</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-ret7">0%</div><div class="stat-label">7日留存</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-cvr">0%</div><div class="stat-label">支付转化率</div></div>
+      <div class="stat-item"><div class="stat-val" id="kpi-arpu">0</div><div class="stat-label">ARPU (¥)</div></div>
     </div>
-    <div id="event-stream">
-      <div class="event-item" style="color:#94a3b8">等待数据接入...</div>
-    </div>
-    <div class="controls">
-      <button class="btn btn-primary" id="stream-btn">&#9654; 开始接收</button>
-      <button class="btn btn-outline" id="stop-stream">&#10074;&#10074; 暂停</button>
+    <div style="margin-top:18px">
+      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">实时运营事件流</div>
+      <div id="event-stream"></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══ Section 2: Retention ═══ -->
-<div class="section" id="retention">
-  <div class="section-title">
-    <div class="icon green">&#x21C5;</div>
-    <h2>留存曲线</h2>
-    <span class="badge">指数衰减拟合</span>
-  </div>
-  <div class="card">
-    <div class="card-hd">
-      <h3>日留存 · 幂律衰减模型</h3>
-      <span class="tag">D1/D3/D7/D14/D30/D60/D90</span>
+<!-- ═══ 留存分析 ═══ -->
+<section id="retention" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">留存分析</span> 同期群 &amp; RFM 分层</h2></div>
+  <div class="section-sub">// Cohort 周留存曲线 · RFM 用户价值分层（F 频率 × M 金额）</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Cohort 周留存曲线</span><span class="card-badge">Cohort</span></div>
+      <canvas id="retention-canvas" width="520" height="300"></canvas>
     </div>
-    <canvas id="retention-canvas" width="1000" height="420"></canvas>
-  </div>
-</div>
-
-<!-- ═══ Section 3: RFM ═══ -->
-<div class="section" id="rfm">
-  <div class="section-title">
-    <div class="icon purple">&#9673;</div>
-    <h2>RFM 用户分群</h2>
-    <span class="badge">K-Means 聚类</span>
-  </div>
-  <div class="card">
-    <div class="card-hd">
-      <h3>最近消费 × 消费频率分布</h3>
-      <span class="tag">4 类用户画像</span>
-    </div>
-    <canvas id="rfm-canvas" width="700" height="500"></canvas>
-  </div>
-</div>
-
-<!-- ═══ Section 4: Funnel ═══ -->
-<div class="section" id="funnel">
-  <div class="section-title">
-    <div class="icon orange">&#9660;</div>
-    <h2>漏斗转化</h2>
-    <span class="badge">4 层流失诊断</span>
-  </div>
-  <div class="card">
-    <div class="card-hd">
-      <h3>曝光 → 支付 全链路</h3>
-      <span class="tag">流失率 <span id="funnel-loss">96.8%</span></span>
-    </div>
-    <div id="funnel-viz"></div>
-  </div>
-</div>
-
-<!-- ═══ Section 5: Skills ═══ -->
-<div class="section" id="skills">
-  <div class="section-title">
-    <div class="icon blue">&#9881;</div>
-    <h2>技术栈与能力</h2>
-    <span class="badge">数据运营方向</span>
-  </div>
-  <div class="card">
-    <div class="grid-4" id="skill-grid">
-      <div class="skill-item">
-        <div class="skill-hd"><span class="name">数据分析增长</span><span class="pct" data-target="95">0%</span></div>
-        <div class="skill-track"><div class="skill-bar cyan" data-width="95"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-hd"><span class="name">AI Agent 自动化</span><span class="pct" data-target="90">0%</span></div>
-        <div class="skill-track"><div class="skill-bar green" data-width="90"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-hd"><span class="name">数据可视化</span><span class="pct" data-target="88">0%</span></div>
-        <div class="skill-track"><div class="skill-bar purple" data-width="88"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-hd"><span class="name">爬虫采集</span><span class="pct" data-target="82">0%</span></div>
-        <div class="skill-track"><div class="skill-bar orange" data-width="82"></div></div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">RFM 用户分层散点</span><span class="card-badge">RFM</span></div>
+      <canvas id="rfm-canvas" width="520" height="300"></canvas>
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:10px;font-family:var(--font-mono);font-size:11px">
+        <span style="color:#22d3ee">● 重要价值</span><span style="color:#34d399">● 重要发展</span><span style="color:#a78bfa">● 一般保持</span><span style="color:#f472b6">● 流失预警</span>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══ Footer ═══ -->
-<div class="footer">
-  <div class="links">
-    <a href="https://github.com/wzx11223344" target="_blank">GitHub</a>
-    <a href="#">作品集</a>
-    <a href="#">关于</a>
+<!-- ═══ 转化漏斗 ═══ -->
+<section id="funnel" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">转化漏斗</span> 全链路转化分析</h2></div>
+  <div class="section-sub">// 曝光 → 点击 → 详情 → 加购 → 支付 · 逐级转化率 · 定位流失瓶颈</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">电商转化漏斗</span><span class="card-badge">Funnel</span></div>
+    <div class="funnel" id="funnel-mount"></div>
+    <div class="btn-group" style="margin-top:16px">
+      <button class="btn btn-primary" id="funnel-btn">▶ 模拟新流量</button>
+      <button class="btn" id="funnel-reset">↻ 重置</button>
+    </div>
+    <div class="stat-row" style="margin-top:14px;border:none"><span>整体转化率</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
   </div>
-  <div class="award">&#127942; 正大杯全国大学生市场调查与分析大赛 · <strong>优秀奖</strong></div>
-  <div class="copy" style="margin-top:10px">万值翔 &middot; 互联网数据运营方向</div>
-</div>
+</section>
 
-</div><!-- /container -->
+<!-- ═══ A/B 测试 ═══ -->
+<section id="ab" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">A/B 测试</span> 实验与显著性检验</h2></div>
+  <div class="section-sub">// 对照组 vs 实验组 · z-test 显著性 · 增长实验决策</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">落地页改版 A/B 实验</span><span class="card-badge">Experiment</span></div>
+    <div id="ab-mount"></div>
+  </div>
+</section>
 
+<!-- ═══ 用户行为 ═══ -->
+<section id="behavior" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">用户行为</span> 页面热力与路径</h2></div>
+  <div class="section-sub">// 点击热力点阵 · 高活跃区域识别 · 指导页面布局优化</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">页面点击热力图</span><span class="card-badge">Heatmap</span></div>
+    <canvas id="dot-canvas" width="760" height="360"></canvas>
+  </div>
+</section>
+
+<!-- ═══ 增长策略 ═══ -->
+<section id="growth" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">增长策略</span> 落地场景</h2></div>
+  <div class="section-sub">// 从数据洞察到增长动作的闭环</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="ic">🎯</div><h3>拉新获客</h3><p>渠道 ROI 归因、裂变系数 K 监控、低成本获客渠道优先级排序。</p><span class="meta">Acquisition</span></div>
+    <div class="feature-card"><div class="ic">⚡</div><h3>激活转化</h3><p>新用户引导漏斗、关键行为路径分析、Aha-moment 识别与强化。</p><span class="meta">Activation</span></div>
+    <div class="feature-card"><div class="ic">🔁</div><h3>留存促活</h3><p>Cohort 留存、RFM 分层触达、Push/签到/积分等促活策略。</p><span class="meta">Retention</span></div>
+    <div class="feature-card"><div class="ic">💰</div><h3>商业变现</h3><p>ARPU / LTV 提升、付费转化漏斗优化、定价 A/B 实验。</p><span class="meta">Revenue</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="../index.html">← 返回全部作品集</a>
+  </div>
+  <div>万值翔 · 数据驱动增长运营 · 用户行为分析</div>
+  <div class="award">📈 <strong>互联网数据运营</strong> · 增长黑客 · 指标看板</div>
+</footer>
+</main>
+
+<script src="../assets/app.js"></script>
 <script>
-// ══════════════════════════════════════════════════════════════════
-//  1. Dot Grid Canvas (mouse wave effect)
-// ══════════════════════════════════════════════════════════════════
-const dotCanvas = document.getElementById('dot-canvas');
-const dctx = dotCanvas.getContext('2d');
-let dW, dH, dots = [], mouseX = -9999, mouseY = -9999;
+// ═══ 运营看板：实时 KPI ═══
+PD.Dashboard({
+  'kpi-dau':   {base:48200, jitter:3000, dec:0},
+  'kpi-ret7':  {base:31.5,  jitter:2.5,  dec:1, suffix:'%'},
+  'kpi-cvr':   {base:4.8,   jitter:0.8,  dec:2, suffix:'%'},
+  'kpi-arpu':  {base:26.4,  jitter:1.2,  dec:1, prefix:'¥'}
+});
+PD.EventStream('event-stream',{verbs:['新用户注册','浏览商品详情','加入购物车','发起支付','分享裂变','领取优惠券','会员续费','内容点赞']});
 
-function resizeDots() {
-  dW = dotCanvas.width = window.innerWidth;
-  dH = dotCanvas.height = window.innerHeight;
-  const spacing = 36;
-  dots = [];
-  for (let x = spacing; x < dW; x += spacing)
-    for (let y = spacing; y < dH; y += spacing)
-      dots.push({ ox: x, oy: y, x, y });
-}
-resizeDots();
-window.addEventListener('resize', resizeDots);
-window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-window.addEventListener('touchmove', e => {
-  const t = e.touches[0]; mouseX = t.clientX; mouseY = t.clientY;
-}, { passive: true });
+// ═══ 留存曲线 ═══
+PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24,22]);
 
-function drawDots() {
-  dctx.clearRect(0, 0, dW, dH);
-  for (const d of dots) {
-    const dx = d.ox - mouseX, dy = d.oy - mouseY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const wave = Math.max(0, 1 - dist / 180);
-    const angle = Math.atan2(dy, dx);
-    d.x = d.ox + Math.cos(angle) * wave * 14;
-    d.y = d.oy + Math.sin(angle) * wave * 14;
-    const alpha = 0.12 + wave * 0.2;
-    dctx.fillStyle = `rgba(6,182,212,${alpha})`;
-    dctx.beginPath();
-    dctx.arc(d.x, d.y, 1.2 + wave * 1, 0, Math.PI * 2);
-    dctx.fill();
+// ═══ RFM 分层散点 ═══
+(function(){
+  var pts=[], colors=['#22d3ee','#34d399','#a78bfa','#f472b6'];
+  for(var i=0;i<40;i++){
+    var seg=Math.floor(Math.random()*4);
+    pts.push({f:Math.random(), m:Math.random(), r:Math.random(), color:colors[seg]});
   }
-  requestAnimationFrame(drawDots);
-}
-drawDots();
+  PD.RFM(document.getElementById('rfm-canvas'), pts);
+})();
 
-// ══════════════════════════════════════════════════════════════════
-//  2. Navigation + Section Reveal
-// ══════════════════════════════════════════════════════════════════
-const navLinks = document.querySelectorAll('nav a');
-const sections = document.querySelectorAll('.section');
+// ═══ 转化漏斗 ═══
+(function(){
+  var mount='funnel-mount';
+  function gen(){
+    var base=50000+Math.floor(Math.random()*20000);
+    var s=[base, base*(0.5+Math.random()*0.1), base*(0.28+Math.random()*0.06), base*(0.12+Math.random()*0.04), base*(0.05+Math.random()*0.02)]
+      .map(function(v){return Math.round(v);});
+    return [
+      {label:'曝光', value:s[0]},
+      {label:'点击', value:s[1]},
+      {label:'详情', value:s[2]},
+      {label:'加购', value:s[3]},
+      {label:'支付', value:s[4]}
+    ];
+  }
+  function summarize(st){
+    var total=(st[4].value/st[0].value*100).toFixed(2);
+    document.getElementById('funnel-total').textContent=total+'%';
+    var maxDrop=0, idx=0;
+    for(var i=1;i<st.length;i++){ var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;} }
+    document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
+  }
+  function run(){ var st=gen(); PD.funnel(mount, st); summarize(st); }
+  document.getElementById('funnel-btn').onclick=run;
+  document.getElementById('funnel-reset').onclick=function(){ PD.funnel(mount,[{label:'曝光',value:1}]); document.getElementById('funnel-total').textContent='0%'; document.getElementById('funnel-drop').textContent='-'; };
+  run();
+})();
 
-navLinks.forEach(a => {
-  a.addEventListener('click', () => {
-    navLinks.forEach(l => l.classList.remove('active'));
-    a.classList.add('active');
-    const id = a.dataset.section;
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  });
+// ═══ A/B 测试 ═══
+PD.AB({
+  mount:'ab-mount',
+  variants:[
+    {name:'对照组 · 旧版落地页', color:'#9aa6bd', trueRate:0.045},
+    {name:'实验组 · 新版落地页', color:'#22d3ee', trueRate:0.058}
+  ],
+  rounds:400
 });
 
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      navLinks.forEach(l => {
-        l.classList.toggle('active', l.dataset.section === e.target.id);
-      });
-    }
-  });
-}, { threshold: 0.2 });
-sections.forEach(s => obs.observe(s));
-
-// ══════════════════════════════════════════════════════════════════
-//  3. Skill Bar Animation
-// ══════════════════════════════════════════════════════════════════
-function animateSkills() {
-  document.querySelectorAll('.skill-item').forEach(item => {
-    const bar = item.querySelector('.skill-bar');
-    const pct = item.querySelector('.pct');
-    const target = parseInt(bar.dataset.width);
-    bar.style.width = target + '%';
-    let start = 0;
-    const step = () => {
-      if (start >= target) { pct.textContent = target + '%'; return; }
-      start += Math.ceil((target - start) * 0.12) || 1;
-      if (start > target) start = target;
-      pct.textContent = start + '%';
-      requestAnimationFrame(step);
-    };
-    step();
-  });
-}
-
-const skillObs = new IntersectionObserver((entries, obs) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { animateSkills(); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.3 });
-skillObs.observe(document.getElementById('skill-grid'));
-
-// ══════════════════════════════════════════════════════════════════
-//  4. Real-time Event Stream
-// ══════════════════════════════════════════════════════════════════
-const events = ['页面浏览', '点击', '加入购物车', '提交订单', '支付成功', '内容分享', '评论', '点赞', '收藏', '退出'];
-const channels = [
-  { name: 'Web', cls: 'web' },
-  { name: 'iOS', cls: 'ios' },
-  { name: 'Android', cls: 'android' },
-  { name: '小程序', cls: 'mini' }
-];
-let streamRunning = false, streamTimer = null, eventCount = 0;
-
-function addEvent() {
-  const ev = events[Math.floor(Math.random() * events.length)];
-  const ch = channels[Math.floor(Math.random() * channels.length)];
-  const ts = new Date().toLocaleTimeString('zh-CN', { hour12: false });
-  const el = document.getElementById('event-stream');
-  const d = document.createElement('div');
-  d.className = 'event-item';
-  const isHighlight = ev === '支付成功';
-  d.innerHTML = '<span class="event-time">' + ts + '</span>'
-    + '<span class="event-channel ' + ch.cls + '">' + ch.name + '</span>'
-    + '<span class="event-text' + (isHighlight ? ' highlight' : '') + '">' + ev + '</span>'
-    + '<span class="event-count">#' + (++eventCount) + '</span>';
-  el.insertBefore(d, el.firstChild);
-  while (el.children.length > 60) el.removeChild(el.lastChild);
-  // Update live users
-  const base = 1247;
-  const fluct = Math.floor((Math.random() - 0.5) * 120);
-  document.getElementById('live-users').textContent = (base + fluct).toLocaleString();
-  // Update MAU with tiny drift
-  const mauEl = document.getElementById('mau');
-  const mauBase = 6.8;
-  mauEl.textContent = (mauBase + (Math.random() - 0.5) * 0.2).toFixed(1);
-}
-
-document.getElementById('stream-btn').onclick = () => {
-  if (!streamRunning) {
-    streamRunning = true;
-    streamTimer = setInterval(addEvent, 900);
-    // Fast-burst 3 events on start
-    for (let i = 0; i < 3; i++) setTimeout(addEvent, i * 120);
-  }
-};
-document.getElementById('stop-stream').onclick = () => {
-  streamRunning = false;
-  clearInterval(streamTimer);
-};
-// Seed 5 initial events
-for (let i = 0; i < 5; i++) addEvent();
-
-// ══════════════════════════════════════════════════════════════════
-//  5. Retention Curve
-// ══════════════════════════════════════════════════════════════════
-const rc = document.getElementById('retention-canvas');
-const rctx = rc.getContext('2d');
-let rcW = rc.width, rcH = rc.height;
-
-function drawRetention() {
-  const pad = { t: 40, r: 30, b: 40, l: 50 };
-  const w = rcW - pad.l - pad.r, h = rcH - pad.t - pad.b;
-  rctx.clearRect(0, 0, rcW, rcH);
-
-  const days = [1, 3, 7, 14, 30, 60, 90];
-  const labels = ['D1', 'D3', 'D7', 'D14', 'D30', 'D60', 'D90'];
-  const rates = days.map(d => 0.6 * Math.exp(-d / 15) + 0.1 * Math.exp(-d / 40) + (Math.random() - 0.5) * 0.02);
-  // Clamp
-  for (let i = 0; i < rates.length; i++) rates[i] = Math.max(0.01, Math.min(0.95, rates[i]));
-
-  document.getElementById('ret-rate').textContent = (rates[0] * 100).toFixed(1);
-
-  // Grid lines
-  for (let i = 0; i <= 5; i++) {
-    const y = pad.t + h - (i / 5) * h;
-    rctx.strokeStyle = '#f1f5f9';
-    rctx.lineWidth = 1;
-    rctx.beginPath(); rctx.moveTo(pad.l, y); rctx.lineTo(pad.l + w, y); rctx.stroke();
-    rctx.fillStyle = '#94a3b8';
-    rctx.font = '11px -apple-system, sans-serif';
-    rctx.textAlign = 'right';
-    rctx.fillText((i * 20) + '%', pad.l - 8, y + 4);
-  }
-
-  // Area fill
-  rctx.beginPath();
-  rctx.moveTo(pad.l + 0 * (w / (days.length - 1)), pad.t + h);
-  rates.forEach((r, i) => {
-    const x = pad.l + i * (w / (days.length - 1));
-    const y = pad.t + h - r * h;
-    rctx.lineTo(x, y);
-  });
-  rctx.lineTo(pad.l + w, pad.t + h);
-  rctx.closePath();
-  const grad = rctx.createLinearGradient(0, pad.t, 0, pad.t + h);
-  grad.addColorStop(0, 'rgba(6,182,212,.25)');
-  grad.addColorStop(1, 'rgba(6,182,212,.02)');
-  rctx.fillStyle = grad;
-  rctx.fill();
-
-  // Line
-  rctx.beginPath();
-  rates.forEach((r, i) => {
-    const x = pad.l + i * (w / (days.length - 1));
-    const y = pad.t + h - r * h;
-    i === 0 ? rctx.moveTo(x, y) : rctx.lineTo(x, y);
-  });
-  rctx.strokeStyle = '#06b6d4';
-  rctx.lineWidth = 2.5;
-  rctx.lineJoin = 'round';
-  rctx.stroke();
-
-  // Points + labels
-  rates.forEach((r, i) => {
-    const x = pad.l + i * (w / (days.length - 1));
-    const y = pad.t + h - r * h;
-    // Outer glow
-    const grd = rctx.createRadialGradient(x, y, 0, x, y, 12);
-    grd.addColorStop(0, 'rgba(6,182,212,.3)');
-    grd.addColorStop(1, 'rgba(6,182,212,0)');
-    rctx.fillStyle = grd;
-    rctx.beginPath(); rctx.arc(x, y, 12, 0, Math.PI * 2); rctx.fill();
-    // Point
-    rctx.fillStyle = '#fff';
-    rctx.beginPath(); rctx.arc(x, y, 5, 0, Math.PI * 2); rctx.fill();
-    rctx.strokeStyle = '#06b6d4';
-    rctx.lineWidth = 2.5;
-    rctx.stroke();
-    // Rate label
-    rctx.fillStyle = '#0f172a';
-    rctx.font = '600 12px -apple-system, sans-serif';
-    rctx.textAlign = 'center';
-    rctx.fillText((r * 100).toFixed(1) + '%', x, y - 14);
-    // Day label
-    rctx.fillStyle = '#94a3b8';
-    rctx.font = '12px -apple-system, sans-serif';
-    rctx.fillText(labels[i], x, pad.t + h + 18);
-  });
-
-  // Title
-  rctx.fillStyle = '#94a3b8';
-  rctx.font = '11px -apple-system, sans-serif';
-  rctx.textAlign = 'center';
-  rctx.fillText('留存率', 16, 20);
-}
-drawRetention();
-
-// ══════════════════════════════════════════════════════════════════
-//  6. RFM Clustering
-// ══════════════════════════════════════════════════════════════════
-const rfmc = document.getElementById('rfm-canvas');
-const rfmctx = rfmc.getContext('2d');
-let rfmW = rfmc.width, rfmH = rfmc.height;
-
-function drawRFM() {
-  const pad = { t: 40, r: 40, b: 40, l: 50 };
-  const w = rfmW - pad.l - pad.r, h = rfmH - pad.t - pad.b;
-  rfmctx.clearRect(0, 0, rfmW, rfmH);
-
-  // Grid
-  for (let i = 0; i <= 4; i++) {
-    const x = pad.l + (i / 4) * w;
-    const y = pad.t + (i / 4) * h;
-    rfmctx.strokeStyle = '#f1f5f9';
-    rfmctx.lineWidth = 1;
-    rfmctx.beginPath(); rfmctx.moveTo(pad.l, pad.t + (i / 4) * h); rfmctx.lineTo(pad.l + w, pad.t + (i / 4) * h); rfmctx.stroke();
-    rfmctx.beginPath(); rfmctx.moveTo(pad.l + (i / 4) * w, pad.t); rfmctx.lineTo(pad.l + (i / 4) * w, pad.t + h); rfmctx.stroke();
-  }
-
-  // Clusters
-  const clusters = [
-    { cx: .25, cy: .25, n: '高价值用户', co: '#06b6d4', r: 14 },
-    { cx: .65, cy: .30, n: '潜力用户', co: '#10b981', r: 12 },
-    { cx: .40, cy: .75, n: '一般用户', co: '#8b5cf6', r: 10 },
-    { cx: .80, cy: .72, n: '流失预警', co: '#f43f5e', r: 10 }
-  ];
-
-  clusters.forEach(c => {
-    for (let i = 0; i < 16; i++) {
-      const rx = c.cx * w + pad.l + (Math.random() - 0.5) * w * 0.22;
-      const ry = c.cy * h + pad.t + (Math.random() - 0.5) * h * 0.22;
-      const a = 0.3 + Math.random() * 0.4;
-      rfmctx.fillStyle = c.co;
-      rfmctx.globalAlpha = a;
-      rfmctx.beginPath(); rfmctx.arc(rx, ry, c.r * 0.3 + Math.random() * 1.5, 0, Math.PI * 2); rfmctx.fill();
-    }
-    rfmctx.globalAlpha = 1;
-    // Legend dot
-    const lx = pad.l + w + 14, ly = pad.t + 18 + clusters.indexOf(c) * 24;
-    rfmctx.fillStyle = c.co;
-    rfmctx.beginPath(); rfmctx.arc(lx, ly, 5, 0, Math.PI * 2); rfmctx.fill();
-    rfmctx.fillStyle = '#475569';
-    rfmctx.font = '12px -apple-system, sans-serif';
-    rfmctx.textAlign = 'left';
-    rfmctx.fillText(c.n, lx + 12, ly + 4);
-  });
-
-  // Axis labels
-  rfmctx.fillStyle = '#94a3b8';
-  rfmctx.font = '11px -apple-system, sans-serif';
-  rfmctx.textAlign = 'center';
-  rfmctx.fillText('消费频率 →', pad.l + w / 2, rfmH - 6);
-  rfmctx.textAlign = 'left';
-  rfmctx.fillText('最近消费 →', 4, pad.t + h / 2 + 4);
-  // Rotated Y label — we skip rotation for simplicity, just leave it horizontal
-}
-drawRFM();
-
-// ══════════════════════════════════════════════════════════════════
-//  7. Funnel (pure DOM, no canvas)
-// ══════════════════════════════════════════════════════════════════
-const funnelData = [
-  { label: '页面曝光', val: 100000 },
-  { label: '点击',     val: 15000 },
-  { label: '加购',     val: 5000 },
-  { label: '支付',     val: 3200 }
-];
-const funnelColors = ['#06b6d4', '#0ea5e9', '#8b5cf6', '#10b981'];
-const maxVal = funnelData[0].val;
-const funnelEl = document.getElementById('funnel-viz');
-
-funnelData.forEach((d, i) => {
-  const pct = (d.val / maxVal * 100).toFixed(1);
-  const conv = (d.val / funnelData[0].val * 100).toFixed(1);
-  const loss = i > 0 ? ((1 - d.val / funnelData[i - 1].val) * 100).toFixed(1) : '-';
-  const step = document.createElement('div');
-  step.className = 'funnel-step';
-  step.innerHTML = '<div class="funnel-bar-wrap">'
-    + '<div class="funnel-bar" style="width:' + pct + '%;background:' + funnelColors[i] + '">'
-    + '<span>' + d.label + '</span>'
-    + '</div></div>'
-    + '<div class="funnel-info"><div class="val">' + d.val.toLocaleString() + '</div>'
-    + '<div class="pct">占比 ' + conv + '%</div>'
-    + (i > 0 ? '<div class="funnel-loss">&#9660; 流失 ' + loss + '%</div>' : '')
-    + '</div>';
-  funnelEl.appendChild(step);
-});
-
-// Overall loss
-document.getElementById('funnel-loss').textContent =
-  ((1 - funnelData[3].val / funnelData[0].val) * 100).toFixed(1) + '%';
-
-// Update conversion rate KPI
-document.getElementById('conv-rate').textContent =
-  (funnelData[3].val / funnelData[0].val * 100).toFixed(1);
+// ═══ 用户行为热力点阵 ═══
+PD.DotField(document.getElementById('dot-canvas'), {cols:26, rows:12});
 </script>
 </body>
 </html>
