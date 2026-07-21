@@ -36,6 +36,7 @@
     <a href="#kmeans">聚类</a>
     <a href="#funnel">增长漏斗</a>
     <a href="#projects">项目</a>
+    <a href="#skills">综合能力</a>
   </div>
 </nav>
 
@@ -140,6 +141,20 @@
   </div>
 </section>
 
+<!-- ═══ 综合能力 ═══ -->
+<section id="skills" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">综合能力</span> 全栈分析引擎</h2></div>
+  <div class="section-sub">// 真实开源项目 · 跨岗方法论沉淀 · 可复现实证代码</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="ic">📐</div><h3>计量经济</h3><p>真实 pyconometrics（面板固定效应/IV/稳健标准误）+ express-consumption 正大杯 1,352 问卷 OLS 回归。</p><span class="meta">Econometrics</span></div>
+    <div class="feature-card"><div class="ic">📊</div><h3>量化金融</h3><p>真实 quantlab：因子挖掘、信号合成、CVaR 风险度量与绩效归因回测框架。</p><span class="meta">Quant</span></div>
+    <div class="feature-card"><div class="ic">🧪</div><h3>因果推断</h3><p>真实 causal-inference-ml：DID、RD、匹配与 uplift 建模的可复现代码。</p><span class="meta">Causal</span></div>
+    <div class="feature-card"><div class="ic">🧹</div><h3>数据处理</h3><p>pandas / SQL / Stata 清洗治理，statsmodels 建模，把重复分析变成可复用脚本。</p><span class="meta">Data</span></div>
+    <div class="feature-card"><div class="ic">🌏</div><h3>可视化</h3><p>Tableau + 真实 china-econ-pulse 中国经济城市/省份面板动态仪表盘。</p><span class="meta">Viz</span></div>
+    <div class="feature-card"><div class="ic">🏛️</div><h3>政策仿真</h3><p>真实 policysim：DSGE 与 CGE 可视化政策冲击推演，辅助决策论证。</p><span class="meta">Simulation</span></div>
+  </div>
+</section>
+
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
@@ -161,6 +176,10 @@ PD.Dashboard({
 });
 PD.EventStream('event-stream',{verbs:['任务调度','模型训练','数据清洗','特征工程','回测完成','报告生成','管线校验','结果推送']});
 
+// 确定性伪随机（种子固定，所有算法演示数据可复现；仅用于方法演示，非真实业务数据）
+var _gSeed=20240701;
+function _rnd(){ _gSeed=(_gSeed*1664525+1013904223)>>>0; return _gSeed/4294967296; }
+
 // ═══ 神经网络 ═══
 const nnCanvas=document.getElementById('nn-canvas'),nnCtx=nnCanvas.getContext('2d');
 const W=nnCanvas.width,H=nnCanvas.height;
@@ -169,15 +188,15 @@ const nn={wih:null,who:null,bh:null,bo:null,lr:.01};
 function sigmoid(x){return 1/(1+Math.exp(-Math.max(-500,Math.min(500,x))))}
 function dsigmoid(y){return y*(1-y)}
 function initNN(){
-  nn.wih=Array.from({length:2},()=>Array.from({length:8},()=>Math.random()*2-1));
-  nn.who=Array.from({length:8},()=>Array.from({length:1},()=>Math.random()*2-1));
+  nn.wih=Array.from({length:2},()=>Array.from({length:8},()=>_rnd()*2-1));
+  nn.who=Array.from({length:8},()=>Array.from({length:1},()=>_rnd()*2-1));
   nn.bh=Array(8).fill(0);nn.bo=[0];nnEpoch=0;nnLoss=0;
   document.getElementById('epoch-count').textContent='0';
 }
 function trainNN(){
   if(!nnRunning)return;
   for(let s=0;s<10;s++){
-    const x=Math.random(),y=Math.random();
+    const x=_rnd(),y=_rnd();
     const target=((x>.5&&y>.5)||(x<.5&&y<.5))?1:0;
     const h1=nn.wih[0].map((w,i)=>w*x+nn.wih[1][i]*y+nn.bh[i]);
     const h=h1.map(sigmoid);
@@ -195,7 +214,7 @@ function trainNN(){
   document.getElementById('nn-loss').textContent=nnLoss.toFixed(4);
   let correct=0;
   for(let t=0;t<100;t++){
-    const tx=Math.random(),ty=Math.random();
+    const tx=_rnd(),ty=_rnd();
     const tgt=((tx>.5&&ty>.5)||(tx<.5&&ty<.5))?1:0;
     const h1=nn.wih[0].map((w,i)=>w*tx+nn.wih[1][i]*ty+nn.bh[i]);
     const h=h1.map(sigmoid);
@@ -274,8 +293,8 @@ const kmCanvas=document.getElementById('kmeans-canvas'),kmCtx=kmCanvas.getContex
 let kmPoints=[],kmCenters=[],kmRunning=false;
 function genKM(){
   kmPoints=[];const clusters=[[60,80],[170,170],[280,260]];
-  clusters.forEach(c=>{for(let i=0;i<20;i++)kmPoints.push({x:c[0]+(Math.random()-.5)*50,y:c[1]+(Math.random()-.5)*50})});
-  kmCenters=Array.from({length:3},()=>({x:Math.random()*340,y:Math.random()*340}));drawKM();
+  clusters.forEach(c=>{for(let i=0;i<20;i++)kmPoints.push({x:c[0]+(_rnd()-.5)*50,y:c[1]+(_rnd()-.5)*50})});
+  kmCenters=Array.from({length:3},()=>({x:_rnd()*340,y:_rnd()*340}));drawKM();
 }
 function drawKM(){
   kmCtx.fillStyle='#05080f';kmCtx.fillRect(0,0,340,340);
@@ -302,8 +321,8 @@ document.getElementById('km-reset').onclick=()=>{kmRunning=false;genKM()};
 // ═══ 增长漏斗 ═══
 (function(){
   function gen(){
-    var b=8000+Math.floor(Math.random()*3000);
-    var s=[b,b*0.8,b*0.6,b*0.42,b*0.3].map(function(v){return Math.round(v);});
+    // 示意漏斗（固定数值，非真实分析数据）：用于演示分析价值链转化方法
+    var s=[8000,6400,4800,3360,2400];
     return [{label:'获取',value:s[0]},{label:'清洗',value:s[1]},{label:'建模',value:s[2]},{label:'洞察',value:s[3]},{label:'决策',value:s[4]}];
   }
   function run(){var st=gen(); PD.funnel('funnel-mount',st); document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(1)+'%';}
