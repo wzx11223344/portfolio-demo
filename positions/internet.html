@@ -31,6 +31,7 @@
     <a href="#ab">A/B 测试</a>
     <a href="#behavior">用户行为</a>
     <a href="#growth">增长策略</a>
+    <a href="#skills">专业能力</a>
   </div>
 </nav>
 
@@ -73,7 +74,7 @@
 <!-- ═══ 留存分析 ═══ -->
 <section id="retention" class="reveal">
   <div class="section-title"><span class="section-index">02</span><h2><span class="hl">留存分析</span> 同期群 &amp; RFM 分层</h2></div>
-  <div class="section-sub">// Cohort 周留存曲线 · RFM 用户价值分层（F 频率 × M 金额）</div>
+  <div class="section-sub">// Cohort 周留存曲线 · RFM 用户价值分层（F 频率 × M 金额）· 散点示意</div>
   <div class="card-grid">
     <div class="card">
       <div class="card-header"><span class="card-title">Cohort 周留存曲线</span><span class="card-badge">Cohort</span></div>
@@ -92,12 +93,12 @@
 <!-- ═══ 转化漏斗 ═══ -->
 <section id="funnel" class="reveal">
   <div class="section-title"><span class="section-index">03</span><h2><span class="hl">转化漏斗</span> 全链路转化分析</h2></div>
-  <div class="section-sub">// 曝光 → 点击 → 详情 → 加购 → 支付 · 逐级转化率 · 定位流失瓶颈</div>
+  <div class="section-sub">// 曝光 → 点击 → 详情 → 加购 → 支付 · 逐级转化率 · 定位流失瓶颈（数值示意，非真实交易）</div>
   <div class="card">
     <div class="card-header"><span class="card-title">电商转化漏斗</span><span class="card-badge">Funnel</span></div>
     <div class="funnel" id="funnel-mount"></div>
     <div class="btn-group" style="margin-top:16px">
-      <button class="btn btn-primary" id="funnel-btn">▶ 模拟新流量</button>
+      <button class="btn btn-primary" id="funnel-btn">▶ 示例漏斗</button>
       <button class="btn" id="funnel-reset">↻ 重置</button>
     </div>
     <div class="stat-row" style="margin-top:14px;border:none"><span>整体转化率</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
@@ -136,6 +137,20 @@
   </div>
 </section>
 
+<!-- ═══ 专业能力 ═══ -->
+<section id="skills" class="reveal">
+  <div class="section-title"><span class="section-index">07</span><h2><span class="hl">专业能力</span> 数据驱动运营工具箱</h2></div>
+  <div class="section-sub">// 真实运营业绩 · 方法论沉淀 · 可复用分析资产</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="ic">📊</div><h3>用户增长</h3><p>累计触达 128 万、内容点赞 42.6 万、播放 650 万+，搭建从曝光到付费的转化漏斗。</p><span class="meta">Acquisition</span></div>
+    <div class="feature-card"><div class="ic">🔁</div><h3>留存分析</h3><p>Cohort 周留存建模、RFM 用户价值分层，定位流失预警并设计促活触达策略。</p><span class="meta">Retention</span></div>
+    <div class="feature-card"><div class="ic">⚗️</div><h3>A/B 实验</h3><p>对照/实验组 z-test 显著性检验，基于数据而非直觉做增长决策。</p><span class="meta">Experiment</span></div>
+    <div class="feature-card"><div class="ic">🌐</div><h3>实时看板</h3><p>DAU/留存/转化率/ARPU 指标看板 + 实时事件流，秒级监控运营健康度。</p><span class="meta">Dashboard</span></div>
+    <div class="feature-card"><div class="ic">🧩</div><h3>用户行为</h3><p>点击热力点阵与路径分析，识别高活跃区域，指导页面布局与功能优化。</p><span class="meta">Behavior</span></div>
+    <div class="feature-card"><div class="ic">🐍</div><h3>Python · SQL</h3><p>pandas/SQL 清洗埋点、Tableau 可视化、自研 AI Agent 与爬虫沉淀 18 个分析工具。</p><span class="meta">Tooling</span></div>
+  </div>
+</section>
+
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
@@ -162,10 +177,13 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
 
 // ═══ RFM 分层散点 ═══
 (function(){
+  // 确定性伪随机（种子固定，散点可复现；仅用于演示 RFM 分层方法，非真实用户明细）
+  var _rfmSeed=20240615;
+  function _rnd(){ _rfmSeed=(_rfmSeed*1664525+1013904223)>>>0; return _rfmSeed/4294967296; }
   var pts=[], colors=['#22d3ee','#34d399','#a78bfa','#f472b6'];
   for(var i=0;i<40;i++){
-    var seg=Math.floor(Math.random()*4);
-    pts.push({f:Math.random(), m:Math.random(), r:Math.random(), color:colors[seg]});
+    var seg=Math.floor(_rnd()*4);
+    pts.push({f:_rnd(), m:_rnd(), r:_rnd(), color:colors[seg]});
   }
   PD.RFM(document.getElementById('rfm-canvas'), pts);
 })();
@@ -174,9 +192,8 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
 (function(){
   var mount='funnel-mount';
   function gen(){
-    var base=50000+Math.floor(Math.random()*20000);
-    var s=[base, base*(0.5+Math.random()*0.1), base*(0.28+Math.random()*0.06), base*(0.12+Math.random()*0.04), base*(0.05+Math.random()*0.02)]
-      .map(function(v){return Math.round(v);});
+    // 示意漏斗（固定数值，非真实交易）：用于演示电商转化分析方法
+    var s=[60000, 31200, 17400, 7800, 3960];
     return [
       {label:'曝光', value:s[0]},
       {label:'点击', value:s[1]},
@@ -188,7 +205,7 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
   function summarize(st){
     var total=(st[4].value/st[0].value*100).toFixed(2);
     document.getElementById('funnel-total').textContent=total+'%';
-    var maxDrop=0, idx=0;
+    var maxDrop=0, idx=1;
     for(var i=1;i<st.length;i++){ var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;} }
     document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
   }
