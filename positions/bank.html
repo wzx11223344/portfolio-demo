@@ -33,6 +33,7 @@
     <a href="#mc">蒙特卡洛</a>
     <a href="#smile">波动率微笑</a>
     <a href="#funnel">客户漏斗</a>
+    <a href="#skills">专业能力</a>
   </div>
 </nav>
 
@@ -44,10 +45,11 @@
   <div class="hero-sub" data-typed='["BSM 定价 · 希腊值 · 蒙特卡洛 · 波动率微笑","风险管理 · 金融数据 · 客户分层运营","基金从业资格 · 银行从业资格"]'></div>
   <div class="hero-tags"><span>量化分析</span><span>风险管理</span><span>衍生品</span><span>客户运营</span></div>
   <div class="kpi-grid">
-    <div class="kpi-card reveal"><div class="kpi-num" id="kpi-bs-call">0</div><div class="kpi-label">看涨期权价格</div></div>
-    <div class="kpi-card reveal d1"><div class="kpi-num" id="kpi-delta">0</div><div class="kpi-label">Delta</div></div>
-    <div class="kpi-card reveal d2"><div class="kpi-num" id="kpi-var">0%</div><div class="kpi-label">VaR (95%)</div></div>
-    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="2">0</div><div class="kpi-label">金融从业资格</div></div>
+    <div class="kpi-card reveal"><div class="kpi-num" id="kpi-bs-call">0</div><div class="kpi-label">看涨期权价格 (实时)</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" id="kpi-delta">0</div><div class="kpi-label">Delta (实时)</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="36" data-suffix="%">0</div><div class="kpi-label">ETF 大赛净值增长</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">券商研究报告 (份)</div></div>
+    <div class="kpi-card reveal d4"><div class="kpi-num" data-count="2">0</div><div class="kpi-label">金融从业资格</div></div>
   </div>
 </section>
 
@@ -101,7 +103,7 @@
 <!-- ═══ 蒙特卡洛 ═══ -->
 <section id="mc" class="reveal">
   <div class="section-title"><span class="section-index">03</span><h2><span class="hl">蒙特卡洛</span> 价格路径模拟</h2></div>
-  <div class="section-sub">// GBM 几何布朗运动 · 百条路径 · 收敛到理论价格</div>
+  <div class="section-sub">// GBM 几何布朗运动 · 百条路径 · 收敛到理论价格（演示，非真实交易数据）</div>
   <div class="card">
     <div class="card-header"><span class="card-title">GBM 路径模拟</span><span class="card-badge">Monte Carlo</span></div>
     <canvas id="mc-canvas" width="760" height="340"></canvas>
@@ -123,12 +125,26 @@
 <!-- ═══ 客户漏斗 ═══ -->
 <section id="funnel" class="reveal">
   <div class="section-title"><span class="section-index">05</span><h2><span class="hl">客户漏斗</span> 理财转化</h2></div>
-  <div class="section-sub">// 触达 → 咨询 → 风险测评 → 开户 → 首投 · 客户运营转化</div>
+  <div class="section-sub">// 触达 → 咨询 → 风险测评 → 开户 → 首投 · 客户运营转化（示意数据，非真实客户）</div>
   <div class="card">
     <div class="card-header"><span class="card-title">理财产品客户漏斗</span><span class="card-badge">Funnel</span></div>
     <div class="funnel" id="funnel-mount"></div>
-    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 模拟新批次</button></div>
+    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 演示漏斗</button></div>
     <div class="stat-row" style="margin-top:14px;border:none"><span>触达到首投转化</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
+  </div>
+</section>
+
+<!-- ═══ 专业能力 ═══ -->
+<section id="skills" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">专业能力</span> 量化与风险运营</h2></div>
+  <div class="section-sub">// 量化分析 · 风险管理 · 衍生品定价 · 客户运营 · 金融建模</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="ic">📈</div><h3>量化分析</h3><p>BSM 定价、希腊值计算、蒙特卡洛模拟与收敛验证，支撑衍生品估值。</p><span class="meta">Quant</span></div>
+    <div class="feature-card"><div class="ic">🛡️</div><h3>风险管理</h3><p>VaR、波动率、最大回撤、夏普比率监控，构建组合风险看板。</p><span class="meta">Risk</span></div>
+    <div class="feature-card"><div class="ic">💹</div><h3>衍生品定价</h3><p>期权微笑反解隐含波动率，理解风险中性定价与市场偏斜。</p><span class="meta">Derivatives</span></div>
+    <div class="feature-card"><div class="ic">🤝</div><h3>客户运营</h3><p>理财客户触达→咨询→测评→开户→首投漏斗，优化转化路径。</p><span class="meta">Ops</span></div>
+    <div class="feature-card"><div class="ic">🧮</div><h3>金融建模</h3><p>ETF 大赛组合管理实现 36% 净值增长，券商 3 份研究报告被采纳。</p><span class="meta">Track</span></div>
+    <div class="feature-card"><div class="ic">📊</div><h3>Python / SQL</h3><p>用 Python 实现定价与回测，SQL 抽取业务数据支撑分析。</p><span class="meta">Tools</span></div>
   </div>
 </section>
 
@@ -202,9 +218,12 @@ updateBS();
 
 // ═══ 蒙特卡洛 ═══
 const mc=document.getElementById('mc-canvas'),mctx=mc.getContext('2d');
+// 确定性伪随机（种子固定，路径可复现；仅用于演示 GBM 方法，非真实交易数据）
+var _mcSeed=20240718;
+function _rnd(){ _mcSeed=(_mcSeed*1664525+1013904223)>>>0; return _mcSeed/4294967296; }
 function gbmPath(S,T,steps,sig,r){
   var dt=T/steps, path=[S];
-  for(var i=1;i<=steps;i++){ var z=(Math.random()+Math.random()+Math.random()+Math.random()-2)/Math.sqrt(4/12); var prev=path[i-1]; path.push(prev*Math.exp((r-sig*sig/2)*dt+sig*Math.sqrt(dt)*z)); }
+  for(var i=1;i<=steps;i++){ var z=(_rnd()+_rnd()+_rnd()+_rnd()-2)/Math.sqrt(4/12); var prev=path[i-1]; path.push(prev*Math.exp((r-sig*sig/2)*dt+sig*Math.sqrt(dt)*z)); }
   return path;
 }
 function runMC(){
@@ -221,7 +240,7 @@ function runMC(){
   for(var pi=0;pi<N;pi++){
     mctx.beginPath();
     for(var i=0;i<=steps;i++){ var px=x(i), py=y(paths[pi][i]); i===0?mctx.moveTo(px,py):mctx.lineTo(px,py); }
-    mctx.strokeStyle='rgba(96,165,250,'+(0.04+Math.random()*0.08)+')'; mctx.lineWidth=1; mctx.stroke();
+    mctx.strokeStyle='rgba(96,165,250,0.08)'; mctx.lineWidth=1; mctx.stroke();
   }
   // mean path
   mctx.beginPath();
@@ -265,8 +284,8 @@ drawSmile();
 // ═══ 客户漏斗 ═══
 (function(){
   function gen(){
-    var b=10000+Math.floor(Math.random()*4000);
-    var s=[b,b*0.5,b*0.26,b*0.14,b*0.08].map(function(v){return Math.round(v);});
+    // 示意漏斗（固定数值，非真实客户数据）：用于演示客户运营转化分析方法
+    var s=[12000, 6000, 3120, 1680, 960];
     return [{label:'触达',value:s[0]},{label:'咨询',value:s[1]},{label:'测评',value:s[2]},{label:'开户',value:s[3]},{label:'首投',value:s[4]}];
   }
   function summarize(st){
