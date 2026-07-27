@@ -69,6 +69,8 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
   padding:4px 16px;border:1px solid var(--border);border-radius:20px;
   font-size:12px;font-family:var(--font-mono);color:var(--text-dim)
 }
+.hero-note{margin:18px auto 0;max-width:780px;font-size:12.5px;color:var(--text-dim);font-family:var(--font-mono);line-height:1.7;text-align:center}
+.hero-note b{color:var(--neon-green)}
 /* ============ KPI CARDS ============ */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:40px 0 0}
 .kpi-card{
@@ -228,23 +230,24 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <nav id="nav">
 <a href="#hero">首页</a><a href="#raytracer">光线追踪</a><a href="#montecarlo">蒙特卡洛</a>
 <a href="#blackscholes">期权定价</a><a href="#perf">性能测试</a><a href="#algorithms">算法演示</a>
-<a href="#skills">技能</a><a href="positions/index.html">岗位作品集 →</a>
+<a href="#skills">技能</a><a href="#opensource">开源</a><a href="positions/index.html">岗位作品集 →</a>
 </nav>
 
 <!-- ==================== HERO ==================== -->
 <section id="hero">
 <h1 class="hero-name">万值翔</h1>
-<div class="hero-subtitle" id="typewriter">经济学本科(前30%) · 101个开源项目 · 15台MCP服务器 · 人工智能与量化计算</div>
+<div class="hero-subtitle" id="typewriter">华东师范大学 · 经济学 2027 届 · 计量经济学与量化金融的从零实现开源实践</div>
 <div class="hero-tags">
 <span>TRAE插件生态</span><span>MCP架构</span><span>全栈工程</span>
 <span>量化金融</span><span>计算机图形学</span><span>高性能计算</span>
 </div>
+<p class="hero-note">下方为从零实现的工程能力演示（光线追踪 / 蒙特卡洛 / 期权定价 / 算法可视化），用于展示编码与数学功底，<b>非岗位经历</b>；真实实习与项目见各岗位作品集。</p>
 <div class="kpi-grid">
-<div class="kpi-card"><div class="kpi-num" data-target="101">0</div><div class="kpi-label">代码仓库</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="15">0</div><div class="kpi-label">MCP 服务</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="370">0</div><div class="kpi-label">工具集成</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="115000">0</div><div class="kpi-label">代码行数</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="58">0</div><div class="kpi-label">技能模块</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="30">0</div><div class="kpi-label">开源库（计量·量化）</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="9">0</div><div class="kpi-label">核心开源项目</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="100">0</div><div class="kpi-label">GitHub 仓库</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="650">0</div><div class="kpi-label">万次内容播放</div></div>
+<div class="kpi-card"><div class="kpi-num" data-target="1352">0</div><div class="kpi-label">实证问卷样本</div></div>
 </div>
 </section>
 
@@ -523,12 +526,75 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 </div>
 </div>
 <div class="timeline" style="margin-top:40px">
-<div class="timeline-item"><div class="timeline-date">2026 Q2-现在</div><div class="timeline-title">MCP与效率技能生态</div><div class="timeline-desc">15台MCP服务器，~370工具接口。12项效率技能(17,138行)，24+核心算法从零实现。SkillHub发布58个技能。</div></div>
-<div class="timeline-item"><div class="timeline-date">2025</div><div class="timeline-title">MCP基础设施搭建</div><div class="timeline-desc">首批8台MCP服务器上线：金融数据、量化引擎、文档分析、数据库助手、数据可视化、机器学习、统计引擎、网页抓取，共208个工具接口。</div></div>
-<div class="timeline-item"><div class="timeline-date">2024 Q1-Q3</div><div class="timeline-title">量化金融与智能体系统</div><div class="timeline-desc">投资组合优化、回测引擎、因子挖掘、衍生品定价 + 多Agent交易模拟、RL交易</div></div>
-<div class="timeline-item"><div class="timeline-date">2024 起步</div><div class="timeline-title">101个项目起航</div><div class="timeline-desc">14个计量经济学库：bayesmetrics、causalinference、dsgepy、spatialecon等。核心理念：每个算法亲手从零实现</div></div>
+<div class="timeline-item"><div class="timeline-date">2026</div><div class="timeline-title">计量与量化开源深化</div><div class="timeline-desc">30+ 计量 / 量化库从零实现，覆盖 OLS / IV / DID / DSGE / 期权定价 / Greeks 等，全部纯 Python 依赖，已上线 GitHub。</div></div>
+<div class="timeline-item"><div class="timeline-date">2025</div><div class="timeline-title">量化与金融工程实践</div><div class="timeline-desc">国盛证券行业研究、门店风险监测；上证杯 92.5% 正确率、36% 净值增长，沉淀回测与定价代码。</div></div>
+<div class="timeline-item"><div class="timeline-date">2024</div><div class="timeline-title">竞赛与科研起步</div><div class="timeline-desc">正大杯全国大赛 1,352 份问卷计量建模（Logistic p&lt;0.001）；数学建模省二等，建立可复现研究流程。</div></div>
+<div class="timeline-item"><div class="timeline-date">2023 起步</div><div class="timeline-title">经济学与编程启蒙</div><div class="timeline-desc">Python 计量经济学工具库从零构建，核心理念：每个算法亲手实现，拒绝调包凑数。</div></div>
 </div>
 </section>
+
+<!-- ==================== OPEN SOURCE ==================== -->
+<section id="opensource" class="reveal">
+  <div class="section-title"><span class="section-index">&#9733;</span><h2>开源<span class="hl">精选</span></h2></div>
+  <div class="section-subtitle">// 真实 GitHub 数据：★ star · ⑂ fork · 最近更新 — 全部从零实现，纯 Python 依赖</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PY</span><span class="pt-name">pyconometrics</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">pyconometrics</span><span class="proj-tag">计量经济</span></div>
+      <div class="proj-desc">从零实现的计量经济学库：OLS / IV / DID / RDD 等因果识别方法与诊断，纯 Python 依赖。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">QU</span><span class="pt-name">quantlab</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">quantlab</span><span class="proj-tag">量化金融</span></div>
+      <div class="proj-desc">量化工具箱：BS 期权定价、Greeks 风险度量、回测框架与组合分析，覆盖金融工程基础能力。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">DS</span><span class="pt-name">dsgepy</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">dsgepy</span><span class="proj-tag">宏观建模</span></div>
+      <div class="proj-desc">一般均衡建模工具：RBC / NK / B-K 等 DSGE 模型的求解与脉冲响应分析。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/dsgepy" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">MA</span><span class="pt-name">macrodatahub</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">macrodatahub</span><span class="proj-tag">宏观数据</span></div>
+      <div class="proj-desc">宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗流程。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrodatahub" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PO</span><span class="pt-name">policysim</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">policysim</span><span class="proj-tag">政策模拟</span></div>
+      <div class="proj-desc">政策模拟框架：ABM / DID / SC 多方法对比，支持产业政策与冲击的情景推演。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/policysim" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CI</span><span class="pt-name">city-compare</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">city-compare</span><span class="proj-tag">城市分析</span></div>
+      <div class="proj-desc">城市对标分析：50 城 8 维指标聚类与可视化，用于区域与产业比较研究。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/city-compare" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">EX</span><span class="pt-name">express-consumption</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">express-consumption</span><span class="proj-tag">实证研究</span></div>
+      <div class="proj-desc">正大杯全国大赛 1,352 份问卷计量建模可复现代码（LPM / Logistic / 回归），完整数据处理 pipeline。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/express-consumption" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CA</span><span class="pt-name">causal-inference-ml</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">causal-inference-ml</span><span class="proj-tag">因果推断</span></div>
+      <div class="proj-desc">因果机器学习方法：Double ML / Causal Forest，衔接计量经济学与现代 ML 估计。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 1</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">MC</span><span class="pt-name">mcp-financial-data</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">mcp-financial-data</span><span class="proj-tag">AI 工程</span></div>
+      <div class="proj-desc">金融数据 MCP 服务器：把行情、财报、宏观等数据能力封装为 Agent 可调用的标准接口。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/mcp-financial-data" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+  </div>
+</section>
+
 <footer style="text-align:center;padding:40px 0;color:var(--text-dim);font-family:var(--font-mono);font-size:12px">
 从零构建 · 零外部依赖 · 纯HTML/CSS/JS · 所有演示实时计算
 </footer>
@@ -575,10 +641,10 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 // ===================================================================
 (function(){
   const el=$('#typewriter');
-  const texts=['不套壳、不调API凑数、每个算法从零实现',
-    '101个开源项目 · 15台MCP服务器 · ~370个工具接口',
-    '计量经济学到量化金融 · 从NLP到光线追踪引擎',
-    '经济学本科(前30%) · 基金从业+银行从业双证持有'];
+  const texts=['不套壳、不调API凑数，每个算法从零实现',
+    '经济学本科 · 计量与量化金融开源实践',
+    '正大杯 1,352 样本 · 上证杯 36% 净值增长',
+    '国盛证券 / 经信委 / 联通 真实实习经历'];
   let ti=0,ci=0,deleting=false,ch='_';
   function tick(){
     const txt=texts[ti];
