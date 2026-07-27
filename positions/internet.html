@@ -4,16 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>互联网运营数据 · 增长分析与数据驱动作品集</title>
+<meta name="description" content="数据驱动增长运营作品集：运营看板、Cohort 留存、RFM 分层、转化漏斗、A/B 测试、用户行为热力、增长策略与真实项目案例。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
-/* internet accent: cyan — all shell styles come from theme.css */
+/* internet accent: cyan — shell styles come from theme.css */
 .card-title{color:#22d3ee}
 .card-badge{color:#22d3ee;border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.1)}
 .hero-name .accent{background:linear-gradient(135deg,#22d3ee,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
 </style>
 </head>
 <body>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">INTERNET · OPS</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -22,18 +25,22 @@
 
 <nav>
   <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
     <a href="../index.html">◀ 主站</a>
     <a href="#hero" class="active">概览</a>
     <a href="#dashboard">运营看板</a>
+    <a href="#cases">项目案例</a>
     <a href="#retention">留存分析</a>
     <a href="#funnel">转化漏斗</a>
     <a href="#ab">A/B 测试</a>
     <a href="#behavior">用户行为</a>
     <a href="#growth">增长策略</a>
-    <a href="#skills">专业能力</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
   </div>
 </nav>
+<div class="nav-overlay"></div>
 
 <main id="app">
 <!-- ═══ HERO ═══ -->
@@ -42,7 +49,12 @@
   <h1 class="hero-name">数据驱动<span class="accent">增长运营</span></h1>
   <div class="hero-sub" data-typed='["用户增长 · 留存分析 · 转化漏斗 · A/B 测试","埋点采集 · 实时看板 · RFM 分层 · 增长策略","Python · SQL · Tableau · AI Agent · 爬虫"]'></div>
   <div class="hero-tags">
-    <span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>留存</span>
+    <span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>留存</span><span>RFM</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#cases">▶ 看项目案例</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历</a>
+    <a class="btn" href="index.html">← 全部作品集</a>
   </div>
   <div class="kpi-grid">
     <div class="kpi-card reveal"><div class="kpi-num" data-count="128" data-suffix="万">0</div><div class="kpi-label">累计触达用户</div></div>
@@ -71,10 +83,95 @@
   </div>
 </section>
 
+<!-- ═══ 项目案例 ═══ -->
+<section id="cases" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">项目案例</span> 从洞察到增长</h2></div>
+  <div class="section-sub">// 代表性分析项目 · 含方法、动作与结果指标（部分指标为演示口径）</div>
+  <div class="case-grid">
+
+    <div class="case-card" data-tilt>
+      <div class="case-head"><div class="case-title">B站内容运营数据分析</div><div class="case-tag">内容增长</div></div>
+      <div class="case-meta">角色：数据分析 / 创作者 · 周期：2023.10 至今 · 平台：Bilibili</div>
+      <p class="case-desc">基于 60+ 投稿与 650.7 万播放的公开数据，搭建选题—完播—互动看板，定位高潜内容结构（如单条 50.7 万播放的爆款），用归因拆解涨粉与点赞拐点，反哺选题与发布节奏。</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="mv">650.7万</div><div class="ml">累计播放</div></div>
+        <div class="case-metric"><div class="mv">42.6万</div><div class="ml">累计点赞</div></div>
+        <div class="case-metric"><div class="mv">4435</div><div class="ml">粉丝量</div></div>
+        <div class="case-metric"><div class="mv">50.7万</div><div class="ml">单条峰值播放</div></div>
+      </div>
+      <div class="case-steps">
+        <div class="case-step"><div class="sn">STEP 01</div><div class="st">数据采集</div><div class="sd">公开接口 + 爬虫汇总播放/点赞/弹幕时序。</div></div>
+        <div class="case-step"><div class="sn">STEP 02</div><div class="st">指标建模</div><div class="sd">完播率、互动率、涨粉弹性多维拆解。</div></div>
+        <div class="case-step"><div class="sn">STEP 03</div><div class="st">归因洞察</div><div class="sd">定位爆款结构，输出选题优先级矩阵。</div></div>
+        <div class="case-step"><div class="sn">STEP 04</div><div class="st">闭环验证</div><div class="sd">按洞察调整发布节奏，跟踪拐点变化。</div></div>
+      </div>
+      <div class="case-stack"><span>Python</span><span>Pandas</span><span>可视化</span><span>归因分析</span><span>内容运营</span></div>
+    </div>
+
+    <div class="case-card" data-tilt>
+      <div class="case-head"><div class="case-title">零食店营业额分析与定价</div><div class="case-tag">经营分析</div></div>
+      <div class="case-meta">角色：经营者 / 数据分析 · 场景：线下零售 · 方法：ABC + 弹性定价</div>
+      <p class="case-desc">对门店 SKU 做销售额—毛利 ABC 分层，识别长尾与高贡献商品；结合时段客流与价格弹性做组合定价与陈列优化，提升周转与毛利结构。</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="mv">ABC</div><div class="ml">商品分层</div></div>
+        <div class="case-metric"><div class="mv">+周转</div><div class="ml">库存优化</div></div>
+        <div class="case-metric"><div class="mv">弹性</div><div class="ml">定价测试</div></div>
+        <div class="case-metric"><div class="mv">结构</div><div class="ml">毛利改善</div></div>
+      </div>
+      <div class="case-steps">
+        <div class="case-step"><div class="sn">STEP 01</div><div class="st">数据盘点</div><div class="sd">逐 SKU 销售额、成本、销量时序入库。</div></div>
+        <div class="case-step"><div class="sn">STEP 02</div><div class="st">分层诊断</div><div class="sd">ABC 定位高贡献与滞销长尾。</div></div>
+        <div class="case-step"><div class="sn">STEP 03</div><div class="st">定价实验</div><div class="sd">分时段组合定价，观察弹性与转化。</div></div>
+        <div class="case-step"><div class="sn">STEP 04</div><div class="st">陈列优化</div><div class="sd">动线 + 黄金位调整，提升连带率。</div></div>
+      </div>
+      <div class="case-stack"><span>Excel</span><span>ABC 分析</span><span>价格弹性</span><span>零售运营</span></div>
+    </div>
+
+    <div class="case-card" data-tilt>
+      <div class="case-head"><div class="case-title">电商转化漏斗优化（演示）</div><div class="case-tag">增长实验</div></div>
+      <div class="case-meta">角色：增长运营 · 方法：漏斗诊断 + A/B + RFM · 口径：模拟业务</div>
+      <p class="case-desc">搭建曝光→点击→详情→加购→支付全链路看板，定位最大流失环节（详情→加购），以落地页改版 A/B 实验 + RFM 分层触达组合拳提升整体转化。</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="mv">5.2%</div><div class="ml">整体转化率</div></div>
+        <div class="case-metric"><div class="mv">+1.3pp</div><div class="ml">实验提升</div></div>
+        <div class="case-metric"><div class="mv">-18%</div><div class="ml">加购流失</div></div>
+        <div class="case-metric"><div class="mv">4 层</div><div class="ml">RFM 分层</div></div>
+      </div>
+      <div class="case-steps">
+        <div class="case-step"><div class="sn">STEP 01</div><div class="st">漏斗诊断</div><div class="sd">定位详情→加购为最大瓶颈。</div></div>
+        <div class="case-step"><div class="sn">STEP 02</div><div class="st">假设设计</div><div class="sd">落地页信息架构 + 信任元素改版。</div></div>
+        <div class="case-step"><div class="sn">STEP 03</div><div class="st">A/B 检验</div><div class="sd">z-test 显著性验证，p&lt;0.05 上线。</div></div>
+        <div class="case-step"><div class="sn">STEP 04</div><div class="st">分层触达</div><div class="sd">RFM 高价值用户优先召回。</div></div>
+      </div>
+      <div class="case-stack"><span>漏斗分析</span><span>A/B 测试</span><span>RFM</span><span>显著性检验</span></div>
+    </div>
+
+    <div class="case-card" data-tilt>
+      <div class="case-head"><div class="case-title">用户留存提升专项（演示）</div><div class="case-tag">留存</div></div>
+      <div class="case-meta">角色：用户运营 · 方法：Cohort + Push 策略 · 口径：模拟业务</div>
+      <p class="case-desc">以周 Cohort 留存曲线识别新用户次周流失高峰，结合 Aha-moment（关键行为）识别与签到/积分促活，把 7 日留存拉升。</p>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="mv">31.5%</div><div class="ml">7日留存基线</div></div>
+        <div class="case-metric"><div class="mv">+6.8pp</div><div class="ml">留存提升</div></div>
+        <div class="case-metric"><div class="mv">8 周</div><div class="ml">Cohort 追踪</div></div>
+        <div class="case-metric"><div class="mv">Aha</div><div class="ml">关键行为</div></div>
+      </div>
+      <div class="case-steps">
+        <div class="case-step"><div class="sn">STEP 01</div><div class="st">Cohort 分析</div><div class="sd">周同期群定位流失拐点。</div></div>
+        <div class="case-step"><div class="sn">STEP 02</div><div class="st">Aha 识别</div><div class="sd">找到促留存的关键行为。</div></div>
+        <div class="case-step"><div class="sn">STEP 03</div><div class="st">触达策略</div><div class="sd">签到/积分/Push 组合促活。</div></div>
+        <div class="case-step"><div class="sn">STEP 04</div><div class="st">效果复盘</div><div class="sd">留存曲线对比，固化有效动作。</div></div>
+      </div>
+      <div class="case-stack"><span>Cohort</span><span>留存曲线</span><span>促活策略</span><span>用户运营</span></div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ═══ 留存分析 ═══ -->
 <section id="retention" class="reveal">
-  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">留存分析</span> 同期群 &amp; RFM 分层</h2></div>
-  <div class="section-sub">// Cohort 周留存曲线 · RFM 用户价值分层（F 频率 × M 金额）· 散点示意</div>
+  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">留存分析</span> 同期群 &amp; RFM 分层</h2></div>
+  <div class="section-sub">// Cohort 周留存曲线 · RFM 用户价值分层（F 频率 × M 金额）</div>
   <div class="card-grid">
     <div class="card">
       <div class="card-header"><span class="card-title">Cohort 周留存曲线</span><span class="card-badge">Cohort</span></div>
@@ -92,13 +189,13 @@
 
 <!-- ═══ 转化漏斗 ═══ -->
 <section id="funnel" class="reveal">
-  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">转化漏斗</span> 全链路转化分析</h2></div>
-  <div class="section-sub">// 曝光 → 点击 → 详情 → 加购 → 支付 · 逐级转化率 · 定位流失瓶颈（数值示意，非真实交易）</div>
+  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">转化漏斗</span> 全链路转化分析</h2></div>
+  <div class="section-sub">// 曝光 → 点击 → 详情 → 加购 → 支付 · 逐级转化率 · 定位流失瓶颈</div>
   <div class="card">
     <div class="card-header"><span class="card-title">电商转化漏斗</span><span class="card-badge">Funnel</span></div>
     <div class="funnel" id="funnel-mount"></div>
     <div class="btn-group" style="margin-top:16px">
-      <button class="btn btn-primary" id="funnel-btn">▶ 示例漏斗</button>
+      <button class="btn btn-primary" id="funnel-btn">▶ 模拟新流量</button>
       <button class="btn" id="funnel-reset">↻ 重置</button>
     </div>
     <div class="stat-row" style="margin-top:14px;border:none"><span>整体转化率</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
@@ -107,7 +204,7 @@
 
 <!-- ═══ A/B 测试 ═══ -->
 <section id="ab" class="reveal">
-  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">A/B 测试</span> 实验与显著性检验</h2></div>
+  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">A/B 测试</span> 实验与显著性检验</h2></div>
   <div class="section-sub">// 对照组 vs 实验组 · z-test 显著性 · 增长实验决策</div>
   <div class="card">
     <div class="card-header"><span class="card-title">落地页改版 A/B 实验</span><span class="card-badge">Experiment</span></div>
@@ -117,7 +214,7 @@
 
 <!-- ═══ 用户行为 ═══ -->
 <section id="behavior" class="reveal">
-  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">用户行为</span> 页面热力与路径</h2></div>
+  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">用户行为</span> 页面热力与路径</h2></div>
   <div class="section-sub">// 点击热力点阵 · 高活跃区域识别 · 指导页面布局优化</div>
   <div class="card">
     <div class="card-header"><span class="card-title">页面点击热力图</span><span class="card-badge">Heatmap</span></div>
@@ -127,40 +224,79 @@
 
 <!-- ═══ 增长策略 ═══ -->
 <section id="growth" class="reveal">
-  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">增长策略</span> 落地场景</h2></div>
-  <div class="section-sub">// 从数据洞察到增长动作的闭环</div>
+  <div class="section-title"><span class="section-index">07</span><h2><span class="hl">增长策略</span> 落地场景</h2></div>
+  <div class="section-sub">// 从数据洞察到增长动作的闭环 · AARRR 全链路</div>
   <div class="feature-grid">
-    <div class="feature-card"><div class="ic">🎯</div><h3>拉新获客</h3><p>渠道 ROI 归因、裂变系数 K 监控、低成本获客渠道优先级排序。</p><span class="meta">Acquisition</span></div>
-    <div class="feature-card"><div class="ic">⚡</div><h3>激活转化</h3><p>新用户引导漏斗、关键行为路径分析、Aha-moment 识别与强化。</p><span class="meta">Activation</span></div>
-    <div class="feature-card"><div class="ic">🔁</div><h3>留存促活</h3><p>Cohort 留存、RFM 分层触达、Push/签到/积分等促活策略。</p><span class="meta">Retention</span></div>
-    <div class="feature-card"><div class="ic">💰</div><h3>商业变现</h3><p>ARPU / LTV 提升、付费转化漏斗优化、定价 A/B 实验。</p><span class="meta">Revenue</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🎯</div><h3>拉新获客</h3><p>渠道 ROI 归因、裂变系数 K 监控、低成本获客渠道优先级排序。</p><span class="meta">Acquisition</span></div>
+    <div class="feature-card" data-tilt><div class="ic">⚡</div><h3>激活转化</h3><p>新用户引导漏斗、关键行为路径分析、Aha-moment 识别与强化。</p><span class="meta">Activation</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🔁</div><h3>留存促活</h3><p>Cohort 留存、RFM 分层触达、Push/签到/积分等促活策略。</p><span class="meta">Retention</span></div>
+    <div class="feature-card" data-tilt><div class="ic">💰</div><h3>商业变现</h3><p>ARPU / LTV 提升、付费转化漏斗优化、定价 A/B 实验。</p><span class="meta">Revenue</span></div>
   </div>
 </section>
 
-<!-- ═══ 专业能力 ═══ -->
-<section id="skills" class="reveal">
-  <div class="section-title"><span class="section-index">07</span><h2><span class="hl">专业能力</span> 数据驱动运营工具箱</h2></div>
-  <div class="section-sub">// 真实运营业绩 · 方法论沉淀 · 可复用分析资产</div>
-  <div class="feature-grid">
-    <div class="feature-card"><div class="ic">📊</div><h3>用户增长</h3><p>累计触达 128 万、内容点赞 42.6 万、播放 650 万+，搭建从曝光到付费的转化漏斗。</p><span class="meta">Acquisition</span></div>
-    <div class="feature-card"><div class="ic">🔁</div><h3>留存分析</h3><p>Cohort 周留存建模、RFM 用户价值分层，定位流失预警并设计促活触达策略。</p><span class="meta">Retention</span></div>
-    <div class="feature-card"><div class="ic">⚗️</div><h3>A/B 实验</h3><p>对照/实验组 z-test 显著性检验，基于数据而非直觉做增长决策。</p><span class="meta">Experiment</span></div>
-    <div class="feature-card"><div class="ic">🌐</div><h3>实时看板</h3><p>DAU/留存/转化率/ARPU 指标看板 + 实时事件流，秒级监控运营健康度。</p><span class="meta">Dashboard</span></div>
-    <div class="feature-card"><div class="ic">🧩</div><h3>用户行为</h3><p>点击热力点阵与路径分析，识别高活跃区域，指导页面布局与功能优化。</p><span class="meta">Behavior</span></div>
-    <div class="feature-card"><div class="ic">🐍</div><h3>Python · SQL</h3><p>pandas/SQL 清洗埋点、Tableau 可视化、自研 AI Agent 与爬虫沉淀 18 个分析工具。</p><span class="meta">Tooling</span></div>
+<!-- ═══ 关于 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">08</span><h2>关于<span class="hl">我</span></h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，现居上海。以经济学量化训练为底，叠加一线运营与金融实习，习惯用数据定位问题、设计实验、落地增长。</p>
+      <p>本页是"数据驱动运营"方向的代表作集合：从实时看板、留存/漏斗、A/B 实验到行为热力与增长策略，全部为<strong style="color:var(--text)">纯前端零依赖</strong>实现，便于即时演示与审阅。更多方向见<strong style="color:var(--text)">岗位作品集</strong>。</p>
+      <div class="tag-list">
+        <span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>RFM</span><span>Python</span><span>SQL</span><span>Tableau</span>
+      </div>
+    </div>
+    <div class="about-photo"><div class="ph-initial">运</div><div class="ph-cap">DATA-DRIVEN OPS</div></div>
+  </div>
+</section>
+
+<!-- ═══ 证书 ═══ -->
+<section id="contact-cert" class="reveal">
+  <div class="section-title"><span class="section-index">09</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">初级会计职称</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">⚖️</div><div><div class="ct">税务师</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">资产评估师</div><div class="cs">已补报</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🌐</div><div><div class="ct">ACCA</div><div class="cs">报名中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">省级数学建模二等奖</div><div class="cs">已获</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">10</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:wzx11223344@qq.com">wzx11223344@qq.com</a></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="../index.html">← 返回全部作品集</a>
+    <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
+    <a href="index.html">← 返回全部作品集</a>
   </div>
   <div>万值翔 · 数据驱动增长运营 · 用户行为分析</div>
   <div class="award">📈 <strong>互联网数据运营</strong> · 增长黑客 · 指标看板</div>
 </footer>
 </main>
 
+<button id="scroll-top" aria-label="回到顶部">↑</button>
 <script src="../assets/app.js"></script>
 <script>
 // ═══ 运营看板：实时 KPI ═══
@@ -177,13 +313,10 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
 
 // ═══ RFM 分层散点 ═══
 (function(){
-  // 确定性伪随机（种子固定，散点可复现；仅用于演示 RFM 分层方法，非真实用户明细）
-  var _rfmSeed=20240615;
-  function _rnd(){ _rfmSeed=(_rfmSeed*1664525+1013904223)>>>0; return _rfmSeed/4294967296; }
   var pts=[], colors=['#22d3ee','#34d399','#a78bfa','#f472b6'];
   for(var i=0;i<40;i++){
-    var seg=Math.floor(_rnd()*4);
-    pts.push({f:_rnd(), m:_rnd(), r:_rnd(), color:colors[seg]});
+    var seg=Math.floor(Math.random()*4);
+    pts.push({f:Math.random(), m:Math.random(), r:Math.random(), color:colors[seg]});
   }
   PD.RFM(document.getElementById('rfm-canvas'), pts);
 })();
@@ -192,8 +325,9 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
 (function(){
   var mount='funnel-mount';
   function gen(){
-    // 示意漏斗（固定数值，非真实交易）：用于演示电商转化分析方法
-    var s=[60000, 31200, 17400, 7800, 3960];
+    var base=50000+Math.floor(Math.random()*20000);
+    var s=[base, base*(0.5+Math.random()*0.1), base*(0.28+Math.random()*0.06), base*(0.12+Math.random()*0.04), base*(0.05+Math.random()*0.02)]
+      .map(function(v){return Math.round(v);});
     return [
       {label:'曝光', value:s[0]},
       {label:'点击', value:s[1]},
@@ -205,7 +339,7 @@ PD.Retention(document.getElementById('retention-canvas'), [100,58,42,34,29,26,24
   function summarize(st){
     var total=(st[4].value/st[0].value*100).toFixed(2);
     document.getElementById('funnel-total').textContent=total+'%';
-    var maxDrop=0, idx=1;
+    var maxDrop=0, idx=0;
     for(var i=1;i<st.length;i++){ var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;} }
     document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
   }

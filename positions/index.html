@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>万值翔 · 岗位作品集导航</title>
+<title>万值翔 · 数据驱动岗位作品集</title>
+<meta name="description" content="万值翔 · 华东师范大学经济学 · 数据驱动增长运营 / 金融分析作品集。运营看板、转化漏斗、A/B 测试、风险定价、财务分析、AI 工具链。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 </head>
 <body>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -16,61 +19,182 @@
 
 <nav>
   <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
-    <a href="../index.html">◀ 主站 / 技术演示总览</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#about">关于</a>
+    <a href="#works">作品</a>
+    <a href="#skills">技能</a>
+    <a href="#certs">证书</a>
+    <a href="#contact">联系</a>
+    <a href="../index.html">◀ 主站 / 技术演示</a>
   </div>
 </nav>
+<div class="nav-overlay"></div>
 
 <main id="app">
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-eyebrow"><span class="pulse"></span>PORTFOLIO · 数据驱动岗位作品集</div>
-  <h1 class="hero-name">岗位<span class="accent">作品集</span></h1>
-  <div class="hero-sub" data-typed='["以互联网运营数据岗方法论重构 · 每个方向都含数据看板","数据分析 · 用户增长 · 转化漏斗 · A/B 测试 · 指标监控","点开任意方向，查看专属交互演示"]'></div>
-  <div class="hero-tags"><span>数据分析</span><span>用户增长</span><span>转化漏斗</span><span>A/B 测试</span><span>指标监控</span></div>
+  <div class="hero-eyebrow"><span class="pulse"></span>DATA-DRIVEN · 数据驱动岗位作品集</div>
+  <h1 class="hero-name">万值翔<span class="accent"> · 作品集</span></h1>
+  <div class="hero-sub" data-typed='["经济学背景 · 数据驱动增长运营 / 金融分析","从数据洞察到业务增长落地的闭环能力","Python · SQL · 可视化 · A/B 实验 · 计量建模 · AI Agent"]'></div>
+  <div class="hero-tags">
+    <span>用户增长</span><span>数据分析</span><span>转化漏斗</span><span>A/B 测试</span><span>金融风控</span><span>AI 工具链</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#works">▶ 查看岗位作品</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历 (PDF)</a>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="27">0</div><div class="kpi-label">GitHub 公开仓库</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="650.7" data-dec="1" data-suffix="万">0</div><div class="kpi-label">B站累计播放量</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="4435">0</div><div class="kpi-label">B站粉丝</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="42.6" data-dec="1" data-suffix="万">0</div><div class="kpi-label">内容点赞量</div></div>
+  </div>
 </section>
 
-<!-- ═══ 方向卡片 ═══ -->
-<section class="reveal">
-  <div class="section-title"><span class="section-index">✧</span><h2>选择你的<span class="hl">岗位方向</span></h2></div>
-  <div class="section-sub">// 每个方向都是一套含数据看板 / 漏斗 / A-B 的独立交互作品集</div>
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>关于<span class="hl">我</span></h2></div>
+  <div class="section-lead">// 经济学训练 + 实战运营 / 金融分析经验，习惯用数据说话、把分析变成可落地动作。</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">我是万值翔，华东师范大学经济与管理学院经济学专业 2027 届本科毕业生，现居上海。兼具<strong style="color:var(--text)">经济学量化训练</strong>与<strong style="color:var(--text)">一线运营 / 金融实习</strong>经验，擅长把散乱的业务数据整理成清晰的指标、看板与增长策略。</p>
+      <p>实习横跨政府侧（上海市经信委 · 智能制造项目）与市场化机构（国盛证券、中国联通、Lacoste），参与过正大杯市场调研、上证杯 ETF 研究，获省级数学建模竞赛二等奖。日常维护约 27 个开源仓库，覆盖量化金融、经济学工具、MCP 服务与 AI Agent 技能；B 站「黎明之剑11」累计播放 650.7 万，是技术表达与科普的延伸。</p>
+      <p>我经营一家零食店，对<strong style="color:var(--text)">营业额分析、商品定价、转化与留存</strong>有第一手体感——这也是本作品集以"数据驱动运营"为旗舰方向的原因。</p>
+      <div class="tag-list">
+        <span>Python / Pandas</span><span>SQL</span><span>Tableau</span><span>A/B 实验</span><span>转化漏斗</span><span>RFM 分层</span><span>计量经济学</span><span>风险定价</span><span>AI Agent</span>
+      </div>
+    </div>
+    <div class="about-photo">
+      <div class="ph-initial">W</div>
+      <div class="ph-cap">WAN ZHI-XIANG · ECNU</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WORKS ═══ -->
+<section id="works" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>岗位<span class="hl">作品</span></h2></div>
+  <div class="section-lead">// 每个方向都是一套独立交互作品集：含实时指标看板、分析模型与可视化演示，点击进入。</div>
   <div class="feature-grid">
-    <a class="feature-card" href="internet.html">
+    <a class="feature-card" href="internet.html" data-tilt>
       <div class="ic">📊</div><h3>互联网数据运营 <span style="color:var(--emerald);font-size:11px">· 旗舰</span></h3>
-      <p>运营看板、留存曲线、RFM 分层、转化漏斗、A/B 测试、行为热力。</p><span class="meta">internet.html →</span>
+      <p>运营看板、Cohort 留存、RFM 分层、转化漏斗、A/B 测试、行为热力、增长策略与真实项目案例。</p><span class="meta">internet.html →</span>
     </a>
-    <a class="feature-card" href="hr.html">
-      <div class="ic">👥</div><h3>人事 / HR</h3>
-      <p>人才看板、招聘漏斗、能力雷达、人岗匹配、渠道 A/B ROI。</p><span class="meta">hr.html →</span>
+    <a class="feature-card" href="hr.html" data-tilt>
+      <div class="ic">👥</div><h3>人事 / HR 分析</h3>
+      <p>人才看板、招聘漏斗、能力雷达、人岗匹配（TF-IDF）、渠道 ROI A/B。</p><span class="meta">hr.html →</span>
     </a>
-    <a class="feature-card" href="bank.html">
-      <div class="ic">🏦</div><h3>银行 / 金融</h3>
-      <p>风险看板、BSM 定价、蒙特卡洛、波动率微笑、客户漏斗。</p><span class="meta">bank.html →</span>
+    <a class="feature-card" href="bank.html" data-tilt>
+      <div class="ic">🏦</div><h3>银行 / 金融风控</h3>
+      <p>风险看板、BSM 期权定价、Greeks、蒙特卡洛、波动率微笑、客户漏斗。</p><span class="meta">bank.html →</span>
     </a>
-    <a class="feature-card" href="finance.html">
-      <div class="ic">💰</div><h3>财务 / 会计</h3>
-      <p>财务运营看板、异常检测、杜邦分解、营收趋势预测。</p><span class="meta">finance.html →</span>
+    <a class="feature-card" href="finance.html" data-tilt>
+      <div class="ic">💰</div><h3>财务 / 会计分析</h3>
+      <p>财务运营看板、异常检测（Z/MAD/IQR）、杜邦分解、营收趋势预测。</p><span class="meta">finance.html →</span>
     </a>
-    <a class="feature-card" href="state.html">
-      <div class="ic">🏛️</div><h3>国企综合</h3>
+    <a class="feature-card" href="state.html" data-tilt>
+      <div class="ic">🏛️</div><h3>国企综合岗</h3>
       <p>产业看板、政策主题分析、合规审计、数据治理漏斗。</p><span class="meta">state.html →</span>
     </a>
-    <a class="feature-card" href="general.html">
-      <div class="ic">🌐</div><h3>通用综合</h3>
+    <a class="feature-card" href="general.html" data-tilt>
+      <div class="ic">🌐</div><h3>通用综合分析</h3>
       <p>分析引擎看板、神经网络、卷积、K-Means、开源项目实证。</p><span class="meta">general.html →</span>
     </a>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2>能力<span class="hl">矩阵</span></h2></div>
+  <div class="section-lead">// 以岗位需求倒推的能力栈，量化呈现熟练度。</div>
+  <div class="skill-grid">
+    <div class="skill-cat">
+      <h4>数据分析与工程</h4>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Python · Pandas / NumPy</span><span>95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>SQL · 数据建模</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Excel 高级函数 / VBA</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>爬虫 / 自动化采集</span><span>82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+    </div>
+    <div class="skill-cat">
+      <h4>增长运营与可视化</h4>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>指标看板 / 实时监控</span><span>92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="92"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>A/B 实验 / 显著性检验</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>转化漏斗 / RFM 分层</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Tableau / 数据可视化</span><span>85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+    </div>
+    <div class="skill-cat">
+      <h4>金融与计量</h4>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>计量经济学 / 面板模型</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>期权定价 / 风险模型</span><span>84%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="84"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>财务分析 / 杜邦</span><span>86%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="86"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>因果推断 / DID / IV</span><span>82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+    </div>
+    <div class="skill-cat">
+      <h4>AI 工具与工程化</h4>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>AI Agent / MCP 服务</span><span>88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>GitHub / 开源协作</span><span>90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>大模型应用 / Prompt</span><span>86%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="86"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>前端 / 可视化工程</span><span>80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTS ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="section-lead">// 已持证 + 备考中，持续扩展金融 / 经济 / 会计资质矩阵。</div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">初级会计职称</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中 · 7月报名</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">⚖️</div><div><div class="ct">税务师</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">资产评估师</div><div class="cs">已补报 · 7/13</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🌐</div><div><div class="ct">ACCA</div><div class="cs">报名截止 7/27</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">省级数学建模二等奖</div><div class="cs">已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🎓</div><div><div class="ct">CFA（规划中）</div><div class="cs">目标资质</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="section-lead">// 欢迎就实习 / 校招 / 项目合作与我联系，通常 24 小时内回复。</div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:wzx11223344@qq.com">wzx11223344@qq.com</a></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">🎓</span><span class="cl">院校</span><span class="v">华东师范大学 · 经济学 2027 届</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="https://github.com/wzx11223344/portfolio-demo" target="_blank"><span class="si">💻</span>本站源码</a>
+        <a class="social-btn" href="https://www.zhihu.com" target="_blank"><span class="si">📖</span>知乎</a>
+      </div>
+      <div class="contact-row" style="margin-top:16px;border:none"><span class="ci">💡</span><span class="v" style="color:var(--text-dim)">备注：B站「黎明之剑11」650.7万播放 · 技术科普与表达。</span></div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="https://github.com/wzx11223344/portfolio-demo" target="_blank">源码</a>
+    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
+    <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
     <a href="../index.html">技术演示总览</a>
   </div>
-  <div>万值翔 · 数据驱动岗位作品集 · 从零实现</div>
+  <div>万值翔 · 数据驱动岗位作品集 · 经济学 × 运营 × 金融</div>
+  <div class="award">📊 <strong>从数据洞察到业务增长</strong> · 一站式能力展示</div>
 </footer>
 </main>
+
+<button id="scroll-top" aria-label="回到顶部">↑</button>
 <script src="../assets/app.js"></script>
 </body>
 </html>

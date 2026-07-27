@@ -19,6 +19,7 @@
 </style>
 </head>
 <body>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -27,6 +28,7 @@
 
 <nav>
   <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
     <a href="../index.html">◀ 主站</a>
     <a href="#hero" class="active">概览</a>
@@ -39,6 +41,7 @@
     <a href="#skills">综合能力</a>
   </div>
 </nav>
+<div class="nav-overlay"></div>
 
 <main id="app">
 <!-- ═══ HERO ═══ -->
@@ -158,7 +161,15 @@
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
+    <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
     <a href="../index.html">← 返回全部作品集</a>
+  </div>
+  <div class="cert-grid" style="max-width:780px;margin:18px auto">
+    <div class="cert-card"><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card"><div class="cert-ic">📈</div><div><div class="ct">初级会计</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card"><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
+    <div class="cert-card"><div class="cert-ic">🧮</div><div><div class="ct">数学建模省二</div><div class="cs">已获</div></div></div>
   </div>
   <div>万值翔 · 全栈分析引擎 · 从零实现一切</div>
   <div class="award">🌐 <strong>通用综合</strong> · 量化 · 计量 · ML</div>
@@ -329,5 +340,6 @@ document.getElementById('km-reset').onclick=()=>{kmRunning=false;genKM()};
   document.getElementById('funnel-btn').onclick=run; run();
 })();
 </script>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
 </body>
 </html>
