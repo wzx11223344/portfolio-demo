@@ -228,9 +228,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <div id="app">
 <!-- ==================== NAV ==================== -->
 <nav id="nav">
-<a href="#hero">首页</a><a href="#raytracer">光线追踪</a><a href="#montecarlo">蒙特卡洛</a>
-<a href="#blackscholes">期权定价</a><a href="#perf">性能测试</a><a href="#algorithms">算法演示</a>
-<a href="#skills">技能</a><a href="#opensource">开源</a><a href="positions/index.html">岗位作品集 →</a>
+<a href="#hero">首页</a><a href="#featured">精选项目</a><a href="#opensource">全部开源</a><a href="#skills">技能</a><a href="positions/index.html">岗位作品集 →</a>
 </nav>
 
 <!-- ==================== HERO ==================== -->
@@ -241,7 +239,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <span>TRAE插件生态</span><span>MCP架构</span><span>全栈工程</span>
 <span>量化金融</span><span>计算机图形学</span><span>高性能计算</span>
 </div>
-<p class="hero-note">下方为从零实现的工程能力演示（光线追踪 / 蒙特卡洛 / 期权定价 / 算法可视化），用于展示编码与数学功底，<b>非岗位经历</b>；真实实习与项目见各岗位作品集。</p>
+<p class="hero-note">以下为本人从零实现的<b>真实开源项目</b>与工程能力沉淀 —— 计量经济学、量化金融、宏观经济与因果推断工具链；完整实习与岗位匹配见各岗位作品集。</p>
 <div class="kpi-grid">
 <div class="kpi-card"><div class="kpi-num" data-count="30">0</div><div class="kpi-label">开源库（计量·量化）</div></div>
 <div class="kpi-card"><div class="kpi-num" data-count="9">0</div><div class="kpi-label">核心开源项目</div></div>
@@ -251,245 +249,38 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 </div>
 </section>
 
-<!-- ==================== RAY TRACER ==================== -->
-<section id="raytracer">
-<div class="section-title"><span class="hl">[</span> 光线追踪 <span class="hl">]</span></div>
-<div class="section-subtitle">// 从零实现的光线追踪渲染器 — 球体求交 · Phong光照 · 镜面反射 · 折射 · 软阴影</div>
-<div class="card">
-<div class="card-header"><span class="card-title">渲染输出</span><span class="card-badge" id="rt-status">就绪</span></div>
-<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
-<div class="canvas-wrap"><canvas id="rt-canvas" width="400" height="300"></canvas></div>
-<div style="flex:1;min-width:280px">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" id="rt-render-btn" onclick="startRayTrace()">开始渲染</button>
-<button class="btn" onclick="resetRayTrace()">重置</button>
-</div>
-<div class="stat-item"><span class="stat-val" id="rt-time">0.00s</span><span class="stat-label">渲染耗时</span></div>
-<div class="stat-item"><span class="stat-val" id="rt-progress">0%</span><span class="stat-label">渲染进度</span></div>
-<div class="progress-wrap"><div class="progress-fill" id="rt-progress-bar"></div></div>
-<div class="stats-grid" style="margin-top:12px">
-<div class="stat-item"><span class="stat-val" id="rt-spheres">3</span><span class="stat-label">球体</span></div>
-<div class="stat-item"><span class="stat-val" id="rt-reflect">3</span><span class="stat-label">递归深度</span></div>
-<div class="stat-item"><span class="stat-val" id="rt-samples">16</span><span class="stat-label">阴影采样</span></div>
-<div class="stat-item"><span class="stat-val" id="rt-pixels">120K</span><span class="stat-label">像素</span></div>
-</div>
-</div>
-</div>
-<div class="code-block" style="margin-top:16px;max-height:200px">
-<span class="cm">// 核心算法：射线-球体求交（二次方程判别式）</span>
-<span class="kw">function</span> <span class="fn">hitSphere</span>(ray, sphere) {
-  <span class="kw">const</span> oc = sub(ray.origin, sphere.center);
-  <span class="kw">const</span> a = dot(ray.dir, ray.dir);
-  <span class="kw">const</span> b = <span class="num">2.0</span> * dot(oc, ray.dir);
-  <span class="kw">const</span> c = dot(oc, oc) - sphere.r * sphere.r;
-  <span class="kw">const</span> disc = b*b - <span class="num">4</span>*a*c;
-  <span class="kw">if</span> (disc &lt; <span class="num">0</span>) <span class="kw">return</span> <span class="kw">null</span>;
-  <span class="kw">return</span> (-b - Math.sqrt(disc)) / (<span class="num">2</span>*a); <span class="cm">// 最近交点</span>
-}
-<span class="cm">// Phong光照模型: I = Ia·ka + Id·kd·(N·L) + Is·ks·(R·V)^n</span>
-<span class="cm">// 反射: Snell's Law n₁sinθ₁ = n₂sinθ₂, 递归深度=3</span>
-<span class="cm">// 软阴影: 对光源方向进行16采样 jittered sampling</span>
-</div>
-</div>
-</section>
-
-<!-- ==================== MONTE CARLO ==================== -->
-<section id="montecarlo">
-<div class="section-title"><span class="hl">[</span> 蒙特卡洛 <span class="hl">]</span></div>
-<div class="section-subtitle">// 实时蒙特卡洛模拟 — PI估计 · 期权定价 · 收敛性分析</div>
-<div class="card">
-<div class="tabs">
-<button class="tab-btn active" data-tab="mc-pi">PI 估计</button>
-<button class="tab-btn" data-tab="mc-option">期权定价</button>
-</div>
-<div class="tab-panel active" id="mc-pi">
-<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
-<div class="canvas-wrap"><canvas id="mc-pi-canvas" width="400" height="400"></canvas></div>
-<div style="flex:1;min-width:280px">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" onclick="startMCPi()">开始模拟</button>
-<button class="btn" onclick="stopMCPi()">暂停</button>
-<button class="btn" onclick="resetMCPi()">重置</button>
-</div>
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn" data-mc-speed="1" onclick="setMCSpeed(1)">1x</button>
-<button class="btn" data-mc-speed="10" onclick="setMCSpeed(10)">10x</button>
-<button class="btn" data-mc-speed="100" onclick="setMCSpeed(100)">100x</button>
-</div>
-<div class="stat-item"><span class="stat-val" id="mc-pi-val">0.00000000</span><span class="stat-label">估算Pi</span></div>
-<div class="stat-item"><span class="stat-val" id="mc-pi-err">0.0000%</span><span class="stat-label">误差</span></div>
-<div class="stat-item"><span class="stat-val" id="mc-pi-total">0</span><span class="stat-label">总点数</span></div>
-</div>
-</div>
-</div>
-<div class="tab-panel" id="mc-option">
-<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
-<div class="canvas-wrap"><canvas id="mc-opt-canvas" width="400" height="400"></canvas></div>
-<div style="flex:1;min-width:280px">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" onclick="startMCOption()">开始定价</button>
-<button class="btn" onclick="stopMCOption()">暂停</button>
-<button class="btn" onclick="resetMCOption()">重置</button>
-</div>
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn" data-mc-n="1000" onclick="setMCN(1000)">N=1K</button>
-<button class="btn" data-mc-n="10000" onclick="setMCN(10000)">N=10K</button>
-<button class="btn btn-primary" data-mc-n="100000" onclick="setMCN(100000)">N=100K</button>
-</div>
-<div class="stat-item"><span class="stat-val" id="mc-opt-mc">0.0000</span><span class="stat-label">MC估计</span></div>
-<div class="stat-item"><span class="stat-val" id="mc-opt-bs">0.0000</span><span class="stat-label">BS基准</span></div>
-<div class="stat-item"><span class="stat-val" id="mc-opt-err">0.0000%</span><span class="stat-label">差异</span></div>
-<div class="stat-item"><span class="stat-val" id="mc-opt-paths">0</span><span class="stat-label">模拟路径</span></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- ==================== BLACK-SCHOLES ==================== -->
-<section id="blackscholes">
-<div class="section-title"><span class="hl">[</span> 期权定价引擎 <span class="hl">]</span></div>
-<div class="section-subtitle">// 衍生品定价引擎 — 解析解 + 全部7个Greeks + 波动率微笑 + Delta曲线 — 解析解 + 全部7个Greeks + 波动率微笑 + Delta曲线</div>
-<div class="card">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
-<div>
-<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:16px">参数设置</h4>
-<div class="slider-group"><label>S (标的价格) <span class="val" id="bs-s-val">100.00</span></label><input type="range" id="bs-s" min="1" max="300" value="100" step="1"></div>
-<div class="slider-group"><label>K (行权价) <span class="val" id="bs-k-val">100.00</span></label><input type="range" id="bs-k" min="1" max="300" value="100" step="1"></div>
-<div class="slider-group"><label>T (到期时间/年) <span class="val" id="bs-t-val">1.00</span></label><input type="range" id="bs-t" min="0.01" max="5" value="1" step="0.01"></div>
-<div class="slider-group"><label>σ (波动率) <span class="val" id="bs-sigma-val">0.30</span></label><input type="range" id="bs-sigma" min="0.05" max="1.5" value="0.3" step="0.01"></div>
-<div class="slider-group"><label>r (无风险利率) <span class="val" id="bs-r-val">0.05</span></label><input type="range" id="bs-r" min="0" max="0.2" value="0.05" step="0.005"></div>
-<div class="slider-group"><label>q (股息率) <span class="val" id="bs-q-val">0.00</span></label><input type="range" id="bs-q" min="0" max="0.1" value="0" step="0.005"></div>
-</div>
-<div>
-<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:16px">定价与Greeks</h4>
-<table class="greeks-table">
-<tr><td>看涨期权</td><td id="bs-call">-</td></tr>
-<tr><td>看跌期权</td><td id="bs-put">-</td></tr>
-<tr><td>Delta(看涨)</td><td id="bs-delta-c">-</td></tr>
-<tr><td>Delta(看跌)</td><td id="bs-delta-p">-</td></tr>
-<tr><td>Gamma</td><td id="bs-gamma">-</td></tr>
-<tr><td>Theta(看涨)</td><td id="bs-theta-c">-</td></tr>
-<tr><td>Vega(每1%)</td><td id="bs-vega">-</td></tr>
-<tr><td>Rho(看涨)</td><td id="bs-rho">-</td></tr>
-</table>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:20px">
-<div><h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">波动率微笑</h4>
-<div class="canvas-wrap"><canvas id="bs-smile" width="400" height="280"></canvas></div></div>
-<div><h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">Delta随标的变化</h4>
-<div class="canvas-wrap"><canvas id="bs-delta" width="400" height="280"></canvas></div></div>
-</div>
-</div>
-</section>
-
-<!-- ==================== PERFORMANCE ==================== -->
-<section id="perf">
-<div class="section-title"><span class="hl">[</span> 性能基准 <span class="hl">]</span></div>
-<div class="section-subtitle">// Web Worker多线程 — 归并排序 · 百万数据 · 调度时间线可视化 — 归并排序 · 百万数据 · 调度时间线可视化</div>
-<div class="card">
-<div class="btn-group" style="margin-bottom:16px">
-<button class="btn btn-primary" id="perf-st-btn" onclick="runSingleThread()">单线程排序</button>
-<button class="btn btn-primary" id="perf-mt-btn" onclick="runMultiThread()">4线程排序</button>
-<button class="btn" onclick="resetPerf()">重置</button>
-</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
-<div class="stat-item"><span class="stat-val" id="perf-st-time">---</span><span class="stat-label">单线程</span></div>
-<div class="stat-item"><span class="stat-val" id="perf-mt-time">---</span><span class="stat-label">4线程</span></div>
-<div class="stat-item"><span class="stat-val" id="perf-speedup">---</span><span class="stat-label">加速比</span></div>
-<div class="stat-item"><span class="stat-val" id="perf-data">1,000,000</span><span class="stat-label">数据量</span></div>
-</div>
-<div class="progress-wrap"><div class="progress-fill" id="perf-st-bar" style="background:var(--neon-orange)"></div></div>
-<div style="font-size:11px;color:var(--text-dim);margin:4px 0 12px;font-family:var(--font-mono)">单线程</div>
-<div class="progress-wrap"><div class="progress-fill" id="perf-mt-bar" style="background:var(--neon-cyan)"></div></div>
-<div style="font-size:11px;color:var(--text-dim);margin:4px 0 12px;font-family:var(--font-mono)">多线程</div>
-<h4 style="color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:8px">线程调度时间线</h4>
-<div class="worker-timeline" id="perf-timeline"></div>
-<div style="font-size:11px;color:var(--text-dim);margin-top:8px;font-family:var(--font-mono)">
-<span style="color:var(--neon-orange)">MAIN</span> ·
-<span style="color:var(--neon-cyan)">W1</span> ·
-<span style="color:var(--neon-pink)">W2</span> ·
-<span style="color:var(--neon-green)">W3</span> ·
-<span style="color:var(--neon-yellow)">W4</span>
-</div>
-</div>
-</section>
-
-<!-- ==================== ALGORITHMS ==================== -->
-<section id="algorithms">
-<div class="section-title"><span class="hl">[</span> 算法演示 <span class="hl">]</span></div>
-<div class="section-subtitle">// 排序算法实时对比 · 路径规划BFS/DFS/A* · 康威生命游戏 · 曼德博集合 · 路径规划 · 康威生命游戏 · 曼德博集合</div>
-<div class="tabs" id="algo-tabs">
-<button class="tab-btn active" data-tab="algo-sort">排序</button>
-<button class="tab-btn" data-tab="algo-path">寻路</button>
-<button class="tab-btn" data-tab="algo-life">生命游戏</button>
-<button class="tab-btn" data-tab="algo-mandel">曼德博</button>
-</div>
-<!-- Sorting -->
-<div class="tab-panel active" id="algo-sort">
-<div class="card">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn" onclick="runSort('bubble')">冒泡排序 O(n²)</button>
-<button class="btn" onclick="runSort('quick')">快速排序 O(n log n)</button>
-<button class="btn" onclick="runSort('merge')">归并排序 O(n log n)</button>
-<button class="btn" onclick="runSort('heap')">堆排序 O(n log n)</button>
-<button class="btn" onclick="shuffleSortData()">随机打乱</button>
-</div>
-<div class="canvas-wrap"><canvas id="algo-sort-canvas" width="800" height="300"></canvas></div>
-<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
-<span id="algo-sort-info">比较次数: 0 | 交换次数: 0 | 耗时: 0ms</span>
-</div>
-</div>
-</div>
-<!-- Pathfinding -->
-<div class="tab-panel" id="algo-path">
-<div class="card">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" onclick="runPathfinding('bfs')">BFS (最短路径)</button>
-<button class="btn btn-primary" onclick="runPathfinding('dfs')">DFS (深度优先)</button>
-<button class="btn btn-primary" onclick="runPathfinding('astar')">A* (启发式)</button>
-<button class="btn" onclick="generateMaze()">生成迷宫</button>
-<button class="btn" onclick="resetPathfinding()">重置</button>
-</div>
-<div class="canvas-wrap"><canvas id="algo-path-canvas" width="500" height="500"></canvas></div>
-<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
-<span id="algo-path-info">已探索: 0 | 路径长度: 0 | 耗时: 0ms</span>
-</div>
-</div>
-</div>
-<!-- Game of Life -->
-<div class="tab-panel" id="algo-life">
-<div class="card">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" id="life-play-btn" onclick="toggleLife()">开始</button>
-<button class="btn" onclick="stepLife()">单步</button>
-<button class="btn" onclick="randomLife()">随机初始</button>
-<button class="btn" onclick="clearLife()">清空</button>
-</div>
-<div class="canvas-wrap"><canvas id="algo-life-canvas" width="600" height="400"></canvas></div>
-<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
-<span id="algo-life-info">世代: 0 | 存活: 0</span>
-</div>
-</div>
-</div>
-<!-- Mandelbrot -->
-<div class="tab-panel" id="algo-mandel">
-<div class="card">
-<div class="btn-group" style="margin-bottom:12px">
-<button class="btn btn-primary" onclick="renderMandelbrot()">渲染</button>
-<button class="btn" onclick="resetMandelbrot()">重置视图</button>
-<button class="btn" onclick="mandelZoomIn()">放大</button>
-<button class="btn" onclick="mandelZoomOut()">缩小</button>
-</div>
-<div class="canvas-wrap" id="mandel-wrap" style="cursor:grab">
-<canvas id="algo-mandel-canvas" width="600" height="400"></canvas>
-</div>
-<div style="margin-top:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">
-<span id="algo-mandel-info">中心: -0.7+0.0i | 范围: 3.5 | 最大迭代: 256</span>
-</div>
-</div>
-</div>
+<!-- ==================== FEATURED PROJECTS ==================== -->
+<section id="featured" class="reveal">
+  <div class="section-title"><span class="section-index">&#9733;</span><h2>精选<span class="hl">项目</span></h2></div>
+  <div class="section-subtitle">// 从零实现的开源工具链 —— 计量 · 量化 · 宏观 · 因果推断；点卡片查看完整 README 与截图</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-shot"><img src="assets/shots/city-compare-default.png" alt="city-compare 实时预览" loading="lazy"><span class="ps-badge live">Streamlit · 已部署</span></div>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CI</span><span class="pt-name">city-compare</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">city-compare</span><span class="proj-tag">城市分析</span></div>
+      <div class="proj-desc">城市经济竞争力对标系统：50 城 8 维指标、雷达图与 K-means 聚类，Streamlit 交互式对标。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/city-compare" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/city-compare.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-shot"><img src="assets/shots/econ-macro.png" alt="EconDashboard 宏观概览" loading="lazy"><span class="ps-badge live">Streamlit</span></div>
+      <div class="proj-thumb" style="--rc:#0EA5E9"><span class="pt-mono">EC</span><span class="pt-name">econ-dashboard</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">econ-dashboard</span><span class="proj-tag">经济看板</span></div>
+      <div class="proj-desc">交互式经济数据看板：GDP / CPI / PMI 跨国对比与宏观趋势可视化，Streamlit 多页面应用。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/econ-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/econ-dashboard.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">QU</span><span class="pt-name">quantlab</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">quantlab</span><span class="proj-tag">量化金融</span></div>
+      <div class="proj-desc">量化工具箱：BS 期权定价、Greeks 风险度量、回测框架与组合分析，覆盖金融工程基础能力。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/quantlab.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PY</span><span class="pt-name">pyconometrics</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">pyconometrics</span><span class="proj-tag">计量经济</span></div>
+      <div class="proj-desc">从零实现的计量经济学库：OLS / IV / DID / RDD 等因果识别方法与诊断，纯 Python 依赖。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/pyconometrics.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+    </div>
+  </div>
 </section>
 
 <!-- ==================== SKILLS ==================== -->
@@ -542,1008 +333,100 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PY</span><span class="pt-name">pyconometrics</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">pyconometrics</span><span class="proj-tag">计量经济</span></div>
       <div class="proj-desc">从零实现的计量经济学库：OLS / IV / DID / RDD 等因果识别方法与诊断，纯 Python 依赖。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/pyconometrics.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">QU</span><span class="pt-name">quantlab</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">quantlab</span><span class="proj-tag">量化金融</span></div>
       <div class="proj-desc">量化工具箱：BS 期权定价、Greeks 风险度量、回测框架与组合分析，覆盖金融工程基础能力。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/quantlab.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">DS</span><span class="pt-name">dsgepy</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">dsgepy</span><span class="proj-tag">宏观建模</span></div>
       <div class="proj-desc">一般均衡建模工具：RBC / NK / B-K 等 DSGE 模型的求解与脉冲响应分析。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/dsgepy" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/dsgepy" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/dsgepy.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">MA</span><span class="pt-name">macrodatahub</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">macrodatahub</span><span class="proj-tag">宏观数据</span></div>
       <div class="proj-desc">宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗流程。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrodatahub" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrodatahub" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/macrodatahub.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PO</span><span class="pt-name">policysim</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">policysim</span><span class="proj-tag">政策模拟</span></div>
       <div class="proj-desc">政策模拟框架：ABM / DID / SC 多方法对比，支持产业政策与冲击的情景推演。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/policysim" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/policysim" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/policysim.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-shot"><img src="assets/shots/city-compare-default.png" alt="city-compare 实时预览" loading="lazy"><span class="ps-badge">实时预览</span></div>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CI</span><span class="pt-name">city-compare</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">city-compare</span><span class="proj-tag">城市分析</span></div>
       <div class="proj-desc">城市对标分析：50 城 8 维指标聚类与可视化，用于区域与产业比较研究。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/city-compare" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/city-compare" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/city-compare.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-shot"><img src="assets/shots/econ-macro.png" alt="EconDashboard 宏观概览" loading="lazy"><span class="ps-badge live">Streamlit</span></div>
       <div class="proj-thumb" style="--rc:#0EA5E9"><span class="pt-mono">EC</span><span class="pt-name">econ-dashboard</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">econ-dashboard</span><span class="proj-tag">经济看板</span></div>
       <div class="proj-desc">交互式经济数据看板：GDP/CPI/PMI 跨国对比与宏观趋势可视化，Streamlit 多页面应用。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/econ-dashboard" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/econ-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/econ-dashboard.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">EX</span><span class="pt-name">express-consumption</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">express-consumption</span><span class="proj-tag">实证研究</span></div>
       <div class="proj-desc">正大杯全国大赛 1,352 份问卷计量建模可复现代码（LPM / Logistic / 回归），完整数据处理 pipeline。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/express-consumption" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/express-consumption" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/express-consumption.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CA</span><span class="pt-name">causal-inference-ml</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">causal-inference-ml</span><span class="proj-tag">因果推断</span></div>
       <div class="proj-desc">因果机器学习方法：Double ML / Causal Forest，衔接计量经济学与现代 ML 估计。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 1</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/causal-inference-ml.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 1</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-06</span></div>
     </div>
     <div class="proj-card" data-tilt>
       <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">MC</span><span class="pt-name">mcp-financial-data</span><span class="pt-lang">Python</span></div>
       <div class="proj-top"><span class="proj-name">mcp-financial-data</span><span class="proj-tag">AI 工程</span></div>
       <div class="proj-desc">金融数据 MCP 服务器：把行情、财报、宏观等数据能力封装为 Agent 可调用的标准接口。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/mcp-financial-data" target="_blank">↗ 源码</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/mcp-financial-data" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/mcp-financial-data.html">查看详情 →</a><span>· Python</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
     </div>
   </div>
 </section>
 
 <footer style="text-align:center;padding:40px 0;color:var(--text-dim);font-family:var(--font-mono);font-size:12px">
-从零构建 · 零外部依赖 · 纯HTML/CSS/JS · 所有演示实时计算
+从零构建 · 零外部依赖 · 纯 HTML/CSS/JS · 真实开源项目展示
 </footer>
 </div>
 
 <script>
-// ===================================================================
-// ==================== MATRIX RAIN BACKGROUND ========================
-// ===================================================================
-(function(){
-  const c=document.getElementById('matrix-bg');
-  if(!c){ return; } // matrix rain replaced by shared bg layers; skip if absent
-  const ctx=c.getContext('2d');
-  let w,h,cols,chars;
-  function resize(){
-    w=c.width=window.innerWidth;h=c.height=window.innerHeight;
-    cols=Math.floor(w/14);
-    chars=new Array(cols).fill(0);
-  }
-  resize();window.addEventListener('resize',resize);
-  const glyphs='アイウエオカキ0123456789算法量化金融机器学习深度网络经济计量'+'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!';
-  function draw(){
-    ctx.fillStyle='rgba(15,23,42,.05)';ctx.fillRect(0,0,w,h);
-    ctx.fillStyle=Math.random()>.5?'#047857':'#047857';ctx.font='13px monospace';
-    for(let i=0;i<cols;i++){
-      const t=glyphs[Math.floor(Math.random()*glyphs.length)];
-      const x=i*14,y=chars[i]*14;
-      ctx.fillText(t,x,y);
-      if(y>h&&Math.random()>.975)chars[i]=0;
-      chars[i]++;
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-// ===================================================================
-// ==================== UTILITY FUNCTIONS =============================
-// ===================================================================
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 
-// ===================================================================
-// ==================== TYPEWRITER EFFECT =============================
-// ===================================================================
+// TYPEWRITER
 (function(){
-  const el=$('#typewriter');
-  const texts=['不套壳、不调API凑数，每个算法从零实现',
+  const el=$('#typewriter'); if(!el) return;
+  const texts=['不套壳、不调API凑数，每个项目从零实现',
     '经济学本科 · 计量与量化金融开源实践',
     '正大杯 1,352 样本 · 上证杯 36% 净值增长',
     '国盛证券 / 经信委 / 联通 真实实习经历'];
   let ti=0,ci=0,deleting=false,ch='_';
   function tick(){
     const txt=texts[ti];
-    if(!deleting){
-      el.innerHTML=txt.substring(0,ci)+'<span class="cursor">'+ch+'</span>';
-      ci++;ch=ch==='_'?' ':'_';
-      if(ci<=txt.length){setTimeout(tick,40+Math.random()*30);return;}
-      deleting=true;setTimeout(tick,2000);return;
-    }
-    el.innerHTML=txt.substring(0,ci)+'<span class="cursor">_</span>';
-    ci--;if(ci>=0){setTimeout(tick,20);return;}
-    deleting=false;ci=0;ti=(ti+1)%texts.length;setTimeout(tick,500);
+    if(!deleting){ el.innerHTML=txt.substring(0,ci)+'<span class="cursor">'+ch+'</span>'; ci++;ch=ch==='_'?' ':'_'; if(ci<=txt.length){setTimeout(tick,40+Math.random()*30);return;} deleting=true;setTimeout(tick,2000);return; }
+    el.innerHTML=txt.substring(0,ci)+'<span class="cursor">_</span>'; ci--; if(ci>=0){setTimeout(tick,20);return;} deleting=false;ci=0;ti=(ti+1)%texts.length;setTimeout(tick,500);
   }
   tick();
 })();
 
-// ===================================================================
-// ==================== KPI SCROLL ANIMATION ==========================
-// ===================================================================
+// SKILL BARS
+(function(){ let anim=false; const obs=new IntersectionObserver(e=>{ if(e[0].isIntersecting&&!anim){anim=true; $$('.skill-bar-fill').forEach(el=>{el.style.width=el.dataset.width+'%';}); } },{threshold:.2}); const g=$('.skill-grid'); if(g) obs.observe(g); })();
+
+// NAV HIGHLIGHT
 (function(){
-  const nums=$$('.kpi-num');let animated=false;
-  function animateKPI(){
-    if(animated)return;animated=true;
-    nums.forEach(el=>{
-      const target=parseInt(el.dataset.target);
-      let cur=0;const dur=1500,step=Math.max(1,Math.floor(target/(dur/16)));
-      const timer=setInterval(()=>{
-        cur=Math.min(cur+step,target);
-        if(target>=10000)el.textContent=(cur/10000).toFixed(1)+'万';
-        else if(target>=1000)el.textContent=cur.toLocaleString();
-        else el.textContent=cur;
-        if(cur>=target)clearInterval(timer);
-      },16);
-    });
-  }
-  const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting)animateKPI();},{threshold:.3});
-  obs.observe($('.kpi-grid'));
+  const navLinks=$$('nav a'); const sections=[];
+  navLinks.forEach(a=>{ const id=a.getAttribute('href'); if(id&&id.charAt(0)==='#'){ const sec=document.getElementById(id.slice(1)); if(sec) sections.push(sec); } });
+  window.addEventListener('scroll',()=>{ let cur='hero'; sections.forEach(x=>{ if(x&&window.scrollY>=x.offsetTop-200) cur=x.id; }); navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+cur); }); });
 })();
-
-// ===================================================================
-// ==================== SKILL BAR ANIMATION ===========================
-// ===================================================================
-(function(){
-  let anim=false;
-  const obs=new IntersectionObserver(e=>{
-    if(e[0].isIntersecting&&!anim){anim=true;
-      $$('.skill-bar-fill').forEach(el=>{el.style.width=el.dataset.width+'%';});
-    }
-  },{threshold:.2});
-  obs.observe($('.skill-grid'));
-})();
-
-// ===================================================================
-// ==================== TAB SYSTEM ====================================
-// ===================================================================
-document.addEventListener('click',e=>{
-  const btn=e.target.closest('.tab-btn');
-  if(!btn)return;
-  const tabGroup=btn.closest('.tabs');
-  const panelParent=tabGroup.parentElement;
-  const tabId=btn.dataset.tab;
-  tabGroup.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  panelParent.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  const panel=panelParent.querySelector('#'+tabId);
-  if(panel)panel.classList.add('active');
-  if(tabId==='algo-mandel'){renderMandelbrot();const mc=$('#algo-mandel-canvas');if(mc){mc.style.width='100%';mc.style.height='100%';}}
-  if(tabId==='algo-life'){resizeLifeCanvas();const lc=$('#algo-life-canvas');if(lc){lc.style.width='100%';lc.style.height='100%';}}
-  if(tabId==='algo-path'){resizePathCanvas();const pc=$('#algo-path-canvas');if(pc){pc.style.width='100%';pc.style.height='100%';}}
-  if(tabId==='algo-sort'){resizeSortCanvas();const sc=$('#algo-sort-canvas');if(sc){sc.style.width='100%';sc.style.height='100%';}}
-});
-
-// ===================================================================
-// ==================== NAV HIGHLIGHT =================================
-// ===================================================================
-(function(){
-  const navLinks=$$('nav a');
-  const sections=[];
-  navLinks.forEach(a=>{
-    const id=a.getAttribute('href');
-    // only same-page anchors ("#id"); skip external/file links
-    if(id && id.charAt(0)==='#'){
-      const sec=document.getElementById(id.slice(1));
-      if(sec) sections.push(sec);
-    }
-  });
-  window.addEventListener('scroll',()=>{
-    let cur='hero';
-    sections.forEach(s=>{if(s&&window.scrollY>=s.offsetTop-200)cur=s.id;});
-    navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
-  });
-})();
-
-// ===================================================================
-// ==================== 3D VECTOR MATH ================================
-// ===================================================================
-function vec3(x,y,z){return{x,y,z}}
-function add(a,b){return{x:a.x+b.x,y:a.y+b.y,z:a.z+b.z}}
-function sub(a,b){return{x:a.x-b.x,y:a.y-b.y,z:a.z-b.z}}
-function scale(v,s){return{x:v.x*s,y:v.y*s,z:v.z*s}}
-function dot(a,b){return a.x*b.x+a.y*b.y+a.z*b.z}
-function cross(a,b){return{x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x}}
-function length(v){return Math.sqrt(dot(v,v))}
-function normalize(v){const l=length(v);return l>1e-9?scale(v,1/l):vec3(0,0,0)}
-function reflect(v,n){return sub(v,scale(n,2*dot(v,n)))}
-function mix(a,b,t){return add(scale(a,1-t),scale(b,t))}
-
-// ===================================================================
-// ==================== RAY TRACER ====================================
-// ===================================================================
-const rtCanvas=$('#rt-canvas'),rtCtx=rtCanvas.getContext('2d');
-const RT_W=400,RT_H=300;
-let rtData=null,rtRendering=false,rtRow=0,rtStartTime=0;
-
-const rtScene={
-  spheres:[
-    {center:vec3(0,0,-5),r:1.0,color:vec3(0.9,0.9,0.9),type:'mirror',refractiveIndex:0},
-    {center:vec3(2.5,0,-4.5),r:0.8,color:vec3(0.9,0.6,0.4),type:'matte',refractiveIndex:0},
-    {center:vec3(-2.2,0.4,-4),r:0.9,color:vec3(0.95,0.95,0.95),type:'glass',refractiveIndex:1.5},
-  ],
-  lights:[
-    {pos:vec3(5,8,-3),color:vec3(1,1,1),intensity:30},
-    {pos:vec3(-5,3,-2),color:vec3(0.4,0.6,1),intensity:8},
-  ],
-  ambient:vec3(0.08,0.08,0.1),
-};
-
-function hitSphere(ray,sphere){
-  const oc=sub(ray.origin,sphere.center);
-  const a=dot(ray.dir,ray.dir),b=2*dot(oc,ray.dir),c=dot(oc,oc)-sphere.r*sphere.r;
-  const disc=b*b-4*a*c;
-  if(disc<0)return null;
-  return (-b-Math.sqrt(disc))/(2*a);
-}
-
-function hitFloor(ray){
-  if(Math.abs(ray.dir.y)<1e-6)return null;
-  const t=-ray.origin.y/ray.dir.y;
-  if(t<0.01)return null;
-  const p=add(ray.origin,scale(ray.dir,t));
-  const u=Math.floor(p.x),v=Math.floor(p.z);
-  const isWhite=((u+v)&1)===0;
-  return{t,point:p,normal:vec3(0,1,0),color:isWhite?vec3(0.85,0.85,0.85):vec3(0.15,0.15,0.15),type:'matte'};
-}
-
-function traceScene(ray,depth){
-  if(depth>3)return vec3(0,0,0);
-  let closest=Infinity,hitObj=null,hitT=0;
-  for(const s of rtScene.spheres){
-    const t=hitSphere(ray,s);
-    if(t!==null&&t<closest){closest=t;hitObj=s;hitT=t;}
-  }
-  const floorHit=hitFloor(ray);
-  if(floorHit&&floorHit.t<closest){closest=floorHit.t;hitObj=floorHit;hitT=floorHit.t;}
-
-  if(!hitObj)return vec3(0.02,0.02,0.04);
-
-  const hitPoint=add(ray.origin,scale(ray.dir,hitT));
-  let normal;
-  if(hitObj.r!==undefined){normal=normalize(sub(hitPoint,hitObj.center));}
-  else{normal=hitObj.normal;}
-
-  // Shadow / lighting
-  let color=vec3(0,0,0);
-  const ambient=scale(rtScene.ambient,hitObj.color?1:hitObj.r!==undefined?1:1);
-  color=add(color,hitObj.type?mix(rtScene.ambient,rtScene.ambient,0):ambient);
-
-  for(const light of rtScene.lights){
-    const lightDir=normalize(sub(light.pos,hitPoint));
-    const dist=length(sub(light.pos,hitPoint));
-    // Soft shadows
-    let shadowSum=0;const shadowSamples=hitObj.type==='mirror'?1:16;
-    for(let s=0;s<shadowSamples;s++){
-      const jx=(Math.random()-.5)*0.15,jy=(Math.random()-.5)*0.15,jz=(Math.random()-.5)*0.15;
-      const jitteredPos=add(light.pos,vec3(jx,jy,jz));
-      const sd=normalize(sub(jitteredPos,hitPoint));
-      const shadowRay={origin:add(hitPoint,scale(normal,0.001)),dir:sd};
-      let blocked=false;
-      for(const sp of rtScene.spheres){
-        const t=hitSphere(shadowRay,sp);
-        if(t!==null&&t<length(sub(jitteredPos,hitPoint))-0.1){blocked=true;break;}
-      }
-      shadowSum+=blocked?0:1;
-    }
-    const shadowFactor=shadowSum/shadowSamples;
-
-    // Diffuse
-    const nDotL=Math.max(0,dot(normal,lightDir));
-    const diffuse=scale(light.color,nDotL*light.intensity*shadowFactor/dist);
-    if(hitObj.color){
-      const base=hitObj.color||vec3(1,1,1);
-      // Checkerboard
-      color=add(color,vec3(base.x*diffuse.x,base.y*diffuse.y,base.z*diffuse.z));
-    }
-    // Specular
-    const viewDir=normalize(scale(ray.dir,-1));
-    const halfVec=normalize(add(lightDir,viewDir));
-    const spec=Math.pow(Math.max(0,dot(normal,halfVec)),hitObj.type==='mirror'?256:32);
-    const specColor=hitObj.type==='mirror'?vec3(1,1,1):vec3(0.5,0.5,0.5);
-    color=add(color,scale(light.color,spec*light.intensity*shadowFactor*0.5/dist));
-  }
-
-  // Mirror reflection
-  if(hitObj.type==='mirror'){
-    const reflDir=reflect(ray.dir,normal);
-    const reflRay={origin:add(hitPoint,scale(normal,0.001)),dir:reflDir};
-    const reflColor=traceScene(reflRay,depth+1);
-    color=add(scale(color,0.3),scale(reflColor,0.7));
-  }
-
-  // Refraction (glass)
-  if(hitObj.type==='glass'){
-    let n1=1,n2=hitObj.refractiveIndex;
-    let refractNormal=normal;
-    let cosI=dot(ray.dir,normal);
-    if(cosI>0){n1=hitObj.refractiveIndex;n2=1;refractNormal=scale(normal,-1);cosI=-cosI;}
-    const ratio=n1/n2;
-    const sinT2=ratio*ratio*(1-cosI*cosI);
-    if(sinT2<=1){
-      const cosT=Math.sqrt(1-sinT2);
-      const refractDir=add(scale(ray.dir,ratio),scale(refractNormal,ratio*cosI-cosT));
-      const refrRay={origin:add(hitPoint,scale(refractNormal,-0.001)),dir:refractDir};
-      const refrColor=traceScene(refrRay,depth+1);
-      // Fresnel
-      const r0=((n1-n2)/(n1+n2))*((n1-n2)/(n1+n2));
-      const fresnel=r0+(1-r0)*Math.pow(1-Math.abs(cosI),5);
-      const reflDir=reflect(ray.dir,normal);
-      const reflRay={origin:add(hitPoint,scale(normal,0.001)),dir:reflDir};
-      const reflColor=traceScene(reflRay,depth+1);
-      color=mix(reflColor,refrColor,fresnel>0.5?0.5:fresnel);
-    }
-  }
-
-  return color;
-}
-
-function rtPixel(x,y){
-  const u=(x/RT_W-.5)*2*RT_W/RT_H,v=-(y/RT_H-.5)*2;
-  const ray={origin:vec3(0,1,1),dir:normalize(vec3(u,v,-1))};
-  return traceScene(ray,0);
-}
-
-function resetRayTrace(){
-  rtRendering=false;rtRow=0;
-  rtCtx.fillStyle=rootCanvasBg();rtCtx.fillRect(0,0,RT_W,RT_H);
-  $('#rt-status').textContent='就绪';$('#rt-progress').textContent='0%';
-  $('#rt-progress-bar').style.width='0%';$('#rt-time').textContent='0.00s';
-}
-
-function startRayTrace(){
-  if(rtRendering)return;
-  rtRendering=true;rtRow=0;rtStartTime=performance.now();
-  $('#rt-status').textContent='RENDERING...';
-  rtCtx.fillStyle=rootCanvasBg();rtCtx.fillRect(0,0,RT_W,RT_H);
-  rtData=rtCtx.createImageData(RT_W,RT_H);
-  requestAnimationFrame(rtRenderLoop);
-}
-
-function rtRenderLoop(){
-  if(!rtRendering)return;
-  const endRow=Math.min(rtRow+2,RT_H);
-  for(let y=rtRow;y<endRow;y++){
-    for(let x=0;x<RT_W;x++){
-      const c=rtPixel(x,y);
-      const idx=(y*RT_W+x)*4;
-      rtData.data[idx]=Math.min(255,Math.floor(Math.sqrt(c.x)*255));
-      rtData.data[idx+1]=Math.min(255,Math.floor(Math.sqrt(c.y)*255));
-      rtData.data[idx+2]=Math.min(255,Math.floor(Math.sqrt(c.z)*255));
-      rtData.data[idx+3]=255;
-    }
-  }
-  rtCtx.putImageData(rtData,0,0);
-  rtRow=endRow;
-  const pct=Math.floor(rtRow/RT_H*100);
-  $('#rt-progress').textContent=pct+'%';
-  $('#rt-progress-bar').style.width=pct+'%';
-  if(rtRow>=RT_H){
-    rtRendering=false;
-    const elapsed=((performance.now()-rtStartTime)/1000).toFixed(2);
-    $('#rt-time').textContent=elapsed+'s';
-    $('#rt-status').textContent='COMPLETE';
-  }else{
-    requestAnimationFrame(rtRenderLoop);
-  }
-}
-
-// ===================================================================
-// ==================== MONTE CARLO PI ================================
-// ===================================================================
-let mcPiRunning=false,mcPiSpeed=10,mcPiTotal=0,mcPiInside=0,mcPiAnimId=null;
-const mcPiCanvas=$('#mc-pi-canvas'),mcPiCtx=mcPiCanvas.getContext('2d');
-const MCPI_W=400,MCPI_H=400;
-
-function drawMCPiBackground(){
-  mcPiCtx.fillStyle=rootCanvasBg();mcPiCtx.fillRect(0,0,MCPI_W,MCPI_H);
-  mcPiCtx.strokeStyle=rootCanvasAxis();mcPiCtx.beginPath();mcPiCtx.arc(0,MCPI_H,MCPI_H,0,Math.PI/2);mcPiCtx.stroke();
-  mcPiCtx.strokeStyle=rootCanvasAxis();mcPiCtx.strokeRect(0,0,MCPI_W,MCPI_H);
-  mcPiCtx.fillStyle='#047857';mcPiCtx.font='11px monospace';mcPiCtx.fillText('(0,0)',4,390);
-  mcPiCtx.fillText('(1,0)',380,390);mcPiCtx.fillText('(0,1)',4,14);
-}
-
-function resetMCPi(){
-  mcPiRunning=false;mcPiTotal=0;mcPiInside=0;
-  if(mcPiAnimId)cancelAnimationFrame(mcPiAnimId);
-  drawMCPiBackground();
-  $('#mc-pi-val').textContent='0.00000000';$('#mc-pi-err').textContent='0.0000%';
-  $('#mc-pi-total').textContent='0';
-}
-
-function startMCPi(){if(!mcPiRunning){mcPiRunning=true;mcPiAnimId=requestAnimationFrame(mcPiLoop);}}
-function stopMCPi(){mcPiRunning=false;if(mcPiAnimId)cancelAnimationFrame(mcPiAnimId);}
-function setMCSpeed(s){mcPiSpeed=s;$$('#mc-pi .btn[data-mc-speed]').forEach(b=>b.classList.toggle('btn-primary',parseInt(b.dataset.mcSpeed)===s));}
-
-function mcPiLoop(){
-  if(!mcPiRunning)return;
-  for(let i=0;i<mcPiSpeed;i++){
-    const x=Math.random(),y=Math.random();
-    const inside=(x*x+y*y)<=1;
-    mcPiTotal++;if(inside)mcPiInside++;
-    const px=x*MCPI_W,py=MCPI_H-y*MCPI_H;
-    mcPiCtx.fillStyle=inside?'rgba(14,165,183,.6)':'rgba(190,24,93,.45)';
-    mcPiCtx.fillRect(px,py,1.5,1.5);
-  }
-  const est=4*mcPiInside/mcPiTotal;
-  const err=Math.abs((est-Math.PI)/Math.PI)*100;
-  $('#mc-pi-val').textContent=est.toFixed(8);
-  $('#mc-pi-err').textContent=err.toFixed(4)+'%';
-  $('#mc-pi-total').textContent=mcPiTotal;
-  mcPiAnimId=requestAnimationFrame(mcPiLoop);
-}
-
-// ===================================================================
-// ==================== MONTE CARLO OPTION PRICING ====================
-// ===================================================================
-let mcOptRunning=false,mcOptN=10000,mcOptPaths=0,mcOptSum=0,mcOptAnimId=null;
-const mcOptCanvas=$('#mc-opt-canvas'),mcOptCtx=mcOptCanvas.getContext('2d');
-const MCOPT_W=400,MCOPT_H=400;
-const optParams={S:100,K:100,T:1,sigma:0.3,r:0.05};
-
-function normCDF(x){const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;const sign=x<0?-1:1;x=Math.abs(x)/Math.sqrt(2);const t=1/(1+p*x);const y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);return 0.5*(1+sign*y);}
-function bsPrice(S,K,T,sigma,r,isCall=true){
-  const d1=(Math.log(S/K)+(r+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
-  const d2=d1-sigma*Math.sqrt(T);
-  if(isCall)return S*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);
-  return K*Math.exp(-r*T)*normCDF(-d2)-S*normCDF(-d1);
-}
-
-function drawMCOptionBackground(){
-  mcOptCtx.fillStyle=rootCanvasBg();mcOptCtx.fillRect(0,0,MCOPT_W,MCOPT_H);
-  const bs=bsPrice(optParams.S,optParams.K,optParams.T,optParams.sigma,optParams.r,true);
-  mcOptCtx.strokeStyle='rgba(14,165,183,.5)';mcOptCtx.setLineDash([5,5]);
-  mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-bs*10);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-bs*10);mcOptCtx.stroke();
-  mcOptCtx.setLineDash([]);
-  mcOptCtx.fillStyle='rgba(14,165,183,.75)';mcOptCtx.font='10px monospace';mcOptCtx.fillText('BS Benchmark: '+bs.toFixed(4),10,20);
-  mcOptCtx.fillText('Convergence Trace:',10,MCOPT_H-10);
-  mcOptCtx.strokeStyle=rootCanvasAxis();mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-MCOPT_H/2);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-MCOPT_H/2);mcOptCtx.stroke();
-}
-
-function geometricBM(S,r,sigma,T){
-  return S*Math.exp((r-sigma*sigma/2)*T+sigma*Math.sqrt(T)*boxMuller());
-}
-let boxMullerZ2=null;
-function boxMuller(){
-  if(boxMullerZ2!==null){const z=boxMullerZ2;boxMullerZ2=null;return z;}
-  let u1,u2,s;do{u1=Math.random()*2-1;u2=Math.random()*2-1;s=u1*u1+u2*u2;}while(s>=1||s===0);
-  const f=Math.sqrt(-2*Math.log(s)/s);boxMullerZ2=u2*f;return u1*f;
-}
-
-function resetMCOption(){
-  mcOptRunning=false;mcOptPaths=0;mcOptSum=0;
-  if(mcOptAnimId)cancelAnimationFrame(mcOptAnimId);
-  drawMCOptionBackground();
-  $('#mc-opt-mc').textContent='0.0000';$('#mc-opt-bs').textContent='0.0000';
-  $('#mc-opt-err').textContent='0.0000%';$('#mc-opt-paths').textContent='0';
-}
-
-function startMCOption(){if(!mcOptRunning){mcOptRunning=true;mcOptAnimId=requestAnimationFrame(mcOptLoop);}}
-function stopMCOption(){mcOptRunning=false;if(mcOptAnimId)cancelAnimationFrame(mcOptAnimId);}
-function setMCN(n){mcOptN=n;$$('#mc-option .btn[data-mc-n]').forEach(b=>b.classList.toggle('btn-primary',parseInt(b.dataset.mcN)===n));}
-let mcOptLineX=0;
-function mcOptLoop(){
-  if(!mcOptRunning)return;
-  const batch=Math.min(200,mcOptN-mcOptPaths);
-  for(let i=0;i<batch;i++){
-    const ST=geometricBM(optParams.S,optParams.r,optParams.sigma,optParams.T);
-    const payoff=Math.max(ST-optParams.K,0);
-    mcOptSum+=payoff;mcOptPaths++;
-  }
-  if(mcOptLineX===0){mcOptLineX=0;drawMCOptionBackground();}
-  const mcEst=Math.exp(-optParams.r*optParams.T)*mcOptSum/mcOptPaths;
-  const bs=bsPrice(optParams.S,optParams.K,optParams.T,optParams.sigma,optParams.r,true);
-  const errPct=mcOptPaths>0?Math.abs((mcEst-bs)/bs)*100:0;
-  $('#mc-opt-mc').textContent=mcEst.toFixed(4);$('#mc-opt-bs').textContent=bs.toFixed(4);
-  $('#mc-opt-err').textContent=errPct.toFixed(4)+'%';$('#mc-opt-paths').textContent=mcOptPaths;
-  if(mcOptPaths%400===0||mcOptPaths>=mcOptN){
-    const yVal=MCOPT_H-mcEst*10;
-    mcOptCtx.fillStyle='rgba(190,24,93,.55)';mcOptCtx.fillRect(mcOptLineX,yVal,2,2);
-    mcOptLineX=(mcOptLineX+2)%MCOPT_W;
-  }
-  if(mcOptPaths>=mcOptN){mcOptRunning=false;return;}
-  mcOptAnimId=requestAnimationFrame(mcOptLoop);
-}
-
-// ===================================================================
-// ==================== BLACK-SCHOLES =================================
-// ===================================================================
-function calcGreeks(S,K,T,sigma,r,q){
-  const call=bsPrice(S,K,T,sigma,r-q,true);
-  const put=bsPrice(S,K,T,sigma,r-q,false);
-  const d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
-  const d2=d1-sigma*Math.sqrt(T);
-  const pdfD1=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI);
-  const dc=N(d1)*Math.exp(-q*T),dp=-N(-d1)*Math.exp(-q*T);
-  const gamma=pdfD1*Math.exp(-q*T)/(S*sigma*Math.sqrt(T));
-  const tc=-S*pdfD1*sigma*Math.exp(-q*T)/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*N(d2)+q*S*N(d1)*Math.exp(-q*T);
-  const tp=-S*pdfD1*sigma*Math.exp(-q*T)/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*N(-d2)-q*S*N(-d1)*Math.exp(-q*T);
-  const vega=S*Math.exp(-q*T)*pdfD1*Math.sqrt(T)*0.01;
-  const rc=K*T*Math.exp(-r*T)*N(d2),rp=-K*T*Math.exp(-r*T)*N(-d2);
-  return{call,put,dc,dp,gamma,tc,tp,vega,rc,rp};
-}
-const N=normCDF;
-
-function updateBS(){
-  const S=parseFloat($('#bs-s').value),K=parseFloat($('#bs-k').value),
-    T=parseFloat($('#bs-t').value),sigma=parseFloat($('#bs-sigma').value),
-    r=parseFloat($('#bs-r').value),q=parseFloat($('#bs-q').value);
-  $('#bs-s-val').textContent=S.toFixed(2);$('#bs-k-val').textContent=K.toFixed(2);
-  $('#bs-t-val').textContent=T.toFixed(2);$('#bs-sigma-val').textContent=sigma.toFixed(2);
-  $('#bs-r-val').textContent=r.toFixed(3);$('#bs-q-val').textContent=q.toFixed(3);
-  const g=calcGreeks(S,K,T,sigma,r,q);
-  $('#bs-call').textContent=g.call.toFixed(6);$('#bs-put').textContent=g.put.toFixed(6);
-  $('#bs-delta-c').textContent=g.dc.toFixed(6);$('#bs-delta-p').textContent=g.dp.toFixed(6);
-  $('#bs-gamma').textContent=g.gamma.toFixed(6);$('#bs-theta-c').textContent=(g.tc/365).toFixed(6);
-  $('#bs-vega').textContent=g.vega.toFixed(6);$('#bs-rho').textContent=g.rc.toFixed(6);
-  drawSmile(S,T,r,q);drawDelta(S,T,r,q);
-}
-function drawSmile(S,T,r,q){
-  const c=$('#bs-smile'),ctx=c.getContext('2d'),w=c.width,h=c.height;
-  ctx.fillStyle=rootCanvasBg();ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle=rootCanvasAxis();ctx.beginPath();ctx.moveTo(0,h*0.4);ctx.lineTo(w,h*0.4);ctx.stroke();
-  ctx.fillStyle='#64748b';ctx.font='10px monospace';ctx.fillText('ATM',10,h*0.4-4);
-  ctx.strokeStyle='var(--neon-cyan)';ctx.beginPath();
-  const strikes=[];for(let k=60;k<=140;k+=2)strikes.push(k);
-  for(let i=0;i<strikes.length;i++){
-    let iv=0;const k=strikes[i];
-    for(let sig=0.05;sig<=1.5;sig+=0.005){
-      const p=bsPrice(S,k,T,sig,r,true);
-      if(p>0){iv=sig;break;}
-    }
-    const x=i*w/strikes.length,y=h-(iv*h/1.5);
-    ctx[i===0?'moveTo':'lineTo'](x,y);
-  }
-  ctx.strokeStyle='#0e7490';ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
-  ctx.fillStyle='#0e7490';ctx.font='10px monospace';ctx.fillText('Volatility Smile',10,16);
-}
-function drawDelta(S,T,r,q){
-  const c=$('#bs-delta'),ctx=c.getContext('2d'),w=c.width,h=c.height;
-  ctx.fillStyle=rootCanvasBg();ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle=rootCanvasAxis();ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
-  ctx.fillStyle='#64748b';ctx.font='10px monospace';ctx.fillText('0.5',2,h/2-4);
-  ctx.strokeStyle='#0e7490';ctx.beginPath();
-  for(let i=0;i<=200;i+=2){
-    const s=i,delta=N((Math.log(Math.max(s,1)/S)+(r-q+0.3*0.3/2)*T)/(0.3*Math.sqrt(T)))*Math.exp(-q*T);
-    ctx[i===0?'moveTo':'lineTo'](i*w/200,h-delta*h);
-  }
-  ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
-  ctx.fillStyle='#0e7490';ctx.font='10px monospace';ctx.fillText('Delta(S) Call',10,16);
-}
-['#bs-s','#bs-k','#bs-t','#bs-sigma','#bs-r','#bs-q'].forEach(id=>{
-  document.querySelector(id).addEventListener('input',updateBS);
-});
-updateBS();
-
-// ===================================================================
-// ==================== WEB WORKER PERFORMANCE ========================
-// ===================================================================
-let perfData=null,perfResult={};
-
-function generatePerfData(){
-  perfData=new Float64Array(1000000);
-  for(let i=0;i<perfData.length;i++)perfData[i]=Math.random();
-  $('#perf-data').textContent='1,000,000';
-}
-generatePerfData();
-
-function mergeSort(arr){
-  if(arr.length<=1)return arr;
-  const m=Math.floor(arr.length/2);
-  const L=mergeSort(arr.slice(0,m)),R=mergeSort(arr.slice(m));
-  let i=0,j=0;const result=[];
-  while(i<L.length&&j<R.length)result.push(L[i]<=R[j]?L[i++]:R[j++]);
-  return result.concat(L.slice(i)).concat(R.slice(j));
-}
-
-function workerBlobCode(){
-  self.onmessage=function(e){
-    const chunk=e.data;
-    const sorted=chunk.sort((a,b)=>a-b);
-    self.postMessage({sorted,id:e.data.id||0});
-  };
-}
-
-function createWorker(){
-  const blob=new Blob(['('+workerBlobCode.toString()+')()'],{type:'application/javascript'});
-  return new Worker(URL.createObjectURL(blob));
-}
-
-async function runSingleThread(){
-  $('#perf-st-btn').disabled=true;$('#perf-st-bar').style.width='0%';
-  $('#perf-st-time').textContent='Running...';
-  const arr=Array.from(perfData);
-  const start=performance.now();
-  await new Promise(r=>setTimeout(r,0));
-  const sorted=mergeSort(arr);
-  const elapsed=(performance.now()-start).toFixed(0);
-  $('#perf-st-time').textContent=elapsed+'ms';
-  $('#perf-st-bar').style.width='100%';
-  $('#perf-st-btn').disabled=false;
-  if($('#perf-mt-time').textContent!=='---'){
-    const su=(parseFloat($('#perf-mt-time'))/parseFloat(elapsed)).toFixed(2);
-    $('#perf-speedup').textContent=su+'x';
-  }
-}
-
-async function runMultiThread(){
-  $('#perf-mt-btn').disabled=true;$('#perf-mt-bar').style.width='0%';
-  $('#perf-mt-time').textContent='Running...';
-  const N=4,size=Math.floor(perfData.length/N);
-  const workers=Array.from({length:N},()=>createWorker());
-  const chunks=[];
-  for(let i=0;i<N;i++){
-    const start=i*size,end=i===N-1?perfData.length:(i+1)*size;
-    chunks.push(Array.from(perfData.slice(start,end)));
-  }
-  const start=performance.now();
-  const timeline=[],tlOffset=20;
-  const results=await Promise.all(chunks.map((chunk,i)=>{
-    timeline.push({id:i,start:performance.now()-start});
-    return new Promise(resolve=>{
-      workers[i].onmessage=function(e){
-        timeline[i].end=performance.now()-start;
-        resolve(e.data.sorted);
-      };
-      workers[i].postMessage(chunk);
-    });
-  }));
-  const merged=results.flat().sort((a,b)=>a-b);
-  const elapsed=(performance.now()-start).toFixed(0);
-  workers.forEach(w=>w.terminate());
-  $('#perf-mt-time').textContent=elapsed+'ms';
-  $('#perf-mt-bar').style.width='100%';
-  $('#perf-mt-btn').disabled=false;
-  if($('#perf-st-time').textContent!=='---'){
-    const su=(parseFloat($('#perf-st-time'))/parseFloat(elapsed)).toFixed(2);
-    $('#perf-speedup').textContent=su+'x';
-  }
-  drawTimeline(timeline,parseFloat(elapsed));
-}
-
-function drawTimeline(timeline,totalMs){
-  const tl=$('#perf-timeline'),w=tl.clientWidth;
-  const colors=['var(--neon-cyan)','var(--neon-pink)','var(--neon-green)','var(--neon-yellow)','var(--neon-orange)'];
-  tl.innerHTML='';
-  const mainBar=document.createElement('div');mainBar.className='worker-bar';
-  mainBar.style.cssText=`left:0;top:70px;width:${w}px;background:var(--neon-orange);opacity:.92;font-size:10px;color:#0f172a;padding:0 6px`;
-  mainBar.textContent='MAIN '+totalMs+'ms';tl.appendChild(mainBar);
-
-  timeline.forEach(t=>{
-    const bar=document.createElement('div');bar.className='worker-bar';
-    const left=(t.start/totalMs)*w;
-    const width=Math.max(20,((t.end-t.start)/totalMs)*w);
-    const top=8+(t.id*28);
-    bar.style.cssText=`left:${left}px;top:${top}px;width:${width}px;background:${colors[t.id]};font-size:10px;padding:0 4px`;
-    bar.textContent='W'+(t.id+1)+' '+(t.end-t.start).toFixed(1)+'ms';
-    tl.appendChild(bar);
-  });
-}
-
-function resetPerf(){
-  $('#perf-st-time').textContent='---';$('#perf-mt-time').textContent='---';
-  $('#perf-speedup').textContent='---';$('#perf-st-bar').style.width='0%';
-  $('#perf-mt-bar').style.width='0%';$('#perf-timeline').innerHTML='';
-  generatePerfData();
-}
-
-// ===================================================================
-// ==================== SORTING VISUALIZATION =========================
-// ===================================================================
-let sortData=[],sortRunning=false,sortAnimId=null;
-const sortCanvas=$('#algo-sort-canvas'),sortCtx=sortCanvas.getContext('2d');
-let sortComparisons=0,sortSwaps=0;
-
-function resizeSortCanvas(){
-  sortCanvas.width=sortCanvas.parentElement.clientWidth;
-  sortCanvas.height=300;
-  initSortData();
-}
-function initSortData(){
-  const w=sortCanvas.width;sortData=[];
-  for(let i=0;i<w;i+=4)sortData.push(Math.floor(Math.random()*280)+10);
-}
-function drawSortData(highlight=[]){
-  sortCtx.fillStyle=rootCanvasBg();sortCtx.fillRect(0,0,sortCanvas.width,sortCanvas.height);
-  const bw=Math.max(1,Math.floor(sortCanvas.width/sortData.length)-1);
-  for(let i=0;i<sortData.length;i++){
-    const x=i*(bw+1),h=sortData[i];
-    sortCtx.fillStyle=highlight.includes(i)?'var(--neon-cyan)':'#475569';
-    sortCtx.fillRect(x,sortCanvas.height-h,bw,h);
-  }
-  $('#algo-sort-info').textContent='比较次数: '+sortComparisons+' | 交换次数: '+sortSwaps+' | 耗时: 计算中...';
-}
-function shuffleSortData(){
-  if(sortRunning)return;
-  for(let i=sortData.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));[sortData[i],sortData[j]]=[sortData[j],sortData[i]];
-  }
-  sortComparisons=0;sortSwaps=0;drawSortData();
-}
-
-async function runSort(type){
-  if(sortRunning)return;sortRunning=true;sortComparisons=0;sortSwaps=0;
-  const start=performance.now();
-  if(type==='bubble')await bubbleSort();
-  else if(type==='quick')await quickSort(0,sortData.length-1);
-  else if(type==='merge')await mergeSortVisual(0,sortData.length-1);
-  else if(type==='heap')await heapSort();
-  const elapsed=(performance.now()-start).toFixed(0);
-  $('#algo-sort-info').textContent='比较次数: '+sortComparisons+' | 交换次数: '+sortSwaps+' | 耗时: '+elapsed+'ms';
-  drawSortData();sortRunning=false;
-}
-
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-
-async function bubbleSort(){
-  for(let i=0;i<sortData.length-1;i++){
-    for(let j=0;j<sortData.length-1-i;j++){
-      sortComparisons++;
-      if(sortData[j]>sortData[j+1]){[sortData[j],sortData[j+1]]=[sortData[j+1],sortData[j]];sortSwaps++;}
-      if(sortComparisons%200===0){drawSortData([j,j+1]);await sleep(1);}
-    }
-  }
-}
-
-async function quickSort(lo,hi){
-  if(lo>=hi)return;
-  const p=sortData[hi];let i=lo-1;
-  for(let j=lo;j<hi;j++){sortComparisons++;if(sortData[j]<=p){i++;[sortData[i],sortData[j]]=[sortData[j],sortData[i]];sortSwaps++;}}
-  [sortData[i+1],sortData[hi]]=[sortData[hi],sortData[i+1]];sortSwaps++;
-  if(sortComparisons%200===0){drawSortData([i+1,hi]);await sleep(1);}
-  await quickSort(lo,i);await quickSort(i+2,hi);
-}
-
-async function mergeSortVisual(l,r){
-  if(l>=r)return;
-  const m=Math.floor((l+r)/2);
-  await mergeSortVisual(l,m);await mergeSortVisual(m+1,r);
-  const L=sortData.slice(l,m+1),R=sortData.slice(m+1,r+1);
-  let i=0,j=0,k=l;
-  while(i<L.length&&j<R.length){sortComparisons++;sortData[k++]=L[i]<=R[j]?L[i++]:R[j++];}
-  while(i<L.length)sortData[k++]=L[i++];
-  while(j<R.length)sortData[k++]=R[j++];
-  sortSwaps+=r-l+1;
-  if(sortComparisons%200===0){drawSortData([l,r]);await sleep(1);}
-}
-
-async function heapSort(){
-  const n=sortData.length;
-  for(let i=Math.floor(n/2)-1;i>=0;i--)await heapify(n,i);
-  for(let i=n-1;i>0;i--){[sortData[0],sortData[i]]=[sortData[i],sortData[0]];sortSwaps++;await heapify(i,0);}
-}
-async function heapify(n,i){
-  let largest=i,l=2*i+1,r=2*i+2;
-  if(l<n){sortComparisons++;if(sortData[l]>sortData[largest])largest=l;}
-  if(r<n){sortComparisons++;if(sortData[r]>sortData[largest])largest=r;}
-  if(largest!==i){[sortData[i],sortData[largest]]=[sortData[largest],sortData[i]];sortSwaps++;await heapify(n,largest);}
-}
-
-// ===================================================================
-// ==================== PATHFINDING ===================================
-// ===================================================================
-const PF_COLS=25,PF_ROWS=25,PF_CS=20;
-let pfGrid=[],pfStart={x:1,y:1},pfEnd={x:PF_COLS-2,y:PF_ROWS-2},pfRunning=false;
-const pfCanvas=$('#algo-path-canvas'),pfCtx=pfCanvas.getContext('2d');
-
-function resizePathCanvas(){pfCanvas.width=PF_COLS*PF_CS;pfCanvas.height=PF_ROWS*PF_CS;initPFGrid();}
-function initPFGrid(){
-  pfGrid=[];
-  for(let y=0;y<PF_ROWS;y++){pfGrid[y]=[];for(let x=0;x<PF_COLS;x++){pfGrid[y][x]=0;}}
-  pfGrid[pfStart.y][pfStart.x]=1;pfGrid[pfEnd.y][pfEnd.x]=2;
-}
-function drawPFGrid(explored=[],path=[]){
-  pfCtx.fillStyle=rootCanvasBg();pfCtx.fillRect(0,0,pfCanvas.width,pfCanvas.height);
-  for(let y=0;y<PF_ROWS;y++){
-    for(let x=0;x<PF_COLS;x++){
-      if(pfGrid[y][x]===-1)pfCtx.fillStyle='#475569';
-      else if(x===pfStart.x&&y===pfStart.y)pfCtx.fillStyle='#047857';
-      else if(x===pfEnd.x&&y===pfEnd.y)pfCtx.fillStyle='#dc2626';
-      else pfCtx.fillStyle='#475569';
-      pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);
-    }
-  }
-  explored.forEach(([x,y])=>{pfCtx.fillStyle='rgba(14,165,183,.35)';pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);});
-  path.forEach(({x,y})=>{pfCtx.fillStyle='#b45309';pfCtx.fillRect(x*PF_CS,y*PF_CS,PF_CS-1,PF_CS-1);});
-}
-
-function generateMaze(){
-  initPFGrid();pfRunning=false;
-  for(let y=0;y<PF_ROWS;y++)for(let x=0;x<PF_COLS;x++){
-    if(Math.random()<.3&&!(x===pfStart.x&&y===pfStart.y)&&!(x===pfEnd.x&&y===pfEnd.y))pfGrid[y][x]=-1;
-  }
-  drawPFGrid();
-}
-function resetPathfinding(){initPFGrid();pfRunning=false;drawPFGrid();$('#algo-path-info').textContent='已探索: 0 | 路径长度: 0 | 耗时: 0ms';}
-
-function pfNeighbors(x,y){
-  const dirs=[[0,-1],[1,0],[0,1],[-1,0]],res=[];
-  for(const[dx,dy]of dirs){const nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<PF_COLS&&ny<PF_ROWS&&pfGrid[ny][nx]!==-1)res.push([nx,ny]);}
-  return res;
-}
-
-async function runPathfinding(type){
-  if(pfRunning)return;pfRunning=true;pfGrid[pfStart.y][pfStart.x]=1;pfGrid[pfEnd.y][pfEnd.x]=2;
-  for(let y=0;y<PF_ROWS;y++)for(let x=0;x<PF_COLS;x++)if(pfGrid[y][x]!==-1&&!(x===pfStart.x&&y===pfStart.y)&&!(x===pfEnd.x&&y===pfEnd.y))pfGrid[y][x]=0;
-  const start=performance.now(),explored=[];
-  let path=[],found=false;
-  if(type==='bfs'){const q=[[pfStart.x,pfStart.y]],parent={};parent[pfStart.x+','+pfStart.y]=null;const visited=new Set([pfStart.x+','+pfStart.y]);
-    while(q.length&&!found){const[node]=q.splice(0,1);explored.push(node);
-      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
-      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const k=nx+','+ny;if(!visited.has(k)){visited.add(k);parent[k]=node;q.push([nx,ny]);}}
-      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
-    }
-  }else if(type==='dfs'){const stack=[[pfStart.x,pfStart.y]],parent={};parent[pfStart.x+','+pfStart.y]=null;const visited=new Set([pfStart.x+','+pfStart.y]);
-    while(stack.length&&!found){const node=stack.pop();explored.push(node);
-      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
-      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const k=nx+','+ny;if(!visited.has(k)){visited.add(k);parent[k]=node;stack.push([nx,ny]);}}
-      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
-    }
-  }else if(type==='astar'){
-    function h(x,y){return Math.abs(x-pfEnd.x)+Math.abs(y-pfEnd.y);}
-    const open=new Map(),closed=new Set(),parent={},g={},f={};
-    const sk=pfStart.x+','+pfStart.y;g[sk]=0;f[sk]=h(pfStart.x,pfStart.y);open.set(sk,[pfStart.x,pfStart.y]);
-    while(open.size&&!found){
-      let best=null,bestK;
-      for(const[k,v]of open){if(best===null||f[k]<best){best=f[k];bestK=k;}}
-      const node=open.get(bestK);open.delete(bestK);closed.add(bestK);explored.push(node);
-      if(node[0]===pfEnd.x&&node[1]===pfEnd.y){found=true;let c=node;while(c){path.unshift({x:c[0],y:c[1]});c=parent[c[0]+','+c[1]];}}
-      for(const[nx,ny]of pfNeighbors(node[0],node[1])){const nk=nx+','+ny;if(closed.has(nk))continue;const tg=g[bestK]+1;
-        if(!open.has(nk)||tg<g[nk]){parent[nk]=node;g[nk]=tg;f[nk]=tg+h(nx,ny);open.set(nk,[nx,ny]);}
-      }
-      if(explored.length%10===0){drawPFGrid(explored,[]);await sleep(10);}
-    }
-  }
-  const elapsed=(performance.now()-start).toFixed(0);
-  drawPFGrid(explored,path);
-  $('#algo-path-info').textContent='已探索: '+explored.length+' | 路径长度: '+path.length+' | 耗时: '+elapsed+'ms';
-  pfRunning=false;
-}
-
-// ===================================================================
-// ==================== GAME OF LIFE ==================================
-// ===================================================================
-const LIFE_COLS=60,LIFE_ROWS=40,LIFE_CS=10;
-let lifeGrid=[],lifeRunning=false,lifeGen=0,lifeAnimId=null;
-const lifeCanvas=$('#algo-life-canvas'),lifeCtx=lifeCanvas.getContext('2d');
-
-function resizeLifeCanvas(){lifeCanvas.width=LIFE_COLS*LIFE_CS;lifeCanvas.height=LIFE_ROWS*LIFE_CS;initLifeGrid();}
-function initLifeGrid(){lifeGrid=[];for(let y=0;y<LIFE_ROWS;y++){lifeGrid[y]=new Array(LIFE_COLS).fill(0);}}
-function drawLifeGrid(){
-  lifeCtx.fillStyle=rootCanvasBg();lifeCtx.fillRect(0,0,lifeCanvas.width,lifeCanvas.height);
-  let alive=0;
-  for(let y=0;y<LIFE_ROWS;y++)for(let x=0;x<LIFE_COLS;x++)if(lifeGrid[y][x]){lifeCtx.fillStyle='#047857';lifeCtx.fillRect(x*LIFE_CS,y*LIFE_CS,LIFE_CS-1,LIFE_CS-1);alive++;}
-  $('#algo-life-info').textContent='世代: '+lifeGen+' | 存活: '+alive;
-}
-function randomLife(){initLifeGrid();for(let y=0;y<LIFE_ROWS;y++)for(let x=0;x<LIFE_COLS;x++)lifeGrid[y][x]=Math.random()>.7?1:0;lifeGen=0;drawLifeGrid();}
-function clearLife(){initLifeGrid();lifeGen=0;drawLifeGrid();stopLife();}
-
-function stepLife(){
-  const next=[];for(let y=0;y<LIFE_ROWS;y++){next[y]=new Array(LIFE_COLS).fill(0);
-    for(let x=0;x<LIFE_COLS;x++){
-      let n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
-        if(dx===0&&dy===0)continue;
-        const nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<LIFE_COLS&&ny<LIFE_ROWS)n+=lifeGrid[ny][nx];
-      }
-      next[y][x]=(lifeGrid[y][x]&&(n===2||n===3))||(!lifeGrid[y][x]&&n===3)?1:0;
-    }
-  }
-  lifeGrid=next;lifeGen++;drawLifeGrid();
-}
-
-function toggleLife(){
-  if(lifeRunning){stopLife();$('#life-play-btn').textContent='开始';}else{lifeRunning=true;$('#life-play-btn').textContent='暂停';lifeLoop();}
-}
-function stopLife(){lifeRunning=false;if(lifeAnimId)cancelAnimationFrame(lifeAnimId);}
-function lifeLoop(){if(!lifeRunning)return;stepLife();lifeAnimId=requestAnimationFrame(()=>setTimeout(lifeLoop,100));}
-
-lifeCanvas.addEventListener('click',e=>{
-  const rect=lifeCanvas.getBoundingClientRect(),x=Math.floor((e.clientX-rect.left)/LIFE_CS),y=Math.floor((e.clientY-rect.top)/LIFE_CS);
-  if(x>=0&&y>=0&&x<LIFE_COLS&&y<LIFE_ROWS){lifeGrid[y][x]=lifeGrid[y][x]?0:1;drawLifeGrid();}
-});
-
-// ===================================================================
-// ==================== MANDELBROT SET ================================
-// ===================================================================
-let mandelCenterR=-0.7,mandelCenterI=0,mandelRange=3.5,mandelMaxIter=256;
-const mandelCanvas=$('#algo-mandel-canvas'),mandelCtx=mandelCanvas.getContext('2d');
-const MANDEL_W=600,MANDEL_H=400;
-let mandelDragging=false,mandelDragStart=null,mandelRenderId=0,mandelRendered=false;
-
-function renderMandelbrot(){
-  if(mandelRendered)return;
-  const cw=mandelCanvas.width=MANDEL_W,ch=mandelCanvas.height=MANDEL_H;
-  const img=mandelCtx.createImageData(cw,ch);
-  const aspect=cw/ch,hw=mandelRange*aspect/2,hh=mandelRange/2;
-  const x0=mandelCenterR-hw,y0=mandelCenterI-hh;
-  mandelRenderId++;
-  const rid=mandelRenderId;
-  function renderRow(y){
-    if(rid!==mandelRenderId)return;
-    for(let x=0;x<cw;x++){
-      const cr=x0+x/cw*mandelRange*aspect,ci=y0+y/ch*mandelRange;
-      let zr=0,zi=0,iter=0;
-      while(zr*zr+zi*zi<=4&&iter<mandelMaxIter){const tmp=zr*zr-zi*zi+cr;zi=2*zr*zi+ci;zr=tmp;iter++;}
-      const idx=(y*cw+x)*4;
-      if(iter>=mandelMaxIter){img.data[idx]=0;img.data[idx+1]=0;img.data[idx+2]=0;img.data[idx+3]=255;}
-      else{
-        const t=iter/mandelMaxIter;
-        img.data[idx]=Math.floor(9*(1-t)*t*t*t*255);
-        img.data[idx+1]=Math.floor(15*(1-t)*(1-t)*t*t*255);
-        img.data[idx+2]=Math.floor(8.5*(1-t)*(1-t)*(1-t)*t*255);
-        img.data[idx+3]=255;
-      }
-    }
-    mandelCtx.putImageData(img,0,0);
-    if(y<ch-1)requestAnimationFrame(()=>renderRow(y+1));
-    else $('#algo-mandel-info').textContent='中心: '+mandelCenterR.toFixed(6)+'+'+mandelCenterI.toFixed(6)+'i | 范围: '+mandelRange.toFixed(2)+' | 最大迭代: '+mandelMaxIter;
-  }
-  renderRow(0);
-  mandelRendered=true;
-}
-
-function resetMandelbrot(){mandelCenterR=-0.7;mandelCenterI=0;mandelRange=3.5;mandelRendered=false;renderMandelbrot();}
-function mandelZoomIn(){mandelRange*=0.5;mandelRendered=false;renderMandelbrot();}
-function mandelZoomOut(){mandelRange*=2;mandelRendered=false;renderMandelbrot();}
-
-mandelCanvas.addEventListener('mousedown',e=>{
-  mandelDragging=true;mandelDragStart={x:e.clientX,y:e.clientY,cr:mandelCenterR,ci:mandelCenterI};
-  mandelCanvas.style.cursor='grabbing';
-});
-mandelCanvas.addEventListener('mousemove',e=>{
-  if(!mandelDragging)return;
-  const dx=e.clientX-mandelDragStart.x,dy=e.clientY-mandelDragStart.y;
-  const scale=mandelRange/mandelCanvas.width;
-  mandelCenterR=mandelDragStart.cr-dx*scale;
-  mandelCenterI=mandelDragStart.ci-dy*scale;
-});
-mandelCanvas.addEventListener('mouseup',()=>{
-  if(!mandelDragging)return;mandelDragging=false;mandelCanvas.style.cursor='grab';
-  mandelRendered=false;renderMandelbrot();
-});
-mandelCanvas.addEventListener('wheel',e=>{
-  e.preventDefault();
-  mandelRange*=e.deltaY>0?1.1:.9;
-  mandelRange=Math.max(1e-6,Math.min(10,mandelRange));
-  mandelRendered=false;renderMandelbrot();
-});
-
-// ===================================================================
-// ==================== INITIALIZATION ================================
-// ===================================================================
-initSortData();drawSortData();
-initPFGrid();drawPFGrid();
-initLifeGrid();drawLifeGrid();
-resetMCPi();drawMCPiBackground();
-resetMCOption();drawMCOptionBackground();
-resetRayTrace();
-
-// Auto-run single-thread sort on load for immediate demo
-setTimeout(()=>{
-  if($('#perf-st-time').textContent==='---')runSingleThread();
-},2000);
-
-console.log('%c[PORTFOLIO] %cAll systems initialized. Pure HTML/CSS/JS. Zero dependencies.',
-  'color:#0e7490;font-size:16px','color:#475569');
-console.log('%cRay Tracer: %cPhong + mirror + refraction + soft shadows',
-  'color:#0e7490','color:#475569');
-console.log('%cMonte Carlo: %cPI estimation + option pricing with convergence',
-  'color:#0e7490','color:#475569');
-console.log('%cBlack-Scholes: %cFull pricing model + 7 Greeks + vol smile',
-  'color:#0e7490','color:#475569');
-console.log('%cWeb Workers: %c1M merge sort + multi-thread timeline',
-  'color:#0e7490','color:#475569');
 </script>
 <script src="assets/app.js"></script>
 <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>

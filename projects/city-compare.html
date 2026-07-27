@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>city-compare · 项目详情 | 万值翔</title>
+<script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="中国城市经济竞争力对标系统 — 50城市/8维度/雷达图/K-means聚类, Streamlit交互">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+<div class="pd-back">
+  <a href="../index.html">← 作品集首页</a>
+  <a href="../positions/index.html">← 岗位作品集</a>
+</div>
+<main id="app">
+  <div class="pd-head">
+    <div class="pd-title"><h1>city-compare</h1><span class="pd-lang">Python</span></div>
+    <p class="pd-desc">中国城市经济竞争力对标系统 — 50城市/8维度/雷达图/K-means聚类, Streamlit交互</p>
+    <div class="pd-tags"><span>城市经济</span><span>对标分析</span><span>K-means</span><span>Streamlit</span><span>可视化</span></div>
+    <div class="pd-stats">
+      <span>⭐ Stars <b>0</b></span>
+      <span>⑂ Forks <b>0</b></span>
+      <span>📅 更新 <b>2026-07-18</b></span>
+      <span>⚖ License <b>MIT</b></span>
+    </div>
+    <div class="pd-actions">
+      <a class="btn btn-primary" href="https://github.com/wzx11223344/city-compare" target="_blank">🐙 GitHub 仓库</a>
+      <span class="btn">📊 Streamlit 应用（本地部署截图）</span>
+    </div>
+  </div>
+<div class="pd-section-title">应用截图</div><div class="pd-shots"><figure><img src="../assets/shots/city-compare-default.png" alt="city-compare"><figcaption>默认视图 · 50 城 8 维对标雷达</figcaption></figure><figure><img src="../assets/shots/city-compare-yrd.png" alt="city-compare"><figcaption>长三角城市集群视图</figcaption></figure></div>
+  <div class="pd-section-title">README</div>
+  <div class="readme markdown-body">
+<div id="readme" class="md" data-path="README.md"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">city-compare -- 中国城市经济多维对比诊断仪表板</h1><a id="user-content-city-compare----中国城市经济多维对比诊断仪表板" class="anchor" aria-label="Permalink: city-compare -- 中国城市经济多维对比诊断仪表板" href="#city-compare----中国城市经济多维对比诊断仪表板"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<blockquote>
+<p dir="auto"><strong>Not another city ranking site -- this is a structured multi-dimensional economic health diagnostic tool.</strong></p>
+</blockquote>
+<p dir="auto">对城市经济进行 8 个维度的系统性诊断：经济规模、增长动能、财政收入、居民收入、消费活力、工业实力、对外开放、公共服务。雷达图 + 聚类 + 差距分析 + 排名，一键生成自包含 HTML 诊断报告。</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">快速开始</h2><a id="user-content-快速开始" class="anchor" aria-label="Permalink: 快速开始" href="#快速开始"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# 1. 克隆项目
+git clone &lt;repo-url&gt; city-compare
+cd city-compare
+
+# 2. 安装依赖
+pip install -r requirements.txt
+
+# 3. 启动 Web 应用
+streamlit run app.py
+
+# 4. (可选) 运行命令行 Demo
+python examples/demo.py"><pre><span class="pl-c"><span class="pl-c">#</span> 1. 克隆项目</span>
+git clone <span class="pl-k">&lt;</span>repo-url<span class="pl-k">&gt;</span> city-compare
+<span class="pl-c1">cd</span> city-compare
+
+<span class="pl-c"><span class="pl-c">#</span> 2. 安装依赖</span>
+pip install -r requirements.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 启动 Web 应用</span>
+streamlit run app.py
+
+<span class="pl-c"><span class="pl-c">#</span> 4. (可选) 运行命令行 Demo</span>
+python examples/demo.py</pre></div>
+<p dir="auto">打开浏览器访问 <code>http://localhost:8501</code> 即可使用。</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">功能亮点</h2><a id="user-content-功能亮点" class="anchor" aria-label="Permalink: 功能亮点" href="#功能亮点"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>8维雷达图</strong></td>
+<td>z-score 标准化到 0-100，每个维度由 2-3 个子指标加权合成</td>
+</tr>
+<tr>
+<td><strong>交互式排名</strong></td>
+<td>横向条形图 + 样式化 HTML 排名表，悬停查看详情</td>
+</tr>
+<tr>
+<td><strong>K-means 聚类</strong></td>
+<td>PCA 降维 + 聚类分组，发现经济结构相似的城市</td>
+</tr>
+<tr>
+<td><strong>差距分析</strong></td>
+<td>双城市逐维对比，一目了然谁在哪个维度领先</td>
+</tr>
+<tr>
+<td><strong>相关性热力图</strong></td>
+<td>12 项经济指标的 Pearson 相关系数矩阵</td>
+</tr>
+<tr>
+<td><strong>自包含报告</strong></td>
+<td>单文件 HTML，含封面、雷达图、排名表、聚类图、热力图、数据附录</td>
+</tr>
+<tr>
+<td><strong>Streamlit Web</strong></td>
+<td>侧边栏多选城市，Tab 页切换，一键下载报告</td>
+</tr>
+<tr>
+<td><strong>50城预载</strong></td>
+<td>config/cities.yaml 包含中国前 50 城市 2023 年基准数据</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">项目结构</h2><a id="user-content-项目结构" class="anchor" aria-label="Permalink: 项目结构" href="#项目结构"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="city-compare/
+├── README.md
+├── requirements.txt
+├── app.py                    # Streamlit Web 前端
+├── city_compare/
+│   ├── __init__.py           # 包入口，公开 API
+│   ├── fetcher.py            # 数据获取 (akshare + YAML 回退)
+│   ├── radar.py              # 可视化核心 (Plotly)
+│   └── report.py             # HTML 报告生成器
+├── config/
+│   └── cities.yaml           # 50 城市预载数据
+└── examples/
+    └── demo.py               # 命令行演示脚本"><pre class="notranslate"><code>city-compare/
+├── README.md
+├── requirements.txt
+├── app.py                    # Streamlit Web 前端
+├── city_compare/
+│   ├── __init__.py           # 包入口，公开 API
+│   ├── fetcher.py            # 数据获取 (akshare + YAML 回退)
+│   ├── radar.py              # 可视化核心 (Plotly)
+│   └── report.py             # HTML 报告生成器
+├── config/
+│   └── cities.yaml           # 50 城市预载数据
+└── examples/
+    └── demo.py               # 命令行演示脚本
+</code></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">8维指标体系</h2><a id="user-content-8维指标体系" class="anchor" aria-label="Permalink: 8维指标体系" href="#8维指标体系"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">每个维度由 2-3 个底层指标加权合成，所有指标均经过 z-score 标准化并平滑映射到 0-100 区间。</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>子指标 (权重)</th>
+<th>数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>经济规模</strong></td>
+<td>GDP总量 (0.6) + 人均GDP (0.4)</td>
+<td>国家统计局</td>
+</tr>
+<tr>
+<td><strong>增长动能</strong></td>
+<td>GDP增速 (1.0)</td>
+<td>国家统计局</td>
+</tr>
+<tr>
+<td><strong>财政收入</strong></td>
+<td>预算收入/GDP (0.5) + 人均预算 (0.5)</td>
+<td>财政部</td>
+</tr>
+<tr>
+<td><strong>居民收入</strong></td>
+<td>城镇居民人均可支配收入 (1.0)</td>
+<td>国家统计局</td>
+</tr>
+<tr>
+<td><strong>消费活力</strong></td>
+<td>社消/GDP (0.5) + 人均社消 (0.5)</td>
+<td>国家统计局</td>
+</tr>
+<tr>
+<td><strong>工业实力</strong></td>
+<td>工业增加值/GDP (0.7) + 人均工业 (0.3)</td>
+<td>工信部</td>
+</tr>
+<tr>
+<td><strong>对外开放</strong></td>
+<td>外资/GDP (0.6) + 人均外资 (0.4)</td>
+<td>商务部</td>
+</tr>
+<tr>
+<td><strong>公共服务</strong></td>
+<td>R&amp;D占比 (0.4) + 千人床位 (0.3) + 百万人口高校 (0.3)</td>
+<td>多源合成</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">API 速览</h2><a id="user-content-api-速览" class="anchor" aria-label="Permalink: API 速览" href="#api-速览"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="from city_compare import compare_cities, compute_composite_scores, generate_report
+
+# 获取多城市对比数据
+result = compare_cities([&quot;上海&quot;, &quot;北京&quot;, &quot;深圳&quot;, &quot;广州&quot;])
+# result[&quot;overview&quot;]   -- 综合概览 DataFrame
+# result[&quot;per_capita&quot;]  -- 人均指标 DataFrame
+# result[&quot;raw&quot;]         -- 完整原始数据 DataFrame
+
+# 计算8维综合得分
+scores = compute_composite_scores([&quot;上海&quot;, &quot;北京&quot;, &quot;深圳&quot;, &quot;广州&quot;])
+
+# 生成 HTML 诊断报告
+generate_report([&quot;上海&quot;, &quot;北京&quot;, &quot;深圳&quot;], output_path=&quot;report.html&quot;)"><pre><span class="pl-k">from</span> <span class="pl-s1">city_compare</span> <span class="pl-k">import</span> <span class="pl-s1">compare_cities</span>, <span class="pl-s1">compute_composite_scores</span>, <span class="pl-s1">generate_report</span>
+
+<span class="pl-c"># 获取多城市对比数据</span>
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-en">compare_cities</span>([<span class="pl-s">"上海"</span>, <span class="pl-s">"北京"</span>, <span class="pl-s">"深圳"</span>, <span class="pl-s">"广州"</span>])
+<span class="pl-c"># result["overview"]   -- 综合概览 DataFrame</span>
+<span class="pl-c"># result["per_capita"]  -- 人均指标 DataFrame</span>
+<span class="pl-c"># result["raw"]         -- 完整原始数据 DataFrame</span>
+
+<span class="pl-c"># 计算8维综合得分</span>
+<span class="pl-s1">scores</span> <span class="pl-c1">=</span> <span class="pl-en">compute_composite_scores</span>([<span class="pl-s">"上海"</span>, <span class="pl-s">"北京"</span>, <span class="pl-s">"深圳"</span>, <span class="pl-s">"广州"</span>])
+
+<span class="pl-c"># 生成 HTML 诊断报告</span>
+<span class="pl-en">generate_report</span>([<span class="pl-s">"上海"</span>, <span class="pl-s">"北京"</span>, <span class="pl-s">"深圳"</span>], <span class="pl-s1">output_path</span><span class="pl-c1">=</span><span class="pl-s">"report.html"</span>)</pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">数据说明</h2><a id="user-content-数据说明" class="anchor" aria-label="Permalink: 数据说明" href="#数据说明"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>实时数据</strong>: 通过 <a href="https://github.com/akfamily/akshare">akshare</a> 从公开 API 获取最新城市经济数据</li>
+<li><strong>回退数据</strong>: 当 akshare 获取失败时，自动回退到 <code>config/cities.yaml</code> 中的预载静态数据</li>
+<li><strong>数据年份</strong>: 默认使用 2023 年数据，cities.yaml 中包含 50 个城市的完整指标</li>
+<li><strong>数据更新</strong>: 编辑 <code>config/cities.yaml</code> 即可更新基准数据</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">依赖</h2><a id="user-content-依赖" class="anchor" aria-label="Permalink: 依赖" href="#依赖"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Python &gt;= 3.9</strong></li>
+<li><strong>streamlit</strong> -- Web 前端</li>
+<li><strong>akshare</strong> -- 经济数据获取</li>
+<li><strong>plotly</strong> -- 交互式可视化</li>
+<li><strong>pandas, numpy, scipy</strong> -- 数据处理</li>
+<li><strong>scikit-learn</strong> -- K-means 聚类 + PCA</li>
+<li><strong>pyyaml</strong> -- 配置文件解析</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">截图</h2><a id="user-content-截图" class="anchor" aria-label="Permalink: 截图" href="#截图"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>雷达图</th>
+<th>排名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8维雷达对比，面积越大综合实力越强</td>
+<td>横向排名条形图，悬停交互</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>聚类</th>
+<th>报告</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K-means + PCA，经济结构相似性分组</td>
+<td>自包含 HTML，打印友好</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">License</h2><a id="user-content-license" class="anchor" aria-label="Permalink: License" href="#license"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">MIT</p>
+</div>
+  </div>
+</main>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>

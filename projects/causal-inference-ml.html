@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>causal-inference-ml · 项目详情 | 万值翔</title>
+<script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="前沿因果推断与机器学习融合引擎 — Double/Debiased ML + Causal Forest + S/T/X-Learners + Neyman Orthogonal Scores">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+<div class="pd-back">
+  <a href="../index.html">← 作品集首页</a>
+  <a href="../positions/index.html">← 岗位作品集</a>
+</div>
+<main id="app">
+  <div class="pd-head">
+    <div class="pd-title"><h1>causal-inference-ml</h1><span class="pd-lang">Python</span></div>
+    <p class="pd-desc">前沿因果推断与机器学习融合引擎 — Double/Debiased ML + Causal Forest + S/T/X-Learners + Neyman Orthogonal Scores</p>
+    <div class="pd-tags"><span>因果推断</span><span>Double ML</span><span>Causal Forest</span><span>X-Learner</span></div>
+    <div class="pd-stats">
+      <span>⭐ Stars <b>1</b></span>
+      <span>⑂ Forks <b>0</b></span>
+      <span>📅 更新 <b>2026-06-28</b></span>
+      <span>⚖ License <b>MIT</b></span>
+    </div>
+    <div class="pd-actions">
+      <a class="btn btn-primary" href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">🐙 GitHub 仓库</a>
+      <span class="btn">📦 开源库 · 见下方 README 与源码</span>
+    </div>
+  </div>
+
+  <div class="pd-section-title">README</div>
+  <div class="readme markdown-body">
+<div id="readme" class="md" data-path="README.md"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">CausalInference — 前沿因果推断与机器学习融合引擎</h1><a id="user-content-causalinference--前沿因果推断与机器学习融合引擎" class="anchor" aria-label="Permalink: CausalInference — 前沿因果推断与机器学习融合引擎" href="#causalinference--前沿因果推断与机器学习融合引擎"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><a href="https://www.python.org/" rel="nofollow"><img src="https://camo.githubusercontent.com/bd7bcdc70784bad7073b66850c51f4fed5dc3b2fc782277551b9013c7d27f043/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f707974686f6e2d332e382b2d626c75652e737667" alt="Python" data-canonical-src="https://img.shields.io/badge/python-3.8+-blue.svg" style="max-width: 100%;"></a>
+<a href="https://github.com/wzx11223344/causal-inference-ml/blob/main/LICENSE"><img src="https://camo.githubusercontent.com/8bb50fd2278f18fc326bf71f6e88ca8f884f72f179d3e555e20ed30157190d0d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d677265656e2e737667" alt="License" data-canonical-src="https://img.shields.io/badge/license-MIT-green.svg" style="max-width: 100%;"></a></p>
+<p dir="auto">实现了近年计量经济学/因果推断<strong>最前沿</strong>的方法论，将机器学习与经典计量理论深度融合。</p>
+<blockquote>
+<p dir="auto">"Double/Debiased Machine Learning" 是 Chernozhukov et al. (2018) 提出的框架，
+被广泛认为是 <strong>过去十年因果推断最重要的方法论突破</strong>。</p>
+</blockquote>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">🧬 核心算法</h2><a id="user-content--核心算法" class="anchor" aria-label="Permalink: 🧬 核心算法" href="#-核心算法"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>论文</th>
+<th>期刊</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Double ML</strong></td>
+<td>Chernozhukov et al. (2018)</td>
+<td><em>Econometrics Journal</em></td>
+<td>√n-一致的 ATE 估计</td>
+</tr>
+<tr>
+<td><strong>Causal Forest</strong></td>
+<td>Athey et al. (2019)</td>
+<td><em>Annals of Statistics</em></td>
+<td>异质性处理效应 (CATE)</td>
+</tr>
+<tr>
+<td><strong>S/T/X-Learner</strong></td>
+<td>Künzel et al. (2019)</td>
+<td><em>PNAS</em></td>
+<td>Meta-Learner 框架</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">技术亮点</h3><a id="user-content-技术亮点" class="anchor" aria-label="Permalink: 技术亮点" href="#技术亮点"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li>🎯 <strong>Neyman 正交得分</strong> — 消除 ML 偏差的一阶效应</li>
+<li>🔀 <strong>K-fold 交叉拟合</strong> — 去除 Donsker 条件, 允许任意 ML 模型</li>
+<li>🌲 <strong>诚实因果树</strong> — Half-sampling: 分裂与估计在不同数据上</li>
+<li>🛡️ <strong>双重稳健</strong> — 倾向得分 OR 结果模型任一正确即可</li>
+<li>📊 <strong>异质性 CATE</strong> — 发现谁从处理中获益最大</li>
+<li>🎪 <strong>排列检验</strong> — Fisher 精确检验, 无需渐近近似</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">🚀 快速开始</h2><a id="user-content--快速开始" class="anchor" aria-label="Permalink: 🚀 快速开始" href="#-快速开始"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="from causalinference import DoubleML, CausalForest
+from causalinference import SLearner, TLearner, XLearner
+
+# 1. Double ML — 稳健的 ATE 估计
+dml = DoubleML(n_folds=5)
+result = dml.fit(X, y, T, do_bootstrap=True)
+print(result.summary())
+# ATE = 2.05, p &lt; 0.001, Neyman-orthogonal, Double-robust
+
+# 2. Causal Forest — 异质性处理效应
+cf = CausalForest(n_trees=500)
+result = cf.fit(X, y, T)
+cate = result.cate  # 每个观测的个性化处理效应
+
+# 3. Meta-Learners 对比
+s = SLearner().fit(X, y, T).predict(X)
+t = TLearner().fit(X, y, T).predict(X)
+x = XLearner().fit(X, y, T).predict(X)"><pre><span class="pl-k">from</span> <span class="pl-s1">causalinference</span> <span class="pl-k">import</span> <span class="pl-v">DoubleML</span>, <span class="pl-v">CausalForest</span>
+<span class="pl-k">from</span> <span class="pl-s1">causalinference</span> <span class="pl-k">import</span> <span class="pl-v">SLearner</span>, <span class="pl-v">TLearner</span>, <span class="pl-v">XLearner</span>
+
+<span class="pl-c"># 1. Double ML — 稳健的 ATE 估计</span>
+<span class="pl-s1">dml</span> <span class="pl-c1">=</span> <span class="pl-en">DoubleML</span>(<span class="pl-s1">n_folds</span><span class="pl-c1">=</span><span class="pl-c1">5</span>)
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">dml</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-c1">T</span>, <span class="pl-s1">do_bootstrap</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">result</span>.<span class="pl-c1">summary</span>())
+<span class="pl-c"># ATE = 2.05, p &lt; 0.001, Neyman-orthogonal, Double-robust</span>
+
+<span class="pl-c"># 2. Causal Forest — 异质性处理效应</span>
+<span class="pl-s1">cf</span> <span class="pl-c1">=</span> <span class="pl-en">CausalForest</span>(<span class="pl-s1">n_trees</span><span class="pl-c1">=</span><span class="pl-c1">500</span>)
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">cf</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-c1">T</span>)
+<span class="pl-s1">cate</span> <span class="pl-c1">=</span> <span class="pl-s1">result</span>.<span class="pl-c1">cate</span>  <span class="pl-c"># 每个观测的个性化处理效应</span>
+
+<span class="pl-c"># 3. Meta-Learners 对比</span>
+<span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-en">SLearner</span>().<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-c1">T</span>).<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>)
+<span class="pl-s1">t</span> <span class="pl-c1">=</span> <span class="pl-en">TLearner</span>().<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-c1">T</span>).<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>)
+<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-en">XLearner</span>().<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-c1">T</span>).<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">🔬 算法原理</h2><a id="user-content--算法原理" class="anchor" aria-label="Permalink: 🔬 算法原理" href="#-算法原理"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">Double/Debiased ML</h3><a id="user-content-doubledebiased-ml" class="anchor" aria-label="Permalink: Double/Debiased ML" href="#doubledebiased-ml"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="Step 1: K-fold Cross-fitting → ĝ(X), m̂(X)  (nuisance functions)
+Step 2: Neyman Orthogonal Score
+    ψ = g(1,X) - g(0,X) + T(Y-g(1,X))/m(X) - (1-T)(Y-g(0,X))/(1-m(X))
+Step 3: ATE = mean(ψ),  SE = std(ψ)/√n"><pre class="notranslate"><code>Step 1: K-fold Cross-fitting → ĝ(X), m̂(X)  (nuisance functions)
+Step 2: Neyman Orthogonal Score
+    ψ = g(1,X) - g(0,X) + T(Y-g(1,X))/m(X) - (1-T)(Y-g(0,X))/(1-m(X))
+Step 3: ATE = mean(ψ),  SE = std(ψ)/√n
+</code></pre></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">Honest Causal Tree</h3><a id="user-content-honest-causal-tree" class="anchor" aria-label="Permalink: Honest Causal Tree" href="#honest-causal-tree"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="For each split candidate:
+    分裂增益 Δ = n_L·n_R/(n_L+n_R) · (τ̂_L - τ̂_R)²
+    其中 τ̂ 是节点内双重稳健处理效应"><pre class="notranslate"><code>For each split candidate:
+    分裂增益 Δ = n_L·n_R/(n_L+n_R) · (τ̂_L - τ̂_R)²
+    其中 τ̂ 是节点内双重稳健处理效应
+</code></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📖 参考文献</h2><a id="user-content--参考文献" class="anchor" aria-label="Permalink: 📖 参考文献" href="#-参考文献"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ol dir="auto">
+<li>
+<p dir="auto"><strong>Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., &amp; Robins, J. (2018).</strong> Double/debiased machine learning for treatment and structural parameters. <em>The Econometrics Journal</em>, 21(1), C1-C68.</p>
+</li>
+<li>
+<p dir="auto"><strong>Athey, S., Tibshirani, J., &amp; Wager, S. (2019).</strong> Generalized random forests. <em>Annals of Statistics</em>, 47(2), 1148-1178.</p>
+</li>
+<li>
+<p dir="auto"><strong>Künzel, S. R., Sekhon, J. S., Bickel, P. J., &amp; Yu, B. (2019).</strong> Metalearners for estimating heterogeneous treatment effects using machine learning. <em>PNAS</em>, 116(10), 4156-4165.</p>
+</li>
+<li>
+<p dir="auto"><strong>Wager, S., &amp; Athey, S. (2018).</strong> Estimation and inference of heterogeneous treatment effects using random forests. <em>JASA</em>, 113(523), 1228-1242.</p>
+</li>
+</ol>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📄 许可证</h2><a id="user-content--许可证" class="anchor" aria-label="Permalink: 📄 许可证" href="#-许可证"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">MIT License © 2024 wzx11223344</p>
+</div>
+  </div>
+</main>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>express-consumption · 项目详情 | 万值翔</title>
+<script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="快递网点客流量与附带消费经济效应研究 — 1352份问卷+Logistic回归+条件Logit+可复现代码">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+<div class="pd-back">
+  <a href="../index.html">← 作品集首页</a>
+  <a href="../positions/index.html">← 岗位作品集</a>
+</div>
+<main id="app">
+  <div class="pd-head">
+    <div class="pd-title"><h1>express-consumption</h1><span class="pd-lang">Python</span></div>
+    <p class="pd-desc">快递网点客流量与附带消费经济效应研究 — 1352份问卷+Logistic回归+条件Logit+可复现代码</p>
+    <div class="pd-tags"><span>实证研究</span><span>问卷</span><span>Logistic回归</span><span>条件Logit</span></div>
+    <div class="pd-stats">
+      <span>⭐ Stars <b>0</b></span>
+      <span>⑂ Forks <b>0</b></span>
+      <span>📅 更新 <b>2026-06-28</b></span>
+      <span>⚖ License <b>MIT</b></span>
+    </div>
+    <div class="pd-actions">
+      <a class="btn btn-primary" href="https://github.com/wzx11223344/express-consumption" target="_blank">🐙 GitHub 仓库</a>
+      <span class="btn">📦 开源库 · 见下方 README 与源码</span>
+    </div>
+  </div>
+
+  <div class="pd-section-title">README</div>
+  <div class="readme markdown-body">
+<div id="readme" class="md" data-path="README.md"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">快递网点客流量与附带消费经济效应研究</h1><a id="user-content-快递网点客流量与附带消费经济效应研究" class="anchor" aria-label="Permalink: 快递网点客流量与附带消费经济效应研究" href="#快递网点客流量与附带消费经济效应研究"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><a href="https://python.org" rel="nofollow"><img src="https://camo.githubusercontent.com/abbe7d446675e0347993fe6a78eb9b90de03423466cc32359dd55e558a105c84/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f507974686f6e2d332e382b2d3337373641423f6c6f676f3d707974686f6e266c6f676f436f6c6f723d7768697465" alt="Python" data-canonical-src="https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&amp;logoColor=white" style="max-width: 100%;"></a>
+<a href="https://numpy.org" rel="nofollow"><img src="https://camo.githubusercontent.com/87609557cfb425575043517d053dc2a4c65b177030a8f4a649f3706db5f801bd/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4e756d50792d2545322539432539332d3031333234333f6c6f676f3d6e756d7079" alt="NumPy" data-canonical-src="https://img.shields.io/badge/NumPy-%E2%9C%93-013243?logo=numpy" style="max-width: 100%;"></a>
+<a href="https://pandas.pydata.org" rel="nofollow"><img src="https://camo.githubusercontent.com/8c7f0435247083e5d91c2ff5b8f467d573ff6856238cde384023a044138202e7/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f70616e6461732d2545322539432539332d3135303435383f6c6f676f3d70616e646173" alt="pandas" data-canonical-src="https://img.shields.io/badge/pandas-%E2%9C%93-150458?logo=pandas" style="max-width: 100%;"></a>
+<a href="https://scikit-learn.org" rel="nofollow"><img src="https://camo.githubusercontent.com/645f85c213ca289d04b75ec04edc840fc9ba0e759d39f4fd5476c5f9a2d1fcb3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f736b6c6561726e2d2545322539432539332d4637393331453f6c6f676f3d7363696b69742d6c6561726e" alt="scikit-learn" data-canonical-src="https://img.shields.io/badge/sklearn-%E2%9C%93-F7931E?logo=scikit-learn" style="max-width: 100%;"></a>
+<a href="https://github.com/wzx11223344/express-consumption/blob/main/LICENSE"><img src="https://camo.githubusercontent.com/8bb50fd2278f18fc326bf71f6e88ca8f884f72f179d3e555e20ed30157190d0d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d677265656e2e737667" alt="License" data-canonical-src="https://img.shields.io/badge/license-MIT-green.svg" style="max-width: 100%;"></a></p>
+<p dir="auto">基于 <strong>1352 份全国问卷调查数据</strong>的完整计量经济学研究，探索快递末端网络的消费经济效应。</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📄 论文摘要</h2><a id="user-content--论文摘要" class="anchor" aria-label="Permalink: 📄 论文摘要" href="#-论文摘要"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">快递物流网络的快速扩张深刻改变了城市消费空间格局。本文基于1352份有效问卷，综合运用<strong>描述性统计、二元Logistic回归和条件Logit效用函数</strong>，系统考察快递取件行为对附带消费的诱发效应。</p>
+<p dir="auto"><strong>核心发现：</strong></p>
+<ul dir="auto">
+<li>📊 <strong>85.5%</strong> 的受访者取快递时产生附带消费意愿</li>
+<li>👥 工作人群是核心驱动力 (<strong>OR = 13.58, p &lt; 0.001</strong>)</li>
+<li>🍔 餐饮消费占比<strong>93.3%</strong>，为绝对主力</li>
+<li>📍 距离贡献驿站选择总效用的<strong>25.35%</strong></li>
+<li>🏪 <strong>84.1%</strong> 受访者表示便利设施会提高消费意愿</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📂 仓库结构</h2><a id="user-content--仓库结构" class="anchor" aria-label="Permalink: 📂 仓库结构" href="#-仓库结构"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="express-consumption/
+├── README.md                    # 项目说明
+├── paper.pdf                    # 完整论文
+├── data/
+│   ├── survey_raw.xlsx          # 1352份原始调查数据
+│   └── econometric_analysis.xlsx # 计量分析报告（含图表和结论）
+├── analysis/
+│   ├── replication.py           # 完整可复现代码
+│   └── README.md                # 分析说明
+└── output/                      # 输出结果（运行后生成）"><pre class="notranslate"><code>express-consumption/
+├── README.md                    # 项目说明
+├── paper.pdf                    # 完整论文
+├── data/
+│   ├── survey_raw.xlsx          # 1352份原始调查数据
+│   └── econometric_analysis.xlsx # 计量分析报告（含图表和结论）
+├── analysis/
+│   ├── replication.py           # 完整可复现代码
+│   └── README.md                # 分析说明
+└── output/                      # 输出结果（运行后生成）
+</code></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">🚀 快速开始</h2><a id="user-content--快速开始" class="anchor" aria-label="Permalink: 🚀 快速开始" href="#-快速开始"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">复现全部实证结果</h3><a id="user-content-复现全部实证结果" class="anchor" aria-label="Permalink: 复现全部实证结果" href="#复现全部实证结果"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="cd analysis
+python replication.py"><pre><span class="pl-c1">cd</span> analysis
+python replication.py</pre></div>
+<p dir="auto">输出包括：</p>
+<ul dir="auto">
+<li>描述性统计（表 1-4）</li>
+<li>5 个 Logistic 回归模型（系数、标准误、OR、置信区间）</li>
+<li>条件 Logit 效用函数（五因素排序分析）</li>
+<li>消费者内部细分（四象限分析）</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">依赖</h3><a id="user-content-依赖" class="anchor" aria-label="Permalink: 依赖" href="#依赖"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="pip install numpy pandas scipy scikit-learn openpyxl"><pre>pip install numpy pandas scipy scikit-learn openpyxl</pre></div>
+<p dir="auto">仅需 NumPy / SciPy / scikit-learn / pandas，零额外依赖。</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📊 核心实证结果</h2><a id="user-content--核心实证结果" class="anchor" aria-label="Permalink: 📊 核心实证结果" href="#-核心实证结果"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">表 1：样本人口统计特征</h3><a id="user-content-表-1样本人口统计特征" class="anchor" aria-label="Permalink: 表 1：样本人口统计特征" href="#表-1样本人口统计特征"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>身份类别</th>
+<th align="right">人数</th>
+<th align="right">占比</th>
+<th align="right">会消费人数</th>
+<th align="right">消费占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本科生与研究生</td>
+<td align="right">605</td>
+<td align="right">44.7%</td>
+<td align="right">451</td>
+<td align="right">74.5%</td>
+</tr>
+<tr>
+<td>工作或待业中</td>
+<td align="right">529</td>
+<td align="right">39.1%</td>
+<td align="right">516</td>
+<td align="right"><strong>97.5%</strong></td>
+</tr>
+<tr>
+<td>中小学生</td>
+<td align="right">216</td>
+<td align="right">16.0%</td>
+<td align="right">188</td>
+<td align="right">87.0%</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td align="right"><strong>1352</strong></td>
+<td align="right"><strong>100%</strong></td>
+<td align="right"><strong>1156</strong></td>
+<td align="right"><strong>85.5%</strong></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">模型 1：附带消费意愿的 Logistic 回归</h3><a id="user-content-模型-1附带消费意愿的-logistic-回归" class="anchor" aria-label="Permalink: 模型 1：附带消费意愿的 Logistic 回归" href="#模型-1附带消费意愿的-logistic-回归"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><math-renderer class="js-display-math" style="display: block" data-run-id="96e0e5fb9c71f04973fe86db40ead1e6">$$P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_{worker} + \beta_2 X_{k12} + \beta_3 X_{retired})}}$$</math-renderer></p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>变量</th>
+<th align="right">Coef</th>
+<th align="right">SE</th>
+<th align="right">z</th>
+<th align="right">p</th>
+<th align="right">OR</th>
+<th align="left">95% CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作或待业中</td>
+<td align="right">2.609</td>
+<td align="right">0.281</td>
+<td align="right">9.28</td>
+<td align="right">&lt;0.001</td>
+<td align="right"><strong>13.58</strong></td>
+<td align="left">[7.83, 23.56]</td>
+</tr>
+<tr>
+<td>中小学生</td>
+<td align="right">0.829</td>
+<td align="right">0.202</td>
+<td align="right">4.09</td>
+<td align="right">&lt;0.001</td>
+<td align="right">2.29</td>
+<td align="left">[1.54, 3.41]</td>
+</tr>
+<tr>
+<td>Pseudo R²</td>
+<td align="right">0.126</td>
+<td align="right">Accuracy</td>
+<td align="right">85.5%</td>
+<td align="right">n</td>
+<td align="right">1352</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">条件 Logit 效用函数</h3><a id="user-content-条件-logit-效用函数" class="anchor" aria-label="Permalink: 条件 Logit 效用函数" href="#条件-logit-效用函数"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>因素</th>
+<th align="right">平均排名</th>
+<th align="right">效用得分</th>
+<th align="right">贡献占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏠 距离</td>
+<td align="right">2.38</td>
+<td align="right">3.62</td>
+<td align="right"><strong>23.84%</strong></td>
+</tr>
+<tr>
+<td>🚗 交通便捷性</td>
+<td align="right">2.99</td>
+<td align="right">3.01</td>
+<td align="right">19.79%</td>
+</tr>
+<tr>
+<td>⏱️ 节省时间</td>
+<td align="right">3.01</td>
+<td align="right">2.99</td>
+<td align="right">19.67%</td>
+</tr>
+<tr>
+<td>🤝 服务态度</td>
+<td align="right">3.21</td>
+<td align="right">2.79</td>
+<td align="right">18.37%</td>
+</tr>
+<tr>
+<td>🏪 周边设施</td>
+<td align="right">3.21</td>
+<td align="right">2.79</td>
+<td align="right">18.33%</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">消费者细分类型</h3><a id="user-content-消费者细分类型" class="anchor" aria-label="Permalink: 消费者细分类型" href="#消费者细分类型"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>类型</th>
+<th align="right">人数</th>
+<th align="right">设施敏感度</th>
+<th align="right">工作人群占比</th>
+<th align="right">OR (便利设施)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🛍️ 服装消费型</td>
+<td align="right">801</td>
+<td align="right">97.0%</td>
+<td align="right">49.2%</td>
+<td align="right"><strong>14.15</strong></td>
+</tr>
+<tr>
+<td>⏰ 时间敏感型</td>
+<td align="right">436</td>
+<td align="right">90.6%</td>
+<td align="right">39.9%</td>
+<td align="right"><strong>10.54</strong></td>
+</tr>
+<tr>
+<td>🏷️ 促销敏感型</td>
+<td align="right">918</td>
+<td align="right">97.1%</td>
+<td align="right">48.9%</td>
+<td align="right"><strong>55.04</strong></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">🔬 计量方法</h2><a id="user-content--计量方法" class="anchor" aria-label="Permalink: 🔬 计量方法" href="#-计量方法"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">二元 Logistic 回归</h3><a id="user-content-二元-logistic-回归" class="anchor" aria-label="Permalink: 二元 Logistic 回归" href="#二元-logistic-回归"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">对二分类因变量（是否消费 / 是否增加频率 / 设施是否有效）使用极大似然估计：</p>
+<p dir="auto"><math-renderer class="js-display-math" style="display: block" data-run-id="96e0e5fb9c71f04973fe86db40ead1e6">$$L(\beta) = \prod_{i=1}^{n} p_i^{y_i} (1-p_i)^{1-y_i}, \quad p_i = \frac{1}{1+e^{-X_i\beta}}$$</math-renderer></p>
+<p dir="auto">报告系数、标准误（Hessian矩阵逆）、z值、p值、优势比（OR）及95%置信区间。</p>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">条件 Logit 效用函数</h3><a id="user-content-条件-logit-效用函数-1" class="anchor" aria-label="Permalink: 条件 Logit 效用函数" href="#条件-logit-效用函数-1"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">基于 McFadden (1974) 的随机效用框架：</p>
+<p dir="auto"><math-renderer class="js-display-math" style="display: block" data-run-id="96e0e5fb9c71f04973fe86db40ead1e6">$$U_{ij} = V_{ij} + \varepsilon_{ij}$$</math-renderer></p>
+<p dir="auto">消费者在5个驿站特征中选择效用最大者，排序数据用于估计各因素的边际效用贡献。</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📖 研究设计</h2><a id="user-content--研究设计" class="anchor" aria-label="Permalink: 📖 研究设计" href="#-研究设计"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>调查方式</strong>：线上问卷（微信平台）+ 线下发放</li>
+<li><strong>调查时间</strong>：2025年1月22日 - 2月8日</li>
+<li><strong>覆盖范围</strong>：全国31个省（自治区、直辖市）</li>
+<li><strong>样本量</strong>：1352份有效问卷（Q7注意力检验通过率84.8%）</li>
+<li><strong>问卷结构</strong>：10道核心题目，含排序题、多选题、二元选择题</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">📄 许可证</h2><a id="user-content--许可证" class="anchor" aria-label="Permalink: 📄 许可证" href="#-许可证"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">MIT License © 2025</p>
+<hr>
+<p dir="auto"><em>本项目包含完整的可复现代码和数据，实证结果可直接验证。</em></p>
+</div>
+  </div>
+</main>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>

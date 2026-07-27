@@ -189,10 +189,10 @@ def process_index():
             1)
         rep += 1
 
-    # 6) nav: add 开源 link
+    # 6) nav: add 开源 link (skip if already present to avoid duplicates)
     old = '<a href="positions/index.html">岗位作品集 →</a>'
     new = '<a href="#opensource">开源</a><a href="positions/index.html">岗位作品集 →</a>'
-    if old in html:
+    if old in html and '#opensource' not in html:
         html = html.replace(old, new, 1); rep += 1
 
     # 7) timeline overclaims

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>mcp-financial-data · 项目详情 | 万值翔</title>
+<script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="MCP Server: mcp-financial-data">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+<div class="pd-back">
+  <a href="../index.html">← 作品集首页</a>
+  <a href="../positions/index.html">← 岗位作品集</a>
+</div>
+<main id="app">
+  <div class="pd-head">
+    <div class="pd-title"><h1>mcp-financial-data</h1><span class="pd-lang">Python</span></div>
+    <p class="pd-desc">MCP Server: mcp-financial-data</p>
+    <div class="pd-tags"><span>MCP</span><span>金融数据</span><span>Agent工具</span><span>Server</span></div>
+    <div class="pd-stats">
+      <span>⭐ Stars <b>0</b></span>
+      <span>⑂ Forks <b>0</b></span>
+      <span>📅 更新 <b>2026-07-18</b></span>
+      <span>⚖ License <b>MIT</b></span>
+    </div>
+    <div class="pd-actions">
+      <a class="btn btn-primary" href="https://github.com/wzx11223344/mcp-financial-data" target="_blank">🐙 GitHub 仓库</a>
+      <span class="btn">📦 开源库 · 见下方 README 与源码</span>
+    </div>
+  </div>
+
+  <div class="pd-section-title">README</div>
+  <div class="readme markdown-body">
+<div id="readme" class="md" data-path="README.md"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">金融数据 MCP 服务器 (mcp-financial-data)</h1><a id="user-content-金融数据-mcp-服务器-mcp-financial-data" class="anchor" aria-label="Permalink: 金融数据 MCP 服务器 (mcp-financial-data)" href="#金融数据-mcp-服务器-mcp-financial-data"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><a href="https://github.com/wzx11223344/mcp-financial-data/actions/workflows/ci.yml"><img src="https://github.com/wzx11223344/mcp-financial-data/actions/workflows/ci.yml/badge.svg" alt="CI" style="max-width: 100%;"></a></p>
+<p dir="auto">基于 <a href="https://modelcontextprotocol.io" rel="nofollow">MCP (Model Context Protocol)</a> 协议的金融数据服务器，使用 <a href="https://github.com/jlowin/fastmcp">FastMCP</a> 框架构建，为 AI 客户端提供实时的中国 A 股 / 基金 / 宏观经济 / 市场行情数据工具。</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">功能特性</h2><a id="user-content-功能特性" class="anchor" aria-label="Permalink: 功能特性" href="#功能特性"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>19 个金融数据工具</strong>，覆盖四大领域</li>
+<li>使用 <a href="https://akshare.akfamily.xyz/" rel="nofollow">akshare</a> 获取真实金融数据</li>
+<li>所有工具返回 markdown 格式字符串，适合 AI 客户端直接消费</li>
+<li>完整的类型提示和 docstring，MCP 自动生成 JSON Schema</li>
+<li>统一的错误处理，网络异常或接口变更时返回友好提示</li>
+<li>自动数据截断，防止输出过大</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">项目结构</h2><a id="user-content-项目结构" class="anchor" aria-label="Permalink: 项目结构" href="#项目结构"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="mcp-financial-data/
+├── server.py                    # MCP Server 入口（FastMCP）
+├── mcp_financial_data/
+│   ├── __init__.py               # 包初始化
+│   ├── stock_tools.py            # 股票数据工具（6个）
+│   ├── fund_tools.py             # 基金数据工具（4个）
+│   ├── econ_tools.py             # 宏观经济数据工具（5个）
+│   ├── market_tools.py           # 市场行情工具（4个）
+│   └── utils.py                  # 公共工具函数
+├── README.md
+├── SKILL.md
+└── requirements.txt"><pre class="notranslate"><code>mcp-financial-data/
+├── server.py                    # MCP Server 入口（FastMCP）
+├── mcp_financial_data/
+│   ├── __init__.py               # 包初始化
+│   ├── stock_tools.py            # 股票数据工具（6个）
+│   ├── fund_tools.py             # 基金数据工具（4个）
+│   ├── econ_tools.py             # 宏观经济数据工具（5个）
+│   ├── market_tools.py           # 市场行情工具（4个）
+│   └── utils.py                  # 公共工具函数
+├── README.md
+├── SKILL.md
+└── requirements.txt
+</code></pre></div>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">工具列表</h2><a id="user-content-工具列表" class="anchor" aria-label="Permalink: 工具列表" href="#工具列表"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">股票数据工具 (6个)</h3><a id="user-content-股票数据工具-6个" class="anchor" aria-label="Permalink: 股票数据工具 (6个)" href="#股票数据工具-6个"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>工具名</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_stock_quote</code></td>
+<td>获取股票实时行情（开高低收量额、PE/PB/市值）</td>
+</tr>
+<tr>
+<td><code>get_stock_history</code></td>
+<td>获取历史 K 线（日/周/月，前复权）</td>
+</tr>
+<tr>
+<td><code>get_stock_financial</code></td>
+<td>获取财务指标（ROE/PE/PB/营收/净利润）</td>
+</tr>
+<tr>
+<td><code>get_stock_list</code></td>
+<td>获取股票列表（沪深300/中证500/上证50/全A）</td>
+</tr>
+<tr>
+<td><code>get_top_gainers</code></td>
+<td>获取涨幅排行榜</td>
+</tr>
+<tr>
+<td><code>get_top_losers</code></td>
+<td>获取跌幅排行榜</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">基金数据工具 (4个)</h3><a id="user-content-基金数据工具-4个" class="anchor" aria-label="Permalink: 基金数据工具 (4个)" href="#基金数据工具-4个"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>工具名</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_fund_list</code></td>
+<td>获取基金列表（股票型/混合型/债券型/指数型/QDII/ETF/LOF）</td>
+</tr>
+<tr>
+<td><code>get_fund_nav</code></td>
+<td>获取基金净值历史</td>
+</tr>
+<tr>
+<td><code>get_fund_holdings</code></td>
+<td>获取基金重仓股持仓</td>
+</tr>
+<tr>
+<td><code>get_fund_performance</code></td>
+<td>获取基金业绩（近1周/1月/3月/6月/1年/3年收益）</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">宏观经济数据工具 (5个)</h3><a id="user-content-宏观经济数据工具-5个" class="anchor" aria-label="Permalink: 宏观经济数据工具 (5个)" href="#宏观经济数据工具-5个"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>工具名</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_gdp_data</code></td>
+<td>获取中国 GDP 季度数据</td>
+</tr>
+<tr>
+<td><code>get_cpi_data</code></td>
+<td>获取中国 CPI 月度数据</td>
+</tr>
+<tr>
+<td><code>get_pmi_data</code></td>
+<td>获取中国 PMI 月度数据</td>
+</tr>
+<tr>
+<td><code>get_money_supply</code></td>
+<td>获取货币供应量（M0/M1/M2）</td>
+</tr>
+<tr>
+<td><code>get_fx_rate</code></td>
+<td>获取汇率数据（美元/欧元/日元/英镑/港元）</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">市场行情工具 (4个)</h3><a id="user-content-市场行情工具-4个" class="anchor" aria-label="Permalink: 市场行情工具 (4个)" href="#市场行情工具-4个"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>工具名</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_index_data</code></td>
+<td>获取指数行情（上证/深证/创业板/科创50/沪深300）</td>
+</tr>
+<tr>
+<td><code>get_sector_performance</code></td>
+<td>获取板块涨跌幅排行</td>
+</tr>
+<tr>
+<td><code>get_market_breadth</code></td>
+<td>获取市场宽度（涨跌家数/涨停跌停/总成交额）</td>
+</tr>
+<tr>
+<td><code>get_north_flow</code></td>
+<td>获取北向资金流向</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">安装</h2><a id="user-content-安装" class="anchor" aria-label="Permalink: 安装" href="#安装"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# 克隆项目
+git clone &lt;repo-url&gt;
+cd mcp-financial-data
+
+# 安装依赖
+pip install -r requirements.txt"><pre><span class="pl-c"><span class="pl-c">#</span> 克隆项目</span>
+git clone <span class="pl-k">&lt;</span>repo-url<span class="pl-k">&gt;</span>
+<span class="pl-c1">cd</span> mcp-financial-data
+
+<span class="pl-c"><span class="pl-c">#</span> 安装依赖</span>
+pip install -r requirements.txt</pre></div>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">配置 MCP 客户端</h2><a id="user-content-配置-mcp-客户端" class="anchor" aria-label="Permalink: 配置 MCP 客户端" href="#配置-mcp-客户端"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">Claude Desktop / Claude Code</h3><a id="user-content-claude-desktop--claude-code" class="anchor" aria-label="Permalink: Claude Desktop / Claude Code" href="#claude-desktop--claude-code"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">在 MCP 配置文件中添加：</p>
+<div class="highlight highlight-source-json notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="{
+  &quot;mcpServers&quot;: {
+    &quot;financial-data&quot;: {
+      &quot;command&quot;: &quot;python&quot;,
+      &quot;args&quot;: [&quot;server.py&quot;],
+      &quot;cwd&quot;: &quot;/path/to/mcp-financial-data&quot;
+    }
+  }
+}"><pre>{
+  <span class="pl-ent">"mcpServers"</span>: {
+    <span class="pl-ent">"financial-data"</span>: {
+      <span class="pl-ent">"command"</span>: <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>,
+      <span class="pl-ent">"args"</span>: [<span class="pl-s"><span class="pl-pds">"</span>server.py<span class="pl-pds">"</span></span>],
+      <span class="pl-ent">"cwd"</span>: <span class="pl-s"><span class="pl-pds">"</span>/path/to/mcp-financial-data<span class="pl-pds">"</span></span>
+    }
+  }
+}</pre></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">其他 MCP 客户端</h3><a id="user-content-其他-mcp-客户端" class="anchor" aria-label="Permalink: 其他 MCP 客户端" href="#其他-mcp-客户端"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-json notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="{
+  &quot;mcpServers&quot;: {
+    &quot;financial-data&quot;: {
+      &quot;command&quot;: &quot;python&quot;,
+      &quot;args&quot;: [&quot;/path/to/mcp-financial-data/server.py&quot;]
+    }
+  }
+}"><pre>{
+  <span class="pl-ent">"mcpServers"</span>: {
+    <span class="pl-ent">"financial-data"</span>: {
+      <span class="pl-ent">"command"</span>: <span class="pl-s"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>,
+      <span class="pl-ent">"args"</span>: [<span class="pl-s"><span class="pl-pds">"</span>/path/to/mcp-financial-data/server.py<span class="pl-pds">"</span></span>]
+    }
+  }
+}</pre></div>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">使用示例</h2><a id="user-content-使用示例" class="anchor" aria-label="Permalink: 使用示例" href="#使用示例"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">启动服务器后，AI 客户端会自动发现所有工具。示例对话：</p>
+<ul dir="auto">
+<li>"查询贵州茅台的实时行情" → 调用 <code>get_stock_quote("600519")</code></li>
+<li>"查看沪深300成分股" → 调用 <code>get_stock_list("hs300")</code></li>
+<li>"今天涨幅前20的股票" → 调用 <code>get_top_gainers(20)</code></li>
+<li>"基金161725的净值历史" → 调用 <code>get_fund_nav("161725")</code></li>
+<li>"最新的GDP数据" → 调用 <code>get_gdp_data()</code></li>
+<li>"上证指数今天怎么样" → 调用 <code>get_index_data("sh000001")</code></li>
+<li>"北向资金最近流向" → 调用 <code>get_north_flow()</code></li>
+</ul>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">技术栈</h2><a id="user-content-技术栈" class="anchor" aria-label="Permalink: 技术栈" href="#技术栈"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>MCP Protocol</strong>: <code>mcp</code> (Model Context Protocol SDK)</li>
+<li><strong>Server Framework</strong>: FastMCP</li>
+<li><strong>Data Source</strong>: akshare (免费开源金融数据接口库)</li>
+<li><strong>Data Processing</strong>: pandas</li>
+<li><strong>Python</strong>: 3.10+</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">开发</h2><a id="user-content-开发" class="anchor" aria-label="Permalink: 开发" href="#开发"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">运行服务器</h3><a id="user-content-运行服务器" class="anchor" aria-label="Permalink: 运行服务器" href="#运行服务器"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="python server.py"><pre>python server.py</pre></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">验证语法</h3><a id="user-content-验证语法" class="anchor" aria-label="Permalink: 验证语法" href="#验证语法"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="python -m py_compile server.py
+python -m py_compile mcp_financial_data/*.py"><pre>python -m py_compile server.py
+python -m py_compile mcp_financial_data/<span class="pl-k">*</span>.py</pre></div>
+<div class="markdown-heading" dir="auto"><h3 class="heading-element" dir="auto">添加新工具</h3><a id="user-content-添加新工具" class="anchor" aria-label="Permalink: 添加新工具" href="#添加新工具"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ol dir="auto">
+<li>在对应的 <code>*_tools.py</code> 文件中实现工具函数</li>
+<li>在 <code>server.py</code> 中用 <code>@mcp.tool()</code> 装饰器注册</li>
+<li>确保有完整的类型提示和 docstring</li>
+<li>用 <code>py_compile</code> 验证语法</li>
+</ol>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">测试</h2><a id="user-content-测试" class="anchor" aria-label="Permalink: 测试" href="#测试"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">运行单元测试：</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="pip install pytest flake8
+pytest tests/ -v --tb=short"><pre>pip install pytest flake8
+pytest tests/ -v --tb=short</pre></div>
+<p dir="auto">代码质量检查：</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="flake8 . --count --max-line-length=120 --statistics
+
+## License
+
+MIT"><pre>flake8 <span class="pl-c1">.</span> --count --max-line-length=120 --statistics
+
+<span class="pl-c"><span class="pl-c">#</span># License</span>
+
+MIT</pre></div>
+</div>
+  </div>
+</main>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>

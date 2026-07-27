@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>policysim · 项目详情 | 万值翔</title>
+<script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="政策模拟与反事实分析引擎 — ABM+DID+Synthetic Control 从底层构建">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+<div class="pd-back">
+  <a href="../index.html">← 作品集首页</a>
+  <a href="../positions/index.html">← 岗位作品集</a>
+</div>
+<main id="app">
+  <div class="pd-head">
+    <div class="pd-title"><h1>policysim</h1><span class="pd-lang">Python</span></div>
+    <p class="pd-desc">政策模拟与反事实分析引擎 — ABM+DID+Synthetic Control 从底层构建</p>
+    <div class="pd-tags"><span>政策模拟</span><span>ABM</span><span>合成控制法</span><span>反事实分析</span></div>
+    <div class="pd-stats">
+      <span>⭐ Stars <b>0</b></span>
+      <span>⑂ Forks <b>0</b></span>
+      <span>📅 更新 <b>2026-06-28</b></span>
+      <span>⚖ License <b>MIT</b></span>
+    </div>
+    <div class="pd-actions">
+      <a class="btn btn-primary" href="https://github.com/wzx11223344/policysim" target="_blank">🐙 GitHub 仓库</a>
+      <span class="btn">📦 开源库 · 见下方 README 与源码</span>
+    </div>
+  </div>
+
+  <div class="pd-section-title">README</div>
+  <div class="readme markdown-body">
+<div id="readme" class="md" data-path="README.md"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">PolicySim</h1><a id="user-content-policysim" class="anchor" aria-label="Permalink: PolicySim" href="#policysim"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Policy Simulation &amp; Counterfactual Analysis Engine</strong></p>
+<p dir="auto">PolicySim is a professional open-source Python toolkit for designing, simulating, and analyzing economic policies. It combines three powerful methodological pillars:</p>
+<ul dir="auto">
+<li><strong>Agent-Based Modeling (ABM)</strong> — Simulate heterogeneous economic agents with realistic behavioral rules</li>
+<li><strong>Microsimulation</strong> — Track individual-level outcomes under different policy regimes</li>
+<li><strong>Difference-in-Differences / Synthetic Control</strong> — Estimate causal policy effects using counterfactual methods</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Features</h2><a id="user-content-features" class="anchor" aria-label="Permalink: Features" href="#features"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Heterogeneous Economic Agents</strong> with parametrized wealth, income, consumption propensity, labor supply, and skill levels</li>
+<li><strong>Labor and Goods Market Clearing</strong> via supply-demand equilibrium with price discovery</li>
+<li><strong>Rich Policy Toolkit</strong> — progressive/flat tax, targeted subsidies, UBI, minimum wage, monetary policy</li>
+<li><strong>Full ABM Simulation Engine</strong> — multi-period simulation with configurable agent counts and policy interventions</li>
+<li><strong>Counterfactual Analysis</strong> — DiD estimator, Synthetic Control Method, placebo tests, event study plots</li>
+<li><strong>Built-in Metrics</strong> — Gini coefficient, GDP, unemployment rate, inequality indices, poverty rate</li>
+<li><strong>Visualization</strong> — trajectory plots comparing baseline vs policy scenarios</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Installation</h2><a id="user-content-installation" class="anchor" aria-label="Permalink: Installation" href="#installation"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="pip install policysim"><pre>pip install policysim</pre></div>
+<p dir="auto">Or from source:</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="git clone https://github.com/policysim/policysim.git
+cd policysim
+pip install -e ."><pre>git clone https://github.com/policysim/policysim.git
+<span class="pl-c1">cd</span> policysim
+pip install -e <span class="pl-c1">.</span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Quick Start</h2><a id="user-content-quick-start" class="anchor" aria-label="Permalink: Quick Start" href="#quick-start"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="from policysim import Simulation, TaxPolicy, UBiPolicy
+from policysim.counterfactual import did_estimate
+
+# Run a baseline simulation with 2000 agents over 50 periods
+sim = Simulation(n_agents=2000, n_periods=50, seed=42)
+df_base = sim.run(policies=None)
+sim.plot_trajectories()
+
+# Apply tax reform at period 25
+tax_reform = TaxPolicy(rate=0.35, brackets=[(0, 0.10), (50000, 0.25), (150000, 0.40)])
+df_policy = sim.run(policies=[(25, tax_reform)])
+
+# Compare outcomes
+print(f&quot;Baseline Gini: {df_base['gini'].iloc[-1]:.3f}&quot;)
+print(f&quot;Policy  Gini: {df_policy['gini'].iloc[-1]:.3f}&quot;)"><pre><span class="pl-k">from</span> <span class="pl-s1">policysim</span> <span class="pl-k">import</span> <span class="pl-v">Simulation</span>, <span class="pl-v">TaxPolicy</span>, <span class="pl-v">UBiPolicy</span>
+<span class="pl-k">from</span> <span class="pl-s1">policysim</span>.<span class="pl-s1">counterfactual</span> <span class="pl-k">import</span> <span class="pl-s1">did_estimate</span>
+
+<span class="pl-c"># Run a baseline simulation with 2000 agents over 50 periods</span>
+<span class="pl-s1">sim</span> <span class="pl-c1">=</span> <span class="pl-en">Simulation</span>(<span class="pl-s1">n_agents</span><span class="pl-c1">=</span><span class="pl-c1">2000</span>, <span class="pl-s1">n_periods</span><span class="pl-c1">=</span><span class="pl-c1">50</span>, <span class="pl-s1">seed</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+<span class="pl-s1">df_base</span> <span class="pl-c1">=</span> <span class="pl-s1">sim</span>.<span class="pl-c1">run</span>(<span class="pl-s1">policies</span><span class="pl-c1">=</span><span class="pl-c1">None</span>)
+<span class="pl-s1">sim</span>.<span class="pl-c1">plot_trajectories</span>()
+
+<span class="pl-c"># Apply tax reform at period 25</span>
+<span class="pl-s1">tax_reform</span> <span class="pl-c1">=</span> <span class="pl-en">TaxPolicy</span>(<span class="pl-s1">rate</span><span class="pl-c1">=</span><span class="pl-c1">0.35</span>, <span class="pl-s1">brackets</span><span class="pl-c1">=</span>[(<span class="pl-c1">0</span>, <span class="pl-c1">0.10</span>), (<span class="pl-c1">50000</span>, <span class="pl-c1">0.25</span>), (<span class="pl-c1">150000</span>, <span class="pl-c1">0.40</span>)])
+<span class="pl-s1">df_policy</span> <span class="pl-c1">=</span> <span class="pl-s1">sim</span>.<span class="pl-c1">run</span>(<span class="pl-s1">policies</span><span class="pl-c1">=</span>[(<span class="pl-c1">25</span>, <span class="pl-s1">tax_reform</span>)])
+
+<span class="pl-c"># Compare outcomes</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"Baseline Gini: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">df_base</span>[<span class="pl-s">'gini'</span>].<span class="pl-c1">iloc</span>[<span class="pl-c1">-</span><span class="pl-c1">1</span>]:.3f<span class="pl-kos">}</span></span>"</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f"Policy  Gini: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">df_policy</span>[<span class="pl-s">'gini'</span>].<span class="pl-c1">iloc</span>[<span class="pl-c1">-</span><span class="pl-c1">1</span>]:.3f<span class="pl-kos">}</span></span>"</span>)</pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Module Overview</h2><a id="user-content-module-overview" class="anchor" aria-label="Permalink: Module Overview" href="#module-overview"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policysim.agents</code></td>
+<td><code>EconomicAgent</code> class with work, consume, save, and policy-response behavior</td>
+</tr>
+<tr>
+<td><code>policysim.market</code></td>
+<td>Labor market and goods market clearing with equilibrium wage/price discovery</td>
+</tr>
+<tr>
+<td><code>policysim.policy</code></td>
+<td>Policy intervention classes: tax, subsidy, UBI, minimum wage, interest rate</td>
+</tr>
+<tr>
+<td><code>policysim.abm</code></td>
+<td><code>Simulation</code> engine — multi-period ABM with metrics tracking and visualization</td>
+</tr>
+<tr>
+<td><code>policysim.counterfactual</code></td>
+<td>DiD estimator, Synthetic Control, placebo tests, event study analysis</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Examples</h2><a id="user-content-examples" class="anchor" aria-label="Permalink: Examples" href="#examples"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Run the full demonstration:</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="python examples/demo.py"><pre>python examples/demo.py</pre></div>
+<p dir="auto">This runs a complete policy analysis pipeline:</p>
+<ol dir="auto">
+<li>ABM simulation with 2000 agents for 50 periods</li>
+<li>Tax reform at period 25</li>
+<li>Comparison of Gini, GDP, and unemployment trajectories</li>
+<li>DiD counterfactual estimation</li>
+<li>Policy effectiveness summary</li>
+</ol>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Requirements</h2><a id="user-content-requirements" class="anchor" aria-label="Permalink: Requirements" href="#requirements"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li>Python &gt;= 3.8</li>
+<li>numpy &gt;= 1.22.0</li>
+<li>scipy &gt;= 1.8.0</li>
+<li>matplotlib &gt;= 3.5.0</li>
+<li>pandas &gt;= 1.4.0</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Contributing</h2><a id="user-content-contributing" class="anchor" aria-label="Permalink: Contributing" href="#contributing"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Contributions are welcome! Please see <a href="https://github.com/wzx11223344/policysim/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for guidelines.</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">License</h2><a id="user-content-license" class="anchor" aria-label="Permalink: License" href="#license"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">MIT License — see <a href="https://github.com/wzx11223344/policysim/blob/main/LICENSE">LICENSE</a> for details.</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Citation</h2><a id="user-content-citation" class="anchor" aria-label="Permalink: Citation" href="#citation"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-text-bibtex notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="@software{policysim2024,
+  title = {PolicySim: Policy Simulation &amp; Counterfactual Analysis Engine},
+  year = {2024},
+  url = {https://github.com/policysim/policysim}
+}"><pre><span class="pl-k">@software</span>{<span class="pl-en">policysim2024</span>,
+  <span class="pl-s">title</span> = <span class="pl-s"><span class="pl-pds">{</span>PolicySim: Policy Simulation &amp; Counterfactual Analysis Engine<span class="pl-pds">}</span></span>,
+  <span class="pl-s">year</span> = <span class="pl-s"><span class="pl-pds">{</span>2024<span class="pl-pds">}</span></span>,
+  <span class="pl-s">url</span> = <span class="pl-s"><span class="pl-pds">{</span>https://github.com/policysim/policysim<span class="pl-pds">}</span></span>
+}</pre></div>
+</div>
+  </div>
+</main>
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>
