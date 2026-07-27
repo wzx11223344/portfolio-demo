@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wzx11223344.github.io/portfolio-demo/sitemap.xml
