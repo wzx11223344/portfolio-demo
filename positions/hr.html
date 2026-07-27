@@ -3,35 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HR 人事作品集 · 数据化人才运营</title>
+<title>万值翔 · 人事 / HR 方向 | 数据治理 · 培训运营 · 公文写作</title>
+<meta name="description" content="万值翔 · 人事 / HR 方向真实作品集：中国联通人力资源实习（统筹 7 个班级 21 个部门 3,500+ 条积点数据治理、设计被沿用的积点台账模板）、政府公文与台账管理实践、跨部门协作与数据分析，配套 GitHub 数据工具（macrohub / citycompare / express-consumption）。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23ec4899'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23ec4899'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23ec4899'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
-/* hr accent: magenta/violet */
-.card-title{color:#ec4899}
-.card-badge{color:#ec4899;border-color:rgba(236,72,153,.3);background:rgba(236,72,153,.1)}
+.card-title{color:#be185d}
+.card-badge{color:#be185d;border-color:rgba(236,72,153,.3);background:rgba(236,72,153,.1)}
 .hero-name .accent{background:linear-gradient(135deg,#ec4899,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
 .section-title .hl{background:linear-gradient(135deg,#ec4899,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat-row .hl{color:#ec4899}
-#radar-canvas,#skill-canvas{width:auto;max-width:100%;margin:0 auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{padding:10px 8px;color:#ec4899;text-align:left;border-bottom:1px solid rgba(236,72,153,.2);font-weight:600;font-size:12px;font-family:var(--font-mono)}
-td{padding:8px;border-bottom:1px solid var(--border)}
-.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-family:var(--font-mono)}
-.badge-high{background:rgba(52,211,153,.12);color:#34d399}
-.badge-mid{background:rgba(236,72,153,.12);color:#ec4899}
-.badge-low{background:rgba(244,68,68,.12);color:#f87171}
-.skill-item{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:16px;transition:.3s}
-.skill-item:hover{border-color:rgba(236,72,153,.3);transform:translateY(-2px)}
-.skill-item .name{font-size:13px;font-weight:600;margin-bottom:6px;color:#ec4899;font-family:var(--font-mono)}
-.skill-item .desc{font-size:11px;color:var(--text-dim)}
-.skill-bar{height:4px;background:var(--surface-hi);border-radius:2px;margin-top:10px;overflow:hidden}
-.skill-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#ec4899,#a78bfa);width:0;transition:1.2s ease}
-.skill-item.show .skill-bar-fill{width:var(--pct)}
+.stat-row .hl{color:#be185d}
 </style>
 </head>
 <body>
-<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · HR</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -39,17 +24,17 @@ td{padding:8px;border-bottom:1px solid var(--border)}
 <div id="scroll-progress"></div>
 
 <nav>
-  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <span class="nav-logo"><span class="dot"></span>万值翔</span>
   <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
-    <a href="../index.html">◀ 主站</a>
+    <a href="index.html">◀ 全部作品集</a>
     <a href="#hero" class="active">概览</a>
-    <a href="#talent">人才看板</a>
-    <a href="#funnel">招聘漏斗</a>
-    <a href="#radar">能力雷达</a>
-    <a href="#match">人岗匹配</a>
-    <a href="#channel">渠道 A/B</a>
-    <a href="#skills">专业能力</a>
+    <a href="#about">定位</a>
+    <a href="#exp">真实经历</a>
+    <a href="#hr">人事能力</a>
+    <a href="#projects">数据工具</a>
+    <a href="#certs">证书荣誉</a>
+    <a href="#contact">联系</a>
   </div>
 </nav>
 <div class="nav-overlay"></div>
@@ -57,252 +42,167 @@ td{padding:8px;border-bottom:1px solid var(--border)}
 <main id="app">
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-eyebrow"><span class="pulse"></span>HR · 数据化人才运营专家</div>
-  <h1 class="hero-name">数据化<span class="accent">人才运营</span></h1>
-  <div class="hero-sub" data-typed='["招聘漏斗 · 人岗匹配 · 培训体系 · 组织效能","简历解析 · TF-IDF · 渠道 ROI · 留存分析","数据驱动 · 流程自动化 · 人才发展"]'></div>
-  <div class="hero-tags"><span>招聘分析</span><span>人岗匹配</span><span>培训体系</span><span>组织效能</span></div>
+  <div class="hero-eyebrow"><span class="pulse"></span>人事 / HR 方向 · 数据治理 · 培训运营 · 公文写作</div>
+  <h1 class="hero-name">人事<span class="accent">数据运营</span></h1>
+  <div class="hero-sub" data-typed='["经济学本科 · 共青团员 · 联通 HR 实习","数据治理 · 培训统筹 · 台账管理","细致严谨 · 适合 HR / 行政岗位"]'></div>
+  <div class="hero-tags"><span>数据治理</span><span>培训运营</span><span>公文写作</span><span>跨部门协作</span><span>薪酬核算</span></div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#exp">▶ 看真实经历</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历</a>
+    <a class="btn" href="https://github.com/wzx11223344" target="_blank">🐙 GitHub</a>
+  </div>
   <div class="kpi-grid">
-    <div class="kpi-card reveal"><div class="kpi-num" data-count="98.6" data-dec="1">0</div><div class="kpi-label">简历解析准确率 %</div></div>
-    <div class="kpi-card reveal d1"><div class="kpi-num">150+</div><div class="kpi-label">技能评估维度</div></div>
-    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="5">0</div><div class="kpi-label">综合评估模型 维</div></div>
-    <div class="kpi-card reveal d3"><div class="kpi-num" id="live-match">0%</div><div class="kpi-label">实时匹配度</div></div>
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="3500" data-suffix="+">0</div><div class="kpi-label">统筹治理数据（条）</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="21">0</div><div class="kpi-label">覆盖部门（个）</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="7">0</div><div class="kpi-label">覆盖班级（个）</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="100" data-suffix="%">0</div><div class="kpi-label">台账模板沿用率</div></div>
   </div>
 </section>
 
-<!-- ═══ 人才看板 ═══ -->
-<section id="talent" class="reveal">
-  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">人才看板</span> 运营指标监控</h2></div>
-  <div class="section-sub">// 招聘转化 · 培训完成率 · 人均效能 · 流失预警 · 实时刷新</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">人才运营核心指标</span><span class="card-badge">Live</span></div>
-    <div class="stats-grid" style="margin-top:0">
-      <div class="stat-item"><div class="stat-val" id="kpi-offer">0%</div><div class="stat-label">Offer 接受率</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-onboard">0</div><div class="stat-label">平均到岗周期 (天)</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-train">0%</div><div class="stat-label">培训完成率</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-attr">0%</div><div class="stat-label">主动流失率</div></div>
-    </div>
-    <div style="margin-top:18px">
-      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">人才事件流</div>
-      <div id="event-stream"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 招聘漏斗 ═══ -->
-<section id="funnel" class="reveal">
-  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">招聘漏斗</span> 全链路转化</h2></div>
-  <div class="section-sub">// 简历 → 筛选 → 初试 → 复试 → Offer · 定位流程瓶颈</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">招聘转化漏斗</span><span class="card-badge">Funnel</span></div>
-    <div class="funnel" id="funnel-mount"></div>
-    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 模拟新批次</button><button class="btn" id="funnel-reset">↻ 重置</button></div>
-    <div class="stat-row" style="margin-top:14px;border:none"><span>简历到 Offer 转化</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
-  </div>
-</section>
-
-<!-- ═══ 能力雷达 ═══ -->
-<section id="radar" class="reveal">
-  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">能力雷达</span> 五维评估</h2></div>
-  <div class="section-sub">// 数据管理 · 招聘分析 · 培训系统 · 文档处理 · 沟通协调</div>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-header"><span class="card-title">能力维度评分</span><span class="card-badge">Radar</span></div>
-      <canvas id="radar-canvas" width="400" height="400"></canvas>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">核心能力解读</span><span class="card-badge">Read</span></div>
-      <div id="radar-labels" style="display:flex;flex-direction:column;gap:12px;padding:8px 0"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 人岗匹配 ═══ -->
-<section id="match" class="reveal">
-  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">人岗匹配</span> TF-IDF 向量化</h2></div>
-  <div class="section-sub">// 简历关键词权重 · 余弦相似度 · 候选人综合排序</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">技能分布 · TF-IDF 权重可视化</span><span class="card-badge">NLP</span></div>
-    <div class="btn-group" style="margin-bottom:18px"><button class="btn btn-primary" id="parse-btn">解析简历</button><button class="btn" id="match-btn">计算匹配度</button><button class="btn" id="reset-btn">重置</button></div>
-    <canvas id="skill-canvas" width="700" height="320"></canvas>
-    <div class="card-grid" style="margin-top:16px;gap:16px">
-      <div>
-        <div class="stat-row">TF-IDF 词表大小<span id="tfidf-size">0</span></div>
-        <div class="stat-row">简历关键词命中<span id="kw-count">0</span></div>
-        <div class="stat-row">余弦相似度<span id="cos-sim">0.0000</span></div>
-      </div>
-      <div>
-        <div class="stat-row">JD 要求技能数<span id="jd-skills">0</span></div>
-        <div class="stat-row">简历覆盖技能数<span id="cv-skills">0</span></div>
-        <div class="stat-row">综合匹配度<span id="final-match">0%</span></div>
+<!-- ═══ 定位 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>定位<span class="hl">与优势</span></h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，共青团员，云南红河人。曾在中国联通（上海）公司担任人力资源实习生，统筹新型学徒制培训项目数据治理，设计被部门沿用的积点台账模板。</p>
+      <p>在<b>中国联通</b>统筹企业新型学徒制培训项目数据管理，覆盖 <b>7 个班级、21 个部门 3,500+ 条</b>积点数据，发现各部门考核评分标准不一致的系统性问题，协助制定统一评分规范，并设计积点台账模板被部门沿用。在寒暑假<b>政府实践</b>中承担公文收发登记与台账管理，均获实习鉴定优秀。持初级会计、银行、基金从业资格，具备扎实的数据处理与核算基础。</p>
+      <div class="tag-list">
+        <span>数据治理</span><span>台账管理</span><span>培训运营</span><span>公文写作</span><span>跨部门协作</span><span>薪酬核算</span>
       </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">候选人综合排序</span><span class="card-badge">Rank</span></div>
-    <table><thead><tr><th>候选人</th><th>综合匹配</th><th>技能分</th><th>经验分</th></tr></thead><tbody id="rank-body"></tbody></table>
+    <div class="about-photo"><div class="ph-initial">HR</div><div class="ph-cap">HR · DATA · GOV</div></div>
   </div>
 </section>
 
-<!-- ═══ 渠道 A/B ═══ -->
-<section id="channel" class="reveal">
-  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">渠道 A/B</span> 招聘渠道 ROI</h2></div>
-  <div class="section-sub">// 渠道简历质量 · 转化成本 · 显著性检验 · 预算分配优化</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">内推 vs 社招 · 渠道 A/B</span><span class="card-badge">Experiment</span></div>
-    <div id="ab-mount"></div>
+<!-- ═══ 真实经历 ═══ -->
+<section id="exp" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>真实<span class="hl">经历</span></h2></div>
+  <div class="section-lead">// HR / 行政相关实践，覆盖数据治理、培训统筹、公文台账与跨部门协作。</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">人力资源实习生（含客户经理轮岗）</span><span class="exp-org">中国联通（上海）公司</span></div>
+      <div class="exp-date">2026.01 – 2026.02</div>
+      <ul class="exp-list">
+        <li>数据治理：统筹企业新型学徒制培训项目数据管理，覆盖 <b>7 个班级、21 个部门 3,500+ 条</b>积点数据，发现各部门考核评分标准不一致的系统性问题，协助制定统一评分规范</li>
+        <li>模板产出：设计积点台账模板，沉淀校验口径（班级 / 部门 / 积点范围），<b>被部门沿用为标准化工具</b></li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">行政助理 · 实习教师（寒暑假实践）</span><span class="exp-org">农业农村局 / 红河州高中 / 屏边县团县委</span></div>
+      <div class="exp-date">2024 – 2025（寒暑假）</div>
+      <ul class="exp-list">
+        <li>公文与台账：参与政府公文收发登记、台账管理与西部计划宣讲会筹备，承担高三教学辅助，<b>均获实习鉴定优秀评价</b></li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">产业调研与项目评估</span><span class="exp-org">上海市经济和信息化委员会</span></div>
+      <div class="exp-date">2026.03 – 2026.07</div>
+      <ul class="exp-list">
+        <li>跨部门协作：参与 20+ 场智能制造项目评审，优化审核清单后通过率提升至 95%；实地走访 15+ 家企业，撰写 3 篇产业调研报告</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">证券分析师助理</span><span class="exp-org">国盛证券股份有限公司</span></div>
+      <div class="exp-date">2025.08 – 2025.12</div>
+      <ul class="exp-list">
+        <li>数据敏感度：搭建门店数据动态监测系统，追踪百胜中国、九毛九华东门店运营效率，识别库存周转慢、人效分化等共性问题</li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<!-- ═══ 专业能力 ═══ -->
-<section id="skills" class="reveal">
-  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">专业能力</span> 数据化人才运营工具箱</h2></div>
-  <div class="section-sub">// 真实人事业绩 · 方法论沉淀 · 可复用分析资产</div>
+<!-- ═══ 人事能力 ═══ -->
+<section id="hr" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2>人事<span class="hl">能力</span></h2></div>
+  <div class="section-lead">// HR / 行政岗位看重的核心素养，均有真实场景支撑。</div>
   <div class="feature-grid">
-    <div class="feature-card"><div class="ic">🗂️</div><h3>积点台账治理</h3><p>真实 jidian_check.py 校验班级∈[1,7]、部门∈[1,21]、积点∈[0,200]，21 部门口径统一率 100%。</p><span class="meta">Governance</span></div>
-    <div class="feature-card"><div class="ic">📐</div><h3>台账模板设计</h3><p>联通实习期间设计积点台账模板被部门沿用（真实产出，非泛写"全流程管理"）。</p><span class="meta">Deliverable</span></div>
-    <div class="feature-card"><div class="ic">🔻</div><h3>招聘漏斗分析</h3><p>简历→筛选→初试→复试→Offer 全链路转化，定位流程瓶颈与优化点。</p><span class="meta">Funnel</span></div>
-    <div class="feature-card"><div class="ic">🎯</div><h3>人岗匹配</h3><p>TF-IDF 向量化 + 余弦相似度，候选人综合排序与技能覆盖度量化。</p><span class="meta">Matching</span></div>
-    <div class="feature-card"><div class="ic">🎓</div><h3>培训体系</h3><p>基于 SM-2 间隔重复与 IRT 自适应模型，设计个性化智能培训路径。</p><span class="meta">Training</span></div>
-    <div class="feature-card"><div class="ic">📝</div><h3>文档自动化</h3><p>公文写作、制度起草、政策研究与智能排班，把流程性工作系统化。</p><span class="meta">DocOps</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🗂️</div><h3>数据治理与台账</h3><p>统筹 3,500+ 条跨部门数据，建立台账、交叉校验、统一口径与评分规范。</p><span class="meta">Governance</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🎓</div><h3>培训运营</h3><p>统筹新型学徒制培训项目，设计积点台账模板并推动部门标准化落地。</p><span class="meta">Training</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📝</div><h3>公文写作</h3><p>熟悉政府公文收发登记、台账管理与纪要撰写，实习鉴定优秀。</p><span class="meta">Writing</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🤝</div><h3>跨部门协作</h3><p>对接 21 个部门需求，协调数据口径与评分规范，沉淀沟通推进方法。</p><span class="meta">Coord</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🧮</div><h3>薪酬核算基础</h3><p>持初级会计职称，具备扎实的核算与凭证基础，支撑薪酬绩效处理。</p><span class="meta">Payroll</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📊</div><h3>数据分析</h3><p>pandas / SQL / Excel 处理人事与积点数据，把重复核算变成可复用脚本。</p><span class="meta">Analysis</span></div>
+  </div>
+</section>
+
+<!-- ═══ 数据工具 ═══ -->
+<section id="projects" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>数据<span class="hl">工具</span></h2></div>
+  <div class="section-lead">// 把数据处理能力沉淀为开源工具（点击查看源码）。</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">macrohub</span><span class="proj-tag">宏观数据</span></div>
+      <div class="proj-desc">宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrohub" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">citycompare</span><span class="proj-tag">城市分析</span></div>
+      <div class="proj-desc">城市对标分析：50 城 8 维指标聚类与可视化，用于区域与人力分布比较研究。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/citycompare" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">express-consumption</span><span class="proj-tag">问卷计量</span></div>
+      <div class="proj-desc">正大杯 1,352 份问卷计量建模可复现代码，沉淀数据清洗与回归分析流程。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/express-consumption" target="_blank">↗ 源码</a><span>· 计量</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">新媒体运营（B站）</span><span class="proj-tag">内容传播</span></div>
+      <div class="proj-desc">独立运营「黎明之剑11」：650.7 万播放、42.6 万赞，沉淀内容策划与传播方法论。</div>
+      <div class="proj-meta"><a href="https://space.bilibili.com/502800415" target="_blank">↗ B站主页</a><span>· 真实数据</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 证书 ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">基金从业资格证</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">初级会计职称</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏆</div><div><div class="ct">正大杯市场调查大赛</div><div class="cs">优秀奖 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">💹</div><div><div class="ct">上证杯 ETF 研究</div><div class="cs">优秀 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">全国数学建模二等奖</div><div class="cs">省级 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🔤</div><div><div class="ct">CET-6</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📘</div><div><div class="ct">初级经济师</div><div class="cs">备考中 · 7月报名</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:13388736755@163.com">13388736755@163.com</a></div>
+      <div class="contact-row"><span class="ci">📱</span><span class="cl">电话</span><span class="v">13388736755</span></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
     <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
-    <a href="../index.html">← 返回全部作品集</a>
+    <a href="index.html">← 返回全部作品集</a>
   </div>
-  <div class="cert-grid" style="max-width:780px;margin:18px auto">
-    <div class="cert-card"><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格</div><div class="cs">已通过</div></div></div>
-    <div class="cert-card"><div class="cert-ic">📈</div><div><div class="ct">初级会计</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🧮</div><div><div class="ct">数学建模省二</div><div class="cs">已获</div></div></div>
-  </div>
-  <div>万值翔 · 数据化人才运营专家</div>
-  <div class="award">🤝 <strong>HR 智能管理</strong> · 招聘漏斗 · 人岗匹配</div>
+  <div>万值翔 · 人事 / HR 方向 · 数据治理 · 培训运营</div>
+  <div class="award">🗂️ <strong>人事 HR</strong> · 数据治理 · 台账管理</div>
 </footer>
 </main>
 
-<script src="../assets/app.js"></script>
-<script>
-// ═══ 人才看板 ═══
-PD.Dashboard({
-  'kpi-offer':  {base:82.4, jitter:3, dec:1, suffix:'%'},
-  'kpi-onboard':{base:9.6,  jitter:1.5, dec:1},
-  'kpi-train':  {base:88.2, jitter:2, dec:1, suffix:'%'},
-  'kpi-attr':   {base:4.3,  jitter:0.7, dec:1, suffix:'%'}
-});
-PD.EventStream('event-stream',{verbs:['简历入库','简历筛选通过','初试完成','复试邀约','Offer 发放','候选人入职','培训完成','转正评估']});
-
-// ═══ 招聘漏斗 ═══
-(function(){
-  function gen(){
-    // 示意漏斗（固定数值，非真实招聘数据）：用于演示招聘转化分析方法
-    var s=[2400,1080,480,240,144];
-    return [{label:'简历',value:s[0]},{label:'筛选',value:s[1]},{label:'初试',value:s[2]},{label:'复试',value:s[3]},{label:'Offer',value:s[4]}];
-  }
-  function summarize(st){
-    document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(2)+'%';
-    var maxDrop=0, idx=1;
-    for(var i=1;i<st.length;i++){ var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;} }
-    document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
-  }
-  function run(){ var st=gen(); PD.funnel('funnel-mount', st); summarize(st); }
-  document.getElementById('funnel-btn').onclick=run;
-  document.getElementById('funnel-reset').onclick=function(){ PD.funnel('funnel-mount',[{label:'简历',value:1}]); document.getElementById('funnel-total').textContent='0%'; document.getElementById('funnel-drop').textContent='-'; };
-  run();
-})();
-
-// ═══ 能力雷达 ═══
-const rCanvas=document.getElementById('radar-canvas'),rCtx=rCanvas.getContext('2d');
-const R_W=400,R_H=400,rCX=R_W/2,rCY=R_H/2,rR=130;
-const rLabels=['数据管理','招聘分析','培训系统','文档处理','沟通协调'];
-const rValues=[92,88,85,90,78];
-const rDescs=[
-  '精通人事数据体系搭建、培训台账管理与多部门考核标准化，以数据驱动组织效能提升。',
-  '构建简历解析管道与漏斗分析模型，量化招聘渠道 ROI，实现精准人才画像匹配。',
-  '设计基于 SM-2 间隔重复与 IRT 自适应模型的智能培训系统，推动个性化学习路径。',
-  '擅长公文写作、制度起草与政策研究，实现文档流程自动化与智能排班管理。',
-  '具备跨部门协作与员工关系管理经验，擅长冲突调解与组织沟通效能优化。'
-];
-function drawRadar(vals){
-  rCtx.clearRect(0,0,R_W,R_H);
-  for(let r=1;r<=4;r++){ rCtx.strokeStyle='rgba(236,72,153,.1)';rCtx.lineWidth=.8;rCtx.beginPath();
-    for(let i=0;i<5;i++){ const a=Math.PI*2/5*i-Math.PI/2,rad=rR*r/4; const x=rCX+Math.cos(a)*rad,y=rCY+Math.sin(a)*rad; i===0?rCtx.moveTo(x,y):rCtx.lineTo(x,y); }
-    rCtx.closePath();rCtx.stroke(); }
-  for(let i=0;i<5;i++){ const a=Math.PI*2/5*i-Math.PI/2; rCtx.strokeStyle='rgba(236,72,153,.06)';rCtx.lineWidth=.5;rCtx.beginPath(); rCtx.moveTo(rCX,rCY);rCtx.lineTo(rCX+Math.cos(a)*rR,rCY+Math.sin(a)*rR);rCtx.stroke(); }
-  const pts=[]; for(let i=0;i<5;i++){ const a=Math.PI*2/5*i-Math.PI/2,rad=rR*vals[i]/100; pts.push({x:rCX+Math.cos(a)*rad,y:rCY+Math.sin(a)*rad}); }
-  const grad=rCtx.createRadialGradient(rCX,rCY,0,rCX,rCY,rR); grad.addColorStop(0,'rgba(236,72,153,.22)');grad.addColorStop(1,'rgba(167,139,250,.08)');
-  rCtx.fillStyle=grad;rCtx.beginPath(); pts.forEach((p,i)=>i===0?rCtx.moveTo(p.x,p.y):rCtx.lineTo(p.x,p.y)); rCtx.closePath();rCtx.fill();
-  rCtx.strokeStyle='rgba(236,72,153,.7)';rCtx.lineWidth=2;rCtx.beginPath(); pts.forEach((p,i)=>i===0?rCtx.moveTo(p.x,p.y):rCtx.lineTo(p.x,p.y)); rCtx.closePath();rCtx.stroke();
-  pts.forEach((p,i)=>{ const grd=rCtx.createRadialGradient(p.x,p.y,0,p.x,p.y,6); grd.addColorStop(0,'rgba(236,72,153,.9)');grd.addColorStop(1,'rgba(167,139,250,.3)'); rCtx.fillStyle=grd;rCtx.beginPath();rCtx.arc(p.x,p.y,5,0,Math.PI*2);rCtx.fill();
-    const a=Math.PI*2/5*i-Math.PI/2; const lx=rCX+Math.cos(a)*(rR+30),ly=rCY+Math.sin(a)*(rR+30);
-    rCtx.fillStyle='rgba(231,237,247,.75)';rCtx.font='13px "Microsoft YaHei",sans-serif';rCtx.textAlign='center';rCtx.textBaseline='middle'; rCtx.fillText(rLabels[i],lx,ly-8);
-    rCtx.fillStyle='rgba(236,72,153,.85)';rCtx.font='bold 12px "Microsoft YaHei",sans-serif'; rCtx.fillText(vals[i]+'%',lx,ly+10); });
-}
-drawRadar(rValues);
-const rlEl=document.getElementById('radar-labels');
-rLabels.forEach((label,i)=>{ const d=document.createElement('div'); d.style.cssText='display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)';
-  d.innerHTML='<span style="min-width:38px;font-weight:700;font-size:13px;color:#ec4899;font-family:var(--font-mono)">'+rValues[i]+'%</span><div><div style="font-size:13px;font-weight:600;margin-bottom:2px">'+label+'</div><div style="font-size:11px;color:var(--text-dim)">'+rDescs[i]+'</div></div>'; rlEl.appendChild(d); });
-
-// ═══ 人岗匹配 ═══
-const sCanvas=document.getElementById('skill-canvas'),sCtx=sCanvas.getContext('2d');
-const sW=700,sH=320; let simScore=0;
-function genSkillData(){
-  const dict=['Python','SQL','Excel','Tableau','SPSS','Stata','R','PowerBI','数据分析','数据治理','招聘系统','培训系统','OKR','KPI','绩效','薪酬','劳动关系','HRIS','公文写作','政策研究'];
-  const jdSkills=['Python','SQL','Excel','数据分析','招聘系统','绩效','OKR','HRIS'];
-  // 确定性伪随机（种子固定，TF-IDF 权重可复现；仅用于演示人岗匹配方法，非真实简历数据）
-  var _sd=20240601; function r(){ _sd=(_sd*1664525+1013904223)>>>0; return _sd/4294967296; }
-  const data=dict.map((word,i)=>{ const weight=r()*Math.min(1,1-Math.abs(i-10)/15); return {word,weight,tfidf:weight*(1+r()*0.5),inJD:jdSkills.includes(word)}; });
-  return {data,jdSkills};
-}
-function drawSkillGraph(data){
-  sCtx.clearRect(0,0,sW,sH);
-  sCtx.strokeStyle='rgba(236,72,153,.05)';sCtx.lineWidth=.5; for(let y=0;y<4;y++){ const yy=sH-30-(y+1)*65; sCtx.beginPath();sCtx.moveTo(0,yy);sCtx.lineTo(sW,yy);sCtx.stroke(); }
-  const items=data.data.slice().sort((a,b)=>b.weight-a.weight).slice(0,20);
-  const barW=Math.min(28,(sW-60)/items.length);
-  items.forEach((d,i)=>{ const x=30+i*(barW+4),h=d.weight*260; const grad=sCtx.createLinearGradient(x,sH-30,x,sH-30-h);
-    if(d.inJD){grad.addColorStop(0,'rgba(236,72,153,.85)');grad.addColorStop(1,'rgba(236,72,153,.35)')} else{grad.addColorStop(0,'rgba(167,139,250,.65)');grad.addColorStop(1,'rgba(167,139,250,.2)')}
-    sCtx.fillStyle=grad; sCtx.beginPath(); sCtx.moveTo(x,sH-30);sCtx.lineTo(x,sH-30-h); sCtx.quadraticCurveTo(x+barW/2,sH-30-h-3,x+barW,sH-30-h); sCtx.lineTo(x+barW,sH-30);sCtx.quadraticCurveTo(x+barW/2,sH-30-3,x,sH-30); sCtx.closePath();sCtx.fill();
-    sCtx.fillStyle='rgba(231,237,247,.35)';sCtx.font='8px "Microsoft YaHei",sans-serif';sCtx.textAlign='center'; sCtx.fillText(d.word,x+barW/2,sH-12);
-    sCtx.fillStyle='rgba(231,237,247,.5)';sCtx.font='7px monospace'; sCtx.fillText(d.weight.toFixed(2),x+barW/2,sH-38-h); });
-  let matched=0; data.jdSkills.forEach(jd=>{if(data.data.some(d=>d.word===jd&&d.weight>0.3))matched++;});
-  simScore=matched/data.jdSkills.length;
-  document.getElementById('tfidf-size').textContent=data.data.length;
-  document.getElementById('kw-count').textContent=data.data.filter(d=>d.weight>0.1).length;
-  document.getElementById('cos-sim').textContent=simScore.toFixed(4);
-  document.getElementById('jd-skills').textContent=data.jdSkills.length;
-  document.getElementById('cv-skills').textContent=matched;
-  const matchPct=Math.floor(simScore*70+26);
-  document.getElementById('final-match').textContent=matchPct+'%';
-  document.getElementById('live-match').textContent=matchPct+'%';
-  drawRadar(rValues);
-}
-function genRanking(){
-  const candidates=[{name:'张明慧',skillBase:88,expBase:85},{name:'李思远',skillBase:82,expBase:78},{name:'王雅琳',skillBase:75,expBase:90},{name:'赵志强',skillBase:70,expBase:72},{name:'陈晓雯',skillBase:65,expBase:68}];
-  const tbody=document.getElementById('rank-body');tbody.innerHTML='';
-  candidates.forEach((c,i)=>{ const skill=c.skillBase; const exp=c.expBase; const total=Math.min(99,Math.floor(skill*0.55+exp*0.45)); const tr=document.createElement('tr'); const badge=total>85?'badge-high':total>72?'badge-mid':'badge-low';
-    tr.innerHTML='<td style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(167,139,250,.15));font-size:11px;color:#ec4899;font-weight:700">'+(i+1)+'</span>'+c.name+'</td><td><span class="badge '+badge+'">'+total+'%</span></td><td>'+skill+'</td><td>'+exp+'</td>'; tbody.appendChild(tr); });
-}
-genRanking();
-const genMatch=()=>{drawSkillGraph(genSkillData())};
-document.getElementById('parse-btn').onclick=genMatch;
-document.getElementById('match-btn').onclick=genMatch;
-document.getElementById('reset-btn').onclick=()=>{ ['tfidf-size','kw-count'].forEach(id=>document.getElementById(id).textContent='0'); document.getElementById('cos-sim').textContent='0.0000'; document.getElementById('final-match').textContent='0%'; document.getElementById('live-match').textContent='0%'; sCtx.clearRect(0,0,sW,sH); };
-genMatch();
-
-// ═══ 渠道 A/B ═══
-PD.AB({
-  mount:'ab-mount',
-  variants:[
-    {name:'社招渠道 · 简历质量', color:'#9aa6bd', trueRate:0.11},
-    {name:'内推渠道 · 简历质量', color:'#ec4899', trueRate:0.19}
-  ],
-  rounds:350
-});
-</script>
 <button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
 </body>
 </html>

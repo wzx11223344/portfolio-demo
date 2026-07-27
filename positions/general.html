@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>通用综合 · 全栈分析与算法引擎</title>
+<title>万值翔 · 通用综合方向 | 经济分析 · 数据分析 · 内容运营 · 政策调研</title>
+<meta name="description" content="万值翔 · 通用综合方向真实作品集：4 段实习（国盛证券 / 中国联通 / 上海市经信委 / 政府实践）、27+ GitHub 开源仓库、B站 650.7 万播放、正大杯 1,352 份问卷计量研究，覆盖经济分析、数据分析、内容运营、政策调研与公文写作。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23a78bfa'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23a78bfa'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23a78bfa'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
-/* general accent: violet / pink */
-.card-title{color:#a78bfa}
-.card-badge{color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.1)}
+.card-title{color:#7c3aed}
+.card-badge{color:#7c3aed;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.1)}
 .hero-name .accent{background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
 .section-title .hl{background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat-row .hl{color:#a78bfa}
-#nn-canvas,#conv-canvas,#kmeans-canvas{width:auto;max-width:100%;margin:0 auto}
-.stat-line{display:flex;justify-content:space-between;padding:3px 0;font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
-.stat-line span{color:var(--text)}
+.stat-row .hl{color:#7c3aed}
 </style>
 </head>
 <body>
-<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · ALL</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -27,18 +24,17 @@
 <div id="scroll-progress"></div>
 
 <nav>
-  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <span class="nav-logo"><span class="dot"></span>万值翔</span>
   <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
-    <a href="../index.html">◀ 主站</a>
+    <a href="index.html">◀ 全部作品集</a>
     <a href="#hero" class="active">概览</a>
-    <a href="#analytics">分析看板</a>
-    <a href="#nn">神经网络</a>
-    <a href="#conv">卷积</a>
-    <a href="#kmeans">聚类</a>
-    <a href="#funnel">增长漏斗</a>
-    <a href="#projects">项目</a>
+    <a href="#about">定位</a>
+    <a href="#exp">真实经历</a>
     <a href="#skills">综合能力</a>
+    <a href="#projects">作品开源</a>
+    <a href="#certs">证书荣誉</a>
+    <a href="#contact">联系</a>
   </div>
 </nav>
 <div class="nav-overlay"></div>
@@ -46,300 +42,177 @@
 <main id="app">
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-eyebrow"><span class="pulse"></span>GENERAL · 全栈分析引擎</div>
-  <h1 class="hero-name">全栈<span class="accent">分析引擎</span></h1>
-  <div class="hero-sub" data-typed='["量化金融 · 计量经济 · 因果推断 · NLP","从零实现 · 不套壳不调API · 每个算法手写","Python · SQL · 可视化 · AI Agent"]'></div>
-  <div class="hero-tags"><span>量化金融</span><span>计量经济</span><span>机器学习</span><span>MCP 生态</span></div>
+  <div class="hero-eyebrow"><span class="pulse"></span>通用综合方向 · 经济分析 · 数据分析 · 内容运营</div>
+  <h1 class="hero-name">通用<span class="accent">综合素养</span></h1>
+  <div class="hero-sub" data-typed='["经济学本科 · 4 段实习 · 27+ 开源仓库","经济分析 · 数据分析 · 政策调研","内容运营 · 公文写作 · 跨部门协作"]'></div>
+  <div class="hero-tags"><span>经济分析</span><span>数据分析</span><span>内容运营</span><span>政策调研</span><span>公文写作</span></div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#exp">▶ 看真实经历</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历</a>
+    <a class="btn" href="https://github.com/wzx11223344" target="_blank">🐙 GitHub</a>
+  </div>
   <div class="kpi-grid">
-    <div class="kpi-card reveal"><div class="kpi-num" data-count="101">0</div><div class="kpi-label">项目</div></div>
-    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="15">0</div><div class="kpi-label">MCP</div></div>
-    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="370">0</div><div class="kpi-label">工具 ~</div></div>
-    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="58">0</div><div class="kpi-label">技能</div></div>
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="4">0</div><div class="kpi-label">真实实习经历（段）</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="27" data-suffix="+">0</div><div class="kpi-label">GitHub 开源仓库</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="650.7" data-dec="1" data-suffix="万">0</div><div class="kpi-label">B站总播放（次）</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="1352">0</div><div class="kpi-label">正大杯调研样本（份）</div></div>
   </div>
 </section>
 
-<!-- ═══ 分析看板 ═══ -->
-<section id="analytics" class="reveal">
-  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">分析看板</span> 系统运行指标</h2></div>
-  <div class="section-sub">// 任务吞吐 · 模型准确率 · 数据管线 · 实时刷新</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">分析引擎核心指标</span><span class="card-badge">Live</span></div>
-    <div class="stats-grid" style="margin-top:0">
-      <div class="stat-item"><div class="stat-val" id="kpi-tps">0</div><div class="stat-label">任务吞吐 / 秒</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-acc">0%</div><div class="stat-label">模型准确率</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-pipe">0%</div><div class="stat-label">数据管线健康度</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-jobs">0</div><div class="stat-label">在跑任务</div></div>
-    </div>
-    <div style="margin-top:18px">
-      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">分析事件流</div>
-      <div id="event-stream"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 神经网络 ═══ -->
-<section id="nn" class="reveal">
-  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">神经网络</span> 实时训练 (XOR)</h2></div>
-  <div class="section-sub">// 手写反向传播 · 2→8→1 · Sigmoid+ReLU · 从零实现</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">神经网络 · XOR 实时训练</span><span class="card-badge">Backprop</span></div>
-    <div class="btn-group" style="margin-bottom:14px"><button class="btn btn-primary" id="nn-train">▶ 训练</button><button class="btn" id="nn-stop">⏸ 暂停</button><button class="btn" id="nn-reset">↻ 重置</button><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-left:auto">LR: 0.01</span></div>
-    <canvas id="nn-canvas" width="700" height="360"></canvas>
-    <div class="card-grid" style="margin-top:14px;gap:16px">
-      <div>
-        <div class="stat-line">损失 (MSE)<span id="nn-loss">0.0000</span></div>
-        <div class="stat-line">训练样本<span id="nn-samples">0</span></div>
-        <div class="stat-line">轮次 <span id="epoch-count">0</span> · 准确率 <span id="acc-count">0.0%</span></div>
-      </div>
-      <div>
-        <div class="stat-line">架构<span>2 → 8 → 1</span></div>
-        <div class="stat-line">激活<span>Sigmoid + ReLU</span></div>
-        <div class="stat-line">优化<span>SGD 批处理</span></div>
+<!-- ═══ 定位 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>定位<span class="hl">与优势</span></h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，共青团员，云南红河人。具备金融、国企、政府与内容运营的多线实践，是一名兼具定量分析与表达能力、可快速适配多岗位的综合型候选人。</p>
+      <p>累计 <b>4 段</b>实习：国盛证券（行业研究）、中国联通（数据治理）、上海市经信委（产业调研）、政府基层实践（公文台账）；维护 <b>27+</b> 个 GitHub 开源仓库，覆盖计量经济、量化金融、政策模拟与数据工具；独立运营 B站「黎明之剑11」累计 <b>650.7 万</b>播放。正大杯市场调查大赛以 1,352 份问卷完成计量实证研究。持初级会计、银行、基金从业资格，擅长把复杂问题讲清楚、把数据变成结论。</p>
+      <div class="tag-list">
+        <span>经济分析</span><span>数据分析</span><span>内容运营</span><span>政策调研</span><span>公文写作</span><span>跨部门协作</span>
       </div>
     </div>
+    <div class="about-photo"><div class="ph-initial">ALL</div><div class="ph-cap">ECON · DATA · CONTENT · POLICY</div></div>
   </div>
 </section>
 
-<!-- ═══ 卷积 + K-Means ═══ -->
-<section id="conv" class="reveal">
-  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">卷积 &amp; 聚类</span> 经典算法</h2></div>
-  <div class="section-sub">// 卷积核可视化 · K-Means 无监督聚类</div>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-header"><span class="card-title">卷积核演示</span><span class="card-badge">Conv</span></div>
-      <canvas id="conv-canvas" width="340" height="340"></canvas>
-      <div class="btn-group" style="margin-top:12px"><button class="btn" id="conv-sharpen">锐化</button><button class="btn" id="conv-edge">边缘</button><button class="btn" id="conv-blur">模糊</button><button class="btn" id="conv-emboss">浮雕</button></div>
+<!-- ═══ 真实经历 ═══ -->
+<section id="exp" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>真实<span class="hl">经历</span></h2></div>
+  <div class="section-lead">// 四段实习与基层实践，覆盖金融、国企、政府与内容运营。</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">证券分析师助理</span><span class="exp-org">国盛证券股份有限公司</span></div>
+      <div class="exp-date">2025.08 – 2025.12</div>
+      <ul class="exp-list">
+        <li>门店监测：搭建门店数据动态监测系统，追踪百胜中国、九毛九华东门店运营效率，识别库存周转慢、人效分化等共性问题，部分建议被采纳</li>
+        <li>行业研究：独立完成 3 份消费服务行业深度报告，核心观点被纳入组内投资参考</li>
+      </ul>
     </div>
-    <div class="card" id="kmeans">
-      <div class="card-header"><span class="card-title">K-Means 聚类</span><span class="card-badge">Cluster</span></div>
-      <canvas id="kmeans-canvas" width="340" height="340"></canvas>
-      <div class="btn-group" style="margin-top:12px"><button class="btn btn-primary" id="km-step">▶ 单步</button><button class="btn" id="km-run">▶ 自动</button><button class="btn" id="km-reset">↻ 重置</button></div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">人力资源实习生（含客户经理轮岗）</span><span class="exp-org">中国联通（上海）公司</span></div>
+      <div class="exp-date">2026.01 – 2026.02</div>
+      <ul class="exp-list">
+        <li>数据治理：统筹企业新型学徒制培训项目数据管理，覆盖 7 个班级、21 个部门 3,500+ 条积点数据，协助制定统一评分规范，设计台账模板被部门沿用</li>
+      </ul>
     </div>
-  </div>
-</section>
-
-<!-- ═══ 增长漏斗 ═══ -->
-<section id="funnel" class="reveal">
-  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">增长漏斗</span> 分析转化</h2></div>
-  <div class="section-sub">// 数据获取 → 清洗 → 建模 → 洞察 → 决策 · 分析价值链</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">分析价值链漏斗</span><span class="card-badge">Funnel</span></div>
-    <div class="funnel" id="funnel-mount"></div>
-    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 模拟新流程</button></div>
-    <div class="stat-row" style="margin-top:14px;border:none"><span>分析转化率</span><span class="hl" id="funnel-total">0%</span></div>
-  </div>
-</section>
-
-<!-- ═══ 项目 ═══ -->
-<section id="projects" class="reveal">
-  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">项目作品</span> 开源实证</h2></div>
-  <div class="section-sub">// GitHub 开源 · 可复现实证代码</div>
-  <div class="feature-grid">
-    <a class="feature-card" href="https://github.com/wzx11223344/pyconometrics" target="_blank"><div class="ic">📐</div><h3>pyconometrics</h3><p>计量经济工具库：面板固定效应、IV、稳健标准误与双重机器学习估计。</p><span class="meta">Python · 面板</span></a>
-    <a class="feature-card" href="https://github.com/wzx11223344/quantlab" target="_blank"><div class="ic">📊</div><h3>quantlab</h3><p>量化回测框架：因子挖掘、信号合成、CVaR 风险度量与绩效归因。</p><span class="meta">Python · 回测</span></a>
-    <a class="feature-card" href="https://github.com/wzx11223344/causal-inference-ml" target="_blank"><div class="ic">🧪</div><h3>causal-inference-ml</h3><p>因果推断 + ML：DID、RD、匹配与 uplift 建模的可复现代码。</p><span class="meta">DID · RD</span></a>
-    <a class="feature-card" href="https://github.com/wzx11223344/china-econ-pulse" target="_blank"><div class="ic">🌏</div><h3>china-econ-pulse</h3><p>中国经济数据可视化：城市/省份面板动态仪表盘，融合权威数据源。</p><span class="meta">可视化 · 面板</span></a>
-    <a class="feature-card" href="https://github.com/wzx11223344/policysim" target="_blank"><div class="ic">🏛️</div><h3>policysim</h3><p>政策模拟仿真：DSGE 与 CGE 的可视化政策冲击推演。</p><span class="meta">DSGE · 仿真</span></a>
-    <a class="feature-card" href="https://github.com/wzx11223344/express-consumption" target="_blank"><div class="ic">📋</div><h3>express-consumption</h3><p>正大杯 1,352 份问卷计量建模可复现代码，规范全流程。</p><span class="meta">问卷 · 计量</span></a>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">产业调研与项目评估</span><span class="exp-org">上海市经济和信息化委员会</span></div>
+      <div class="exp-date">2026.03 – 2026.07</div>
+      <ul class="exp-list">
+        <li>项目评审：参与 20+ 场智能制造项目评审，优化审核清单后通过率提升至 95%；实地走访 15+ 家企业，撰写 3 篇产业调研报告</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">行政助理 · 实习教师（寒暑假实践）</span><span class="exp-org">农业农村局 / 红河州高中 / 屏边县团县委</span></div>
+      <div class="exp-date">2024 – 2025（寒暑假）</div>
+      <ul class="exp-list">
+        <li>综合实践：公文收发登记与台账管理，高三教学辅助，均获实习鉴定优秀评价</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- ═══ 综合能力 ═══ -->
 <section id="skills" class="reveal">
-  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">综合能力</span> 全栈分析引擎</h2></div>
-  <div class="section-sub">// 真实开源项目 · 跨岗方法论沉淀 · 可复现实证代码</div>
+  <div class="section-title"><span class="section-index">03</span><h2>综合<span class="hl">能力</span></h2></div>
+  <div class="section-lead">// 跨岗位通用的核心素养，均有真实场景支撑。</div>
   <div class="feature-grid">
-    <div class="feature-card"><div class="ic">📐</div><h3>计量经济</h3><p>真实 pyconometrics（面板固定效应/IV/稳健标准误）+ express-consumption 正大杯 1,352 问卷 OLS 回归。</p><span class="meta">Econometrics</span></div>
-    <div class="feature-card"><div class="ic">📊</div><h3>量化金融</h3><p>真实 quantlab：因子挖掘、信号合成、CVaR 风险度量与绩效归因回测框架。</p><span class="meta">Quant</span></div>
-    <div class="feature-card"><div class="ic">🧪</div><h3>因果推断</h3><p>真实 causal-inference-ml：DID、RD、匹配与 uplift 建模的可复现代码。</p><span class="meta">Causal</span></div>
-    <div class="feature-card"><div class="ic">🧹</div><h3>数据处理</h3><p>pandas / SQL / Stata 清洗治理，statsmodels 建模，把重复分析变成可复用脚本。</p><span class="meta">Data</span></div>
-    <div class="feature-card"><div class="ic">🌏</div><h3>可视化</h3><p>Tableau + 真实 china-econ-pulse 中国经济城市/省份面板动态仪表盘。</p><span class="meta">Viz</span></div>
-    <div class="feature-card"><div class="ic">🏛️</div><h3>政策仿真</h3><p>真实 policysim：DSGE 与 CGE 可视化政策冲击推演，辅助决策论证。</p><span class="meta">Simulation</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📐</div><h3>经济分析</h3><p>经济学本科功底，独立撰写行业与产业调研报告，能从数据提炼结构性结论。</p><span class="meta">Economics</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📊</div><h3>数据分析</h3><p>pandas / SQL / Stata 清洗治理，statsmodels 建模，正大杯 1,352 份问卷计量实证。</p><span class="meta">Data</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📺</div><h3>内容运营</h3><p>独立运营 B站「黎明之剑11」650.7 万播放、42.6 万赞，沉淀内容策划方法论。</p><span class="meta">Content</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🏛️</div><h3>政策调研</h3><p>参与产业政策研究与项目评审，识别资质、证明链与数据一致性问题。</p><span class="meta">Policy</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📝</div><h3>公文写作</h3><p>熟悉政府公文收发登记、台账管理与纪要撰写，实习鉴定优秀。</p><span class="meta">Writing</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🤝</div><h3>跨部门协作</h3><p>对接多部门需求，协调数据口径与流程，沉淀沟通与推进方法。</p><span class="meta">Coord</span></div>
+  </div>
+</section>
+
+<!-- ═══ 作品开源 ═══ -->
+<section id="projects" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>作品<span class="hl">开源</span></h2></div>
+  <div class="section-lead">// 把分析方法沉淀为开源工具（点击查看源码）。</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">pyconometrics</span><span class="proj-tag">计量经济</span></div>
+      <div class="proj-desc">计量经济工具库：面板固定效应、IV、稳健标准误与双重机器学习估计。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">quantlab</span><span class="proj-tag">量化回测</span></div>
+      <div class="proj-desc">量化回测框架：因子挖掘、信号合成、CVaR 风险度量与绩效归因。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">policysim</span><span class="proj-tag">政策模拟</span></div>
+      <div class="proj-desc">政策模拟框架：ABM / DID / SC 多方法对比，支持产业政策与冲击情景推演。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/policysim" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">express-consumption</span><span class="proj-tag">问卷计量</span></div>
+      <div class="proj-desc">正大杯 1,352 份问卷计量建模可复现代码，规范清洗到回归全流程。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/express-consumption" target="_blank">↗ 源码</a><span>· 计量</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">macrohub</span><span class="proj-tag">宏观数据</span></div>
+      <div class="proj-desc">宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrohub" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">新媒体运营（B站）</span><span class="proj-tag">内容传播</span></div>
+      <div class="proj-desc">独立运营「黎明之剑11」：650.7 万播放、42.6 万赞，沉淀内容策划方法论。</div>
+      <div class="proj-meta"><a href="https://space.bilibili.com/502800415" target="_blank">↗ B站主页</a><span>· 真实数据</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 证书 ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">基金从业资格证</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">初级会计职称</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏆</div><div><div class="ct">正大杯市场调查大赛</div><div class="cs">优秀奖 · 1352 样本</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">💹</div><div><div class="ct">上证杯 ETF 研究</div><div class="cs">优秀 · 36% 净值</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">全国数学建模二等奖</div><div class="cs">省级 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🔤</div><div><div class="ct">CET-6</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📘</div><div><div class="ct">初级经济师</div><div class="cs">备考中 · 7月报名</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:13388736755@163.com">13388736755@163.com</a></div>
+      <div class="contact-row"><span class="ci">📱</span><span class="cl">电话</span><span class="v">13388736755</span></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
     <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
-    <a href="../index.html">← 返回全部作品集</a>
+    <a href="index.html">← 返回全部作品集</a>
   </div>
-  <div class="cert-grid" style="max-width:780px;margin:18px auto">
-    <div class="cert-card"><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格</div><div class="cs">已通过</div></div></div>
-    <div class="cert-card"><div class="cert-ic">📈</div><div><div class="ct">初级会计</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🧮</div><div><div class="ct">数学建模省二</div><div class="cs">已获</div></div></div>
-  </div>
-  <div>万值翔 · 全栈分析引擎 · 从零实现一切</div>
-  <div class="award">🌐 <strong>通用综合</strong> · 量化 · 计量 · ML</div>
+  <div>万值翔 · 通用综合方向 · 经济分析 · 数据分析 · 内容运营</div>
+  <div class="award">🌐 <strong>通用综合</strong> · 多线实践 · 综合素养</div>
 </footer>
 </main>
 
-<script src="../assets/app.js"></script>
-<script>
-// ═══ 分析看板 ═══
-PD.Dashboard({
-  'kpi-tps': {base:184, jitter:22, dec:0},
-  'kpi-acc': {base:94.6,jitter:0.8, dec:1, suffix:'%'},
-  'kpi-pipe':{base:99.2,jitter:0.4, dec:1, suffix:'%'},
-  'kpi-jobs':{base:12,  jitter:3, dec:0}
-});
-PD.EventStream('event-stream',{verbs:['任务调度','模型训练','数据清洗','特征工程','回测完成','报告生成','管线校验','结果推送']});
-
-// 确定性伪随机（种子固定，所有算法演示数据可复现；仅用于方法演示，非真实业务数据）
-var _gSeed=20240701;
-function _rnd(){ _gSeed=(_gSeed*1664525+1013904223)>>>0; return _gSeed/4294967296; }
-
-// ═══ 神经网络 ═══
-const nnCanvas=document.getElementById('nn-canvas'),nnCtx=nnCanvas.getContext('2d');
-const W=nnCanvas.width,H=nnCanvas.height;
-let nnRunning=false,nnEpoch=0,nnLoss=0;
-const nn={wih:null,who:null,bh:null,bo:null,lr:.01};
-function sigmoid(x){return 1/(1+Math.exp(-Math.max(-500,Math.min(500,x))))}
-function dsigmoid(y){return y*(1-y)}
-function initNN(){
-  nn.wih=Array.from({length:2},()=>Array.from({length:8},()=>_rnd()*2-1));
-  nn.who=Array.from({length:8},()=>Array.from({length:1},()=>_rnd()*2-1));
-  nn.bh=Array(8).fill(0);nn.bo=[0];nnEpoch=0;nnLoss=0;
-  document.getElementById('epoch-count').textContent='0';
-}
-function trainNN(){
-  if(!nnRunning)return;
-  for(let s=0;s<10;s++){
-    const x=_rnd(),y=_rnd();
-    const target=((x>.5&&y>.5)||(x<.5&&y<.5))?1:0;
-    const h1=nn.wih[0].map((w,i)=>w*x+nn.wih[1][i]*y+nn.bh[i]);
-    const h=h1.map(sigmoid);
-    const o=h.reduce((s,v,i)=>s+v*nn.who[i][0],0)+nn.bo[0];
-    const out=sigmoid(o);
-    const err=target-out,dOut=err*dsigmoid(out);
-    const dHidden=h.map((v,i)=>dOut*nn.who[i][0]*dsigmoid(v));
-    for(let i=0;i<2;i++)for(let j=0;j<8;j++)nn.wih[i][j]+=nn.lr*([x,y][i])*dHidden[j];
-    for(let j=0;j<8;j++)nn.who[j][0]+=nn.lr*h[j]*dOut;
-    for(let j=0;j<8;j++)nn.bh[j]+=nn.lr*dHidden[j];nn.bo[0]+=nn.lr*dOut;
-    nnLoss=nnLoss*.99+Math.abs(err)*.01;
-  }
-  nnEpoch++;
-  document.getElementById('epoch-count').textContent=nnEpoch;
-  document.getElementById('nn-loss').textContent=nnLoss.toFixed(4);
-  let correct=0;
-  for(let t=0;t<100;t++){
-    const tx=_rnd(),ty=_rnd();
-    const tgt=((tx>.5&&ty>.5)||(tx<.5&&ty<.5))?1:0;
-    const h1=nn.wih[0].map((w,i)=>w*tx+nn.wih[1][i]*ty+nn.bh[i]);
-    const h=h1.map(sigmoid);
-    const o=h.reduce((s,v,i)=>s+v*nn.who[i][0],0)+nn.bo[0];
-    if((sigmoid(o)>.5?1:0)===tgt)correct++;
-  }
-  document.getElementById('acc-count').textContent=(correct/100*100).toFixed(1)+'%';
-  document.getElementById('nn-samples').textContent=nnEpoch*10;
-  drawNN();setTimeout(trainNN,16);
-}
-function drawNN(){
-  nnCtx.fillStyle='#05080f';nnCtx.fillRect(0,0,W,H);
-  const colW=W/4;
-  for(let i=0;i<2;i++){
-    const x=colW,y=H/2-30+i*60;
-    for(let j=0;j<8;j++){nnCtx.strokeStyle='rgba(34,211,238,'+(Math.abs(nn.wih[j%2][j])*.25)+')';nnCtx.lineWidth=.6+Math.abs(nn.wih[j%2][j])*.5;
-      nnCtx.beginPath();nnCtx.moveTo(x,y);nnCtx.lineTo(colW*2,30+j*40);nnCtx.stroke()}
-    nnCtx.beginPath();nnCtx.arc(x,y,10,0,Math.PI*2);nnCtx.fillStyle='#22d3ee';nnCtx.fill();
-    nnCtx.fillStyle='#fff';nnCtx.font='9px monospace';nnCtx.textAlign='center';nnCtx.fillText(['x','y'][i],x,y+3);
-  }
-  for(let i=0;i<8;i++){
-    const x=colW*2,y=30+i*40;
-    const wa=nn.wih[0][i],wb=nn.wih[1][i],hue=Math.floor((Math.atan2(wb,wa)/Math.PI*180+180)%360);
-    nnCtx.strokeStyle='rgba(244,114,182,'+(Math.abs(nn.who[i][0])*.2)+')';nnCtx.lineWidth=.5+Math.abs(nn.who[i][0])*.4;
-    nnCtx.beginPath();nnCtx.moveTo(x,y);nnCtx.lineTo(colW*3,H/2);nnCtx.stroke();
-    nnCtx.beginPath();nnCtx.arc(x,y,9,0,Math.PI*2);nnCtx.fillStyle='hsl('+hue+',80%,55%)';nnCtx.fill();
-  }
-  const x=colW*3,y=H/2;
-  const outVal=nn.bo[0];
-  nnCtx.beginPath();nnCtx.arc(x,y,12,0,Math.PI*2);
-  nnCtx.fillStyle=outVal>0?'#22d3ee':'#f472b6';nnCtx.fill();
-  nnCtx.fillStyle='#fff';nnCtx.font='10px monospace';nnCtx.textAlign='center';nnCtx.fillText(outVal>0?'1':'0',x,y+3);
-  nnCtx.fillStyle='#5d687e';nnCtx.font='9px monospace';nnCtx.textAlign='center';
-  nnCtx.fillText('输入',colW,H-6);nnCtx.fillText('隐藏(8)',colW*2,H-6);nnCtx.fillText('输出',colW*3,H-6);
-}
-initNN();drawNN();
-document.getElementById('nn-train').onclick=()=>{if(!nnRunning){nnRunning=true;trainNN()}};
-document.getElementById('nn-stop').onclick=()=>{nnRunning=false};
-document.getElementById('nn-reset').onclick=()=>{nnRunning=false;initNN();drawNN()};
-
-// ═══ 卷积 ═══
-const convCanvas=document.getElementById('conv-canvas'),convCtx=convCanvas.getContext('2d');
-const gs=5;
-let convImg=Array.from({length:68},()=>Array(68).fill(0));
-function genCircle(){
-  convImg=Array.from({length:68},()=>Array(68).fill(0));
-  for(let y=0;y<68;y++)for(let x=0;x<68;x++){
-    if(Math.sqrt((x-34)*(x-34)+(y-34)*(y-34))<20)convImg[y][x]=1;
-    else if(Math.abs(x-34)<10&&Math.abs(y-34)<30)convImg[y][x]=.5;
-  }
-}
-function applyConv(kernel){
-  const ks=kernel.length,off=Math.floor(ks/2);
-  const res=Array.from({length:68},()=>Array(68).fill(0));
-  for(let y=off;y<68-off;y++)for(let x=off;x<68-off;x++){
-    let sum=0;
-    for(let ky=0;ky<ks;ky++)for(let kx=0;kx<ks;kx++)sum+=convImg[y+ky-off][x+kx-off]*kernel[ky][kx];
-    res[y][x]=Math.max(0,Math.min(1,sum*.2+.5));
-  }
-  convImg=res;drawConv();
-}
-function drawConv(){
-  for(let y=0;y<68;y++)for(let x=0;x<68;x++){
-    const v=Math.floor(convImg[y][x]*255);
-    convCtx.fillStyle='rgb('+v+','+v+','+v+')';convCtx.fillRect(x*gs,y*gs,gs,gs);
-  }
-}
-genCircle();drawConv();
-document.getElementById('conv-edge').onclick=()=>{genCircle();applyConv([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])};
-document.getElementById('conv-sharpen').onclick=()=>{genCircle();applyConv([[0,-1,0],[-1,5,-1],[0,-1,0]])};
-document.getElementById('conv-blur').onclick=()=>{genCircle();applyConv([[1,1,1],[1,1,1],[1,1,1]].map(r=>r.map(v=>v/9)))};
-document.getElementById('conv-emboss').onclick=()=>{genCircle();applyConv([[-2,-1,0],[-1,1,1],[0,1,2]])};
-
-// ═══ K-Means ═══
-const kmCanvas=document.getElementById('kmeans-canvas'),kmCtx=kmCanvas.getContext('2d');
-let kmPoints=[],kmCenters=[],kmRunning=false;
-function genKM(){
-  kmPoints=[];const clusters=[[60,80],[170,170],[280,260]];
-  clusters.forEach(c=>{for(let i=0;i<20;i++)kmPoints.push({x:c[0]+(_rnd()-.5)*50,y:c[1]+(_rnd()-.5)*50})});
-  kmCenters=Array.from({length:3},()=>({x:_rnd()*340,y:_rnd()*340}));drawKM();
-}
-function drawKM(){
-  kmCtx.fillStyle='#05080f';kmCtx.fillRect(0,0,340,340);
-  kmPoints.forEach(p=>{
-    let md=Infinity,lb=0;kmCenters.forEach((c,i)=>{const d=Math.hypot(p.x-c.x,p.y-c.y);if(d<md){md=d;lb=i}});
-    kmCtx.fillStyle='hsl('+(lb*120)+',80%,55%)';kmCtx.beginPath();kmCtx.arc(p.x,p.y,3,0,Math.PI*2);kmCtx.fill();
-  });
-  kmCenters.forEach((c,i)=>{
-    kmCtx.strokeStyle='#fff';kmCtx.lineWidth=2;kmCtx.beginPath();kmCtx.arc(c.x,c.y,7,0,Math.PI*2);kmCtx.stroke();
-    kmCtx.fillStyle='hsl('+(i*120)+',100%,65%)';kmCtx.beginPath();kmCtx.arc(c.x,c.y,5,0,Math.PI*2);kmCtx.fill();
-  });
-}
-function stepKM(){
-  const sums=kmCenters.map(()=>({x:0,y:0,count:0}));
-  kmPoints.forEach(p=>{let md=Infinity,lb=0;kmCenters.forEach((c,i)=>{const d=Math.hypot(p.x-c.x,p.y-c.y);if(d<md){md=d;lb=i}});sums[lb].x+=p.x;sums[lb].y+=p.y;sums[lb].count++});
-  kmCenters.forEach((c,i)=>{if(sums[i].count>0){c.x=sums[i].x/sums[i].count;c.y=sums[i].y/sums[i].count}});
-  drawKM();
-}
-genKM();
-document.getElementById('km-step').onclick=stepKM;
-document.getElementById('km-run').onclick=()=>{if(!kmRunning){kmRunning=true;(function loop(){stepKM();setTimeout(loop,300)})()}};
-document.getElementById('km-reset').onclick=()=>{kmRunning=false;genKM()};
-
-// ═══ 增长漏斗 ═══
-(function(){
-  function gen(){
-    // 示意漏斗（固定数值，非真实分析数据）：用于演示分析价值链转化方法
-    var s=[8000,6400,4800,3360,2400];
-    return [{label:'获取',value:s[0]},{label:'清洗',value:s[1]},{label:'建模',value:s[2]},{label:'洞察',value:s[3]},{label:'决策',value:s[4]}];
-  }
-  function run(){var st=gen(); PD.funnel('funnel-mount',st); document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(1)+'%';}
-  document.getElementById('funnel-btn').onclick=run; run();
-})();
-</script>
 <button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
 </body>
 </html>

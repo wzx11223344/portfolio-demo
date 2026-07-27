@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>银行金融 · 量化与风险运营</title>
+<title>万值翔 · 银行 / 金融方向 | 风险核查 · 量化定价 · 行业研究</title>
+<meta name="description" content="万值翔 · 银行 / 金融方向真实作品集：国盛证券风险监测与行业研究、经信委项目风险核查、上证杯 ETF 研究（净值 +36%）、GitHub 量化金融开源（quantlab / dsgepy / mcp-financial-data），以及从零实现的 BSM 定价与蒙特卡洛技术演示。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
-/* bank accent: gold */
-.card-title{color:#f59e0b}
-.card-badge{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.1)}
+.card-title{color:#b45309}
+.card-badge{color:#b45309;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.1)}
 .hero-name .accent{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
 .section-title .hl{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat-row .hl{color:#f59e0b}
-#mc-canvas,#smile-canvas{width:auto;max-width:100%;margin:0 auto}
+.stat-row .hl{color:#b45309}
+#mc-canvas,#smile-canvas{width:auto;max-width:100%;margin:0 auto;background:#f8fafc;border-radius:10px;border:1px solid var(--border)}
 </style>
 </head>
 <body>
-<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · BANK</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -25,17 +25,17 @@
 <div id="scroll-progress"></div>
 
 <nav>
-  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <span class="nav-logo"><span class="dot"></span>万值翔</span>
   <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
-    <a href="../index.html">◀ 主站</a>
+    <a href="index.html">◀ 全部作品集</a>
     <a href="#hero" class="active">概览</a>
-    <a href="#risk">风险看板</a>
-    <a href="#pricing">期权定价</a>
-    <a href="#mc">蒙特卡洛</a>
-    <a href="#smile">波动率微笑</a>
-    <a href="#funnel">客户漏斗</a>
-    <a href="#skills">专业能力</a>
+    <a href="#about">定位</a>
+    <a href="#exp">真实经历</a>
+    <a href="#tech">量化技术演示</a>
+    <a href="#finance">金融能力</a>
+    <a href="#certs">证书荣誉</a>
+    <a href="#contact">联系</a>
   </div>
 </nav>
 <div class="nav-overlay"></div>
@@ -43,45 +43,77 @@
 <main id="app">
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-eyebrow"><span class="pulse"></span>BANK · 量化分析与风险运营</div>
-  <h1 class="hero-name">量化<span class="accent">风险运营</span></h1>
-  <div class="hero-sub" data-typed='["BSM 定价 · 希腊值 · 蒙特卡洛 · 波动率微笑","风险管理 · 金融数据 · 客户分层运营","基金从业资格 · 银行从业资格"]'></div>
-  <div class="hero-tags"><span>量化分析</span><span>风险管理</span><span>衍生品</span><span>客户运营</span></div>
+  <div class="hero-eyebrow"><span class="pulse"></span>银行 / 金融方向 · 风险核查 · 量化定价 · 行业研究</div>
+  <h1 class="hero-name">银行<span class="accent">金融方向</span></h1>
+  <div class="hero-sub" data-typed='["经济学本科 · 银行 / 基金双证 · 风险意识","国盛证券行业研究 · 经信委项目风险核查","从实证分析到风险决策的闭环"]'></div>
+  <div class="hero-tags"><span>风险核查</span><span>行业研究</span><span>量化定价</span><span>合规意识</span><span>客户运营</span></div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#exp">▶ 看真实经历</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历</a>
+    <a class="btn" href="https://github.com/wzx11223344" target="_blank">🐙 GitHub</a>
+  </div>
   <div class="kpi-grid">
-    <div class="kpi-card reveal"><div class="kpi-num" id="kpi-bs-call">0</div><div class="kpi-label">看涨期权价格 (实时)</div></div>
-    <div class="kpi-card reveal d1"><div class="kpi-num" id="kpi-delta">0</div><div class="kpi-label">Delta (实时)</div></div>
-    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="36" data-suffix="%">0</div><div class="kpi-label">ETF 大赛净值增长</div></div>
-    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">券商研究报告 (份)</div></div>
-    <div class="kpi-card reveal d4"><div class="kpi-num" data-count="2">0</div><div class="kpi-label">金融从业资格</div></div>
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="2">0</div><div class="kpi-label">金融从业资格（银行+基金）</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">券商行业深度报告（份）</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="20" data-suffix="+">0</div><div class="kpi-label">经信委项目评审（通过率95%）</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="36" data-suffix="%">0</div><div class="kpi-label">上证杯模拟净值增长</div></div>
   </div>
 </section>
 
-<!-- ═══ 风险看板 ═══ -->
-<section id="risk" class="reveal">
-  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">风险看板</span> 核心监控</h2></div>
-  <div class="section-sub">// VaR · 波动率 · 最大回撤 · 夏普比率 · 实时刷新</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">组合风险指标</span><span class="card-badge">Live</span></div>
-    <div class="stats-grid" style="margin-top:0">
-      <div class="stat-item"><div class="stat-val" id="risk-var">0%</div><div class="stat-label">VaR (95%, 1日)</div></div>
-      <div class="stat-item"><div class="stat-val" id="risk-vol">0%</div><div class="stat-label">年化波动率</div></div>
-      <div class="stat-item"><div class="stat-val" id="risk-mdd">0%</div><div class="stat-label">最大回撤</div></div>
-      <div class="stat-item"><div class="stat-val" id="risk-sharpe">0</div><div class="stat-label">夏普比率</div></div>
+<!-- ═══ 关于/定位 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>定位<span class="hl">与优势</span></h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，持银行从业与基金从业资格双证，目标进入银行客户经理 / 运营支持 / 风控助理等岗位。</p>
+      <p>在<b>国盛证券</b>实习期间独立完成 3 份消费服务行业深度报告并搭建门店经营数据监测系统，识别库存周转、人效分化等风险点；在<b>上海市经信委</b>参与 20+ 场项目评审，核查企业申报材料的资质完整性与数据一致性，优化审核清单后通过率提升至 95%。熟悉金融监管与合规要求，具备风险敏感度与数据分析能力。</p>
+      <div class="tag-list">
+        <span>风险核查</span><span>行业研究</span><span>财务分析</span><span>合规意识</span><span>BSM 定价</span><span>公文写作</span>
+      </div>
     </div>
-    <div style="margin-top:18px">
-      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">风控事件流</div>
-      <div id="event-stream"></div>
+    <div class="about-photo"><div class="ph-initial">银</div><div class="ph-cap">BANK · RISK · QUANT</div></div>
+  </div>
+</section>
+
+<!-- ═══ 真实经历 ═══ -->
+<section id="exp" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>真实<span class="hl">经历</span></h2></div>
+  <div class="section-lead">// 与银行 / 金融岗位直接相关的三段实践，均带可量化产出。</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">证券分析师助理</span><span class="exp-org">国盛证券股份有限公司</span></div>
+      <div class="exp-date">2025.08 – 2025.12</div>
+      <ul class="exp-list">
+        <li>分析上市公司财务报表与经营数据，梳理三张表勾稽关系，识别信用风险与经营异常，独立完成 <b>3 份</b>行业深度报告，观点纳入投资参考</li>
+        <li>搭建门店经营数据动态监测系统，追踪百胜中国、九毛九华东区域门店运营效率，识别库存周转、人效分化等<b>风险点</b>，提出优化建议，部分被采纳</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">产业调研与项目评估</span><span class="exp-org">上海市经济和信息化委员会</span></div>
+      <div class="exp-date">2026.03 – 2026.07</div>
+      <ul class="exp-list">
+        <li>参与 <b>20+ 场</b>项目评审，核查企业申报材料的资质完整性与数据一致性，识别证明链缺失、数据不一致等风险，优化审核清单后<b>通过率提升至 95%</b></li>
+        <li>实地走访 <b>15+ 家</b>企业开展尽职调查式调研，撰写 3 篇报告，识别经营与财务数据风险点，提交产业处参考</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">人力资源实习生（含客户经理轮岗）</span><span class="exp-org">中国联通（上海）公司</span></div>
+      <div class="exp-date">2026.01 – 2026.02</div>
+      <ul class="exp-list">
+        <li>参与客户经理轮岗，统筹新型学徒制培训项目数据管理，覆盖 21 个部门 3,500+ 条数据，对接多部门需求并协调数据口径统一</li>
+        <li>发现各部门考核评分标准不一致的系统性问题，协助制定统一评分规范，强化<b>数据合规与核算准确性</b>意识</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ═══ 期权定价 ═══ -->
-<section id="pricing" class="reveal">
-  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">期权定价</span> BSM 与希腊值</h2></div>
-  <div class="section-sub">// Black-Scholes-Merton · 7 项希腊值实时计算</div>
+<!-- ═══ 量化技术演示（真实编码） ═══ -->
+<section id="tech" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2>量化<span class="hl">技术演示</span></h2></div>
+  <div class="section-lead">// 以下为从零实现的金融工程代码（纯前端，无依赖），用于展示定价与风险量化的编码能力，非真实交易数据。</div>
   <div class="card-grid">
     <div class="card">
-      <div class="card-header"><span class="card-title">BSM 参数</span><span class="card-badge">Input</span></div>
+      <div class="card-header"><span class="card-title">BSM 期权定价与希腊值</span><span class="card-badge">Input</span></div>
       <div class="slider-group"><label>标的价格 S <span class="val" id="v-s">100</span></label><input type="range" id="bs-s" min="50" max="150" value="100" step="1"></div>
       <div class="slider-group"><label>行权价 K <span class="val" id="v-k">100</span></label><input type="range" id="bs-k" min="50" max="150" value="100" step="1"></div>
       <div class="slider-group"><label>到期时间 T (年) <span class="val" id="v-t">0.50</span></label><input type="range" id="bs-t" min="0.05" max="2" value="0.5" step="0.05"></div>
@@ -101,86 +133,99 @@
       </table>
     </div>
   </div>
-</section>
-
-<!-- ═══ 蒙特卡洛 ═══ -->
-<section id="mc" class="reveal">
-  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">蒙特卡洛</span> 价格路径模拟</h2></div>
-  <div class="section-sub">// GBM 几何布朗运动 · 百条路径 · 收敛到理论价格（演示，非真实交易数据）</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">GBM 路径模拟</span><span class="card-badge">Monte Carlo</span></div>
+  <div class="card" style="margin-top:18px">
+    <div class="card-header"><span class="card-title">蒙特卡洛 GBM 路径模拟</span><span class="card-badge">Monte Carlo</span></div>
     <canvas id="mc-canvas" width="760" height="340"></canvas>
     <div class="btn-group" style="margin-top:14px"><button class="btn btn-primary" id="mc-btn">▶ 模拟 200 条路径</button></div>
     <div class="stat-row" style="margin-top:14px;border:none"><span>MC 估计价</span><span class="hl" id="mc-est">-</span><span>BSM 理论价</span><span class="hl" id="mc-bs">-</span><span>误差</span><span class="hl" id="mc-err">-</span></div>
   </div>
-</section>
-
-<!-- ═══ 波动率微笑 ═══ -->
-<section id="smile" class="reveal">
-  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">波动率微笑</span> 隐含波动率曲线</h2></div>
-  <div class="section-sub">// 反解隐含波动率 · 微笑/偏斜形态 · 风险中性预期</div>
-  <div class="card">
+  <div class="card" style="margin-top:18px">
     <div class="card-header"><span class="card-title">隐含波动率微笑</span><span class="card-badge">IV</span></div>
     <canvas id="smile-canvas" width="760" height="300"></canvas>
   </div>
 </section>
 
-<!-- ═══ 客户漏斗 ═══ -->
-<section id="funnel" class="reveal">
-  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">客户漏斗</span> 理财转化</h2></div>
-  <div class="section-sub">// 触达 → 咨询 → 风险测评 → 开户 → 首投 · 客户运营转化（示意数据，非真实客户）</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">理财产品客户漏斗</span><span class="card-badge">Funnel</span></div>
-    <div class="funnel" id="funnel-mount"></div>
-    <div class="btn-group" style="margin-top:16px"><button class="btn btn-primary" id="funnel-btn">▶ 演示漏斗</button></div>
-    <div class="stat-row" style="margin-top:14px;border:none"><span>触达到首投转化</span><span class="hl" id="funnel-total">0%</span><span>最大流失环节</span><span class="hl" id="funnel-drop">-</span></div>
+<!-- ═══ 金融能力 ═══ -->
+<section id="finance" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>金融<span class="hl">能力</span></h2></div>
+  <div class="section-lead">// 真实竞赛、研究与开源，构成金融方向的复合能力。</div>
+  <div class="research-grid">
+    <div class="research-card" data-tilt>
+      <h3>上证杯第六届全国高校 ETF 大赛 · 优秀</h3>
+      <div class="rc-sub">个人赛 · 知识 + 模拟投资双环节</div>
+      <div class="research-big">
+        <div class="rb"><div class="rbv" data-count="92.5" data-dec="1" data-suffix="%">0</div><div class="rbl">知识竞赛正确率</div></div>
+        <div class="rb"><div class="rbv" data-count="36" data-suffix="%">0</div><div class="rbl">模拟净值增长</div></div>
+      </div>
+      <div class="rbar"><span class="rblabel">80 题仅错 6 题</span><div class="rbtrack"><div class="rbfill" style="width:92%">92.5%</div></div></div>
+      <p class="creation-note">独立完成行情研判与资产配置决策，将金融知识转化为实操组合管理结果。</p>
+    </div>
+    <div class="research-card" data-tilt>
+      <h3>GitHub 量化金融开源</h3>
+      <div class="rc-sub">真实仓库 · 可点击查看源码</div>
+      <ul class="exp-list">
+        <li><b>quantlab</b> — 量化工具箱：BS 定价 / Greeks / 回测</li>
+        <li><b>dsgepy</b> — DSGE 宏观建模（RBC / NK / B-K）</li>
+        <li><b>mcp-financial-data</b> — 金融数据 MCP 服务器</li>
+      </ul>
+      <p class="creation-note">把金融工程方法沉淀为可复用工具链，体现工程化与持续迭代能力。</p>
+    </div>
   </div>
 </section>
 
-<!-- ═══ 专业能力 ═══ -->
-<section id="skills" class="reveal">
-  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">专业能力</span> 量化与风险运营</h2></div>
-  <div class="section-sub">// 量化分析 · 风险管理 · 衍生品定价 · 客户运营 · 金融建模</div>
-  <div class="feature-grid">
-    <div class="feature-card"><div class="ic">📈</div><h3>量化分析</h3><p>BSM 定价、希腊值计算、蒙特卡洛模拟与收敛验证，支撑衍生品估值。</p><span class="meta">Quant</span></div>
-    <div class="feature-card"><div class="ic">🛡️</div><h3>风险管理</h3><p>VaR、波动率、最大回撤、夏普比率监控，构建组合风险看板。</p><span class="meta">Risk</span></div>
-    <div class="feature-card"><div class="ic">💹</div><h3>衍生品定价</h3><p>期权微笑反解隐含波动率，理解风险中性定价与市场偏斜。</p><span class="meta">Derivatives</span></div>
-    <div class="feature-card"><div class="ic">🤝</div><h3>客户运营</h3><p>理财客户触达→咨询→测评→开户→首投漏斗，优化转化路径。</p><span class="meta">Ops</span></div>
-    <div class="feature-card"><div class="ic">🧮</div><h3>金融建模</h3><p>ETF 大赛组合管理实现 36% 净值增长，券商 3 份研究报告被采纳。</p><span class="meta">Track</span></div>
-    <div class="feature-card"><div class="ic">📊</div><h3>Python / SQL</h3><p>用 Python 实现定价与回测，SQL 抽取业务数据支撑分析。</p><span class="meta">Tools</span></div>
+<!-- ═══ 证书 ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">基金从业资格证</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">初级会计职称</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">💹</div><div><div class="ct">上证杯 ETF 研究</div><div class="cs">优秀 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏆</div><div><div class="ct">正大杯市场调查大赛</div><div class="cs">优秀奖 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">全国数学建模二等奖</div><div class="cs">省级 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🔤</div><div><div class="ct">CET-6</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📘</div><div><div class="ct">初级经济师</div><div class="cs">备考中 · 7月报名</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:13388736755@163.com">13388736755@163.com</a></div>
+      <div class="contact-row"><span class="ci">📱</span><span class="cl">电话</span><span class="v">13388736755</span></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
     <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
-    <a href="../index.html">← 返回全部作品集</a>
+    <a href="index.html">← 返回全部作品集</a>
   </div>
-  <div class="cert-grid" style="max-width:780px;margin:18px auto">
-    <div class="cert-card"><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格</div><div class="cs">已通过</div></div></div>
-    <div class="cert-card"><div class="cert-ic">📈</div><div><div class="ct">初级会计</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🧮</div><div><div class="ct">数学建模省二</div><div class="cs">已获</div></div></div>
-  </div>
-  <div>万值翔 · 基金从业 · 银行从业 双证</div>
-  <div class="award">🏦 <strong>银行金融</strong> · 量化定价 · 风险运营</div>
+  <div>万值翔 · 银行 / 基金双证 · 风险核查 · 量化定价</div>
+  <div class="award">🏦 <strong>银行金融</strong> · 风险运营 · 行业研究</div>
 </footer>
 </main>
 
+<button id="scroll-top" aria-label="回到顶部">↑</button>
 <script src="../assets/app.js"></script>
 <script>
-// ═══ 风险看板 ═══
-PD.Dashboard({
-  'risk-var':   {base:1.9,  jitter:0.2, dec:2, suffix:'%'},
-  'risk-vol':   {base:18.4, jitter:1.2, dec:1, suffix:'%'},
-  'risk-mdd':   {base:6.8,  jitter:0.5, dec:1, suffix:'%'},
-  'risk-sharpe':{base:1.32, jitter:0.08,dec:2}
-});
-PD.EventStream('event-stream',{verbs:['保证金监控','压力测试','限额预警','敞口对冲','风险报告','合规检查','流动性监控','模型回测']});
-
-// ═══ BSM 与希腊值 ═══
+// ═══ BSM 与希腊值（从零实现） ═══
 function normCdf(x){ var t=1/(1+0.2316419*Math.abs(x)); var d=0.3989423*Math.exp(-x*x/2); var p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return x>0?1-p:p; }
 function normPdf(x){ return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI); }
 function calc(S,K,T,sig,r){
@@ -188,126 +233,68 @@ function calc(S,K,T,sig,r){
   var d2=d1-sig*Math.sqrt(T);
   var call=S*normCdf(d1)-K*Math.exp(-r*T)*normCdf(d2);
   var put=K*Math.exp(-r*T)*normCdf(-d2)-S*normCdf(-d1);
-  return {
-    call:call, put:put,
-    delta:normCdf(d1),
-    gamma:normPdf(d1)/(S*sig*Math.sqrt(T)),
+  return { call:call, put:put, delta:normCdf(d1), gamma:normPdf(d1)/(S*sig*Math.sqrt(T)),
     theta:(-S*normPdf(d1)*sig/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*normCdf(d2))/365,
-    vega:S*normPdf(d1)*Math.sqrt(T)*0.01,
-    rho:K*T*Math.exp(-r*T)*normCdf(d2)*0.01
-  };
+    vega:S*normPdf(d1)*Math.sqrt(T)*0.01, rho:K*T*Math.exp(-r*T)*normCdf(d2)*0.01 };
 }
 function params(){
-  return {
-    S:parseFloat(document.getElementById('bs-s').value),
-    K:parseFloat(document.getElementById('bs-k').value),
-    T:parseFloat(document.getElementById('bs-t').value),
-    sig:parseFloat(document.getElementById('bs-sig').value),
-    r:parseFloat(document.getElementById('bs-r').value)
-  };
+  return { S:parseFloat(document.getElementById('bs-s').value), K:parseFloat(document.getElementById('bs-k').value),
+    T:parseFloat(document.getElementById('bs-t').value), sig:parseFloat(document.getElementById('bs-sig').value), r:parseFloat(document.getElementById('bs-r').value) };
 }
 function updateBS(){
   var p=params();
-  document.getElementById('v-s').textContent=p.S;
-  document.getElementById('v-k').textContent=p.K;
-  document.getElementById('v-t').textContent=p.T.toFixed(2);
-  document.getElementById('v-sig').textContent=p.sig.toFixed(2);
+  document.getElementById('v-s').textContent=p.S; document.getElementById('v-k').textContent=p.K;
+  document.getElementById('v-t').textContent=p.T.toFixed(2); document.getElementById('v-sig').textContent=p.sig.toFixed(2);
   document.getElementById('v-r').textContent=p.r.toFixed(3);
   var g=calc(p.S,p.K,p.T,p.sig,p.r);
-  document.getElementById('g-call').textContent=g.call.toFixed(4);
-  document.getElementById('g-put').textContent=g.put.toFixed(4);
-  document.getElementById('g-delta').textContent=g.delta.toFixed(4);
-  document.getElementById('g-gamma').textContent=g.gamma.toFixed(5);
-  document.getElementById('g-theta').textContent=g.theta.toFixed(5);
-  document.getElementById('g-vega').textContent=g.vega.toFixed(4);
+  document.getElementById('g-call').textContent=g.call.toFixed(4); document.getElementById('g-put').textContent=g.put.toFixed(4);
+  document.getElementById('g-delta').textContent=g.delta.toFixed(4); document.getElementById('g-gamma').textContent=g.gamma.toFixed(5);
+  document.getElementById('g-theta').textContent=g.theta.toFixed(5); document.getElementById('g-vega').textContent=g.vega.toFixed(4);
   document.getElementById('g-rho').textContent=g.rho.toFixed(4);
-  document.getElementById('kpi-bs-call').textContent=g.call.toFixed(2);
-  document.getElementById('kpi-delta').textContent=g.delta.toFixed(3);
 }
 ['bs-s','bs-k','bs-t','bs-sig','bs-r'].forEach(function(id){ document.getElementById(id).addEventListener('input', updateBS); });
 updateBS();
 
-// ═══ 蒙特卡洛 ═══
+// ═══ 蒙特卡洛 GBM（亮色画布） ═══
 const mc=document.getElementById('mc-canvas'),mctx=mc.getContext('2d');
-// 确定性伪随机（种子固定，路径可复现；仅用于演示 GBM 方法，非真实交易数据）
 var _mcSeed=20240718;
 function _rnd(){ _mcSeed=(_mcSeed*1664525+1013904223)>>>0; return _mcSeed/4294967296; }
-function gbmPath(S,T,steps,sig,r){
-  var dt=T/steps, path=[S];
-  for(var i=1;i<=steps;i++){ var z=(_rnd()+_rnd()+_rnd()+_rnd()-2)/Math.sqrt(4/12); var prev=path[i-1]; path.push(prev*Math.exp((r-sig*sig/2)*dt+sig*Math.sqrt(dt)*z)); }
-  return path;
-}
+function gbmPath(S,T,steps,sig,r){ var dt=T/steps, path=[S]; for(var i=1;i<=steps;i++){ var z=(_rnd()+_rnd()+_rnd()+_rnd()-2)/Math.sqrt(4/12); var prev=path[i-1]; path.push(prev*Math.exp((r-sig*sig/2)*dt+sig*Math.sqrt(dt)*z)); } return path; }
 function runMC(){
   var p=params(); var W=760,H=340,pad=30;
-  mctx.fillStyle='#05080f';mctx.fillRect(0,0,W,H);
+  mctx.fillStyle='#f8fafc';mctx.fillRect(0,0,W,H);
   var N=200, steps=60, paths=[], ends=[];
   for(var i=0;i<N;i++){ var path=gbmPath(p.S,p.T,steps,p.sig,p.r); paths.push(path); ends.push(path[steps]); }
   var minV=p.S*0.6, maxV=p.S*1.5, span=maxV-minV;
-  function x(i){return pad+(W-2*pad)*i/steps;}
-  function y(v){return H-pad-((v-minV)/span)*(H-2*pad);}
-  // grid
-  mctx.strokeStyle='rgba(255,255,255,.05)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; mctx.beginPath();mctx.moveTo(pad,yy);mctx.lineTo(W-pad,yy);mctx.stroke(); }
-  // paths
-  for(var pi=0;pi<N;pi++){
-    mctx.beginPath();
-    for(var i=0;i<=steps;i++){ var px=x(i), py=y(paths[pi][i]); i===0?mctx.moveTo(px,py):mctx.lineTo(px,py); }
-    mctx.strokeStyle='rgba(96,165,250,0.08)'; mctx.lineWidth=1; mctx.stroke();
-  }
-  // mean path
-  mctx.beginPath();
-  for(var i2=0;i2<=steps;i2++){ var s=0; for(var pi2=0;pi2<N;pi2++) s+=paths[pi2][i2]; var mean=s/N; var px2=x(i2), py2=y(mean); i2===0?mctx.moveTo(px2,py2):mctx.lineTo(px2,py2); }
+  function x(i){return pad+(W-2*pad)*i/steps;} function y(v){return H-pad-((v-minV)/span)*(H-2*pad);}
+  mctx.strokeStyle='rgba(15,23,42,.06)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; mctx.beginPath();mctx.moveTo(pad,yy);mctx.lineTo(W-pad,yy);mctx.stroke(); }
+  for(var pi=0;pi<N;pi++){ mctx.beginPath(); for(var i=0;i<=steps;i++){ var px=x(i), py=y(paths[pi][i]); i===0?mctx.moveTo(px,py):mctx.lineTo(px,py); } mctx.strokeStyle='rgba(37,99,235,.10)'; mctx.lineWidth=1; mctx.stroke(); }
+  mctx.beginPath(); for(var i2=0;i2<=steps;i2++){ var s=0; for(var pi2=0;pi2<N;pi2++) s+=paths[pi2][i2]; var mean=s/N; var px2=x(i2), py2=y(mean); i2===0?mctx.moveTo(px2,py2):mctx.lineTo(px2,py2); }
   mctx.strokeStyle='#f59e0b'; mctx.lineWidth=2.5; mctx.stroke();
-  // stats
-  var meanEnd=ends.reduce(function(a,b){return a+b;})/N;
-  var g=calc(p.S,p.K,p.T,p.sig,p.r);
+  var meanEnd=ends.reduce(function(a,b){return a+b;})/N; var g=calc(p.S,p.K,p.T,p.sig,p.r);
   document.getElementById('mc-est').textContent=meanEnd.toFixed(2);
   document.getElementById('mc-bs').textContent=g.call.toFixed(2);
   document.getElementById('mc-err').textContent=(Math.abs(meanEnd-g.call)/g.call*100).toFixed(2)+'%';
-  mctx.fillStyle='rgba(154,166,189,.7)';mctx.font='10px monospace'; mctx.fillText(N+' 条 GBM 路径', pad+6, pad-8);
+  mctx.fillStyle='rgba(71,85,105,.85)';mctx.font='10px monospace'; mctx.fillText(N+' 条 GBM 路径', pad+6, pad-8);
 }
 document.getElementById('mc-btn').onclick=runMC; runMC();
 
-// ═══ 波动率微笑 ═══
+// ═══ 波动率微笑（亮色画布） ═══
 const sm=document.getElementById('smile-canvas'),sctx=sm.getContext('2d');
 function drawSmile(){
   var p=params(); var W=760,H=300,pad=36;
-  sctx.fillStyle='#05080f';sctx.fillRect(0,0,W,H);
-  var ks=[], ivs=[];
-  for(var k=p.S*0.7;k<=p.S*1.3;k+=2){
-    // invert: find iv that reproduces a stylized smile market price
-    var moneyness=Math.log(k/p.S);
-    var iv=0.25+0.18*moneyness*moneyness-0.06*moneyness; // stylized smile+skew
-    ks.push(k); ivs.push(iv);
-  }
+  sctx.fillStyle='#f8fafc';sctx.fillRect(0,0,W,H);
+  var ks=[], ivs=[]; for(var k=p.S*0.7;k<=p.S*1.3;k+=2){ var moneyness=Math.log(k/p.S); var iv=0.25+0.18*moneyness*moneyness-0.06*moneyness; ks.push(k); ivs.push(iv); }
   var minIv=Math.min.apply(null,ivs)*0.85, maxIv=Math.max.apply(null,ivs)*1.1, span=maxIv-minIv;
-  sctx.strokeStyle='rgba(255,255,255,.06)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; sctx.beginPath();sctx.moveTo(pad,yy);sctx.lineTo(W-pad,yy);sctx.stroke(); }
-  sctx.beginPath();
-  ks.forEach(function(k,i){ var x=pad+(W-2*pad)*i/(ks.length-1); var y=H-pad-((ivs[i]-minIv)/span)*(H-2*pad); i===0?sctx.moveTo(x,y):sctx.lineTo(x,y); });
+  sctx.strokeStyle='rgba(15,23,42,.06)'; for(var g=0;g<=4;g++){ var yy=pad+(H-2*pad)*g/4; sctx.beginPath();sctx.moveTo(pad,yy);sctx.lineTo(W-pad,yy);sctx.stroke(); }
+  sctx.beginPath(); ks.forEach(function(k,i){ var x=pad+(W-2*pad)*i/(ks.length-1); var y=H-pad-((ivs[i]-minIv)/span)*(H-2*pad); i===0?sctx.moveTo(x,y):sctx.lineTo(x,y); });
   sctx.strokeStyle='#f59e0b';sctx.lineWidth=2.5;sctx.stroke();
-  // ATM marker
-  sctx.fillStyle='rgba(154,166,189,.6)';sctx.font='10px monospace';sctx.textAlign='center';
+  sctx.fillStyle='rgba(71,85,105,.6)';sctx.font='10px monospace';sctx.textAlign='center';
   sctx.fillText('ATM K=S', pad+(W-2*pad)*((p.S-p.S*0.7)/(p.S*0.6)), H-pad+16);
-  sctx.fillStyle='#f59e0b';sctx.textAlign='left'; sctx.fillText('隐含波动率微笑', pad+6, pad-8);
+  sctx.fillStyle='#b45309';sctx.textAlign='left'; sctx.fillText('隐含波动率微笑', pad+6, pad-8);
 }
 drawSmile();
 ['bs-s','bs-sig'].forEach(function(id){ document.getElementById(id).addEventListener('input', drawSmile); });
-
-// ═══ 客户漏斗 ═══
-(function(){
-  function gen(){
-    // 示意漏斗（固定数值，非真实客户数据）：用于演示客户运营转化分析方法
-    var s=[12000, 6000, 3120, 1680, 960];
-    return [{label:'触达',value:s[0]},{label:'咨询',value:s[1]},{label:'测评',value:s[2]},{label:'开户',value:s[3]},{label:'首投',value:s[4]}];
-  }
-  function summarize(st){
-    document.getElementById('funnel-total').textContent=(st[4].value/st[0].value*100).toFixed(2)+'%';
-    var maxDrop=0,idx=1; for(var i=1;i<st.length;i++){var d=st[i-1].value-st[i].value; if(d>maxDrop){maxDrop=d;idx=i;}}
-    document.getElementById('funnel-drop').textContent=st[idx-1].label+' → '+st[idx].label;
-  }
-  function run(){var st=gen(); PD.funnel('funnel-mount',st); summarize(st);}
-  document.getElementById('funnel-btn').onclick=run; run();
-})();
 </script>
-<button id="scroll-top" aria-label="回到顶部">↑</button>
 </body>
 </html>

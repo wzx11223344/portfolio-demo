@@ -3,60 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>政策研究与产业运营 · 数据治理</title>
+<title>万值翔 · 国企 / 政府方向 | 政策调研 · 公文写作 · 产业研究</title>
+<meta name="description" content="万值翔 · 国企 / 政府方向真实作品集：上海市经信委产业调研与项目评估（20+ 场评审通过率 95%）、中国联通数据治理、国盛证券行业研究、公文写作与跨部门协作，GitHub 政策模拟与宏观经济数据开源（policysim / macrohub / citycompare）。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23ef4444'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23ef4444'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23ef4444'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
-/* state accent: gov red/gold */
-:root{--gov-red:#ef4444;--gov-gold:#d4a843}
-.card-title{color:var(--gov-red)}
-.card-badge{color:var(--gov-red);border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.1)}
-.hero-name .accent{background:linear-gradient(135deg,#ef4444,#d4a843);-webkit-background-clip:text;background-clip:text;color:transparent}
-.section-title .hl{background:linear-gradient(135deg,#ef4444,#d4a843);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat-row .hl{color:var(--gov-gold)}
-/* methodology steps */
-.step-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media(max-width:860px){.step-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.step-grid{grid-template-columns:1fr}}
-.step-card{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;transition:transform .4s,border-color .4s,box-shadow .4s;overflow:hidden}
-.step-card:hover{transform:translateY(-4px);border-color:rgba(239,68,68,.35);box-shadow:var(--shadow)}
-.step-card .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gov-red),var(--gov-gold));color:#fff;font-weight:800;font-size:13px;font-family:var(--font-mono);margin-bottom:12px}
-.step-card h4{font-size:15px;color:#fff;margin-bottom:6px;font-weight:600}
-.step-card p{font-size:12.5px;color:var(--text-dim);line-height:1.6}
-/* compliance checklist */
-.check-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
-@media(max-width:640px){.check-list{grid-template-columns:1fr}}
-.check-item{display:flex;align-items:flex-start;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 14px}
-.check-item .ic{width:22px;height:22px;border-radius:6px;background:rgba(239,68,68,.12);color:var(--gov-red);display:flex;align-items:center;justify-content:center;font-size:13px;flex:none;margin-top:1px}
-.check-item .tx h5{font-size:13px;color:#fff;margin-bottom:3px;font-weight:600}
-.check-item .tx p{font-size:11.5px;color:var(--text-dim);line-height:1.5}
-/* interactive validator */
-.validator{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
-@media(max-width:768px){.validator{grid-template-columns:1fr}}
-.v-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px}
-.v-opt{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:13px;color:var(--text);cursor:pointer;font-family:var(--font-mono)}
-.v-opt input{width:16px;height:16px;accent-color:var(--gov-red);cursor:pointer}
-.v-out{font-family:var(--font-mono);font-size:13px;line-height:1.7;white-space:pre-wrap;color:var(--text-dim)}
-.v-out b{color:var(--gov-gold)}
-.v-out .ok{color:#34d399}
-.v-out .no{color:var(--gov-red)}
-/* case narrative */
-.case-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-@media(max-width:880px){.case-grid{grid-template-columns:1fr 1fr}}
-.case-step{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;transition:border-color .4s,transform .4s}
-.case-step:hover{border-color:rgba(239,68,68,.35);transform:translateY(-3px)}
-.case-step .k{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gov-gold);margin-bottom:8px;font-family:var(--font-mono);text-transform:uppercase}
-.case-step h4{font-size:14px;color:#fff;margin-bottom:6px;font-weight:600}
-.case-step p{font-size:12px;color:var(--text-dim);line-height:1.6}
-.case-step.res{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(212,168,67,.06));border-color:rgba(212,168,67,.3)}
-/* feature cards (capabilities) */
-.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.feature-card .ic{background:var(--grad-soft);border:1px solid rgba(239,68,68,.25)}
-.note-real{font-size:11.5px;color:#34d399;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:8px 14px;display:inline-block;margin-top:14px;font-weight:600;font-family:var(--font-mono)}
+.card-title{color:#be123c}
+.card-badge{color:#be123c;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#ef4444,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .hl{background:linear-gradient(135deg,#ef4444,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-row .hl{color:#be123c}
 </style>
 </head>
 <body>
-<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · PORTFOLIO</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · GOV</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -64,17 +24,17 @@
 <div id="scroll-progress"></div>
 
 <nav>
-  <span class="nav-logo"><span class="dot"></span>WZX·LAB</span>
+  <span class="nav-logo"><span class="dot"></span>万值翔</span>
   <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
   <div class="nav-inner">
-    <a href="../index.html">◀ 主站</a>
+    <a href="index.html">◀ 全部作品集</a>
     <a href="#hero" class="active">概览</a>
-    <a href="#board">产业看板</a>
-    <a href="#method">研究方法</a>
-    <a href="#compliance">合规审查</a>
-    <a href="#case">评审案例</a>
-    <a href="#governance">数据治理</a>
-    <a href="#skills">专业能力</a>
+    <a href="#about">定位</a>
+    <a href="#exp">真实经历</a>
+    <a href="#gov">政务能力</a>
+    <a href="#projects">政策开源</a>
+    <a href="#certs">证书荣誉</a>
+    <a href="#contact">联系</a>
   </div>
 </nav>
 <div class="nav-overlay"></div>
@@ -82,202 +42,166 @@
 <main id="app">
 <!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-eyebrow"><span class="pulse"></span>STATE · 政策研究与产业数据治理</div>
-  <h1 class="hero-name">政策研究<span class="accent">与产业运营</span></h1>
-  <div class="hero-sub" data-typed='["产业政策 · 合规审计 · 数据治理 · 调研报告","公文写作 · 政策调研 · 实地走访 · 高质量发展","经信委实习 · 产业分析 · 数据驱动决策"]'></div>
-  <div class="hero-tags"><span>政策分析</span><span>合规审计</span><span>数据治理</span><span>调研报告</span></div>
+  <div class="hero-eyebrow"><span class="pulse"></span>国企 / 政府方向 · 政策调研 · 公文写作 · 产业研究</div>
+  <h1 class="hero-name">国企<span class="accent">政府方向</span></h1>
+  <div class="hero-sub" data-typed='["经济学本科 · 共青团员 · 经信委实习","政策调研 · 公文写作 · 数据治理","沉稳严谨 · 适合体制内岗位"]'></div>
+  <div class="hero-tags"><span>政策调研</span><span>公文写作</span><span>产业研究</span><span>数据治理</span><span>跨部门协作</span></div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#exp">▶ 看真实经历</a>
+    <a class="btn" href="../assets/resume.pdf" target="_blank" download>⬇ 下载简历</a>
+    <a class="btn" href="https://github.com/wzx11223344" target="_blank">🐙 GitHub</a>
+  </div>
   <div class="kpi-grid">
-    <div class="kpi-card reveal"><div class="kpi-num" data-count="95" data-dec="0" data-suffix="%">0</div><div class="kpi-label">项目审核通过率</div></div>
-    <div class="kpi-card reveal d1"><div class="kpi-num">15+</div><div class="kpi-label">实地调研企业</div></div>
-    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">产业调研报告 (篇)</div></div>
-    <div class="kpi-card reveal d3"><div class="kpi-num">20+</div><div class="kpi-label">项目评审场数</div></div>
-  </div>
-  <span class="note-real">✓ 数据来自上海市经信委实习真实工作：优化申报审核清单后通过率 95%、实地走访 15+ 企业、撰写 3 篇产业调研报告</span>
-</section>
-
-<!-- ═══ 产业看板 ═══ -->
-<section id="board" class="reveal">
-  <div class="section-title"><span class="section-index">01</span><h2><span class="hl">产业看板</span> 区域产业指标</h2></div>
-  <div class="section-sub">// 规上工业增加值 · 园区企业数 · 在建项目 · 政策兑现 · 监控示意（演示）</div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">产业运营核心指标</span><span class="card-badge">Live</span></div>
-    <div class="stats-grid" style="margin-top:0">
-      <div class="stat-item"><div class="stat-val" id="kpi-ind">0%</div><div class="stat-label">规上工业增加值增速</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-park">0</div><div class="stat-label">园区在园企业 (家)</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-proj">0</div><div class="stat-label">在建项目 (个)</div></div>
-      <div class="stat-item"><div class="stat-val" id="kpi-policy">0%</div><div class="stat-label">政策兑现率</div></div>
-    </div>
-    <div style="margin-top:18px">
-      <div class="stat-row" style="border:none;margin-bottom:6px;color:var(--text-faint)">产业事件流（演示）</div>
-      <div id="event-stream"></div>
-    </div>
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="20" data-suffix="+">0</div><div class="kpi-label">经信委项目评审（通过率95%）</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="15" data-suffix="+">0</div><div class="kpi-label">实地走访企业（家）</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="3">0</div><div class="kpi-label">产业调研报告（篇）</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="3500" data-suffix="+">0</div><div class="kpi-label">统筹治理数据（条）</div></div>
   </div>
 </section>
 
-<!-- ═══ 政策研究方法论 ═══ -->
-<section id="method" class="reveal">
-  <div class="section-title"><span class="section-index">02</span><h2><span class="hl">政策研究方法论</span> 四步工作法</h2></div>
-  <div class="section-sub">// 从经信委实习沉淀：数据采集 → 交叉验证 → 提炼洞察 → 政策建议</div>
-  <div class="step-grid">
-    <div class="step-card"><div class="n">1</div><h4>数据采集</h4><p>企业实地走访 + 申报材料研读，建立一手信息库，避免仅依赖二手数据。</p></div>
-    <div class="step-card"><div class="n">2</div><h4>交叉验证</h4><p>核对数据一致性，识别资质、证明链与口径缺口，守住合规底线。</p></div>
-    <div class="step-card"><div class="n">3</div><h4>提炼洞察</h4><p>对共性问题的归因分析，形成有依据的产业判断，而非罗列现象。</p></div>
-    <div class="step-card"><div class="n">4</div><h4>政策建议</h4><p>输出可落地的政策建议与审核优化方案，让研究真正支撑决策。</p></div>
-  </div>
-  <span class="note-real">✓ 四步法已在经信委实习中复用：走访 15+ 企业、研读申报材料、形成 3 篇被处室采纳的调研报告</span>
-</section>
-
-<!-- ═══ 合规审查 + 评审漏斗 ═══ -->
-<section id="compliance" class="reveal">
-  <div class="section-title"><span class="section-index">03</span><h2><span class="hl">合规审查</span> 申报审核清单与通过率</h2></div>
-  <div class="section-sub">// 真实申报审核四维度：资质 / 证明链 / 数据一致性 / 格式 · 优化后通过率 95%</div>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-header"><span class="card-title">申报审核四维度</span><span class="card-badge">真实口径</span></div>
-      <div class="check-list">
-        <div class="check-item"><div class="ic">✓</div><div class="tx"><h5>资质文件齐全</h5><p>企业营业执照、资质证书等主体资格材料完整有效。</p></div></div>
-        <div class="check-item"><div class="ic">✓</div><div class="tx"><h5>证明链完整</h5><p>批复 + 合同 + 发票三类凭证齐备，形成闭环证据。</p></div></div>
-        <div class="check-item"><div class="ic">✓</div><div class="tx"><h5>数据一致性</h5><p>营收、纳税等核心数据口径一致，无矛盾冲突。</p></div></div>
-        <div class="check-item"><div class="ic">✓</div><div class="tx"><h5>格式合规</h5><p>清单字段完整、装订规范，满足归档与复审要求。</p></div></div>
-      </div>
-      <div class="validator" style="margin-top:18px">
-        <div class="v-box">
-          <div class="v-opt"><input type="checkbox" id="sc1"> 资质文件齐全</div>
-          <div class="v-opt"><input type="checkbox" id="sc2"> 证明链完整（批复+合同+发票）</div>
-          <div class="v-opt"><input type="checkbox" id="sc3"> 数据一致性（营收=纳税口径）</div>
-          <div class="v-opt"><input type="checkbox" id="sc4"> 格式合规（清单字段完整）</div>
-          <button class="btn btn-primary" id="sc-btn" style="margin-top:12px">校验</button>
-        </div>
-        <div class="v-box">
-          <div class="v-out" id="sc-out">勾选四项维度后点击「校验」。\n四维度全部满足即通过，对应优化后 95% 通过率口径。</div>
-        </div>
+<!-- ═══ 定位 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>定位<span class="hl">与优势</span></h2></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，共青团员，云南红河人。曾在上海市经信委、中国联通实习，熟悉公文写作与政策调研流程，性格沉稳、做事严谨，适合体制内岗位。</p>
+      <p>在<b>上海市经信委</b>参与 20+ 场智能制造项目评审，优化审核清单后通过率提升至 95%；实地走访 15+ 家新能源及高端装备企业，撰写 3 篇产业调研报告。在<b>中国联通</b>统筹新型学徒制培训项目数据治理，覆盖 21 个部门 3,500+ 条数据，协助制定统一评分规范。持基金从业、银行从业资格，具备扎实的经济分析与数据处理功底。</p>
+      <div class="tag-list">
+        <span>政策调研</span><span>公文写作</span><span>产业研究</span><span>数据治理</span><span>台账管理</span><span>跨部门协作</span>
       </div>
     </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">项目评审通过漏斗</span><span class="card-badge">真实 95%</span></div>
-      <div class="funnel" id="st-funnel"></div>
-      <div class="stat-row" style="margin-top:14px;border:none"><span>整体通过率</span><span class="hl" id="st-rate">95%</span><span>关键瓶颈</span><span class="hl">材料规范</span></div>
-      <span class="note-real">✓ 优化申报审核清单后，项目通过率由普遍缺漏提升至 95%（20+ 场评审实测）</span>
+    <div class="about-photo"><div class="ph-initial">政</div><div class="ph-cap">GOV · POLICY · RESEARCH</div></div>
+  </div>
+</section>
+
+<!-- ═══ 真实经历 ═══ -->
+<section id="exp" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>真实<span class="hl">经历</span></h2></div>
+  <div class="section-lead">// 政府侧与国企相关实践，覆盖政策调研、项目评审、数据治理与基层综合事务。</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">产业调研与项目评估</span><span class="exp-org">上海市经济和信息化委员会</span></div>
+      <div class="exp-date">2026.03 – 2026.07</div>
+      <ul class="exp-list">
+        <li>项目评审：参与 <b>20+ 场</b>智能制造项目评审，梳理企业申报材料的资质不全、证明链缺失、数据不一致等 3 类高频缺项，优化审核清单后<b>通过率提升至 95%</b></li>
+        <li>企业调研：实地走访 <b>15+ 家</b>新能源及高端装备企业，发现中小企业数字化转型"设备联网率低、数据孤岛、复合人才缺口"3 个共性瓶颈，撰写 <b>3 篇</b>调研报告提交产业处</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">人力资源实习生（含客户经理轮岗）</span><span class="exp-org">中国联通（上海）公司</span></div>
+      <div class="exp-date">2026.01 – 2026.02</div>
+      <ul class="exp-list">
+        <li>数据管理：统筹企业新型学徒制培训项目数据管理，覆盖 <b>7 个班级、21 个部门 3,500+ 条</b>积点数据，发现各部门考核评分标准不一致的系统性问题，协助制定统一评分规范</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">证券分析师助理</span><span class="exp-org">国盛证券股份有限公司</span></div>
+      <div class="exp-date">2025.08 – 2025.12</div>
+      <ul class="exp-list">
+        <li>门店监测：搭建门店数据动态监测系统，追踪百胜中国、九毛九华东区域门店运营效率，识别库存周转慢、人效分化等共性问题，部分建议被采纳</li>
+        <li>行业研究：独立完成 3 份消费服务行业深度报告，核心观点被纳入组内投资参考</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">行政助理 · 实习教师（寒暑假实践）</span><span class="exp-org">农业农村局 / 红河州高中 / 屏边县团县委</span></div>
+      <div class="exp-date">2024 – 2025（寒暑假）</div>
+      <ul class="exp-list">
+        <li>综合实践：参与西部计划宣讲会筹备、政府公文收发登记与台账管理，承担高三教学辅助，<b>均获实习鉴定优秀评价</b></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ═══ 真实评审案例 ═══ -->
-<section id="case" class="reveal">
-  <div class="section-title"><span class="section-index">04</span><h2><span class="hl">真实评审案例</span> 审核流程优化</h2></div>
-  <div class="section-sub">// 背景 → 问题 → 分析 → 行动 → 结果 · 经信委智能制造项目评审真实工作流</div>
-  <div class="case-grid">
-    <div class="case-step"><div class="k">背景</div><h4>评审量大</h4><p>年度智能制造项目评审申报量大，企业提交材料质量参差不齐。</p></div>
-    <div class="case-step"><div class="k">问题</div><h4>高频缺漏</h4><p>资质不全、证明链缺失、数据不一致等高频问题频发，拖累评审效率。</p></div>
-    <div class="case-step"><div class="k">分析</div><h4>归类成因</h4><p>梳理高频问题类型，归因为其「申报规范不清、校验口径缺位」，而非企业主观失误。</p></div>
-    <div class="case-step"><div class="k">行动</div><h4>优化清单</h4><p>协助优化项目申报审核清单，明确材料规范、必备证明与数据校验口径，前置规避缺漏。</p></div>
-    <div class="case-step res"><div class="k">结果</div><h4>95% 通过率</h4><p>优化后项目通过率提升至 95%，评审更高效、口径更一致，形成可复用规范。</p></div>
-  </div>
-  <span class="note-real">✓ 从「发现问题」到「沉淀规范」：体现流程优化与合规建设能力，可迁移至各类审核场景</span>
-</section>
-
-<!-- ═══ 数据治理 ═══ -->
-<section id="governance" class="reveal">
-  <div class="section-title"><span class="section-index">05</span><h2><span class="hl">数据治理</span> 质量与流转</h2></div>
-  <div class="section-sub">// 数据采集 → 清洗 → 校验 → 入库 → 共享 · 数据资产运营（流程示意）</div>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-header"><span class="card-title">数据流转流程</span><span class="card-badge">Pipeline</span></div>
-      <div class="funnel" id="gov-funnel"></div>
-      <div class="stat-row" style="margin-top:14px;border:none"><span>流程环节</span><span class="hl">5 段</span><span>核心目标</span><span class="hl">可用率提升</span></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">重点产业政策关注度</span><span class="card-badge">关键词·示意</span></div>
-      <canvas id="kw-canvas" width="520" height="300"></canvas>
-      <div class="stat-row" style="margin-top:10px;border:none;color:var(--text-faint);font-size:11px">* 柱状为政策研究关注方向分布示意，非统计普查数据</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 专业能力 ═══ -->
-<section id="skills" class="reveal">
-  <div class="section-title"><span class="section-index">06</span><h2><span class="hl">专业能力</span> 技术体系</h2></div>
-  <div class="section-sub">// 公文写作 · 政策调研 · 合规安全 · 数据治理 · 跨部门协调</div>
+<!-- ═══ 政务能力 ═══ -->
+<section id="gov" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2>政务<span class="hl">能力</span></h2></div>
+  <div class="section-lead">// 体制内岗位看重的核心素养，均有真实场景支撑。</div>
   <div class="feature-grid">
-    <div class="feature-card"><div class="ic">📝</div><h3>公文写作管理</h3><p>收发登记、台账管理、会议纪要、归档全流程，熟练政务文书规范。</p><span class="meta">文书规范</span></div>
-    <div class="feature-card"><div class="ic">🔍</div><h3>政策调研报告</h3><p>产业分析、走访调研、信息归纳与撰写，3 篇报告获处室采纳参考。</p><span class="meta">产业分析</span></div>
-    <div class="feature-card"><div class="ic">🛡️</div><h3>合规与安全</h3><p>法规检索、合同分析、数据脱敏与合规评估，守住审查底线。</p><span class="meta">合规审查</span></div>
-    <div class="feature-card"><div class="ic">🗂️</div><h3>数据治理</h3><p>数据分析、可视化、数据库与报表，支撑数据驱动决策。</p><span class="meta">数据运营</span></div>
-    <div class="feature-card"><div class="ic">🤝</div><h3>跨部门协调</h3><p>统筹 20+ 场评审会务，对接 15+ 企业与 5 个处室，保障流程高效。</p><span class="meta">会务统筹</span></div>
-    <div class="feature-card"><div class="ic">📊</div><h3>Python / SQL</h3><p>用 pandas / SQL 清洗申报台账、交叉核验数据一致性，提升审核效率。</p><span class="meta">工具赋能</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🏛️</div><h3>政策调研</h3><p>参与产业政策研究与项目评审，能从申报材料里识别资质、证明链与数据一致性问题。</p><span class="meta">Policy</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📝</div><h3>公文写作</h3><p>熟悉政府公文收发登记、台账管理与纪要撰写，实习鉴定优秀。</p><span class="meta">Writing</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🗂️</div><h3>数据治理</h3><p>统筹 3,500+ 条跨部门数据，建立台账、交叉校验、统一口径与规范。</p><span class="meta">Governance</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🤝</div><h3>跨部门协作</h3><p>对接多部门需求，协调数据口径与流程，沉淀沟通与推进方法。</p><span class="meta">Coord</span></div>
+  </div>
+</section>
+
+<!-- ═══ 政策开源 ═══ -->
+<section id="projects" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>政策<span class="hl">开源</span></h2></div>
+  <div class="section-lead">// 把经济学方法用于政策与宏观研究，沉淀为开源工具（点击查看源码）。</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">policysim</span><span class="proj-tag">政策模拟</span></div>
+      <div class="proj-desc">政策模拟框架：ABM / DID / SC 多方法对比，支持产业政策与冲击的情景推演。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/policysim" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">macrohub</span><span class="proj-tag">宏观数据</span></div>
+      <div class="proj-desc">宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/macrohub" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">citycompare</span><span class="proj-tag">城市分析</span></div>
+      <div class="proj-desc">城市对标分析：50 城 8 维指标聚类与可视化，用于区域与产业比较研究。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/citycompare" target="_blank">↗ 源码</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-top"><span class="proj-name">新媒体运营（B站）</span><span class="proj-tag">内容传播</span></div>
+      <div class="proj-desc">独立运营「黎明之剑11」：650.7 万播放、42.6 万赞，沉淀内容策划与传播方法论。</div>
+      <div class="proj-meta"><a href="https://space.bilibili.com/502800415" target="_blank">↗ B站主页</a><span>· 真实数据</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 证书 ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">基金从业资格证</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">初级会计职称</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏆</div><div><div class="ct">正大杯市场调查大赛</div><div class="cs">优秀奖 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">💹</div><div><div class="ct">上证杯 ETF 研究</div><div class="cs">优秀 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">全国数学建模二等奖</div><div class="cs">省级 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🔤</div><div><div class="ct">CET-6</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📘</div><div><div class="ct">初级经济师</div><div class="cs">备考中 · 7月报名</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:13388736755@163.com">13388736755@163.com</a></div>
+      <div class="contact-row"><span class="ci">📱</span><span class="cl">电话</span><span class="v">13388736755</span></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a href="../assets/resume.pdf" target="_blank" download>下载 PDF 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="flinks">
     <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
-    <a href="https://space.bilibili.com/502800415" target="_blank">B站 · 黎明之剑11</a>
     <a href="../assets/resume.pdf" target="_blank" download>简历 PDF</a>
-    <a href="../index.html">← 返回全部作品集</a>
+    <a href="index.html">← 返回全部作品集</a>
   </div>
-  <div class="cert-grid" style="max-width:780px;margin:18px auto">
-    <div class="cert-card"><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格</div><div class="cs">已通过</div></div></div>
-    <div class="cert-card"><div class="cert-ic">📈</div><div><div class="ct">初级会计</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🏛️</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
-    <div class="cert-card"><div class="cert-ic">🧮</div><div><div class="ct">数学建模省二</div><div class="cs">已获</div></div></div>
-  </div>
-  <div>万值翔 · 经信委实习 · 产业政策调研</div>
-  <div class="award">🏛️ <strong>政策研究</strong> · 合规审计 · 数据治理</div>
+  <div>万值翔 · 国企 / 政府方向 · 政策调研 · 公文写作</div>
+  <div class="award">🏛️ <strong>国企政府</strong> · 产业研究 · 数据治理</div>
 </footer>
 </main>
 
-<script src="../assets/app.js"></script>
-<script>
-// ═══ 产业看板（监控示意，演示） ═══
-PD.Dashboard({
-  'kpi-ind':   {base:6.8, jitter:0.6, dec:1, suffix:'%'},
-  'kpi-park':  {base:486, jitter:18, dec:0},
-  'kpi-proj':  {base:37,  jitter:3, dec:0},
-  'kpi-policy':{base:88,  jitter:3, dec:0, suffix:'%'}
-});
-PD.EventStream('event-stream',{verbs:['项目备案','政策兑现','企业走访','数据上报','合规审查','园区招商','专项资金','督查督办']});
-
-// ═══ 评审漏斗（真实 95%） ═══
-PD.funnel('st-funnel', [
-  {label:'收件申报', value:100},
-  {label:'资质/证明链/数据一致性初审', value:95},
-  {label:'专家评审上会', value:95},
-  {label:'立项通过', value:95}
-]);
-
-// ═══ 合规校验器（确定性逻辑，对应 95% 通过率口径） ═══
-document.getElementById('sc-btn').addEventListener('click', function(){
-  var ids=['sc1','sc2','sc3','sc4'];
-  var n=ids.filter(function(id){return document.getElementById(id).checked;}).length;
-  var ok=n===4;
-  var out=document.getElementById('sc-out');
-  out.innerHTML = '已满足维度：'+n+'/4\n'+
-    (ok ? '<span class="ok">✓ 通过（与优化后 95% 通过率口径一致）</span>'
-        : '<span class="no">✗ 退回补正：缺 '+(4-n)+' 项</span>');
-});
-
-// ═══ 数据治理流程（流程示意） ═══
-PD.funnel('gov-funnel', [
-  {label:'采集', value:100},
-  {label:'清洗', value:86},
-  {label:'校验', value:78},
-  {label:'入库', value:70},
-  {label:'共享', value:66}
-]);
-
-// ═══ 重点产业政策关注度（示意，非普查） ═══
-(function(){
-  var items=[
-    {label:'智能制造', value:92},
-    {label:'新能源',   value:85},
-    {label:'高端装备', value:78},
-    {label:'数字经济', value:81},
-    {label:'双碳',     value:64},
-    {label:'人工智能', value:73}
-  ];
-  PD.Bars(document.getElementById('kw-canvas'), items, '#ef4444');
-})();
-</script>
 <button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
 </body>
 </html>
