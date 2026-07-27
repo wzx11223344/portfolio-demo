@@ -104,9 +104,12 @@
     function fmt(v, el){
       var t = parseFloat(el.dataset.count);
       var dec = el.dataset.dec ? parseInt(el.dataset.dec) : 0;
-      if(el.dataset.suffix==='万'){ return (v/10000).toFixed(1)+'万'; }
-      if(t>=1000 && !dec){ return Math.round(v).toLocaleString('en-US'); }
-      return v.toFixed(dec);
+      var base;
+      if(el.dataset.suffix==='万'){ base = (v/10000).toFixed(1)+'万'; }
+      else if(t>=1000 && !dec){ base = Math.round(v).toLocaleString('en-US'); }
+      else { base = v.toFixed(dec); }
+      if(el.dataset.suffix && el.dataset.suffix!=='万'){ base += el.dataset.suffix; }
+      return base;
     }
     function run(el){
       var target = parseFloat(el.dataset.count);
@@ -535,7 +538,9 @@
       var links = document.querySelectorAll('.js-resume');
       for(var i=0;i<links.length;i++){
         var a = links[i];
-        a.href = RP + ((a.getAttribute('data-fmt') === 'docx') ? r.docx : r.pdf);
+        var isDocx = a.getAttribute('data-fmt') === 'docx';
+        a.href = RP + (isDocx ? r.docx : r.pdf);
+        if(isDocx){ a.setAttribute('download',''); } else { a.removeAttribute('download'); }
       }
       var pages = document.querySelectorAll('.js-resume-page');
       for(var j=0;j<pages.length;j++){ pages[j].href = PP + r.page; pages[j].textContent = '📂 ' + r.label + '岗位作品集'; }
