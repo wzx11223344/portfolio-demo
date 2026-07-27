@@ -616,8 +616,17 @@ footer .award strong{color:var(--ink)}
 .readme hr{border:none;border-top:1px solid var(--border);margin:24px 0}
 
 /* project detail page chrome */
-.pd-back{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:22px 0 6px;font-family:var(--font-mono);font-size:13px}
+.pd-back{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:22px 0 6px;font-family:var(--font-mono);font-size:13px}
 .pd-back a{color:var(--cyan);text-decoration:none}
+.pd-back a:hover{text-decoration:underline}
+.pd-back .sep{color:var(--text-dim);opacity:.55}
+.pd-back .cur{color:var(--text);font-weight:600}
+.pd-install{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface-glass,#fff);font-family:var(--font-mono)}
+.pd-install-label{font-size:12px;color:var(--text-dim);letter-spacing:1px}
+.pd-install-cmd{font-size:13px;color:var(--cyan,#0891b2);background:rgba(8,145,178,.08);padding:4px 10px;border-radius:6px;word-break:break-all}
+.pd-copy{font-family:var(--font-mono);font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg3,#f1f5f9);color:var(--text,#0f172a);cursor:pointer;transition:.18s}
+.pd-copy:hover{border-color:var(--cyan,#0891b2);color:var(--cyan,#0891b2)}
+.pd-copy.copied{background:rgba(16,185,129,.12);border-color:#10b981;color:#047857}
 .pd-head{border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(180deg,var(--surface),var(--bg-2));padding:26px 28px;margin:18px 0 26px}
 .pd-title{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .pd-title h1{font-family:var(--font-mono);font-size:26px;margin:0;color:var(--ink)}

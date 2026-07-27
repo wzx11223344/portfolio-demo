@@ -548,3 +548,29 @@
   else { boot(); }
 })();
 
+/* project detail: copy install command (injected) */
+(function(){
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){ return navigator.clipboard.writeText(text); }
+    return new Promise(function(res, rej){
+      try{ var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); res(); }
+      catch(e){ rej(e); }
+    });
+  }
+  function flash(btn){ var t=btn.textContent; btn.classList.add('copied'); btn.textContent='✓ 已复制'; setTimeout(function(){ btn.classList.remove('copied'); btn.textContent=t; }, 1400); }
+  function initCopyInstall(){
+    var btns = document.querySelectorAll('.pd-copy');
+    for(var i=0;i<btns.length;i++){
+      btns[i].addEventListener('click', function(){
+        var box = this.parentElement;
+        var code = box ? box.querySelector('code') : null;
+        if(!code) return;
+        var self = this;
+        copyText(code.textContent).then(function(){ flash(self); }).catch(function(){ flash(self); });
+      });
+    }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', initCopyInstall); }
+  else { initCopyInstall(); }
+})();
+
