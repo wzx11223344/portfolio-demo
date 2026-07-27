@@ -163,7 +163,7 @@ def process_index():
 <div class="kpi-card"><div class="kpi-num" data-target="30">0</div><div class="kpi-label">开源库（计量·量化）</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="9">0</div><div class="kpi-label">核心开源项目</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="100">0</div><div class="kpi-label">GitHub 仓库</div></div>
-<div class="kpi-card"><div class="kpi-num" data-target="650">0</div><div class="kpi-label">万次内容播放</div></div>
+<div class="kpi-card"><div class="kpi-num" data-count="6507000" data-suffix="万">0</div><div class="kpi-label">B站累计播放量</div></div>
 <div class="kpi-card"><div class="kpi-num" data-target="1352">0</div><div class="kpi-label">实证问卷样本</div></div>
 </div>'''
     if old in html:
