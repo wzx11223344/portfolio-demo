@@ -190,6 +190,15 @@
   })();
 
   /* ====================== DATA-OPS HELPERS ====================== */
+  // theme-aware canvas colors (read live so they follow the dark/light switch)
+  function themeCanvas(){
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      bg:   (cs.getPropertyValue('--canvas-bg').trim()   || '#f8fafc'),
+      grid: (cs.getPropertyValue('--canvas-grid').trim() || 'rgba(15,23,42,.07)'),
+      axis: (cs.getPropertyValue('--canvas-axis').trim() || 'rgba(71,85,105,.75)')
+    };
+  }
   var PD = window.PD = {};
 
   /* Funnel (DOM-based, responsive) */
@@ -291,11 +300,12 @@
   /* Retention curve */
   PD.Retention = function(canvas, weeks){
     var ctx = canvas.getContext('2d'); var W=canvas.width, H=canvas.height;
-    ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,W,H);
+    var cv = themeCanvas();
+    ctx.fillStyle=cv.bg; ctx.fillRect(0,0,W,H);
     var pad=34, n=weeks.length;
-    ctx.strokeStyle='rgba(15,23,42,.07)'; ctx.lineWidth=1;
+    ctx.strokeStyle=cv.grid; ctx.lineWidth=1;
     for(var g=0;g<=4;g++){ var y=pad+(H-2*pad)*g/4; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-10,y); ctx.stroke(); }
-    ctx.fillStyle='rgba(71,85,105,.75)'; ctx.font='9px monospace'; ctx.textAlign='right';
+    ctx.fillStyle=cv.axis; ctx.font='9px monospace'; ctx.textAlign='right';
     for(var g2=0;g2<=4;g2++){ ctx.fillText((100-g2*25)+'%',pad-4,pad+(H-2*pad)*g2/4+3); }
     ctx.beginPath();
     weeks.forEach(function(v,i){ var x=pad+(W-pad-10)*i/(n-1); var y=pad+(H-2*pad)*(1-v/100); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
@@ -315,11 +325,12 @@
   /* RFM scatter */
   PD.RFM = function(canvas, points){
     var ctx = canvas.getContext('2d'); var W=canvas.width, H=canvas.height;
-    ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,W,H);
+    var cv = themeCanvas();
+    ctx.fillStyle=cv.bg; ctx.fillRect(0,0,W,H);
     var pad=30;
-    ctx.strokeStyle='rgba(15,23,42,.1)'; ctx.lineWidth=1;
+    ctx.strokeStyle=cv.grid; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(pad,pad); ctx.lineTo(pad,H-pad); ctx.lineTo(W-10,H-pad); ctx.stroke();
-    ctx.fillStyle='rgba(71,85,105,.8)'; ctx.font='9px monospace';
+    ctx.fillStyle=cv.axis; ctx.font='9px monospace';
     ctx.textAlign='center'; ctx.fillText('F 频率 →', (W+pad)/2, H-6);
     ctx.save(); ctx.translate(10,H/2); ctx.rotate(-Math.PI/2); ctx.fillText('M 金额 →', 0,0); ctx.restore();
     points.forEach(function(p){
@@ -341,7 +352,7 @@
     var hotSet = {}; hot.forEach(function(h){ hotSet[h[0]+','+h[1]]=true; });
     var t=0;
     function draw(){
-      ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=themeCanvas().bg; ctx.fillRect(0,0,W,H);
       var cw = W/cols, ch = H/rows;
       for(var r=0;r<rows;r++){
         for(var c=0;c<cols;c++){
@@ -374,15 +385,16 @@
   /* Horizontal bars (simple KPI list) */
   PD.Bars = function(canvas, items, color){
     var ctx = canvas.getContext('2d'); var W=canvas.width, H=canvas.height;
-    ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,W,H);
+    var cv = themeCanvas();
+    ctx.fillStyle=cv.bg; ctx.fillRect(0,0,W,H);
     var max = Math.max.apply(null, items.map(function(i){return i.value;}))||1;
     var bh = (H-20)/items.length;
     items.forEach(function(it,i){
       var y=10+i*bh, bw=(W-120)*(it.value/max);
       var g=ctx.createLinearGradient(80,0,80+bw,0); g.addColorStop(0,color||'#0891b2'); g.addColorStop(1,'rgba(124,58,237,.5)');
       ctx.fillStyle=g; ctx.fillRect(80,y+3,bw,bh-6);
-      ctx.fillStyle='rgba(15,23,42,.8)'; ctx.font='10px monospace'; ctx.textAlign='right'; ctx.fillText(it.label,74,y+bh/2+3);
-      ctx.fillStyle='rgba(71,85,105,.8)'; ctx.textAlign='left'; ctx.fillText(it.value,86+bw,y+bh/2+3);
+      ctx.fillStyle=cv.axis; ctx.font='10px monospace'; ctx.textAlign='right'; ctx.fillText(it.label,74,y+bh/2+3);
+      ctx.fillStyle=cv.axis; ctx.textAlign='left'; ctx.fillText(it.value,86+bw,y+bh/2+3);
     });
   };
 
@@ -399,6 +411,32 @@
     }
     setInterval(tick, 1200); tick();
   };
+
+  /* ---------- theme toggle (dark / light) ---------- */
+  (function(){
+    var KEY = 'pf-theme';
+    function apply(t){ document.documentElement.setAttribute('data-theme', t); }
+    function current(){ return document.documentElement.getAttribute('data-theme') || 'light'; }
+    function paint(btn){
+      var dark = current()==='dark';
+      btn.textContent = dark ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', dark ? '切换到浅色模式' : '切换到深色模式');
+      btn.title = dark ? '切换到浅色模式' : '切换到深色模式';
+    }
+    function init(){
+      var btn = document.getElementById('themeToggle');
+      if(!btn) return;
+      paint(btn);
+      btn.addEventListener('click', function(){
+        var t = current()==='dark' ? 'light' : 'dark';
+        apply(t);
+        try{ localStorage.setItem(KEY, t); }catch(e){}
+        paint(btn);
+      });
+    }
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); }
+    else { init(); }
+  })();
 
   console.log('%c[PORTFOLIO]%c premium light theme loaded · zero dependencies',
     'color:#0891b2;font-weight:700','color:#475569');

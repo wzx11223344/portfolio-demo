@@ -39,8 +39,43 @@
   --radius-sm:10px;
   --shadow:0 14px 38px -16px rgba(15,23,42,.22);
   --maxw:1180px;
+  /* ── theme-switch helper tokens ── */
+  --surface-glass:rgba(255,255,255,.78);
+  --surface-glass-strong:rgba(255,255,255,.98);
+  --canvas-bg:#f8fafc;
+  --code-text:#334155;
+  --canvas-grid:rgba(15,23,42,.07);
+  --canvas-axis:rgba(71,85,105,.75);
+  --scroll-thumb:rgba(15,23,42,.25);
+  --name-grad:linear-gradient(180deg,#0f172a 30%,#64748b 100%);
 }
 
+/* ════════════════════════════════════════════════════════════════
+   THEME · DARK MODE
+   Selector html[data-theme="dark"] carries higher specificity (0,1,1)
+   than any page-local inline :root (0,1,0), so it wins even on the
+   root hub page whose <head> re-declares :root with legacy tokens.
+   ════════════════════════════════════════════════════════════════ */
+html[data-theme="dark"]{
+  --bg:#0b1120;--bg-2:#0f172a;--surface:#111c30;--surface-2:#0e1828;--surface-hi:#1e293b;
+  --border:rgba(148,163,184,.16);--border-hi:rgba(148,163,184,.28);
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-faint:#64748b;
+  --ink:#22d3ee;--ink-v:#a78bfa;--ink-e:#34d399;--ink-p:#f472b6;
+  --cyan:#22d3ee;--violet:#a78bfa;--emerald:#34d399;--pink:#f472b6;--amber:#fbbf24;--blue:#60a5fa;--red:#f87171;
+  --grad:linear-gradient(135deg,#22d3ee 0%,#a78bfa 100%);
+  --grad-soft:linear-gradient(135deg,rgba(34,211,238,.16),rgba(167,139,250,.16));
+  --name-grad:linear-gradient(180deg,#f1f5f9 30%,#94a3b8 100%);
+  --surface-glass:rgba(11,17,32,.72);--surface-glass-strong:rgba(11,17,32,.92);
+  --canvas-bg:#0e1828;--code-text:#cbd5e1;--canvas-grid:rgba(148,163,184,.10);--canvas-axis:rgba(148,163,184,.85);
+  --scroll-thumb:rgba(148,163,184,.30);
+  /* root hub page legacy tokens (bridged so the toggle is global) */
+  --bg2:#111c30;--bg3:#0e1828;
+  --neon-cyan:#22d3ee;--neon-pink:#f472b6;--neon-green:#34d399;--neon-yellow:#fbbf24;--neon-purple:#a78bfa;--neon-orange:#fb923c;
+}
+/* root hub page hardcoded-light overrides (specificity beats inline :root) */
+html[data-theme="dark"] nav{background:var(--surface-glass)}
+html[data-theme="dark"] .hero-name{background:var(--name-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-theme="dark"] .float-cta{background:var(--surface-glass);border-color:rgba(34,211,238,.45);color:var(--ink)}
 html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);
@@ -104,7 +139,7 @@ nav{
   position:sticky;top:0;z-index:100;
   display:flex;justify-content:center;align-items:center;gap:4px;
   padding:14px 16px;margin:0 auto;
-  background:rgba(255,255,255,.78);
+  background:var(--surface-glass);
   backdrop-filter:blur(16px) saturate(140%);
   -webkit-backdrop-filter:blur(16px) saturate(140%);
   border-bottom:1px solid var(--border);
@@ -141,7 +176,7 @@ nav a.active::after{
 .hero-name{
   font-family:var(--font-mono);font-weight:800;
   font-size:clamp(40px,8vw,84px);line-height:1.02;letter-spacing:2px;
-  background:linear-gradient(180deg,#0f172a 30%,#64748b 100%);
+  background:var(--name-grad);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   margin-bottom:6px;
 }
@@ -226,16 +261,16 @@ section{padding:clamp(44px,6vw,72px) 0;border-bottom:1px solid var(--border);scr
 .progress-fill{height:100%;width:0;border-radius:999px;background:var(--grad);transition:width .3s}
 
 /* ── CODE BLOCK ── */
-.code-block{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:16px;font-family:var(--font-mono);font-size:12px;line-height:1.7;overflow:auto;color:#334155;white-space:pre;max-height:320px}
+.code-block{background:var(--canvas-bg);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px;font-family:var(--font-mono);font-size:12px;line-height:1.7;overflow:auto;color:var(--code-text);white-space:pre;max-height:320px}
 .code-block .kw{color:#be185d}.code-block .fn{color:#047857}.code-block .cm{color:#94a3b8}
 .code-block .str{color:#b45309}.code-block .num{color:#6d28d9}
 
 /* ── CANVAS WRAP ── */
 .canvas-wrap{position:relative;display:inline-block;border:1px solid var(--border);
-  border-radius:var(--radius-sm);overflow:hidden;background:#f8fafc;max-width:100%}
+  border-radius:var(--radius-sm);overflow:hidden;background:var(--canvas-bg);max-width:100%}
 .canvas-wrap canvas{display:block;max-width:100%}
-canvas{display:block;width:100%;height:auto;background:#f8fafc;border-radius:10px;border:1px solid var(--border)}
+canvas{display:block;width:100%;height:auto;background:var(--canvas-bg);border-radius:10px;border:1px solid var(--border)}
 canvas.native{width:auto;max-width:100%;margin:0 auto}
 
 /* ── STATS mini ── */
@@ -321,7 +356,7 @@ footer .award strong{color:var(--ink)}
 
 /* ── HUB-BACK / floating button ── */
 .hub-back{position:fixed;top:14px;left:14px;z-index:9999;display:inline-flex;align-items:center;gap:6px;
-  padding:7px 14px;background:rgba(255,255,255,.82);border:1px solid var(--border-hi);border-radius:999px;
+  padding:7px 14px;background:var(--surface-glass);border:1px solid var(--border-hi);border-radius:999px;
   color:var(--text);font:600 12px/1 var(--font-mono);backdrop-filter:blur(8px);transition:.25s}
 .hub-back:hover{border-color:var(--cyan);color:var(--ink);box-shadow:0 0 16px rgba(8,145,178,.3)}
 
@@ -334,7 +369,7 @@ footer .award strong{color:var(--ink)}
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:rgba(15,23,42,.25);border-radius:999px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:999px;border:2px solid var(--bg)}
 ::-webkit-scrollbar-thumb:hover{background:rgba(14,165,183,.55)}
 
 /* ── RESPONSIVE ── */
@@ -383,6 +418,13 @@ footer .award strong{color:var(--ink)}
 #scroll-top{position:fixed;right:18px;bottom:18px;z-index:900;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.82);border:1px solid var(--border-hi);color:var(--ink);cursor:pointer;backdrop-filter:blur(8px);opacity:0;transform:translateY(12px);pointer-events:none;transition:.35s ease;font-size:20px;line-height:1}
 #scroll-top.show{opacity:1;transform:none;pointer-events:auto}
 #scroll-top:hover{border-color:var(--cyan);box-shadow:0 0 18px rgba(8,145,178,.3)}
+/* ── THEME TOGGLE (fixed, bottom-left) ── */
+.theme-toggle{position:fixed;left:18px;bottom:18px;z-index:901;width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;background:var(--surface-glass);border:1px solid var(--border-hi);
+  color:var(--ink);cursor:pointer;backdrop-filter:blur(8px);font-size:18px;line-height:1;
+  box-shadow:0 6px 20px -10px rgba(15,23,42,.4);transition:.3s ease}
+.theme-toggle:hover{border-color:var(--cyan);box-shadow:0 0 18px rgba(8,145,178,.35);transform:translateY(-2px)}
+@media(max-width:520px){.theme-toggle{left:12px;bottom:12px;width:42px;height:42px;font-size:16px}}
 @media(max-width:520px){#scroll-top{right:12px;bottom:12px;width:42px;height:42px}}
 
 /* ── 3D TILT ── */

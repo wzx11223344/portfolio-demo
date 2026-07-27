@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>万值翔 - 技术能力展示 | Portfolio Demo</title>
+<title>万值翔 - 技术能力展示 | Portfolio Demo</title><script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><script>function rootCanvasBg(){return getComputedStyle(document.documentElement).getPropertyValue('--canvas-bg').trim()||'#f8fafc';}function rootCanvasAxis(){return getComputedStyle(document.documentElement).getPropertyValue('--canvas-axis').trim()||'rgba(71,85,105,.75)';}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2308080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2322d3ee'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2322d3ee'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/theme.css">
 <style>
@@ -133,9 +133,9 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 }
 /* ============ CODE BLOCK ============ */
 .code-block{
-  background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:16px;
+  background:var(--canvas-bg);border:1px solid var(--border);border-radius:6px;padding:16px;
   font-family:var(--font-mono);font-size:12px;line-height:1.7;overflow-x:auto;
-  color:#334155;white-space:pre;max-height:300px;overflow-y:auto
+  color:var(--code-text);white-space:pre;max-height:300px;overflow-y:auto
 }
 .code-block .kw{color:#be185d}
 .code-block .fn{color:#047857}
@@ -145,7 +145,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 /* ============ CANVAS WRAPPER ============ */
 .canvas-wrap{
   position:relative;display:inline-block;border:1px solid var(--border);
-  border-radius:4px;overflow:hidden;background:#f8fafc
+  border-radius:4px;overflow:hidden;background:var(--canvas-bg)
 }
 .canvas-wrap canvas{display:block}
 /* ============ STATS ============ */
@@ -219,7 +219,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 </style>
 </head>
 <body>
-<a href="positions/index.html" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:rgba(255,255,255,.85);border:1px solid rgba(14,165,183,.45);color:#0e7490;font:600 13px/1.2 system-ui,'PingFang SC',sans-serif;padding:11px 20px;border-radius:999px;backdrop-filter:blur(8px);box-shadow:0 0 22px rgba(8,145,178,.22);text-decoration:none;white-space:nowrap">📂 查看完整岗位作品集 →</a>
+<a class="float-cta" href="positions/index.html" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:var(--surface-glass);border:1px solid rgba(14,165,183,.45);color:var(--ink);font:600 13px/1.2 system-ui,'PingFang SC',sans-serif;padding:11px 20px;border-radius:999px;backdrop-filter:blur(8px);box-shadow:0 0 22px rgba(8,145,178,.22);text-decoration:none;white-space:nowrap">📂 查看完整岗位作品集 →</a>
 <div id="bg-aurora"></div>
 <div id="bg-grid"></div>
 <canvas id="bg-particles"></canvas>
@@ -897,7 +897,7 @@ function rtPixel(x,y){
 
 function resetRayTrace(){
   rtRendering=false;rtRow=0;
-  rtCtx.fillStyle='#f8fafc';rtCtx.fillRect(0,0,RT_W,RT_H);
+  rtCtx.fillStyle=rootCanvasBg();rtCtx.fillRect(0,0,RT_W,RT_H);
   $('#rt-status').textContent='就绪';$('#rt-progress').textContent='0%';
   $('#rt-progress-bar').style.width='0%';$('#rt-time').textContent='0.00s';
 }
@@ -906,7 +906,7 @@ function startRayTrace(){
   if(rtRendering)return;
   rtRendering=true;rtRow=0;rtStartTime=performance.now();
   $('#rt-status').textContent='RENDERING...';
-  rtCtx.fillStyle='#f8fafc';rtCtx.fillRect(0,0,RT_W,RT_H);
+  rtCtx.fillStyle=rootCanvasBg();rtCtx.fillRect(0,0,RT_W,RT_H);
   rtData=rtCtx.createImageData(RT_W,RT_H);
   requestAnimationFrame(rtRenderLoop);
 }
@@ -947,9 +947,9 @@ const mcPiCanvas=$('#mc-pi-canvas'),mcPiCtx=mcPiCanvas.getContext('2d');
 const MCPI_W=400,MCPI_H=400;
 
 function drawMCPiBackground(){
-  mcPiCtx.fillStyle='#f8fafc';mcPiCtx.fillRect(0,0,MCPI_W,MCPI_H);
-  mcPiCtx.strokeStyle='#222';mcPiCtx.beginPath();mcPiCtx.arc(0,MCPI_H,MCPI_H,0,Math.PI/2);mcPiCtx.stroke();
-  mcPiCtx.strokeStyle='#475569';mcPiCtx.strokeRect(0,0,MCPI_W,MCPI_H);
+  mcPiCtx.fillStyle=rootCanvasBg();mcPiCtx.fillRect(0,0,MCPI_W,MCPI_H);
+  mcPiCtx.strokeStyle=rootCanvasAxis();mcPiCtx.beginPath();mcPiCtx.arc(0,MCPI_H,MCPI_H,0,Math.PI/2);mcPiCtx.stroke();
+  mcPiCtx.strokeStyle=rootCanvasAxis();mcPiCtx.strokeRect(0,0,MCPI_W,MCPI_H);
   mcPiCtx.fillStyle='#047857';mcPiCtx.font='11px monospace';mcPiCtx.fillText('(0,0)',4,390);
   mcPiCtx.fillText('(1,0)',380,390);mcPiCtx.fillText('(0,1)',4,14);
 }
@@ -1001,14 +1001,14 @@ function bsPrice(S,K,T,sigma,r,isCall=true){
 }
 
 function drawMCOptionBackground(){
-  mcOptCtx.fillStyle='#f8fafc';mcOptCtx.fillRect(0,0,MCOPT_W,MCOPT_H);
+  mcOptCtx.fillStyle=rootCanvasBg();mcOptCtx.fillRect(0,0,MCOPT_W,MCOPT_H);
   const bs=bsPrice(optParams.S,optParams.K,optParams.T,optParams.sigma,optParams.r,true);
   mcOptCtx.strokeStyle='rgba(14,165,183,.5)';mcOptCtx.setLineDash([5,5]);
   mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-bs*10);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-bs*10);mcOptCtx.stroke();
   mcOptCtx.setLineDash([]);
   mcOptCtx.fillStyle='rgba(14,165,183,.75)';mcOptCtx.font='10px monospace';mcOptCtx.fillText('BS Benchmark: '+bs.toFixed(4),10,20);
   mcOptCtx.fillText('Convergence Trace:',10,MCOPT_H-10);
-  mcOptCtx.strokeStyle='#475569';mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-MCOPT_H/2);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-MCOPT_H/2);mcOptCtx.stroke();
+  mcOptCtx.strokeStyle=rootCanvasAxis();mcOptCtx.beginPath();mcOptCtx.moveTo(0,MCOPT_H-MCOPT_H/2);mcOptCtx.lineTo(MCOPT_W,MCOPT_H-MCOPT_H/2);mcOptCtx.stroke();
 }
 
 function geometricBM(S,r,sigma,T){
@@ -1091,8 +1091,8 @@ function updateBS(){
 }
 function drawSmile(S,T,r,q){
   const c=$('#bs-smile'),ctx=c.getContext('2d'),w=c.width,h=c.height;
-  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle='#475569';ctx.beginPath();ctx.moveTo(0,h*0.4);ctx.lineTo(w,h*0.4);ctx.stroke();
+  ctx.fillStyle=rootCanvasBg();ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle=rootCanvasAxis();ctx.beginPath();ctx.moveTo(0,h*0.4);ctx.lineTo(w,h*0.4);ctx.stroke();
   ctx.fillStyle='#64748b';ctx.font='10px monospace';ctx.fillText('ATM',10,h*0.4-4);
   ctx.strokeStyle='var(--neon-cyan)';ctx.beginPath();
   const strikes=[];for(let k=60;k<=140;k+=2)strikes.push(k);
@@ -1110,8 +1110,8 @@ function drawSmile(S,T,r,q){
 }
 function drawDelta(S,T,r,q){
   const c=$('#bs-delta'),ctx=c.getContext('2d'),w=c.width,h=c.height;
-  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle='#475569';ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+  ctx.fillStyle=rootCanvasBg();ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle=rootCanvasAxis();ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
   ctx.fillStyle='#64748b';ctx.font='10px monospace';ctx.fillText('0.5',2,h/2-4);
   ctx.strokeStyle='#0e7490';ctx.beginPath();
   for(let i=0;i<=200;i+=2){
@@ -1255,7 +1255,7 @@ function initSortData(){
   for(let i=0;i<w;i+=4)sortData.push(Math.floor(Math.random()*280)+10);
 }
 function drawSortData(highlight=[]){
-  sortCtx.fillStyle='#f8fafc';sortCtx.fillRect(0,0,sortCanvas.width,sortCanvas.height);
+  sortCtx.fillStyle=rootCanvasBg();sortCtx.fillRect(0,0,sortCanvas.width,sortCanvas.height);
   const bw=Math.max(1,Math.floor(sortCanvas.width/sortData.length)-1);
   for(let i=0;i<sortData.length;i++){
     const x=i*(bw+1),h=sortData[i];
@@ -1344,7 +1344,7 @@ function initPFGrid(){
   pfGrid[pfStart.y][pfStart.x]=1;pfGrid[pfEnd.y][pfEnd.x]=2;
 }
 function drawPFGrid(explored=[],path=[]){
-  pfCtx.fillStyle='#f8fafc';pfCtx.fillRect(0,0,pfCanvas.width,pfCanvas.height);
+  pfCtx.fillStyle=rootCanvasBg();pfCtx.fillRect(0,0,pfCanvas.width,pfCanvas.height);
   for(let y=0;y<PF_ROWS;y++){
     for(let x=0;x<PF_COLS;x++){
       if(pfGrid[y][x]===-1)pfCtx.fillStyle='#475569';
@@ -1421,7 +1421,7 @@ const lifeCanvas=$('#algo-life-canvas'),lifeCtx=lifeCanvas.getContext('2d');
 function resizeLifeCanvas(){lifeCanvas.width=LIFE_COLS*LIFE_CS;lifeCanvas.height=LIFE_ROWS*LIFE_CS;initLifeGrid();}
 function initLifeGrid(){lifeGrid=[];for(let y=0;y<LIFE_ROWS;y++){lifeGrid[y]=new Array(LIFE_COLS).fill(0);}}
 function drawLifeGrid(){
-  lifeCtx.fillStyle='#f8fafc';lifeCtx.fillRect(0,0,lifeCanvas.width,lifeCanvas.height);
+  lifeCtx.fillStyle=rootCanvasBg();lifeCtx.fillRect(0,0,lifeCanvas.width,lifeCanvas.height);
   let alive=0;
   for(let y=0;y<LIFE_ROWS;y++)for(let x=0;x<LIFE_COLS;x++)if(lifeGrid[y][x]){lifeCtx.fillStyle='#047857';lifeCtx.fillRect(x*LIFE_CS,y*LIFE_CS,LIFE_CS-1,LIFE_CS-1);alive++;}
   $('#algo-life-info').textContent='世代: '+lifeGen+' | 存活: '+alive;
@@ -1546,5 +1546,6 @@ console.log('%cWeb Workers: %c1M merge sort + multi-thread timeline',
   'color:#0e7490','color:#475569');
 </script>
 <script src="assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
 </body>
 </html>
