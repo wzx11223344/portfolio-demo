@@ -452,3 +452,94 @@
   console.log('%c[PORTFOLIO]%c premium light theme loaded · zero dependencies',
     'color:#0891b2;font-weight:700','color:#475569');
 })();
+
+/* ---------- project galleries + resume switch (injected) ---------- */
+(function(){
+  var PROJECTS = {
+    'pyconometrics':       {name:'pyconometrics',       tag:'计量经济', desc:'从零实现的计量经济学库：OLS / IV / DID / RDD 等因果识别方法与诊断，纯 Python 依赖。', lang:'Python', rc:'#3572A5', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/pyconometrics'},
+    'quantlab':            {name:'quantlab',            tag:'量化金融', desc:'量化工具箱：BS 期权定价、Greeks 风险度量、回测框架与组合分析，覆盖金融工程基础能力。', lang:'Python', rc:'#f59e0b', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/quantlab'},
+    'dsgepy':              {name:'dsgepy',              tag:'宏观建模', desc:'一般均衡建模工具：RBC / NK / B-K 等 DSGE 模型的求解与脉冲响应分析。', lang:'Python', rc:'#0EA5E9', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/dsgepy'},
+    'macrodatahub':        {name:'macrodatahub',        tag:'宏观数据', desc:'宏观经济数据平台：对接 WB / FRED / 国家统计局等多源数据，统一接口与清洗流程。', lang:'Python', rc:'#10b981', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/macrodatahub'},
+    'policysim':           {name:'policysim',           tag:'政策模拟', desc:'政策模拟框架：ABM / DID / SC 多方法对比，支持产业政策与冲击的情景推演。', lang:'Python', rc:'#8b5cf6', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/policysim'},
+    'city-compare':        {name:'city-compare',        tag:'城市分析', desc:'城市对标分析：50 城 8 维指标聚类与可视化，用于区域与产业比较研究。', lang:'Python', rc:'#ec4899', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/city-compare'},
+    'express-consumption': {name:'express-consumption', tag:'实证研究', desc:'正大杯全国大赛 1,352 份问卷计量建模可复现代码（LPM / Logistic / 回归），完整数据处理 pipeline。', lang:'Python', rc:'#ef4444', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/express-consumption'},
+    'causal-inference-ml': {name:'causal-inference-ml', tag:'因果推断', desc:'因果机器学习方法：Double ML / Causal Forest，衔接计量经济学与现代 ML 估计。', lang:'Python', rc:'#14b8a6', stars:1, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/causal-inference-ml'},
+    'mcp-financial-data':  {name:'mcp-financial-data',  tag:'AI 工程',  desc:'金融数据 MCP 服务器：把行情、财报、宏观等数据能力封装为 Agent 可调用的标准接口。', lang:'Python', rc:'#6366f1', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/mcp-financial-data'},
+    'econ-dashboard':      {name:'econ-dashboard',      tag:'经济看板', desc:'交互式经济数据看板：GDP/CPI/PMI 跨国对比与宏观趋势可视化，Streamlit 多页面应用。', lang:'Python', rc:'#0EA5E9', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/econ-dashboard'}
+  };
+  var MONO = {
+    'pyconometrics':'PY','quantlab':'QU','dsgepy':'DS','macrodatahub':'MA','policysim':'PO',
+    'city-compare':'CI','express-consumption':'EX','causal-inference-ml':'CA','mcp-financial-data':'MC','econ-dashboard':'EC'
+  };
+  var RELATED = {
+    'pyconometrics':       ['quantlab','causal-inference-ml','econ-dashboard','dsgepy'],
+    'quantlab':            ['pyconometrics','econ-dashboard','mcp-financial-data','dsgepy'],
+    'dsgepy':              ['pyconometrics','quantlab','macrodatahub','policysim'],
+    'macrodatahub':        ['econ-dashboard','dsgepy','city-compare','policysim'],
+    'policysim':           ['dsgepy','macrodatahub','city-compare','express-consumption'],
+    'city-compare':        ['macrodatahub','causal-inference-ml','express-consumption','econ-dashboard'],
+    'express-consumption': ['causal-inference-ml','city-compare','econ-dashboard','macrodatahub'],
+    'causal-inference-ml': ['pyconometrics','express-consumption','city-compare','econ-dashboard'],
+    'mcp-financial-data':  ['quantlab','econ-dashboard','pyconometrics','macrodatahub'],
+    'econ-dashboard':      ['quantlab','macrodatahub','city-compare','pyconometrics']
+  };
+  var POS_PROJECTS = {
+    'bank':    ['quantlab','econ-dashboard','mcp-financial-data','dsgepy','pyconometrics'],
+    'internet':['econ-dashboard','macrodatahub','express-consumption','city-compare','causal-inference-ml']
+  };
+  var RESUMES = {
+    'general': {pdf:'../resumes/general-resume.pdf', docx:'../resumes/general-resume.docx', page:'general.html', label:'通用'},
+    'bank':    {pdf:'../resumes/bank-resume.pdf',    docx:'../resumes/bank-resume.docx',    page:'bank.html',    label:'银行'},
+    'finance': {pdf:'../resumes/finance-resume.pdf', docx:'../resumes/finance-resume.docx', page:'finance.html', label:'财务/金融'},
+    'state':   {pdf:'../resumes/state-resume.pdf',   docx:'../resumes/state-resume.docx',   page:'state.html',   label:'国企政府'},
+    'internet':{pdf:'../resumes/internet-resume.pdf',docx:'../resumes/internet-resume.docx',page:'internet.html',label:'互联网运营'},
+    'hr':      {pdf:'../resumes/hr-resume.pdf',      docx:'../resumes/hr-resume.docx',      page:'hr.html',      label:'人事'}
+  };
+
+  function card(s){
+    var p = PROJECTS[s]; if(!p) return '';
+    var page = '../projects/' + s + '.html';
+    var star = p.stars > 0 ? ('★ ' + p.stars) : '🌱 新建';
+    var fork = p.fork > 0 ? ('⑂ ' + p.fork) : '🔧 可复刻';
+    return '<div class="proj-card">'
+      + '<div class="proj-thumb" style="--rc:' + p.rc + '"><span class="pt-mono">' + (MONO[s] || s.slice(0,2).toUpperCase()) + '</span><span class="pt-name">' + p.name + '</span><span class="pt-lang">' + p.lang + '</span></div>'
+      + '<div class="proj-top"><span class="proj-name">' + p.name + '</span><span class="proj-tag">' + p.tag + '</span></div>'
+      + '<div class="proj-desc">' + p.desc + '</div>'
+      + '<div class="proj-meta"><a href="' + p.github + '" target="_blank">↗ 源码</a> <a class="proj-detail" href="' + page + '">查看详情 →</a><span>· ' + p.lang + '</span><span class="repo-stat"><b>' + star + '</b><span class="dot"></span><b>' + fork + '</b><span class="dot"></span>更新 ' + p.upd + '</span></div>'
+      + '</div>';
+  }
+  function fillGalleries(){
+    var nodes = document.querySelectorAll('[data-gallery]');
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i];
+      var mode = n.getAttribute('data-gallery');
+      var key = n.getAttribute('data-project') || n.getAttribute('data-position');
+      var slugs = [];
+      if(mode === 'related'){ slugs = (RELATED[key] || []).slice(); }
+      else if(mode === 'position-projects'){ slugs = (POS_PROJECTS[key] || []).slice(); }
+      if(!slugs.length) continue;
+      var html = '';
+      for(var j=0;j<slugs.length;j++){ html += card(slugs[j]); }
+      n.innerHTML = '<div class="proj-grid">' + html + '</div>';
+    }
+  }
+  function initResumeSwitch(){
+    var sel = document.getElementById('resumeSwitch'); if(!sel) return;
+    function apply(v){
+      var r = RESUMES[v]; if(!r) return;
+      var links = document.querySelectorAll('.js-resume');
+      for(var i=0;i<links.length;i++){
+        var a = links[i];
+        a.href = (a.getAttribute('data-fmt') === 'docx') ? r.docx : r.pdf;
+      }
+      var pages = document.querySelectorAll('.js-resume-page');
+      for(var j=0;j<pages.length;j++){ pages[j].href = r.page; pages[j].textContent = '📂 ' + r.label + '岗位作品集'; }
+    }
+    sel.addEventListener('change', function(){ apply(sel.value); });
+    apply(sel.value);
+  }
+  function boot(){ fillGalleries(); initResumeSwitch(); }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); }
+  else { boot(); }
+})();
+

@@ -637,3 +637,13 @@ footer .award strong{color:var(--ink)}
 .proj-detail{display:inline-block;margin-top:10px;font:600 12px/1 system-ui;color:var(--cyan);
   text-decoration:none;border:1px solid var(--border-hi);padding:6px 12px;border-radius:999px;transition:.2s}
 .proj-detail:hover{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+
+/* ── resume switch dropdown (injected) ── */
+.resume-switch-wrap{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.rs-label{font:600 13px/1.2 system-ui,'PingFang SC',sans-serif;color:var(--text-dim)}
+.resume-switch{font:600 13px/1.2 system-ui,'PingFang SC',sans-serif;padding:9px 16px;border-radius:999px;background:var(--surface-glass);color:var(--ink);border:1px solid var(--border);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 0 18px rgba(8,145,178,.15);max-width:260px}
+.resume-switch:focus{outline:none;border-color:#0891b2}
+.rs-page{font:600 13px/1.2 system-ui,'PingFang SC',sans-serif;color:var(--ink);text-decoration:none;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:var(--surface-glass);backdrop-filter:blur(8px);transition:.18s}
+.rs-page:hover{border-color:var(--ink);box-shadow:0 0 18px rgba(8,145,178,.22)}
+.pd-gallery{margin:4px 0 26px}
+
