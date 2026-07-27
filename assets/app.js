@@ -488,12 +488,12 @@
     'internet':['econ-dashboard','macrodatahub','express-consumption','city-compare','causal-inference-ml']
   };
   var RESUMES = {
-    'general': {pdf:'../resumes/general-resume.pdf', docx:'../resumes/general-resume.docx', page:'general.html', label:'通用'},
-    'bank':    {pdf:'../resumes/bank-resume.pdf',    docx:'../resumes/bank-resume.docx',    page:'bank.html',    label:'银行'},
-    'finance': {pdf:'../resumes/finance-resume.pdf', docx:'../resumes/finance-resume.docx', page:'finance.html', label:'财务/金融'},
-    'state':   {pdf:'../resumes/state-resume.pdf',   docx:'../resumes/state-resume.docx',   page:'state.html',   label:'国企政府'},
-    'internet':{pdf:'../resumes/internet-resume.pdf',docx:'../resumes/internet-resume.docx',page:'internet.html',label:'互联网运营'},
-    'hr':      {pdf:'../resumes/hr-resume.pdf',      docx:'../resumes/hr-resume.docx',      page:'hr.html',      label:'人事'}
+    'general': {pdf:'resumes/general-resume.pdf', docx:'resumes/general-resume.docx', page:'general.html', label:'通用'},
+    'bank':    {pdf:'resumes/bank-resume.pdf',    docx:'resumes/bank-resume.docx',    page:'bank.html',    label:'银行'},
+    'finance': {pdf:'resumes/finance-resume.pdf', docx:'resumes/finance-resume.docx', page:'finance.html', label:'财务/金融'},
+    'state':   {pdf:'resumes/state-resume.pdf',   docx:'resumes/state-resume.docx',   page:'state.html',   label:'国企政府'},
+    'internet':{pdf:'resumes/internet-resume.pdf',docx:'resumes/internet-resume.docx',page:'internet.html',label:'互联网运营'},
+    'hr':      {pdf:'resumes/hr-resume.pdf',      docx:'resumes/hr-resume.docx',      page:'hr.html',      label:'人事'}
   };
 
   function card(s){
@@ -525,15 +525,20 @@
   }
   function initResumeSwitch(){
     var sel = document.getElementById('resumeSwitch'); if(!sel) return;
+    // path-aware base: pages under /positions/ need '../' for resumes and '' for position pages;
+    // root pages need '' for resumes and 'positions/' for position pages.
+    var isPos = location.pathname.split('/').indexOf('positions') > -1;
+    var RP = isPos ? '../' : '';
+    var PP = isPos ? '' : 'positions/';
     function apply(v){
       var r = RESUMES[v]; if(!r) return;
       var links = document.querySelectorAll('.js-resume');
       for(var i=0;i<links.length;i++){
         var a = links[i];
-        a.href = (a.getAttribute('data-fmt') === 'docx') ? r.docx : r.pdf;
+        a.href = RP + ((a.getAttribute('data-fmt') === 'docx') ? r.docx : r.pdf);
       }
       var pages = document.querySelectorAll('.js-resume-page');
-      for(var j=0;j<pages.length;j++){ pages[j].href = r.page; pages[j].textContent = '📂 ' + r.label + '岗位作品集'; }
+      for(var j=0;j<pages.length;j++){ pages[j].href = PP + r.page; pages[j].textContent = '📂 ' + r.label + '岗位作品集'; }
     }
     sel.addEventListener('change', function(){ apply(sel.value); });
     apply(sel.value);
