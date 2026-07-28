@@ -88,13 +88,27 @@
     Array.prototype.forEach.call(els,function(e){ obs.observe(e); });
   })();
 
-  /* ---------- skill bars (animate to data-w) ---------- */
+  /* ---------- skill bars (animate fill + count-up number from left) ---------- */
   (function(){
     var bars = document.querySelectorAll('.skill-bar-fill[data-w]');
     if(!bars.length) return;
-    if(!('IntersectionObserver' in window)){ Array.prototype.forEach.call(bars,function(b){ b.style.width=b.dataset.w+'%'; }); return; }
-    var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.style.width=e.target.dataset.w+'%'; obs.unobserve(e.target); } }); }, {threshold:0.3});
-    Array.prototype.forEach.call(bars,function(b){ obs.observe(b); });
+    function numSpan(b){ var w = b.closest ? b.closest('.skill-bar-wrap') : null; return w ? w.querySelector('.skill-bar-label span:last-child') : null; }
+    function fmtNum(span, target){
+      if(!span) return;
+      if(reduce){ span.textContent = target + '%'; return; }
+      var dur = 1300, t0 = null;
+      function tick(ts){ if(!t0) t0 = ts; var p = Math.min(1,(ts-t0)/dur); var e = 1-Math.pow(1-p,3); span.textContent = Math.round(target*e) + '%'; if(p<1) requestAnimationFrame(tick); else span.textContent = target + '%'; }
+      requestAnimationFrame(tick);
+    }
+    function run(b){
+      b.style.width = b.dataset.w + '%';
+      fmtNum(numSpan(b), parseInt(b.dataset.w,10));
+    }
+    // zero the numbers immediately so they count up on reveal (no flash of final value)
+    Array.prototype.forEach.call(bars, function(b){ var n=numSpan(b); if(n) n.textContent='0%'; });
+    if(!('IntersectionObserver' in window)){ Array.prototype.forEach.call(bars, run); return; }
+    var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ run(e.target); obs.unobserve(e.target); } }); }, {threshold:0.3});
+    Array.prototype.forEach.call(bars, function(b){ obs.observe(b); });
   })();
 
   /* ---------- KPI count-up ---------- */
@@ -454,6 +468,19 @@
 
   console.log('%c[PORTFOLIO]%c premium light theme loaded · zero dependencies',
     'color:#0891b2;font-weight:700','color:#475569');
+
+  /* ---------- site-wide floating "导出 PDF" button ---------- */
+  (function(){
+    if(window.location.search.indexOf('noprint') > -1) return;
+    var b = document.createElement('button');
+    b.className = 'float-print';
+    b.type = 'button';
+    b.setAttribute('aria-label', '导出 PDF');
+    b.title = '导出 / 打印当前页面为 PDF';
+    b.innerHTML = '🖨 导出 PDF';
+    b.addEventListener('click', function(){ window.print(); });
+    document.body.appendChild(b);
+  })();
 })();
 
 /* ---------- project galleries + resume switch (injected) ---------- */
@@ -557,6 +584,8 @@
   }
   function renderNetwork(){
     var nodes = document.querySelectorAll('[data-network]');
+    var isPosN = location.pathname.split('/').indexOf('positions') > -1;
+    var NPP = isPosN ? '../projects/' : 'projects/';
     for(var i=0;i<nodes.length;i++){
       var slug = nodes[i].getAttribute('data-network');
       var me = PROJECTS[slug]; if(!me) continue;
@@ -573,7 +602,7 @@
         var s = rel[k]; var p = PROJECTS[s]; if(!p) continue;
         var a2 = (-90 + k*(360/rel.length)) * Math.PI/180;
         var sx = NET_CX + NET_R*Math.cos(a2), sy = NET_CY + NET_R*Math.sin(a2);
-        var g = svgEl('a', {href:'../projects/'+s+'.html', 'class':'net-node'});
+        var g = svgEl('a', {href:NPP+s+'.html', 'class':'net-node'});
         g.appendChild(svgEl('circle', {cx:sx, cy:sy, r:30, fill:p.rc, 'fill-opacity':0.16, stroke:p.rc, 'stroke-width':1.5}));
         var t1 = svgEl('text', {x:sx, y:sy-2, 'text-anchor':'middle', 'class':'net-mono'}); t1.textContent = MONO[s] || s.slice(0,2).toUpperCase();
         var t2 = svgEl('text', {x:sx, y:sy+13, 'text-anchor':'middle', 'class':'net-name'}); t2.textContent = p.tag;
@@ -707,6 +736,57 @@
     html += '</div>';
     for(var k=0;k<nodes.length;k++){ nodes[k].innerHTML = html; }
   }
+  /* ---------- GitHub real data: contribution timeline + file tree (injected) ---------- */
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmtSize(b){ if(b>=1048576) return (b/1048576).toFixed(1)+' MB'; if(b>=1024) return (b/1024).toFixed(1)+' KB'; return b+' B'; }
+  function renderGHTree(nodes){
+    if(!nodes || !nodes.length) return '<div class="gh-empty">空仓库</div>';
+    var h = '';
+    for(var i=0;i<nodes.length;i++){
+      var n = nodes[i];
+      if(n.type === 'tree'){
+        var kids = (n.children && n.children.length) || 0;
+        h += '<div class="gh-folder"><span class="gh-ic">📁</span><span class="gh-name">'+escapeHtml(n.name)+'</span>'
+          + (kids ? '<span class="gh-count">'+kids+' 项</span>' : '')
+          + (kids ? '<div class="gh-children">'+renderGHTree(n.children)+'</div>' : '')
+          + '</div>';
+      } else {
+        h += '<div class="gh-file"><span class="gh-ic">📄</span><span class="gh-name">'+escapeHtml(n.name)+'</span>'
+          + (n.size ? '<span class="gh-count">'+fmtSize(n.size)+'</span>' : '')
+          + '</div>';
+      }
+    }
+    return h;
+  }
+  function renderGH(){
+    var nodes = document.querySelectorAll('[data-gh]');
+    if(!nodes.length) return;
+    var GH = window.GH_DATA || {};
+    for(var i=0;i<nodes.length;i++){
+      var slug = nodes[i].getAttribute('data-gh');
+      var rec = GH[slug];
+      if(!rec || rec.error){ nodes[i].innerHTML = '<div class="gh-empty">暂无可展示的仓库数据</div>'; continue; }
+      var total = rec.total_commits || (rec.commits ? rec.commits.length : 0);
+      var html = '<div class="gh-block"><div class="gh-block-title">贡献时间线 <span class="gh-meta">真实 commit · 共 '+total+' 次提交</span></div><div class="gh-timeline">';
+      var cs = rec.commits || [];
+      if(!cs.length){ html += '<div class="gh-empty">暂无提交记录</div>'; }
+      for(var c=0;c<cs.length;c++){
+        var cm = cs[c];
+        var url = cm.url || ('https://github.com/wzx11223344/'+slug+'/commit/'+cm.sha);
+        html += '<a class="gh-commit" href="'+url+'" target="_blank" rel="noopener">'
+          + '<span class="gh-dot"></span>'
+          + '<span class="gh-date">'+cm.date+'</span>'
+          + '<span class="gh-sha">'+cm.sha+'</span>'
+          + '<span class="gh-msg">'+escapeHtml(cm.msg)+'</span>'
+          + '<span class="gh-go">↗</span></a>';
+      }
+      html += '</div></div>';
+      html += '<div class="gh-block"><div class="gh-block-title">文件结构树 <span class="gh-meta">'+rec.branch+' 分支 · 顶层 '+(rec.tree?rec.tree.length:0)+' 项</span></div><div class="gh-tree">';
+      html += renderGHTree(rec.tree);
+      html += '</div></div>';
+      nodes[i].innerHTML = html;
+    }
+  }
   /* ---------- README / content image lightbox (injected) ---------- */
   var lbOv = null;
   function lbEnsure(){
@@ -733,7 +813,7 @@
       lbOpen(src, img.getAttribute('alt') || '');
     });
   }
-  function boot(){ fillGalleries(); initResumeSwitch(); renderNetwork(); renderRadar(); renderMiniRadar(); renderTimeline(); initLightbox(); }
+  function boot(){ fillGalleries(); initResumeSwitch(); renderNetwork(); renderRadar(); renderMiniRadar(); renderTimeline(); renderGH(); initLightbox(); }
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); }
   else { boot(); }
 })();

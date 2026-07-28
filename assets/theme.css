@@ -583,10 +583,14 @@ footer .award strong{color:var(--ink)}
   html,body{background:#fff!important;color:#0f172a!important}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   nav,.nav-overlay,.theme-toggle,#scroll-top,.float-cta,.hero-cta,.nav-toggle,
+  .float-print,.resume-switch-wrap,.resume-switch,.pd-back,.pd-actions,.pd-copy,
+  footer .flinks,.flink-print,.pd-net,.proj-timeline,
   .bg-particles,#bg-scan,#scroll-progress{display:none!important}
   .reveal{opacity:1!important;transform:none!important}
   main,section,.card,.proj-card{max-width:100%!important;box-shadow:none!important}
   .card,.proj-card{border:1px solid #e2e8f0!important;break-inside:avoid;margin-bottom:14px!important;page-break-inside:avoid}
+  .gh-block,.gh-commit,.pd-install,.readme pre{break-inside:avoid}
+  .gh-timeline{border-left-color:#e2e8f0!important}
   section{padding:16px 0!important}
   .kpi-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}
   h1,h2,h3{break-after:avoid}
@@ -708,4 +712,54 @@ footer .award strong{color:var(--ink)}
 .lb-img{max-width:92vw;max-height:80vh;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.5);background:#fff}
 .lb-cap{color:#e2e8f0;font:600 13px/1.4 system-ui,'PingFang SC',sans-serif;text-align:center}
 .lb-hint{color:#94a3b8;font:500 11px/1 system-ui,sans-serif;letter-spacing:1px}
+
+/* ── muted helper (used in section subtitles) ── */
+.muted{color:var(--text-faint);font-weight:400;font-family:var(--font-mono);font-size:.8em;letter-spacing:.3px}
+
+/* ── site-wide floating export-PDF button ── */
+.float-print{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:902;
+  display:inline-flex;align-items:center;gap:7px;font:600 13px/1 var(--font-mono);
+  padding:11px 20px;border-radius:999px;border:1px solid var(--border-hi);
+  background:var(--surface-glass);color:var(--ink);cursor:pointer;
+  backdrop-filter:blur(10px);box-shadow:0 8px 26px -12px rgba(8,145,178,.5);transition:.25s ease}
+.float-print:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(8,145,178,.4);transform:translateX(-50%) translateY(-2px)}
+@media(max-width:520px){.float-print{bottom:12px;padding:10px 16px;font-size:12px}}
+
+/* ── GitHub live data: contribution timeline + file tree (injected) ── */
+.gh-wrap{margin:6px 0 26px}
+.gh-block{margin:18px 0}
+.gh-block-title{font:600 14px/1.3 system-ui,'PingFang SC',sans-serif;color:var(--text);margin-bottom:12px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.gh-block-title::before{content:'';width:7px;height:7px;border-radius:2px;background:var(--grad)}
+.gh-meta{font:600 11px/1 var(--font-mono);color:var(--text-faint);letter-spacing:.3px}
+.gh-empty{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);padding:8px 0}
+.gh-timeline{position:relative;border-left:2px solid var(--border);margin-left:8px;padding:2px 0 2px 4px}
+.gh-commit{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;transition:.15s;border:1px solid transparent}
+.gh-commit:hover{background:var(--surface-2);border-color:var(--border);color:var(--text)}
+.gh-commit:hover .gh-go{color:var(--ink)}
+.gh-dot{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(8,145,178,.14);margin-left:-13px}
+.gh-date{flex:0 0 auto;color:var(--ink);font-weight:700}
+.gh-sha{flex:0 0 auto;color:var(--text-faint);background:var(--surface-2);padding:1px 7px;border-radius:6px;font-size:11px}
+.gh-msg{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.gh-go{flex:0 0 auto;color:var(--text-faint)}
+.gh-tree{font-family:var(--font-mono);font-size:13px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px}
+.gh-folder{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:2px 0}
+.gh-file{display:flex;align-items:center;gap:8px;padding:3px 0;color:var(--text-dim)}
+.gh-folder>.gh-name{color:var(--ink);font-weight:600}
+.gh-folder .gh-count{margin-left:auto}
+.gh-file .gh-count{margin-left:auto;font-size:11px;color:var(--text-faint)}
+.gh-children{flex:1 1 100%;margin-left:16px;padding-left:12px;border-left:1px dashed var(--border-hi)}
+
+/* ── responsive refinements (mobile) ── */
+@media(max-width:640px){
+  .proj-timeline .tl-wrap{flex-direction:column;align-items:stretch}
+  .tl-node{min-width:0;max-width:none;flex:1 1 auto}
+  .tl-connector{display:none}
+  .gh-commit{flex-wrap:wrap;gap:6px}
+  .gh-commit .gh-msg{flex:1 1 100%;order:5}
+  .gh-timeline{margin-left:4px}
+  .pd-miniradar,.skill-radar,.pd-net{overflow:hidden}
+  .gh-tree{font-size:12px;padding:12px}
+}
+
 
