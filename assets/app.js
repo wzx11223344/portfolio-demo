@@ -548,7 +548,123 @@
     sel.addEventListener('change', function(){ apply(sel.value); });
     apply(sel.value);
   }
-  function boot(){ fillGalleries(); initResumeSwitch(); }
+  /* ---------- project relationship network graph (injected) ---------- */
+  var NET_W = 540, NET_H = 320, NET_CX = 270, NET_CY = 160, NET_R = 116;
+  function svgEl(tag, attrs){
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for(var k in attrs){ e.setAttribute(k, attrs[k]); }
+    return e;
+  }
+  function renderNetwork(){
+    var nodes = document.querySelectorAll('[data-network]');
+    for(var i=0;i<nodes.length;i++){
+      var slug = nodes[i].getAttribute('data-network');
+      var me = PROJECTS[slug]; if(!me) continue;
+      var rel = (RELATED[slug] || []).slice();
+      var svg = svgEl('svg', {viewBox:'0 0 '+NET_W+' '+NET_H, 'class':'net-svg', role:'img', 'aria-label':me.name+' 的项目关系网络'});
+      // edges
+      for(var j=0;j<rel.length;j++){
+        var ang = (-90 + j*(360/rel.length)) * Math.PI/180;
+        var x = NET_CX + NET_R*Math.cos(ang), y = NET_CY + NET_R*Math.sin(ang);
+        svg.appendChild(svgEl('line', {x1:NET_CX, y1:NET_CY, x2:x, y2:y, 'class':'net-edge'}));
+      }
+      // satellites
+      for(var k=0;k<rel.length;k++){
+        var s = rel[k]; var p = PROJECTS[s]; if(!p) continue;
+        var a2 = (-90 + k*(360/rel.length)) * Math.PI/180;
+        var sx = NET_CX + NET_R*Math.cos(a2), sy = NET_CY + NET_R*Math.sin(a2);
+        var g = svgEl('a', {href:'../projects/'+s+'.html', 'class':'net-node'});
+        g.appendChild(svgEl('circle', {cx:sx, cy:sy, r:30, fill:p.rc, 'fill-opacity':0.16, stroke:p.rc, 'stroke-width':1.5}));
+        var t1 = svgEl('text', {x:sx, y:sy-2, 'text-anchor':'middle', 'class':'net-mono'}); t1.textContent = MONO[s] || s.slice(0,2).toUpperCase();
+        var t2 = svgEl('text', {x:sx, y:sy+13, 'text-anchor':'middle', 'class':'net-name'}); t2.textContent = p.tag;
+        g.appendChild(t1); g.appendChild(t2);
+        var title = svgEl('title', {}); title.textContent = p.name; g.appendChild(title);
+        svg.appendChild(g);
+      }
+      // center (current)
+      var c = svgEl('g', {class:'net-center'});
+      c.appendChild(svgEl('circle', {cx:NET_CX, cy:NET_CY, r:40, fill:me.rc, 'fill-opacity':0.22, stroke:me.rc, 'stroke-width':2}));
+      var ct1 = svgEl('text', {x:NET_CX, y:NET_CY-4, 'text-anchor':'middle', 'class':'net-mono net-mono-c'}); ct1.textContent = MONO[slug] || slug.slice(0,2).toUpperCase();
+      var ct2 = svgEl('text', {x:NET_CX, y:NET_CY+14, 'text-anchor':'middle', 'class':'net-name net-name-c'}); ct2.textContent = me.tag;
+      c.appendChild(ct1); c.appendChild(ct2);
+      var ctitle = svgEl('title', {}); ctitle.textContent = me.name + '（当前）'; c.appendChild(ctitle);
+      svg.appendChild(c);
+      nodes[i].innerHTML = '';
+      nodes[i].appendChild(svg);
+    }
+  }
+  /* ---------- skills-domain radar (injected) ---------- */
+  var DOMAINS = {
+    'pyconometrics':'计量经济','quantlab':'量化金融','dsgepy':'宏观建模','macrodatahub':'宏观建模',
+    'policysim':'宏观建模','city-compare':'城市实证','express-consumption':'城市实证',
+    'causal-inference-ml':'因果推断','mcp-financial-data':'量化金融','econ-dashboard':'数据看板'
+  };
+  var RADAR_AXES = ['计量经济','量化金融','宏观建模','城市实证','因果推断','数据看板'];
+  function renderRadar(){
+    var nodes = document.querySelectorAll('[data-radar]');
+    if(!nodes.length) return;
+    var counts = {};
+    for(var s in DOMAINS){ var d = DOMAINS[s]; counts[d] = (counts[d]||0) + 1; }
+    var max = 1; for(var a=0;a<RADAR_AXES.length;a++){ max = Math.max(max, counts[RADAR_AXES[a]]||0); }
+    var W=380, H=320, cx=W/2, cy=H/2+8, R=110, n=RADAR_AXES.length;
+    function pt(idx, val){
+      var ang = (-90 + idx*(360/n)) * Math.PI/180;
+      var r = R * (val/max);
+      return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+    }
+    var svg = svgEl('svg', {viewBox:'0 0 '+W+' '+H, 'class':'radar-svg', role:'img', 'aria-label':'能力域分布雷达图'});
+    // grid rings
+    for(var ring=1; ring<=max; ring++){
+      var pts = [];
+      for(var i2=0;i2<n;i2++){ var q = pt(i2, ring); pts.push(q[0].toFixed(1)+','+q[1].toFixed(1)); }
+      svg.appendChild(svgEl('polygon', {points:pts.join(' '), 'class':'radar-grid'}));
+    }
+    // axes + labels
+    for(var i3=0;i3<n;i3++){
+      var edge = pt(i3, max);
+      svg.appendChild(svgEl('line', {x1:cx, y1:cy, x2:edge[0], y2:edge[1], 'class':'radar-axis'}));
+      var lp = pt(i3, max*1.18);
+      var lab = svgEl('text', {x:lp[0], y:lp[1]+4, 'text-anchor':'middle', 'class':'radar-label'});
+      lab.textContent = RADAR_AXES[i3];
+      svg.appendChild(lab);
+      var cnt = svgEl('text', {x:lp[0], y:lp[1]+18, 'text-anchor':'middle', 'class':'radar-count'});
+      cnt.textContent = (counts[RADAR_AXES[i3]]||0) + ' 个';
+      svg.appendChild(cnt);
+    }
+    // data polygon
+    var dpts = [];
+    for(var i4=0;i4<n;i4++){ var dp = pt(i4, counts[RADAR_AXES[i4]]||0); dpts.push(dp[0].toFixed(1)+','+dp[1].toFixed(1)); }
+    svg.appendChild(svgEl('polygon', {points:dpts.join(' '), 'class':'radar-area'}));
+    for(var i5=0;i5<n;i5++){ var dp2 = pt(i5, counts[RADAR_AXES[i5]]||0); svg.appendChild(svgEl('circle', {cx:dp2[0], cy:dp2[1], r:3.5, 'class':'radar-dot'})); }
+    for(var h=0;h<nodes.length;h++){ nodes[h].innerHTML=''; nodes[h].appendChild(svg.cloneNode(true)); }
+  }
+  /* ---------- README / content image lightbox (injected) ---------- */
+  var lbOv = null;
+  function lbEnsure(){
+    if(lbOv) return;
+    lbOv = document.createElement('div'); lbOv.className = 'lb-overlay';
+    lbOv.innerHTML = '<div class="lb-wrap"><img class="lb-img" alt=""><div class="lb-cap"></div><div class="lb-hint">点击任意处关闭 · Esc</div></div>';
+    document.body.appendChild(lbOv);
+    lbOv.addEventListener('click', lbClose);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') lbClose(); });
+  }
+  function lbOpen(src, cap){
+    lbEnsure();
+    lbOv.querySelector('.lb-img').src = src;
+    lbOv.querySelector('.lb-cap').textContent = cap || '';
+    lbOv.classList.add('open');
+  }
+  function lbClose(){ if(lbOv) lbOv.classList.remove('open'); }
+  function initLightbox(){
+    document.addEventListener('click', function(e){
+      var img = e.target && e.target.closest ? e.target.closest('.readme img, .markdown-body img, .pd-net img') : null;
+      if(!img) return;
+      e.preventDefault();
+      var src = img.getAttribute('data-canonical-src') || img.src;
+      lbOpen(src, img.getAttribute('alt') || '');
+    });
+  }
+  function boot(){ fillGalleries(); initResumeSwitch(); renderNetwork(); renderRadar(); initLightbox(); }
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); }
   else { boot(); }
 })();

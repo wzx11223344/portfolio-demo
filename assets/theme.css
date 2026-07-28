@@ -656,3 +656,36 @@ footer .award strong{color:var(--ink)}
 .rs-page:hover{border-color:var(--ink);box-shadow:0 0 18px rgba(8,145,178,.22)}
 .pd-gallery{margin:4px 0 26px}
 
+/* ---------- project relationship network graph (injected) ---------- */
+.pd-net{display:flex;justify-content:center;margin:6px 0 28px}
+.net-svg{width:100%;max-width:540px;height:auto;font-family:var(--font-mono)}
+.net-edge{stroke:var(--border-hi);stroke-width:1.5}
+.net-mono{font:700 13px/1 var(--font-mono);fill:var(--text-dim);letter-spacing:.5px}
+.net-name{font:600 11px/1 system-ui,'PingFang SC',sans-serif;fill:var(--text-dim)}
+.net-mono-c{fill:var(--ink);font-size:15px}
+.net-name-c{fill:var(--ink)}
+.net-node{cursor:pointer;transition:.18s}
+.net-node:hover circle{fill-opacity:.34}
+.net-node:hover .net-name{fill:var(--ink)}
+.net-center{pointer-events:none}
+
+/* ---------- skills-domain radar (injected) ---------- */
+.skill-radar{display:flex;justify-content:center;margin:6px 0 14px}
+.radar-svg{width:100%;max-width:380px;height:auto}
+.radar-grid{fill:none;stroke:var(--border);stroke-width:1}
+.radar-axis{stroke:var(--border-hi);stroke-width:1}
+.radar-area{fill:var(--cyan);fill-opacity:.18;stroke:var(--cyan);stroke-width:2}
+.radar-dot{fill:var(--cyan)}
+.radar-label{font:600 12px/1 system-ui,'PingFang SC',sans-serif;fill:var(--text-dim)}
+.radar-count{font:600 11px/1 var(--font-mono);fill:var(--ink)}
+
+/* ---------- content image lightbox (injected) ---------- */
+.lb-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+  background:rgba(8,15,30,.86);backdrop-filter:blur(6px);padding:5vh 5vw;cursor:zoom-out}
+.lb-overlay.open{display:flex;animation:lbFade .16s ease}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+.lb-wrap{max-width:92vw;max-height:92vh;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lb-img{max-width:92vw;max-height:80vh;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.5);background:#fff}
+.lb-cap{color:#e2e8f0;font:600 13px/1.4 system-ui,'PingFang SC',sans-serif;text-align:center}
+.lb-hint{color:#94a3b8;font:500 11px/1 system-ui,sans-serif;letter-spacing:1px}
+
