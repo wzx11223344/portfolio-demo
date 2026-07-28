@@ -679,6 +679,26 @@ footer .award strong{color:var(--ink)}
 .radar-label{font:600 12px/1 system-ui,'PingFang SC',sans-serif;fill:var(--text-dim)}
 .radar-count{font:600 11px/1 var(--font-mono);fill:var(--ink)}
 
+/* ---------- project mini-radar (injected) ---------- */
+.pd-miniradar{margin:8px 0 30px}
+.miniradar-svg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+.miniradar-grid{fill:none;stroke:var(--border);stroke-width:1}
+.miniradar-axis{stroke:var(--border-hi);stroke-width:1}
+.miniradar-label{font-size:12px;fill:var(--text-dim)}
+.miniradar-area{fill-opacity:.22;stroke:var(--cyan);stroke-width:2}
+.miniradar-dot{fill:var(--cyan);stroke:var(--bg);stroke-width:1.5}
+
+/* ---------- project timeline by month (injected) ---------- */
+.proj-timeline{margin:8px 0 36px}
+.tl-wrap{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;justify-content:center}
+.tl-node{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:180px;max-width:420px;flex:1 1 220px}
+.tl-month{font:700 15px/1 var(--font-mono);color:var(--cyan);letter-spacing:1px;padding:8px 16px;border:1px solid var(--border);border-radius:999px;background:var(--surface-glass)}
+.tl-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tl-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:8px;background:var(--surface-glass);border:1px solid var(--border);color:var(--ink);font-size:13px;text-decoration:none;transition:.15s}
+.tl-chip:hover{border-color:var(--cyan);box-shadow:0 0 14px rgba(8,145,178,.25)}
+.tl-mono{font:600 11px/1 var(--font-mono);color:var(--rc,var(--cyan));letter-spacing:1px}
+.tl-connector{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent);margin-top:38px;opacity:.55}
+
 /* ---------- content image lightbox (injected) ---------- */
 .lb-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
   background:rgba(8,15,30,.86);backdrop-filter:blur(6px);padding:5vh 5vw;cursor:zoom-out}

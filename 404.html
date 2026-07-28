@@ -6,6 +6,15 @@
 <title>页面走丢了 · 万值翔 Portfolio</title>
 <script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%23f59e0b'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%23f59e0b'/%3E%3C/svg%3E">
+<meta property="og:title" content="页面走丢了 · 万值翔 Portfolio">
+<meta property="og:description" content="万值翔 · 华东师范大学经济学 · 80+ 开源仓库 · B站 650.7万 播放 · 真实项目与岗位作品集">
+<meta property="og:url" content="https://wzx11223344.github.io/portfolio-demo/404.html">
+<meta property="og:image" content="https://wzx11223344.github.io/portfolio-demo/shots/og-root.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="页面走丢了 · 万值翔 Portfolio">
+<meta name="twitter:description" content="万值翔 · 华东师范大学经济学 · 80+ 开源仓库 · B站 650.7万 播放 · 真实项目与岗位作品集">
+<meta name="twitter:image" content="https://wzx11223344.github.io/portfolio-demo/shots/og-root.png">
 <link rel="stylesheet" href="assets/theme.css">
 <style>
 .err-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;padding:40px}
@@ -20,10 +29,27 @@
 <div class="err-wrap">
   <div class="err-code">404</div>
   <p class="err-sub">这个页面好像去参加秋招了，暂时找不到。<br>不如回主页看看我的真实项目与岗位作品集？</p>
-  <div class="err-actions">
-    <a class="btn" href="index.html">🏠 技术能力展示</a>
-    <a class="btn ghost" href="positions/index.html">👤 个人主页 / 岗位作品集</a>
+    <div class="resume-switch-wrap" style="margin-top:10px">
+    <span class="rs-label">切换岗位简历</span>
+    <select id="resumeSwitch" class="resume-switch">
+      <option value="general">通用版</option>
+      <option value="bank">银行方向</option>
+      <option value="finance">财务/金融</option>
+      <option value="state">国企政府</option>
+      <option value="internet">互联网运营</option>
+      <option value="hr">人事方向</option>
+    </select>
+  </div>
+  <div class="err-actions" style="margin-top:12px">
+    <a class="btn js-resume" data-fmt="pdf" href="resumes/general-resume.pdf" target="_blank">🗎 预览简历 (PDF)</a>
+    <a class="btn ghost js-resume" data-fmt="docx" href="resumes/general-resume.docx" download>⬇ 下载 Word</a>
+    <a class="btn ghost js-resume-page" href="positions/general.html">📂 通用岗位作品集</a>
+  </div>
+  <div style="margin-top:30px;width:min(420px,90vw)">
+    <div class="pd-section-title" style="font-size:13px;margin-bottom:8px">能力域分布</div>
+    <div class="skill-radar" data-radar></div>
   </div>
 </div>
+  <script src="assets/app.js"></script>
 </body>
 </html>

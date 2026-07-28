@@ -638,6 +638,75 @@
     for(var i5=0;i5<n;i5++){ var dp2 = pt(i5, counts[RADAR_AXES[i5]]||0); svg.appendChild(svgEl('circle', {cx:dp2[0], cy:dp2[1], r:3.5, 'class':'radar-dot'})); }
     for(var h=0;h<nodes.length;h++){ nodes[h].innerHTML=''; nodes[h].appendChild(svg.cloneNode(true)); }
   }
+  /* ---------- project mini-radar (injected) ---------- */
+  // Capability emphasis (0-3) per project, estimated from tag/description. For relative viz only.
+  var PROJ_RADAR = {
+    'pyconometrics':       [3,1,1,0,2,1],
+    'quantlab':            [1,3,0,0,1,1],
+    'dsgepy':              [1,1,3,0,0,1],
+    'macrodatahub':        [1,0,2,1,0,2],
+    'policysim':           [2,0,3,1,2,1],
+    'city-compare':        [1,0,1,3,0,2],
+    'express-consumption': [2,0,0,2,1,1],
+    'causal-inference-ml': [2,1,0,0,3,1],
+    'mcp-financial-data':  [0,2,0,0,1,2],
+    'econ-dashboard':      [1,1,1,2,0,3]
+  };
+  var MR_W=340, MR_H=260, MR_R=85, MR_MAX=3;
+  function renderMiniRadar(){
+    var nodes = document.querySelectorAll('[data-miniradar]');
+    for(var i=0;i<nodes.length;i++){
+      var slug = nodes[i].getAttribute('data-miniradar');
+      var me = PROJECTS[slug]; var vals = PROJ_RADAR[slug]; if(!me || !vals) continue;
+      var cx=MR_W/2, cy=MR_H/2+4, n=RADAR_AXES.length;
+      function pt(idx,val){
+        var ang = (-90 + idx*(360/n)) * Math.PI/180;
+        var r = MR_R * (val/MR_MAX);
+        return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+      }
+      var svg = svgEl('svg', {viewBox:'0 0 '+MR_W+' '+MR_H, 'class':'miniradar-svg', role:'img', 'aria-label':me.name+' 能力子雷达'});
+      for(var ring=1; ring<=MR_MAX; ring++){
+        var pts=[];
+        for(var a=0;a<n;a++){ var q=pt(a,ring); pts.push(q[0].toFixed(1)+','+q[1].toFixed(1)); }
+        svg.appendChild(svgEl('polygon', {points:pts.join(' '), 'class':'miniradar-grid'}));
+      }
+      for(var b=0;b<n;b++){
+        var edge = pt(b, MR_MAX);
+        svg.appendChild(svgEl('line', {x1:cx, y1:cy, x2:edge[0], y2:edge[1], 'class':'miniradar-axis'}));
+        var lp = pt(b, MR_MAX*1.16);
+        var lab = svgEl('text', {x:lp[0], y:lp[1]+3, 'text-anchor':'middle', 'class':'miniradar-label'});
+        lab.textContent = RADAR_AXES[b]; svg.appendChild(lab);
+      }
+      var dpts=[];
+      for(var c=0;c<n;c++){ var dp=pt(c, vals[c]); dpts.push(dp[0].toFixed(1)+','+dp[1].toFixed(1)); }
+      var area = svgEl('polygon', {points:dpts.join(' '), 'class':'miniradar-area', style:'fill:'+me.rc});
+      svg.appendChild(area);
+      for(var d=0;d<n;d++){ var dp2=pt(d, vals[d]); svg.appendChild(svgEl('circle', {cx:dp2[0], cy:dp2[1], r:3, 'class':'miniradar-dot'})); }
+      nodes[i].innerHTML = ''; nodes[i].appendChild(svg);
+    }
+  }
+  /* ---------- project timeline by month (injected) ---------- */
+  function renderTimeline(){
+    var nodes = document.querySelectorAll('[data-timeline]'); if(!nodes.length) return;
+    var isPos = location.pathname.split('/').indexOf('positions') > -1;
+    var PP = isPos ? '../projects/' : 'projects/';
+    var groups = {};
+    for(var s in PROJECTS){ var p=PROJECTS[s]; groups[p.upd] = (groups[p.upd] || []).concat(s); }
+    var months = Object.keys(groups).sort();
+    var html = '<div class="tl-wrap">';
+    for(var i=0;i<months.length;i++){
+      var m = months[i]; var slugs = groups[m];
+      html += '<div class="tl-node"><div class="tl-month">'+m+'</div><div class="tl-chips">';
+      for(var j=0;j<slugs.length;j++){
+        var p = PROJECTS[slugs[j]];
+        html += '<a class="tl-chip" href="'+PP+slugs[j]+'.html" style="--rc:'+p.rc+'"><span class="tl-mono">'+(MONO[slugs[j]] || slugs[j].slice(0,2).toUpperCase())+'</span><span>'+p.name+'</span></a>';
+      }
+      html += '</div></div>';
+      if(i < months.length-1){ html += '<div class="tl-connector"></div>'; }
+    }
+    html += '</div>';
+    for(var k=0;k<nodes.length;k++){ nodes[k].innerHTML = html; }
+  }
   /* ---------- README / content image lightbox (injected) ---------- */
   var lbOv = null;
   function lbEnsure(){
@@ -664,7 +733,7 @@
       lbOpen(src, img.getAttribute('alt') || '');
     });
   }
-  function boot(){ fillGalleries(); initResumeSwitch(); renderNetwork(); renderRadar(); initLightbox(); }
+  function boot(){ fillGalleries(); initResumeSwitch(); renderNetwork(); renderRadar(); renderMiniRadar(); renderTimeline(); initLightbox(); }
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); }
   else { boot(); }
 })();
