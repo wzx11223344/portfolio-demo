@@ -1,0 +1,39 @@
+name: Refresh GitHub repo data
+
+on:
+  schedule:
+    # Weekly, Monday 04:17 UTC (off-peak, avoids the :00 spike)
+    - cron: '17 4 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # `gh` CLI is preinstalled on GitHub-hosted runners.
+      - name: Refresh gh-data.js from real GitHub metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/build_gh_data.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet assets/gh-data.js; then
+            git add assets/gh-data.js
+            git commit -m "chore: auto-refresh GitHub repo data (stars/commits/tree)"
+            git push
+            echo "pushed updated gh-data.js"
+          else
+            echo "no changes to gh-data.js"
+          fi

@@ -24,7 +24,7 @@
     }
     var col = palette();
     if(typeof MutationObserver!=='undefined'){
-      new MutationObserver(function(){ col = palette(); }).observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
+      new MutationObserver(function(){ col = palette(); if(reduce) draw(); }).observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
     }
     function resize(){
       w = c.width = Math.floor(innerWidth*dpr);
@@ -34,21 +34,25 @@
       pts = [];
       for(var i=0;i<count;i++){ pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*0.22*dpr,vy:(Math.random()-.5)*0.22*dpr,r:(Math.random()*1.6+0.6)*dpr}); }
     }
-    function step(){
+    function draw(){
       ctx.clearRect(0,0,w,h);
       var R = 130*dpr;
       for(var i=0;i<pts.length;i++){
-        var p = pts[i]; p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+        var p = pts[i];
+        if(!reduce){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1; }
         ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fillStyle=col.dot; ctx.fill();
         for(var j=i+1;j<pts.length;j++){
           var q=pts[j], dx=p.x-q.x, dy=p.y-q.y, d=Math.sqrt(dx*dx+dy*dy);
           if(d<R){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.strokeStyle=col.line(0.12*(1-d/R)); ctx.lineWidth=1; ctx.stroke(); }
         }
       }
-      requestAnimationFrame(step);
     }
-    resize(); addEventListener('resize', resize); step();
+    function loop(){ draw(); rafId = requestAnimationFrame(loop); }
+    var rafId = null;
+    function onVis(){ if(document.hidden){ if(rafId) cancelAnimationFrame(rafId); rafId=null; } else if(rafId===null && !reduce){ rafId = requestAnimationFrame(loop); } }
+    resize(); addEventListener('resize', resize);
+    if(reduce){ draw(); addEventListener('resize', draw); }   // 静态单帧：尊重 prefers-reduced-motion
+    else { loop(); document.addEventListener('visibilitychange', onVis); }   // 后台标签页暂停，省电
   })();
 
   /* ---------- scroll progress ---------- */
@@ -529,7 +533,9 @@
   function card(s){
     var p = PROJECTS[s]; if(!p) return '';
     var page = '../projects/' + s + '.html';
-    var star = p.stars > 0 ? ('★ ' + p.stars) : '🌱 新建';
+    var gh = (window.GH_DATA && window.GH_DATA[s]) || null;   // 优先用真实 GitHub 数据，与详情页一致
+    var stars = gh ? gh.stars : p.stars;
+    var star = stars > 0 ? ('★ ' + stars) : '🌱 新建';
     var fork = p.fork > 0 ? ('⑂ ' + p.fork) : '🔧 可复刻';
     return '<div class="proj-card">'
       + '<div class="proj-thumb" style="--rc:' + p.rc + '"><span class="pt-mono">' + (MONO[s] || s.slice(0,2).toUpperCase()) + '</span><span class="pt-name">' + p.name + '</span><span class="pt-lang">' + p.lang + '</span></div>'
