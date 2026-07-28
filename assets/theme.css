@@ -750,6 +750,24 @@ footer .award strong{color:var(--ink)}
 .gh-file .gh-count{margin-left:auto;font-size:11px;color:var(--text-faint)}
 .gh-children{flex:1 1 100%;margin-left:16px;padding-left:12px;border-left:1px dashed var(--border-hi)}
 
+/* ── monthly commit aggregation (real data) ── */
+.gh-monthly{display:flex;align-items:flex-end;gap:10px;padding:6px 4px 16px;margin:0 0 14px;border-bottom:1px dashed var(--border)}
+.gh-mbar{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:96px}
+.gh-mcnt{font:700 11px/1 var(--font-mono);color:var(--ink)}
+.gh-mbar-fill{width:100%;max-width:36px;background:var(--grad);border-radius:6px 6px 3px 3px;min-height:6px;transition:height .3s ease}
+.gh-mlab{font:600 10px/1 var(--font-mono);color:var(--text-faint);white-space:nowrap}
+
+/* ── mobile overflow hardening (real-device measured) ── */
+/* Off-canvas .nav-inner (translateX 102%) and README tables used to push
+   document scrollWidth to ~758px on phones → horizontal swipe / zoom risk.
+   clip (not hidden) so position:sticky nav keeps working. */
+html,body{overflow-x:hidden}
+@supports (overflow-x:clip){ html,body{overflow-x:clip} }
+/* README API tables have min-content wider than the column: make them scroll
+   horizontally inside their own container instead of widening the page. */
+markdown-accessiblity-table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+
 /* ── responsive refinements (mobile) ── */
 @media(max-width:640px){
   .proj-timeline .tl-wrap{flex-direction:column;align-items:stretch}

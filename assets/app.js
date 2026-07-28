@@ -771,10 +771,34 @@
     for(var i=0;i<nodes.length;i++){
       var slug = nodes[i].getAttribute('data-gh');
       var rec = GH[slug];
+      // ① header stars rendered from real GitHub data (not hardcoded)
+      var starEl = document.querySelector('.pd-stats span:first-child');
+      if(starEl && rec && !rec.error){
+        var st = rec.stars || 0;
+        starEl.innerHTML = st > 0 ? ('⭐ Stars <b>'+st+'</b>') : '🌱 新建仓库';
+      }
       if(!rec || rec.error){ nodes[i].innerHTML = '<div class="gh-empty">暂无可展示的仓库数据</div>'; continue; }
       var total = rec.total_commits || (rec.commits ? rec.commits.length : 0);
-      var html = '<div class="gh-block"><div class="gh-block-title">贡献时间线 <span class="gh-meta">真实 commit · 共 '+total+' 次提交</span></div><div class="gh-timeline">';
       var cs = rec.commits || [];
+      // ② monthly aggregation view (real commits grouped by YYYY-MM)
+      var monthly = {};
+      for(var m0=0;m0<cs.length;m0++){ var mk=(cs[m0].date||'').slice(0,7); if(mk) monthly[mk]=(monthly[mk]||0)+1; }
+      var monthKeys = Object.keys(monthly).sort();
+      var monthlyHtml = '';
+      if(monthKeys.length){
+        var maxCnt = 1;
+        for(var m1=0;m1<monthKeys.length;m1++){ maxCnt = Math.max(maxCnt, monthly[monthKeys[m1]]); }
+        monthlyHtml = '<div class="gh-monthly">';
+        for(var m2=0;m2<monthKeys.length;m2++){
+          var k = monthKeys[m2], cnt = monthly[k], bh = Math.max(6, Math.round(cnt/maxCnt*64));
+          monthlyHtml += '<div class="gh-mbar" title="'+k+' · '+cnt+' 次提交">'
+            + '<span class="gh-mcnt">'+cnt+'</span>'
+            + '<span class="gh-mbar-fill" style="height:'+bh+'px"></span>'
+            + '<span class="gh-mlab">'+k.slice(2)+'</span></div>';
+        }
+        monthlyHtml += '</div>';
+      }
+      var html = '<div class="gh-block"><div class="gh-block-title">贡献时间线 <span class="gh-meta">真实 commit · 共 '+total+' 次提交</span></div>'+monthlyHtml+'<div class="gh-timeline">';
       if(!cs.length){ html += '<div class="gh-empty">暂无提交记录</div>'; }
       for(var c=0;c<cs.length;c++){
         var cm = cs[c];
