@@ -2150,5 +2150,126 @@ window.GH_DATA = {
         ]
       }
     ]
+  },
+  "smart-factory-dashboard": {
+    "branch": "main",
+    "pushed_at": "2026-07-29T14:48:43Z",
+    "created_at": "2026-07-29T14:43:37Z",
+    "stars": 0,
+    "license": "MIT",
+    "language": "HTML",
+    "description": "智能工厂能级提升·全流程可观测与指挥平台：生产指挥中心大屏(10屏)+FastAPI后端+MES/SCADA/RTSP 真实数据接入层",
+    "total_commits": 2,
+    "commits": [
+      {
+        "date": "2026-07-29",
+        "sha": "80353db",
+        "msg": "docs: 补充两个在线演示地址（GitHub Pages + CloudStudio）",
+        "url": "https://github.com/wzx11223344/smart-factory-dashboard/commit/80353dbf362394ff19f34b3121679fa041d19b98"
+      },
+      {
+        "date": "2026-07-29",
+        "sha": "7b29689",
+        "msg": "智能工厂能级提升·全流程可观测与指挥平台：大屏看板(10屏)+后端+MES/SCADA/RTSP 接入",
+        "url": "https://github.com/wzx11223344/smart-factory-dashboard/commit/7b296890d5e9ad7022e903e9551d5172ef0cd8ec"
+      }
+    ],
+    "tree": [
+      {
+        "type": "blob",
+        "name": ".gitignore",
+        "size": 127
+      },
+      {
+        "type": "blob",
+        "name": "Dockerfile",
+        "size": 431
+      },
+      {
+        "type": "blob",
+        "name": "LICENSE",
+        "size": 1068
+      },
+      {
+        "type": "blob",
+        "name": "README.md",
+        "size": 7384
+      },
+      {
+        "type": "blob",
+        "name": "RTSP_GATEWAY.md",
+        "size": 3684
+      },
+      {
+        "type": "tree",
+        "name": "app"
+      },
+      {
+        "type": "tree",
+        "name": "app",
+        "children": [
+          {
+            "type": "blob",
+            "name": "app.js",
+            "size": 9868
+          },
+          {
+            "type": "blob",
+            "name": "index.html",
+            "size": 5441
+          },
+          {
+            "type": "blob",
+            "name": "styles.css",
+            "size": 7801
+          }
+        ]
+      },
+      {
+        "type": "blob",
+        "name": "docker-compose.yml",
+        "size": 263
+      },
+      {
+        "type": "blob",
+        "name": "floor_layout.json",
+        "size": 4608
+      },
+      {
+        "type": "blob",
+        "name": "index.html",
+        "size": 60002
+      },
+      {
+        "type": "blob",
+        "name": "integration.json",
+        "size": 484
+      },
+      {
+        "type": "blob",
+        "name": "mes_adapter.py",
+        "size": 4973
+      },
+      {
+        "type": "blob",
+        "name": "requirements.txt",
+        "size": 43
+      },
+      {
+        "type": "blob",
+        "name": "server.py",
+        "size": 48662
+      },
+      {
+        "type": "blob",
+        "name": "大屏看板.html",
+        "size": 60002
+      },
+      {
+        "type": "blob",
+        "name": "大屏看板_离线版.html",
+        "size": 36071
+      }
+    ]
   }
 };

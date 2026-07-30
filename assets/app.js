@@ -499,23 +499,25 @@
     'express-consumption': {name:'express-consumption', tag:'实证研究', desc:'正大杯全国大赛 1,352 份问卷计量建模可复现代码（LPM / Logistic / 回归），完整数据处理 pipeline。', lang:'Python', rc:'#ef4444', stars:0, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/express-consumption'},
     'causal-inference-ml': {name:'causal-inference-ml', tag:'因果推断', desc:'因果机器学习方法：Double ML / Causal Forest，衔接计量经济学与现代 ML 估计。', lang:'Python', rc:'#14b8a6', stars:1, fork:0, upd:'2026-06', github:'https://github.com/wzx11223344/causal-inference-ml'},
     'mcp-financial-data':  {name:'mcp-financial-data',  tag:'AI 工程',  desc:'金融数据 MCP 服务器：把行情、财报、宏观等数据能力封装为 Agent 可调用的标准接口。', lang:'Python', rc:'#6366f1', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/mcp-financial-data'},
-    'econ-dashboard':      {name:'econ-dashboard',      tag:'经济看板', desc:'交互式经济数据看板：GDP/CPI/PMI 跨国对比与宏观趋势可视化，Streamlit 多页面应用。', lang:'Python', rc:'#0EA5E9', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/econ-dashboard'}
+    'econ-dashboard':      {name:'econ-dashboard',      tag:'经济看板', desc:'交互式经济数据看板：GDP/CPI/PMI 跨国对比与宏观趋势可视化，Streamlit 多页面应用。', lang:'Python', rc:'#0EA5E9', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/econ-dashboard'},
+    'smart-factory-dashboard': {name:'smart-factory-dashboard', tag:'工业看板', desc:'智能工厂全流程可观测与指挥平台：生产指挥中心大屏（10 屏）+ FastAPI 后端 + MES/SCADA/RTSP 真实数据接入层。', lang:'HTML', rc:'#0EA5E9', stars:0, fork:0, upd:'2026-07', github:'https://github.com/wzx11223344/smart-factory-dashboard'}
   };
   var MONO = {
     'pyconometrics':'PY','quantlab':'QU','dsgepy':'DS','macrodatahub':'MA','policysim':'PO',
-    'city-compare':'CI','express-consumption':'EX','causal-inference-ml':'CA','mcp-financial-data':'MC','econ-dashboard':'EC'
+    'city-compare':'CI','express-consumption':'EX','causal-inference-ml':'CA','mcp-financial-data':'MC','econ-dashboard':'EC','smart-factory-dashboard':'SF'
   };
   var RELATED = {
     'pyconometrics':       ['quantlab','causal-inference-ml','econ-dashboard','dsgepy'],
     'quantlab':            ['pyconometrics','econ-dashboard','mcp-financial-data','dsgepy'],
     'dsgepy':              ['pyconometrics','quantlab','macrodatahub','policysim'],
-    'macrodatahub':        ['econ-dashboard','dsgepy','city-compare','policysim'],
+    'macrodatahub':        ['econ-dashboard','dsgepy','city-compare','policysim','smart-factory-dashboard'],
     'policysim':           ['dsgepy','macrodatahub','city-compare','express-consumption'],
-    'city-compare':        ['macrodatahub','causal-inference-ml','express-consumption','econ-dashboard'],
+    'city-compare':        ['macrodatahub','causal-inference-ml','express-consumption','econ-dashboard','smart-factory-dashboard'],
     'express-consumption': ['causal-inference-ml','city-compare','econ-dashboard','macrodatahub'],
     'causal-inference-ml': ['pyconometrics','express-consumption','city-compare','econ-dashboard'],
     'mcp-financial-data':  ['quantlab','econ-dashboard','pyconometrics','macrodatahub'],
-    'econ-dashboard':      ['quantlab','macrodatahub','city-compare','pyconometrics']
+    'econ-dashboard':      ['quantlab','macrodatahub','city-compare','pyconometrics','smart-factory-dashboard'],
+    'smart-factory-dashboard': ['econ-dashboard','macrodatahub','city-compare','pyconometrics']
   };
   var POS_PROJECTS = {
     'bank':    ['quantlab','econ-dashboard','mcp-financial-data','dsgepy','pyconometrics'],
@@ -632,7 +634,7 @@
   var DOMAINS = {
     'pyconometrics':'计量经济','quantlab':'量化金融','dsgepy':'宏观建模','macrodatahub':'宏观建模',
     'policysim':'宏观建模','city-compare':'城市实证','express-consumption':'城市实证',
-    'causal-inference-ml':'因果推断','mcp-financial-data':'量化金融','econ-dashboard':'数据看板'
+    'causal-inference-ml':'因果推断','mcp-financial-data':'量化金融','econ-dashboard':'数据看板','smart-factory-dashboard':'数据看板'
   };
   var RADAR_AXES = ['计量经济','量化金融','宏观建模','城市实证','因果推断','数据看板'];
   function renderRadar(){
@@ -685,7 +687,8 @@
     'express-consumption': [2,0,0,2,1,1],
     'causal-inference-ml': [2,1,0,0,3,1],
     'mcp-financial-data':  [0,2,0,0,1,2],
-    'econ-dashboard':      [1,1,1,2,0,3]
+    'econ-dashboard':      [1,1,1,2,0,3],
+    'smart-factory-dashboard': [0,0,0,0,0,3]
   };
   var MR_W=340, MR_H=260, MR_R=85, MR_MAX=3;
   function renderMiniRadar(){

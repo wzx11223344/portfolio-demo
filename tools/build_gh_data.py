@@ -24,7 +24,7 @@ OWNER = "wzx11223344"
 REPOS = [
     "pyconometrics", "quantlab", "dsgepy", "macrodatahub", "policysim",
     "city-compare", "express-consumption", "causal-inference-ml",
-    "mcp-financial-data", "econ-dashboard",
+    "mcp-financial-data", "econ-dashboard", "smart-factory-dashboard",
 ]
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "gh-data.js")
