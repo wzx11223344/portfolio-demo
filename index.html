@@ -259,6 +259,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
     <a href="#hero" class="active">首页</a>
     <a href="#featured">精选项目</a>
     <a href="#opensource">全部开源</a>
+    <a href="#industry">工业可视化</a>
     <a href="#skills">技能</a>
     <a href="positions/index.html">岗位作品集 →</a>
   </div>
@@ -268,7 +269,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <!-- ==================== HERO ==================== -->
 <section id="hero">
 <h1 class="hero-name">万值翔</h1>
-<div class="hero-subtitle" id="typewriter">华东师范大学 · 经济学 2027 届 · 计量经济学与量化金融的从零实现开源实践</div>
+<div class="hero-subtitle" id="typewriter">华东师范大学 · 经济学 2027 届 · 计量经济学、量化金融与工业级数据可视化的从零实现开源实践</div>
 <div class="hero-tags">
 <span>TRAE插件生态</span><span>MCP架构</span><span>全栈工程</span>
 <span>量化金融</span><span>计算机图形学</span><span>高性能计算</span>
@@ -302,7 +303,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <!-- ==================== FEATURED PROJECTS ==================== -->
 <section id="featured" class="reveal">
   <div class="section-title"><span class="section-index">&#9733;</span><h2>精选<span class="hl">项目</span></h2></div>
-  <div class="section-subtitle">// 从零实现的开源工具链 —— 计量 · 量化 · 宏观 · 因果推断；点卡片查看完整 README 与截图</div>
+  <div class="section-subtitle">// 从零实现的开源工具链 —— 计量 · 量化 · 宏观 · 因果推断 · 工业数据可视化；点卡片查看完整 README 与实时演示</div>
   <div class="proj-grid">
     <div class="proj-card" data-tilt>
       <div class="proj-shot"><img src="assets/shots/city-compare-default.png" alt="city-compare 实时预览" loading="lazy"><span class="ps-badge live">Streamlit · 已部署</span></div>
@@ -338,6 +339,34 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
       <div class="proj-top"><span class="proj-name">smart-factory-dashboard</span><span class="proj-tag">工业看板</span></div>
       <div class="proj-desc">智能工厂全流程可观测与指挥平台：生产指挥中心大屏（10 屏）+ FastAPI 后端 + MES/SCADA/RTSP 真实数据接入层。</div>
       <div class="proj-meta"><a href="https://github.com/wzx11223344/smart-factory-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/smart-factory-dashboard.html">查看详情 →</a><a href="https://wzx11223344.github.io/smart-factory-dashboard/" target="_blank">🔴 在线演示</a><a href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">国内直连</a><span>· HTML</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INDUSTRIAL VIZ SPOTLIGHT ==================== -->
+<section id="industry" class="reveal">
+  <div class="section-title"><span class="section-index">&#9881;</span><h2>工业级<span class="hl">可视化</span></h2></div>
+  <div class="section-subtitle">// 独立深介绍 —— 智能工厂全流程可观测与指挥平台，含真实在线演示入口</div>
+  <div class="spotlight">
+    <div class="spotlight-visual">
+      <span class="ps-badge live">🔴 Live Demo · 已部署</span>
+      <div class="spotlight-visual-cap">生产指挥中心 · 10 屏联动</div>
+    </div>
+    <div class="spotlight-body">
+      <h3>smart-factory-dashboard</h3>
+      <p class="spotlight-tag">智能工厂能级提升 · 全流程可观测与指挥平台</p>
+      <p>面向真实工厂场景的工业级可视化系统：生产指挥中心大屏（10 屏联动）+ FastAPI 后端数据服务 + 对接 MES / SCADA / RTSP 摄像头的真实数据接入层，实现从设备层到指挥层的端到端可观测。</p>
+      <ul class="spotlight-points">
+        <li>🖥 <b>10 屏生产指挥大屏</b>：OEE、产能、能耗、告警实时联动</li>
+        <li>🔌 <b>真实数据接入</b>：MES 工单、SCADA 点位、RTSP 视频流</li>
+        <li>🧩 <b>全栈架构</b>：HTML 大屏前端 + FastAPI 聚合服务</li>
+      </ul>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="https://github.com/wzx11223344/smart-factory-dashboard" target="_blank">🐙 GitHub 仓库</a>
+        <a class="btn" href="https://wzx11223344.github.io/smart-factory-dashboard/" target="_blank">🔴 在线演示</a>
+        <a class="btn" href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">🇨🇳 国内直连</a>
+        <a class="btn" href="projects/smart-factory-dashboard.html">查看详情 →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -477,6 +506,7 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
   const el=$('#typewriter'); if(!el) return;
   const texts=['不套壳、不调API凑数，每个项目从零实现',
     '经济学本科 · 计量与量化金融开源实践',
+    '智能工厂指挥大屏 · 工业级数据可视化与全栈实践',
     '正大杯 1,352 样本 · 上证杯 36% 净值增长',
     '国盛证券 / 经信委 / 联通 真实实习经历'];
   let ti=0,ci=0,deleting=false,ch='_';
