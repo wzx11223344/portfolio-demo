@@ -260,6 +260,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
     <a href="#featured">精选项目</a>
     <a href="#opensource">全部开源</a>
     <a href="#industry">工业可视化</a>
+    <a href="#hippocampus">记忆流</a>
     <a href="#skills">技能</a>
     <a href="positions/index.html">岗位作品集 →</a>
   </div>
@@ -303,7 +304,7 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
 <!-- ==================== FEATURED PROJECTS ==================== -->
 <section id="featured" class="reveal">
   <div class="section-title"><span class="section-index">&#9733;</span><h2>精选<span class="hl">项目</span></h2></div>
-  <div class="section-subtitle">// 从零实现的开源工具链 —— 计量 · 量化 · 宏观 · 因果推断 · 工业数据可视化；点卡片查看完整 README 与实时演示</div>
+  <div class="section-subtitle">// 从零实现的项目链 —— 计量 · 量化 · 宏观 · 因果推断 · 工业数据可视化 · Agent 记忆系统；点卡片查看详情与实时演示</div>
   <div class="proj-grid">
     <div class="proj-card" data-tilt>
       <div class="proj-shot"><img src="assets/shots/city-compare-default.png" alt="city-compare 实时预览" loading="lazy"><span class="ps-badge live">Streamlit · 已部署</span></div>
@@ -338,7 +339,17 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
       <div class="proj-thumb" style="--rc:#0EA5E9"><span class="pt-mono">SF</span><span class="pt-name">smart-factory</span><span class="pt-lang">HTML</span></div>
       <div class="proj-top"><span class="proj-name">smart-factory-dashboard</span><span class="proj-tag">工业看板</span></div>
       <div class="proj-desc">智能工厂全流程可观测与指挥平台：生产指挥中心大屏（10 屏）+ FastAPI 后端 + MES/SCADA/RTSP 真实数据接入层。</div>
-      <div class="proj-meta"><a href="https://github.com/wzx11223344/smart-factory-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/smart-factory-dashboard.html">查看详情 →</a><a href="https://wzx11223344.github.io/smart-factory-dashboard/" target="_blank">🔴 在线演示</a><a href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">国内直连</a><span>· HTML</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/smart-factory-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="projects/smart-factory-dashboard.html">查看详情 →</a><a href="https://wzx11223344.github.io/smart-factory-dashboard/" target="_blank">🔴 在线演示</a><a href="https://9b4a9004620c4d2b99481077cf6f4a94.gz5.agentos-app.net" target="_blank">国内直连</a><span>· HTML</span><span class="repo-stat"><b>★ 0</b><span class="dot"></span><b>⑂ 0</b><span class="dot"></span>更新 2026-07</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-shot">
+        <img src="assets/projects/hippocampus-memory-stream.png" alt="海马体记忆流交互可视化" loading="lazy">
+        <span class="ps-badge live">🔴 Live Demo · 已部署</span>
+      </div>
+      <div class="proj-thumb" style="--rc:#8B5CF6"><span class="pt-mono">HP</span><span class="pt-name">hippocampus</span><span class="pt-lang">Live</span></div>
+      <div class="proj-top"><span class="proj-name">hippocampus-memory-stream</span><span class="proj-tag">Agent 记忆</span></div>
+      <div class="proj-desc">以海马体神经环路为隐喻的 Agent 外部记忆中枢：点击节点查看记忆，相关记忆自动互联，42 个记忆节点实时流动。</div>
+      <div class="proj-meta"><a href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">🔴 在线演示</a> <a class="proj-detail" href="projects/hippocampus-memory-stream.html">查看详情 →</a><span>· Live Demo</span><span class="repo-stat">🧠 42 节点</span></div>
     </div>
   </div>
 </section>
@@ -364,8 +375,34 @@ section{padding:60px 0;border-bottom:1px solid var(--border)}
       <div class="btn-group">
         <a class="btn btn-primary" href="https://github.com/wzx11223344/smart-factory-dashboard" target="_blank">🐙 GitHub 仓库</a>
         <a class="btn" href="https://wzx11223344.github.io/smart-factory-dashboard/" target="_blank">🔴 在线演示</a>
-        <a class="btn" href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">🇨🇳 国内直连</a>
+        <a class="btn" href="https://9b4a9004620c4d2b99481077cf6f4a94.gz5.agentos-app.net" target="_blank">🇨🇳 国内直连</a>
         <a class="btn" href="projects/smart-factory-dashboard.html">查看详情 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HIPPOCAMPUS MEMORY STREAM ==================== -->
+<section id="hippocampus" class="reveal">
+  <div class="section-title"><span class="section-index">🧠</span><h2>海马体<span class="hl">记忆流</span></h2></div>
+  <div class="section-subtitle">// Agent 外部记忆中枢 —— 以海马体神经环路为隐喻的交互式记忆知识图谱</div>
+  <div class="spotlight">
+    <div class="spotlight-visual" style="background-image:url('assets/projects/hippocampus-memory-stream.png');background-size:cover;background-position:center">
+      <span class="ps-badge live">🔴 Live Demo · 已部署</span>
+      <div class="spotlight-visual-cap">交互式记忆网络 · 42 节点实时互联</div>
+    </div>
+    <div class="spotlight-body">
+      <h3>hippocampus-memory-stream</h3>
+      <p class="spotlight-tag">以海马体神经环路为隐喻的 Agent 外部记忆中枢</p>
+      <p>把 Agent 的长期记忆组织成一张可交互的神经环路图：信息像光点一样沿「内嗅皮层 → 齿状回 → CA3 → CA1 → 下托 → 自动沉淀」流动，点击任意节点即可查看记忆内容，相关记忆自动连线。</p>
+      <ul class="spotlight-points">
+        <li>🧠 <b>神经环路隐喻</b>：6 大脑区对应 Agent 记忆的不同处理阶段</li>
+        <li>🔗 <b>自动关联</b>：相关记忆节点自动互联，已连接 42 个记忆节点</li>
+        <li>🖱 <b>原生交互</b>：滚轮缩放、拖拽平移、点击节点查看详情</li>
+      </ul>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="https://14c618dbef3041478b3fdaf476de864d.gz5.agentos-app.net" target="_blank">🔴 在线演示</a>
+        <a class="btn" href="projects/hippocampus-memory-stream.html">查看详情 →</a>
       </div>
     </div>
   </div>

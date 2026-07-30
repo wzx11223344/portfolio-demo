@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wzx11223344.github.io/portfolio-demo/</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -110,6 +110,12 @@
   </url>
   <url>
     <loc>https://wzx11223344.github.io/portfolio-demo/projects/smart-factory-dashboard</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wzx11223344.github.io/portfolio-demo/projects/hippocampus-memory-stream</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
