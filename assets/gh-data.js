@@ -2153,14 +2153,32 @@ window.GH_DATA = {
   },
   "smart-factory-dashboard": {
     "branch": "main",
-    "pushed_at": "2026-07-29T14:48:43Z",
+    "pushed_at": "2026-07-30T12:02:10Z",
     "created_at": "2026-07-29T14:43:37Z",
     "stars": 0,
     "license": "MIT",
     "language": "HTML",
     "description": "智能工厂能级提升·全流程可观测与指挥平台：生产指挥中心大屏(10屏)+FastAPI后端+MES/SCADA/RTSP 真实数据接入层",
-    "total_commits": 2,
+    "total_commits": 5,
     "commits": [
+      {
+        "date": "2026-07-30",
+        "sha": "8df5188",
+        "msg": "docs: 明确国内访问优先用 CloudStudio（GitHub Pages 受 GFW 影响），并更新演示链接说明",
+        "url": "https://github.com/wzx11223344/smart-factory-dashboard/commit/8df5188ca27a18fc2cc976a81dc617f455c0ddd4"
+      },
+      {
+        "date": "2026-07-30",
+        "sha": "18af028",
+        "msg": "feat: 移动端适配 — 单列卡片流/横向滚动导航/大字号/全屏钻取面板/3D厂房降角度缩放 (≤768px & ≤420px)",
+        "url": "https://github.com/wzx11223344/smart-factory-dashboard/commit/18af02897b442c79ba9db7f69d1c5fb0f7a85cc2"
+      },
+      {
+        "date": "2026-07-30",
+        "sha": "d4fab20",
+        "msg": "v2: 延锋风格全面升级 — 3D等轴测数字孪生/仪表盘KPI/安全矩阵+金字塔/工艺流程链/PM完成率/缺陷饼图/钻取面板/差异化OEE/丰富告警类型/时间选择器/视频传感叠加",
+        "url": "https://github.com/wzx11223344/smart-factory-dashboard/commit/d4fab2037ca6a4127ef917f9f6f6925b52921b69"
+      },
       {
         "date": "2026-07-29",
         "sha": "80353db",
@@ -2193,7 +2211,7 @@ window.GH_DATA = {
       {
         "type": "blob",
         "name": "README.md",
-        "size": 7384
+        "size": 7735
       },
       {
         "type": "blob",
@@ -2238,7 +2256,7 @@ window.GH_DATA = {
       {
         "type": "blob",
         "name": "index.html",
-        "size": 60002
+        "size": 86863
       },
       {
         "type": "blob",
@@ -2263,7 +2281,7 @@ window.GH_DATA = {
       {
         "type": "blob",
         "name": "大屏看板.html",
-        "size": 60002
+        "size": 86863
       },
       {
         "type": "blob",
