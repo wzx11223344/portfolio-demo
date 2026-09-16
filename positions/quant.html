@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>万值翔 · 量化 / 数据科学方向 | 因子回测 · 组合优化 · 因果推断</title><script>(function(){try{var t=localStorage.getItem('pf-theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<meta name="description" content="万值翔 · 量化研究 / 数据科学方向真实作品集：从零实现计量经济学、因果推断与量化金融工具链，覆盖因子与回测、组合优化、期权定价、面板计量与贝叶斯推断；正大杯 1,352 份问卷计量建模可复现。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2307080e'/%3E%3Crect%20x='7'%20y='17'%20width='4'%20height='8'%20rx='1'%20fill='%2310b981'/%3E%3Crect%20x='14'%20y='11'%20width='4'%20height='14'%20rx='1'%20fill='%2310b981'/%3E%3Crect%20x='21'%20y='7'%20width='4'%20height='18'%20rx='1'%20fill='%2310b981'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/theme.css">
+<style>
+.card-title{color:#047857}
+.card-badge{color:#047857;border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.1)}
+.hero-name .accent{background:linear-gradient(135deg,#10b981,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .hl{background:linear-gradient(135deg,#10b981,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-row .hl{color:#047857}
+</style>
+<!--OG--><meta property="og:type" content="website">
+<meta property="og:title" content="万值翔 · 量化 / 数据科学方向">
+<meta property="og:description" content="量化研究 / 数据科学方向作品集 —— 从零实现的计量、因果与量化金融工具链。">
+<meta property="og:url" content="https://wzx11223344.github.io/portfolio-demo/positions/quant.html">
+<meta property="og:image" content="https://wzx11223344.github.io/portfolio-demo/shots/og-general.png">
+<meta property="og:site_name" content="万值翔 · Portfolio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="万值翔 · 量化 / 数据科学方向">
+<meta name="twitter:description" content="量化研究 / 数据科学方向作品集 —— 从零实现的计量、因果与量化金融工具链。">
+<meta name="twitter:image" content="https://wzx11223344.github.io/portfolio-demo/shots/og-general.png">
+
+<!--JSONLD--><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://wzx11223344.github.io/portfolio-demo/#person",
+  "name": "万值翔",
+  "jobTitle": "经济学专业（量化研究方向）",
+  "alumniOf": {"@type": "CollegeOrUniversity", "name": "华东师范大学"},
+  "url": "https://wzx11223344.github.io/portfolio-demo/",
+  "sameAs": ["https://github.com/wzx11223344"],
+  "description": "量化研究 / 数据科学方向作品集 —— 从零实现的计量、因果与量化金融工具链。"
+}
+</script>
+</head>
+<body>
+<div id="preloader"><div class="pl-mark">W</div><div class="pl-name">WZX · QUANT</div><div class="pl-bar"><div class="pl-fill"></div></div><div class="pl-pct">0%</div></div>
+<div id="bg-aurora"></div>
+<div id="bg-grid"></div>
+<canvas id="bg-particles"></canvas>
+<div id="bg-scan"></div>
+<div id="scroll-progress"></div>
+
+<nav>
+  <span class="nav-logo"><span class="dot"></span>万值翔</span>
+  <button class="nav-toggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  <div class="nav-inner">
+    <a href="index.html">◀ 全部作品集</a>
+    <a href="#hero" class="active">概览</a>
+    <a href="#about">定位</a>
+    <a href="#exp">真实经历</a>
+    <a href="#skills">量化能力</a>
+    <a href="#projects">作品开源</a>
+    <a href="#certs">证书荣誉</a>
+    <a href="#contact">联系</a>
+  </div>
+  <div class="nav-overlay"></div>
+</nav>
+
+<main id="app">
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>量化研究 · 金融科技 · 数据科学 · 从零实现</div>
+  <h1 class="hero-name">量化<span class="accent">工程能力</span></h1>
+  <div class="hero-sub" data-typed='["从零实现计量、因果与量化金融工具链","不套壳、不调黑箱，每个算法自己写","正大杯 1,352 份问卷计量建模可复现"]'></div>
+  <div class="hero-tags"><span>因子与回测</span><span>组合优化</span><span>期权定价</span><span>面板计量</span><span>因果推断</span></div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#exp">▶ 看真实经历</a>
+    <a class="btn js-resume" data-fmt="pdf" href="../resumes/general-resume.pdf" target="_blank">🗎 预览简历 (PDF)</a>
+    <a class="btn js-resume" data-fmt="docx" href="../resumes/general-resume.docx" target="_blank" download>⬇ 下载简历 (Word)</a>
+    <a class="btn" href="https://github.com/wzx11223344" target="_blank">🐙 GitHub</a>
+    <a class="btn" href="javascript:window.print()">🖨 打印简历 PDF</a>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card reveal"><div class="kpi-num" data-count="80" data-suffix="+">0</div><div class="kpi-label">GitHub 开源仓库</div></div>
+    <div class="kpi-card reveal d1"><div class="kpi-num" data-count="4">0</div><div class="kpi-label">真实实习经历（段）</div></div>
+    <div class="kpi-card reveal d2"><div class="kpi-num" data-count="1352">0</div><div class="kpi-label">正大杯调研样本（份）</div></div>
+    <div class="kpi-card reveal d3"><div class="kpi-num" data-count="36" data-suffix="%">0</div><div class="kpi-label">上证杯模拟组合净值增长</div></div>
+  </div>
+</section>
+
+<!-- ═══ 定位 ═══ -->
+<section id="about" class="reveal">
+  <div class="section-title"><span class="section-index">01</span><h2>定位<span class="hl">与优势</span></h2></div>
+  <div class="section-lead">// 经济学训练 + 工程化实现 —— 把经济直觉写成能跑、能复现的代码。</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="lead">万值翔 · 华东师范大学经济学 2027 届，共青团员，云南红河人。以量化研究 / 数据科学为方向，习惯把每一个算法从零实现，而不是套壳调包。</p>
+      <p>日常维护 <b>80+ 个</b> 开源仓库，覆盖计量经济学（pyconometrics：OLS / IV / 2SLS / DID / RDD / 面板 FE）、因果推断机器学习（causal-inference-ml：Double ML / 因果森林）、量化金融（quantlab 因子与回测、组合优化、期权定价与波动率曲面）、宏观建模（dsgepy）与宏观数据管道（macrodatahub）；前端演示均为零第三方运行时、自研可视化。</p>
+      <p>在 <b>国盛证券</b> 分析助理实习中独立完成 <b>3 份</b> 消费服务行业深度报告，并用 Excel Power Query + 数据透视表搭建门店经营数据动态监测系统；正大杯市场调查大赛以 <b>1,352 份</b> 问卷完成 LPM / Logistic / 多元线性回归三类模型，代码完整可复现。</p>
+      <div class="tag-list">
+        <span>Python / NumPy / pandas</span><span>SQL</span><span>Stata / SPSS</span><span>Double ML</span><span>因果森林</span><span>NUTS / HMC</span><span>DSGE</span><span>面板计量</span>
+      </div>
+    </div>
+    <div class="about-photo"><div class="ph-initial">量</div><div class="ph-cap">QUANT · CAUSAL · REPRODUCIBLE</div></div>
+  </div>
+</section>
+
+<!-- ═══ 真实经历 ═══ -->
+<section id="exp" class="reveal">
+  <div class="section-title"><span class="section-index">02</span><h2>真实<span class="hl">经历</span></h2></div>
+  <div class="section-lead">// 证券研究、政府数据调研、事务所核查与企业数据治理 —— 数据严谨性的四重训练。</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">证券分析师助理</span><span class="exp-org">国盛证券股份有限公司</span></div>
+      <div class="exp-date">2025.08 – 2025.12</div>
+      <ul class="exp-list">
+        <li>数据工程：搭建门店经营数据动态监测系统（Excel Power Query + 数据透视表），处理百胜中国、九毛九等标的多维运营数据，构建库存周转、人效等观测指标并定期更新</li>
+        <li>量化分析：独立完成 3 份消费服务行业深度报告，以可比公司数据做横截面对比与趋势识别，核心观点纳入组内投资参考</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">会计实习生</span><span class="exp-org">上海沪中会计师事务所</span></div>
+      <div class="exp-date">2026.09 – 2026.12</div>
+      <ul class="exp-list">
+        <li>审计程序：参与企业年度审计及专项审计项目，完成货币资金、往来款项等科目的凭证抽查、银行函证、余额核对及底稿编制，形成严格的数据核对与异常识别习惯</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">产业调研与项目评估</span><span class="exp-org">上海市经济和信息化委员会</span></div>
+      <div class="exp-date">2026.03 – 2026.07</div>
+      <ul class="exp-list">
+        <li>数据调研：参与 20+ 场项目评审，梳理企业申报数据并识别一致性问题，优化审核清单后项目通过率提升至 95%；走访 15+ 家企业撰写 3 篇调研报告</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-head"><span class="exp-role">人力资源实习生（含客户经理轮岗）</span><span class="exp-org">中国联通（上海）公司</span></div>
+      <div class="exp-date">2026.01 – 2026.02</div>
+      <ul class="exp-list">
+        <li>数据治理：统筹 7 个班级、21 个部门 3,500+ 条积点数据，建立台账并交叉校验，识别评分口径不一致问题并协助统一规范</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 量化能力 ═══ -->
+<section id="skills" class="reveal">
+  <div class="section-title"><span class="section-index">03</span><h2>量化<span class="hl">能力</span></h2></div>
+  <div class="section-lead">// 每一项都对应一个可运行的开源实现，算法从零写起。</div>
+  <div class="feature-grid">
+    <div class="feature-card" data-tilt><div class="ic">📐</div><h3>计量与因果</h3><p>从零实现 OLS / IV / 2SLS / DID / RDD 与面板 FE / RE；Double ML、因果森林用于高维混杂下的效应识别。</p><span class="meta">Econometrics</span></div>
+    <div class="feature-card" data-tilt><div class="ic">📈</div><h3>量化金融</h3><p>因子挖掘与回测、Markowitz 与风险平价组合优化、期权定价（Black-Scholes / 二叉树）、GARCH 与收益率曲线（NSS）。</p><span class="meta">Quant Finance</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🎲</div><h3>贝叶斯与宏观</h3><p>NUTS / HMC 采样器自实现；DSGE 动态随机一般均衡建模，服务宏观政策情景推演。</p><span class="meta">Bayes / DSGE</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🧹</div><h3>数据工程</h3><p>多源宏观数据管道（World Bank / FRED / 国家统计局），含统一接口、清洗对齐与失败回落。</p><span class="meta">Pipeline</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🐍</div><h3>工具链</h3><p>Python（NumPy / pandas / matplotlib）/ SQL / Stata / SPSS / Excel Power Query，全部为真实项目使用栈。</p><span class="meta">Stack</span></div>
+    <div class="feature-card" data-tilt><div class="ic">🔁</div><h3>可复现性</h3><p>正大杯 1,352 份问卷从清洗到回归全流程开源，任何人可一键复现结论。</p><span class="meta">Reproducible</span></div>
+  </div>
+</section>
+
+<!-- ═══ 作品开源 ═══ -->
+<section id="projects" class="reveal">
+  <div class="section-title"><span class="section-index">04</span><h2>作品<span class="hl">开源</span></h2></div>
+  <div class="section-lead">// 点击查看实现细节与源码。</div>
+  <div class="proj-grid">
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">PY</span><span class="pt-name">pyconometrics</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">pyconometrics</span><span class="proj-tag">计量经济</span></div>
+      <div class="proj-desc">从零实现的计量工具箱：OLS / IV / 2SLS / DID / RDD、面板固定与随机效应、聚类稳健标准误。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/pyconometrics" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/pyconometrics.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">QU</span><span class="pt-name">quantlab</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">quantlab</span><span class="proj-tag">量化回测</span></div>
+      <div class="proj-desc">量化回测框架：因子挖掘、信号合成、组合优化、CVaR 风险度量与绩效归因。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/quantlab" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/quantlab.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">CI</span><span class="pt-name">causal-inference-ml</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">causal-inference-ml</span><span class="proj-tag">因果推断</span></div>
+      <div class="proj-desc">因果推断机器学习实现：Double ML、因果森林、倾向得分与异质性处理效应估计。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/causal-inference-ml" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/causal-inference-ml.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">DS</span><span class="pt-name">dsgepy</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">dsgepy</span><span class="proj-tag">宏观建模</span></div>
+      <div class="proj-desc">DSGE 动态随机一般均衡建模与求解：稳态求解、线性化与脉冲响应分析。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/dsgepy" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/dsgepy.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">MC</span><span class="pt-name">mcp-financial-data</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">mcp-financial-data</span><span class="proj-tag">数据接口</span></div>
+      <div class="proj-desc">金融数据 MCP 服务器：把行情、财报与宏观指标封装为标准化工具接口，供智能体直接调用。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/mcp-financial-data" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/mcp-financial-data.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+    <div class="proj-card" data-tilt>
+      <div class="proj-thumb" style="--rc:#3776AB"><span class="pt-mono">EC</span><span class="pt-name">econ-dashboard</span><span class="pt-lang">Python</span></div>
+      <div class="proj-top"><span class="proj-name">econ-dashboard</span><span class="proj-tag">经济可视化</span></div>
+      <div class="proj-desc">经济数据可视化看板：多指标联动、时间序列对比与结构化图表输出。</div>
+      <div class="proj-meta"><a href="https://github.com/wzx11223344/econ-dashboard" target="_blank">↗ 源码</a> <a class="proj-detail" href="../projects/econ-dashboard.html">查看详情 →</a><span>· Python</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 证书 ═══ -->
+<section id="certs" class="reveal">
+  <div class="section-title"><span class="section-index">05</span><h2>证书与<span class="hl">荣誉</span></h2></div>
+  <div class="cert-grid">
+    <div class="cert-card" data-tilt><div class="cert-ic">🏅</div><div><div class="ct">银行从业资格证</div><div class="cs">已通过 · 含个人理财</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📈</div><div><div class="ct">基金从业资格证</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🧮</div><div><div class="ct">初级会计职称</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🏆</div><div><div class="ct">正大杯市场调查大赛</div><div class="cs">优秀奖 · 1352 样本</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">💹</div><div><div class="ct">上证杯 ETF 研究</div><div class="cs">优秀 · 36% 净值</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📐</div><div><div class="ct">全国数学建模二等奖</div><div class="cs">省级 · 已获</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">🔤</div><div><div class="ct">CET-6</div><div class="cs">已通过</div></div></div>
+    <div class="cert-card" data-tilt><div class="cert-ic">📘</div><div><div class="ct">初级经济师</div><div class="cs">备考中</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ 联系 ═══ -->
+<section id="contact" class="reveal">
+  <div class="section-title"><span class="section-index">06</span><h2>联系<span class="hl">方式</span></h2></div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>直接联系</h3>
+      <div class="contact-row"><span class="ci">📧</span><span class="cl">邮箱</span><a href="mailto:13388736755@163.com">13388736755@163.com</a></div>
+      <div class="contact-row"><span class="ci">📱</span><span class="cl">电话</span><span class="v">13388736755</span></div>
+      <div class="contact-row"><span class="ci">📍</span><span class="cl">城市</span><span class="v">上海 · 可接受异地实习</span></div>
+      <div class="contact-row"><span class="ci">⬇</span><span class="cl">简历</span><a class="js-resume" data-fmt="pdf" href="../resumes/general-resume.pdf" target="_blank">预览 PDF 简历</a> · <a class="js-resume" data-fmt="docx" href="../resumes/general-resume.docx" target="_blank" download>下载 Word 简历</a></div>
+    </div>
+    <div class="contact-card">
+      <h3>社交与作品</h3>
+      <div class="social-grid">
+        <a class="social-btn" href="https://github.com/wzx11223344" target="_blank"><span class="si">🐙</span>GitHub</a>
+        <a class="social-btn" href="https://space.bilibili.com/502800415" target="_blank"><span class="si">📺</span>B站</a>
+        <a class="social-btn" href="index.html"><span class="si">📂</span>全部作品集</a>
+        <a class="social-btn" href="../index.html"><span class="si">💻</span>技术演示</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flinks">
+    <a href="https://github.com/wzx11223344" target="_blank">github.com/wzx11223344</a>
+    <a class="js-resume" data-fmt="pdf" href="../resumes/general-resume.pdf" target="_blank">简历 PDF</a>
+    <a href="index.html">← 返回全部作品集</a>
+    <a class="flink-print" href="javascript:window.print()">🖨 打印本页简历</a>
+  </div>
+  <div>万值翔 · 量化 / 数据科学方向 · 计量 · 因果推断 · 量化金融</div>
+  <div class="award">📈 <strong>量化工程</strong> · 算法从零实现 · 结论可复现</div>
+</footer>
+</main>
+
+<button id="scroll-top" aria-label="回到顶部">↑</button>
+<script src="../assets/app.js"></script>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色 / 浅色模式" title="切换主题">🌙</button>
+</body>
+</html>

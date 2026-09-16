@@ -49,6 +49,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://wzx11223344.github.io/portfolio-demo/positions/research</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wzx11223344.github.io/portfolio-demo/positions/quant</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wzx11223344.github.io/portfolio-demo/projects/pyconometrics</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>

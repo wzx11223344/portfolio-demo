@@ -529,7 +529,9 @@
     'finance': {pdf:'resumes/finance-resume.pdf', docx:'resumes/finance-resume.docx', page:'finance.html', label:'财务/金融'},
     'state':   {pdf:'resumes/state-resume.pdf',   docx:'resumes/state-resume.docx',   page:'state.html',   label:'国企政府'},
     'internet':{pdf:'resumes/internet-resume.pdf',docx:'resumes/internet-resume.docx',page:'internet.html',label:'互联网运营'},
-    'hr':      {pdf:'resumes/hr-resume.pdf',      docx:'resumes/hr-resume.docx',      page:'hr.html',      label:'人事'}
+    'hr':      {pdf:'resumes/hr-resume.pdf',      docx:'resumes/hr-resume.docx',      page:'hr.html',      label:'人事'},
+    'research':{pdf:'resumes/research-resume.pdf',docx:'resumes/research-resume.docx',page:'research.html',label:'券商研究'},
+    'quant':   {pdf:'resumes/quant-resume.pdf',   docx:'resumes/quant-resume.docx',   page:'quant.html',   label:'量化/数据'}
   };
 
   function card(s){
