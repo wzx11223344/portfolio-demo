@@ -531,7 +531,11 @@
     'internet':{pdf:'resumes/internet-resume.pdf',docx:'resumes/internet-resume.docx',page:'internet.html',label:'互联网运营'},
     'hr':      {pdf:'resumes/hr-resume.pdf',      docx:'resumes/hr-resume.docx',      page:'hr.html',      label:'人事'},
     'research':{pdf:'resumes/research-resume.pdf',docx:'resumes/research-resume.docx',page:'research.html',label:'券商研究'},
-    'quant':   {pdf:'resumes/quant-resume.pdf',   docx:'resumes/quant-resume.docx',   page:'quant.html',   label:'量化/数据'}
+    'quant':   {pdf:'resumes/quant-resume.pdf',   docx:'resumes/quant-resume.docx',   page:'quant.html',   label:'量化/数据'},
+    'audit':      {pdf:'resumes/audit-resume.pdf',      docx:'resumes/audit-resume.docx',      page:'audit.html',      label:'审计税务'},
+    'consulting': {pdf:'resumes/consulting-resume.pdf', docx:'resumes/consulting-resume.docx', page:'consulting.html', label:'管理咨询'},
+    'fmcg':       {pdf:'resumes/fmcg-resume.pdf',       docx:'resumes/fmcg-resume.docx',       page:'fmcg.html',       label:'快消管培'},
+    'xuandiao':   {pdf:'resumes/xuandiao-resume.pdf',   docx:'resumes/xuandiao-resume.docx',   page:'xuandiao.html',   label:'选调生'}
   };
 
   function card(s){
@@ -564,7 +568,6 @@
     }
   }
   function initResumeSwitch(){
-    var sel = document.getElementById('resumeSwitch'); if(!sel) return;
     // path-aware base: pages under /positions/ need '../' for resumes and '' for position pages;
     // root pages need '' for resumes and 'positions/' for position pages.
     var isPos = location.pathname.split('/').indexOf('positions') > -1;
@@ -581,6 +584,13 @@
       }
       var pages = document.querySelectorAll('.js-resume-page');
       for(var j=0;j<pages.length;j++){ pages[j].href = PP + r.page; pages[j].textContent = '📂 ' + r.label + '岗位作品集'; }
+    }
+    var sel = document.getElementById('resumeSwitch');
+    if(!sel){
+      // 岗位页没有下拉：按页面文件名自动绑定本人简历，避免所有岗位页的按钮都指向通用版
+      var slug = (location.pathname.split('/').pop() || '').replace(/\.html?$/i, '');
+      if(RESUMES[slug]) apply(slug);
+      return;
     }
     sel.addEventListener('change', function(){ apply(sel.value); });
     apply(sel.value);
